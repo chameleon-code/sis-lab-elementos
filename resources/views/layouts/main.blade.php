@@ -17,7 +17,7 @@
 </head>
 <body>
         @include('partials.navigation') 
-        @include('content')
+        @yield('content')
         @include('partials.footer')
 </body>    
     <script src="{{ asset('js/bootstrap.bundle.min.js')}}"></script>
