@@ -26,3 +26,18 @@ Route::get('/register', function () {
 Route::get('/login', function () {
     return view('layouts.login');
 });
+
+
+//roles
+Route::get('/admin', function () {
+    return view('components.sections.adminSection');
+});
+Route::get('/student', function () {
+    return view('components.sections.studentSection');
+});
+Route::get('/professor', function () {
+    return view('components.sections.professorSection');
+});
+Route::get('/auxiliar', function () {
+    return view('components.sections.auxiliarSection');
+});
