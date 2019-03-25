@@ -1,0 +1,3 @@
+@section('auxiliar-content')
+    
+@endsection

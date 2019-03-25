@@ -1,0 +1,3 @@
+@section('admin-content')
+    
+@endsection
