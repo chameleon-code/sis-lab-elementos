@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('/home');
 });
+Route::get('/admin', function () {
+    return view('/partials/navigations/admin');
+});
+Route::get('/error', function () {
+    return view('errors.404');
+});
