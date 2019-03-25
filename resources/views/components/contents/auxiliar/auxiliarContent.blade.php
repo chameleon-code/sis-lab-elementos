@@ -1,3 +1,4 @@
-@section('auxiliar-content')
+@extends('components.sections.auxiliarSection')
+@section('userContent')
     
 @endsection
