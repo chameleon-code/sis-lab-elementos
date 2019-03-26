@@ -42,6 +42,6 @@ Route::get('auxiliar', function () {
     return view('components.sections.auxiliarSection');
 });
 //child roles
-Route::get('admin/lista', function () {
-    return view('components.contents.admin.adminContent');
+Route::get('admin/register', function () {
+    return view('components.contents.admin.registerProfessor');
 });
