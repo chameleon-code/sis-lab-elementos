@@ -22,7 +22,7 @@
                   <div class="form-group">
                     <input type="email" class="form-control col-md-12 form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Introduzca el correo">
                   </div>
-                  <a href="index.html" class="btn bg-warning btn-user btn-block col-md-12">
+                  <a href="index.html" class="btn btn-warning btn-user btn-block col-md-12">
                     Generar Contraseña
                   </a>
                   <br>
