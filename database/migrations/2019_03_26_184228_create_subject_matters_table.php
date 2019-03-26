@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMattersTable extends Migration
+class CreateSubjectMattersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateMattersTable extends Migration
      */
     public function up()
     {
-        Schema::create('matters', function (Blueprint $table) {
-            $table->increments('matters_id');
+        Schema::create('subject_matters', function (Blueprint $table) {
+            $table->increments('subject_matters_id');
             $table->unsignedInteger('managements_id');
             $table->foreign('managements_id')->references('managements_id')->on('managements')->onDelete('cascade');
             $table->string('name');
@@ -29,6 +29,6 @@ class CreateMattersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('matters');
+        Schema::dropIfExists('subject_matters');
     }
 }
