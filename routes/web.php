@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -55,3 +57,8 @@ Route::get('auxiliar', function () {
 Route::get('admin/lista', function () {
     return view('components.contents.admin.adminContent');
 });
+
+//registro de materias
+Auth::routes();
+Route::get('/admin/registrarMateria','SubjectMatterController@index');
+Route::get('/admin/gestion','ManagementController@index');

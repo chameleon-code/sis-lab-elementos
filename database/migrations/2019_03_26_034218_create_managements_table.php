@@ -17,6 +17,7 @@ class CreateManagementsTable extends Migration
             $table->increments('managements_id');
             $table->string('semester');
             $table->integer('managements');
+            $table->timestamps();
         });
     }
 
