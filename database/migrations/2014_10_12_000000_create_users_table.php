@@ -31,6 +31,34 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        Schema::create('admins', function (Blueprint $table){
+            $table->increments('id');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
+        });
+        
+        Schema::create('professors', function (Blueprint $table){
+            $table->increments('id');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
+        });
+
+        Schema::create('auxiliars', function (Blueprint $table){
+            $table->increments('id');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
+        });
+
+        Schema::create('students', function (Blueprint $table){
+            $table->increments('id');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -40,8 +68,11 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('admins');
+        Schema::dropIfExists('professors');
+        Schema::dropIfExists('auxiliars');
+        Schema::dropIfExists('students');
         Schema::dropIfExists('users');
+        Schema::dropIfExists('roles');
     }
 }
