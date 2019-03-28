@@ -35,13 +35,18 @@ Route::get('admin', function () {
 Route::get('student', function () {
     return view('components.sections.studentSection');
 });
-Route::get('professor', function () {
-    return view('components.sections.professorSection');
-});
+Route::get('professor', ['uses'=> 'ProfessorController@home']);
+Route::get('professor', ['uses'=> 'ProfessorController@home']);
+Route::get('professor', ['uses'=> 'ProfessorController@home']);
+Route::get('professor', ['uses'=> 'ProfessorController@home']);
+
+
+
+
 Route::get('auxiliar', function () {
     return view('components.sections.auxiliarSection');
 });
 //child roles
-Route::get('admin/register', function () {
+Route::get('admin/professor/register', function () {
     return view('components.contents.admin.registerProfessor');
 });

@@ -93,7 +93,7 @@
           <!-- Nav Item - User Information -->
           <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="mr-2 d-none d-lg-inline text-gray-600 small">Marquitos Soto</span>
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small">Sis-Lab</span>
               <img class="img-profile rounded-circle" src="https://avatars1.githubusercontent.com/u/14966182?s=460&v=4">
             </a>
             <!-- Dropdown - User Information -->
@@ -126,7 +126,7 @@
       @yield('userContent')
 
       <!-- Footer -->
-      <footer class="sticky-footer bg-white">
+      <footer class="sticky-footer">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
             <span>Copyright &copy; Sis-Lab 2019</span>
