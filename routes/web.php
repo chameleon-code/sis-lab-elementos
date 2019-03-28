@@ -60,5 +60,8 @@ Route::get('admin/lista', function () {
 
 //registro de materias
 Auth::routes();
-Route::get('/admin/registrarMateria','SubjectMatterController@index');
-Route::get('/admin/gestion','ManagementController@index');
+Route::get('/admin/subjectmatters','SubjectMatterController@index');
+Route::get('/admin/subjectmatter/create','SubjectMatterController@create');
+Route::post('/admin/subjectmatter/create','SubjectMatterController@store')->name('subjectmatters.create');
+
+Route::get('/admin/gestiones','ManagementController@index');

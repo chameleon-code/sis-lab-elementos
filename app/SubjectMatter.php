@@ -14,4 +14,5 @@ class SubjectMatter extends Model
     public static function getAllSubjectMatters(){
         return self::all();
     }
+    
 }
