@@ -36,11 +36,8 @@ Route::get('student', function () {
     return view('components.sections.studentSection');
 });
 Route::get('professor', ['uses'=> 'ProfessorController@home']);
-Route::get('professor', ['uses'=> 'ProfessorController@home']);
-Route::get('professor', ['uses'=> 'ProfessorController@home']);
-Route::get('professor', ['uses'=> 'ProfessorController@home']);
 
-
+Route::post('admin/professor/register', ['uses'=> 'ProfessorController@validations']);
 
 
 Route::get('auxiliar', function () {
