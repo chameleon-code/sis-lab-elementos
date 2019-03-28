@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
 {
@@ -24,8 +24,9 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('role_id')->default(\App\Role::STUDENT);
             $table->foreign('role_id')->references('id')->on('roles');
+            $table->string('names');
             $table->string('first_name');
-            $table->string('last_name');
+            $table->string('second_name');
             $table->string('email');
             $table->string('password');
             $table->string('img_path')->nullable();
