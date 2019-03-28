@@ -45,3 +45,6 @@ Route::get('auxiliar', function () {
 Route::get('admin/lista', function () {
     return view('components.contents.admin.adminContent');
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
