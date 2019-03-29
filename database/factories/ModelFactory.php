@@ -23,18 +23,20 @@ $factory->define(App\Role::class, function (Faker\Generator $faker) {
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
-    $first_name = $faker->name;
-    $last_name = $faker->LastName;
+    $names = $faker->name;
+    $first_name = $faker->LastName;
+    $second_name = $faker->LastName;
 
 
     return [
+        'names' => $names,
         'first_name' => $first_name,
-        'last_name' => $last_name,
+        'second_name' => $second_name,
         'role_id' => \App\Role::all()->random()->id,
         'email' => $faker->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
-        'img_path' => \Faker\Provider\Image::image(storage_path() . '/app/public/users', 200, 200, 'people', false),
+        //'img_path' => \Faker\Provider\Image::image(storage_path() . '/app/public/users', 200, 200, 'people', false),
     ];
 });
 

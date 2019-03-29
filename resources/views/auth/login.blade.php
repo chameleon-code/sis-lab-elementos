@@ -1,6 +1,3 @@
-@extends('layouts.app')
-
-@section('content')
 
 <!-- Custom fonts for this template-->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -85,4 +82,3 @@
         </div>
     </div>
 </div>
-@endsection
