@@ -38,13 +38,13 @@
                                                     <td class="sorting_1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->created_at}}</font></font></td>
                                                     <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->updated_at}}</font></font></td>
                                                     <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                                                        <a href="/market/{{$item->id}}" class="btn btn-info btn-user btn-block">Ver</a>
+                                                        <a href="/admin/subjectmatter/{{$item->id}}" class="btn btn-info btn-user btn-block">Ver</a>
                                                     </font></font></td>
                                                     <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                                                        <a href="/market/{{$item->id}}/edit" class="btn btn-warning btn-user btn-block">Edit</a>
+                                                        <a href="/admin/subjectmatter/{{$item->id}}/edit" class="btn btn-warning btn-user btn-block">Edit</a>
                                                     </font></font></td>
                                                     <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                                                        <form class="pull-right" action="{{route('subjectmatters.create',[$item->id])}}" method="POST">
+                                                        <form class="pull-right" action="{{route('subjectmatters.destroy',[$item->id])}}" method="POST">
                                                             {{csrf_field()}}
                                                             {{method_field('DELETE')}}
                                                             <button class="btn btn-danger btn-user btn-block" type="submit">Borrar</button>

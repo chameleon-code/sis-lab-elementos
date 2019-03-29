@@ -12,13 +12,60 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\Role::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
+        'name' => $faker->word,
+        'description' => $faker->sentence,
+    ];
+});
+
+$factory->define(App\User::class, function (Faker\Generator $faker) {
+    static $password;
+    $first_name = $faker->name;
+    $last_name = $faker->LastName;
+
+
+    return [
+        'first_name' => $first_name,
+        'last_name' => $last_name,
+        'role_id' => \App\Role::all()->random()->id,
+        'email' => $faker->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+        'img_path' => \Faker\Provider\Image::image(storage_path() . '/app/public/users', 200, 200, 'people', false),
+    ];
+});
+
+$factory->define(App\Admin::class, function (Faker\Generator $faker) {
+    static $password;
+
+    return [
+        'user_id' => null,
+    ];
+});
+
+$factory->define(App\Professor::class, function (Faker\Generator $faker) {
+    static $password;
+
+    return [
+        'user_id' => null,
+    ];
+});
+
+$factory->define(App\Auxiliar::class, function (Faker\Generator $faker) {
+    static $password;
+
+    return [
+        'user_id' => null,
+    ];
+});
+
+$factory->define(App\Student::class, function (Faker\Generator $faker) {
+    static $password;
+
+    return [
+        'user_id' => null,
     ];
 });

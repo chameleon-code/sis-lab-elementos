@@ -14,9 +14,9 @@ class CreateSubjectMattersTable extends Migration
     public function up()
     {
         Schema::create('subject_matters', function (Blueprint $table) {
-            $table->increments('subject_matters_id');
+            $table->increments('id');
             $table->unsignedInteger('managements_id');
-            $table->foreign('managements_id')->references('managements_id')->on('managements')->onDelete('cascade');
+            $table->foreign('managements_id')->references('id')->on('managements')->onDelete('cascade');
             $table->string('name');
             $table->timestamps();
         });

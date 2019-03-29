@@ -14,7 +14,7 @@ class CreateManagementsTable extends Migration
     public function up()
     {
         Schema::create('managements', function (Blueprint $table) {
-            $table->increments('managements_id');
+            $table->increments('id');
             $table->string('semester');
             $table->integer('managements');
             $table->timestamps();

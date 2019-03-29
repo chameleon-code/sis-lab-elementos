@@ -12,16 +12,6 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/prueba', function () {
-    return view('/layouts/app');
-});
-Route::get('/logged', function () {
-    return view('/partials/navigations/logged');
-});
-
-Route::get('/logged/users', function () {
-    return view('/partials/navigations/usuarios');
-});
 
 Route::get('/', function () {
     return view('layouts.home');
@@ -60,8 +50,19 @@ Route::get('admin/lista', function () {
 
 //registro de materias
 Auth::routes();
+
+
 Route::get('/admin/subjectmatters','SubjectMatterController@index');
+Route::get('/admin/subjectmatter/{id}','SubjectMatterController@show');
 Route::get('/admin/subjectmatter/create','SubjectMatterController@create');
 Route::post('/admin/subjectmatter/create','SubjectMatterController@store')->name('subjectmatters.create');
+Route::get('/admin/subjectmatter/{subject_matters_id}/edit','SubjectMatterController@edit');
+Route::post('/admin/subjectmatter/{subject_matters_id}/edit','SubjectMatterController@update')->name('subjectmatters.edit');
+
+Route::delete('/admin/subjectmatter/{id}','SubjectMatterController@destroy')->name('subjectmatters.destroy');
+
 
 Route::get('/admin/gestiones','ManagementController@index');
+
+
+Route::get('/home', 'HomeController@index');
