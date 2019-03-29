@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +47,22 @@ Route::get('auxiliar', function () {
 Route::get('admin/lista', function () {
     return view('components.contents.admin.adminContent');
 });
+
+//registro de materias
 Auth::routes();
+
+
+Route::get('/admin/subjectmatters','SubjectMatterController@index');
+Route::get('/admin/subjectmatter/{id}','SubjectMatterController@show');
+Route::get('/admin/subjectmatter/create','SubjectMatterController@create');
+Route::post('/admin/subjectmatter/create','SubjectMatterController@store')->name('subjectmatters.create');
+Route::get('/admin/subjectmatter/{id}/edit','SubjectMatterController@edit');
+Route::post('/admin/subjectmatter/{id}/edit','SubjectMatterController@update')->name('subjectmatters.edit');
+
+Route::delete('/admin/subjectmatter/{id}','SubjectMatterController@destroy')->name('subjectmatters.destroy');
+
+
+Route::get('/admin/gestiones','ManagementController@index');
+
 
 Route::get('/home', 'HomeController@index');
