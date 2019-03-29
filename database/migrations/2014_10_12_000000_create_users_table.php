@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
             $table->string('second_name');
             $table->string('email');
             $table->string('password');
-            $table->string('img_path')->nullable();
+            //$table->string('img_path')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
