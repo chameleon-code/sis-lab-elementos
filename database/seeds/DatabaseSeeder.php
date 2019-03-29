@@ -22,8 +22,9 @@ class DatabaseSeeder extends Seeder
         factory(\App\Role::class, 1)->create(['name' => 'student']);
         
         factory(\App\User::class, 1)->create([
+            'names' => 'admin',
             'first_name' => 'admin',
-            'last_name' => 'admin', 
+            'second_name' => 'admin',
             'password' => bcrypt('secret'),
             'role_id' => \App\Role::ADMIN
         ])

@@ -26,17 +26,29 @@
                     <div class="p-5">
 
                     <div class="text-center">
-                        <h1 class="h4 text-gray-900 mb-4">Crea una Cuenta!</h1>
+                        <h1 class="h4 text-gray-900 mb-4">Registro de Estudiante</h1>
                     </div>
 
                     <form class="user" role="form" method="POST" action="{{ url('/register') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group row">
+                            <div class="{{ $errors->has('names') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
+
+                                <input id="names" type="text" class="form-control form-control-user" name="names"
+                                       value="{{ old('names') }}" placeholder="Nombres" required autofocus>
+
+                                @if ($errors->has('names'))
+                                    <span class="help-block">
+                                   <strong>{{ $errors->first('names') }}</strong>
+                               </span>
+                                @endif
+                            </div>
 
                         <div class="{{ $errors->has('first_name') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
 
-                                <input id="first_name" type="text" class="form-control form-control-user" name="first_name" value="{{ old('first_name') }}" placeholder="Nombres" required autofocus>
+                            <input id="first_name" type="text" class="form-control form-control-user" name="first_name"
+                                   value="{{ old('first_name') }}" placeholder="Apellido Paterno" required autofocus>
 
                                 @if ($errors->has('first_name'))
                                     <span class="help-block">
@@ -45,13 +57,15 @@
                                 @endif
                         </div>
 
-                        <div class="group{{ $errors->has('last_name') ? ' has-error' : '' }} col-sm-6">
+                            <div class="group{{ $errors->has('second_name') ? ' has-error' : '' }} col-sm-6">
 
-                                <input id="last_name" type="text" class="form-control form-control-user" name="last_name" value="{{ old('last_name') }}" placeholder="Apellidos" required autofocus>
+                                <input id="second_name" type="text" class="form-control form-control-user"
+                                       name="second_name" value="{{ old('second_name') }}"
+                                       placeholder="Apellido Materno" required autofocus>
 
-                                @if ($errors->has('last_name'))
+                                @if ($errors->has('second_name'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('last_name') }}</strong>
+                                        <strong>{{ $errors->first('second_name') }}</strong>
                                     </span>
                                 @endif
                         </div>
@@ -69,7 +83,7 @@
                                 @endif
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group row">\
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
 
                                 <input id="password" type="password" class="form-control form-control-user" name="password" placeholder="Contraseña" required>
@@ -93,7 +107,7 @@
 
                     <hr>
               <div class="text-center">
-                <a class="small" href="#">Olvidste tu Contraseña?</a>
+                  <a class="small" href="#">Olvidaste tu Contraseña?</a>
               </div>
               <div class="text-center">
                 <a class="small" href="{{ url('/login') }}">Ya tienes una Cuenta? Ingresa!</a>
