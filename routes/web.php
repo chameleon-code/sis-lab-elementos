@@ -36,14 +36,10 @@ Route::get('student', function () {
     return view('components.sections.studentSection');
 });
 Route::get('professor', ['uses'=> 'ProfessorController@home']);
-
-Route::post('admin/professor/register', ['uses'=> 'ProfessorController@validations']);
+Route::post('admin/professor/register', ['uses'=> 'ProfessorController@store']);
+Route::get('admin/professor/register', ['uses'=> 'ProfessorController@create']);
 
 
 Route::get('auxiliar', function () {
     return view('components.sections.auxiliarSection');
-});
-//child roles
-Route::get('admin/professor/register', function () {
-    return view('components.contents.admin.registerProfessor');
 });

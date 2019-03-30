@@ -3,16 +3,22 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 class Professor extends Model
 {
-    public function validations(Request $request){
-        $this -> validate($request,[
-            'names' => 'required',
-            'lastnames' => 'required',
-            'email' => 'email|required',
-            'password' => 'required'
-        ]);
-        return $request->all();
+    protected $rules = [
+        'names' => 'required',
+        'lastnames' => 'required',
+        'email' => 'email|required',
+        'password' => 'required'
+    ];
+    public $errors;
+    public function validate($input){
+        $validator = Validator::make($input, $this->rules);
+        if($validator->fails()){
+            $this->errors = $validator->errors();
+            return false;
+        }
+        return true;
     }
 }
