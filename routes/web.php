@@ -48,10 +48,10 @@ Route::get('admin/lista', function () {
     return view('components.contents.admin.adminContent');
 });
 
-//registro de materias
+
 Auth::routes();
 
-
+//registro de materias
 Route::get('/admin/subjectmatters','SubjectMatterController@index');
 Route::get('/admin/subjectmatter/{id}','SubjectMatterController@show');
 Route::get('/admin/subjectmatter/create','SubjectMatterController@create');
@@ -66,3 +66,6 @@ Route::get('/admin/gestiones','ManagementController@index');
 
 
 Route::get('/home', 'HomeController@index');
+
+//registro de auxiliares
+Route::get('/admin/auxiliars','AuxiliarController@index');
