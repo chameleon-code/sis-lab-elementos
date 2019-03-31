@@ -37,12 +37,15 @@ Route::get('admin', function () {
 Route::get('student', function () {
     return view('components.contents.student.studentContent');
 });
-Route::get('professor', function () {
-    return view('components.sections.professorSection');
-});
+Route::get('professor', ['uses'=> 'ProfessorController@home']);
+Route::post('admin/professor/register', ['uses'=> 'ProfessorController@store']);
+Route::get('admin/professor/register', ['uses'=> 'ProfessorController@create']);
+
+
 Route::get('auxiliar', function () {
     return view('components.sections.auxiliarSection');
 });
+
 //child roles
 Route::get('admin/lista', function () {
     return view('components.contents.admin.adminContent');
@@ -69,3 +72,4 @@ Route::get('/home', 'HomeController@index');
 
 //registro de auxiliares
 Route::get('/admin/auxiliars','AuxiliarController@index');
+Route::get('/admin/auxiliar/register','AuxiliarController@create');
