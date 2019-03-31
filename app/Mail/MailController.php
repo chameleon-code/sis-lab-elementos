@@ -29,8 +29,7 @@ class MailController extends Mailable
      */
     public function build()
     {
-        return $this->from('chameleon.code.soft@gmail.com')->subject('Hola')->view('mails.templateCreateProfessor')
+        return $this->from('chameleon.code.soft@gmail.com')->subject('Registro Docente')->view('mails.templateCreateProfessor')
         ->with('data',$this->data);
-        //return $this->view('view.name');
     }
 }

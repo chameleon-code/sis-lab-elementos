@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Validator;
 class Professor extends Model
 {
     protected $rules = [
-        'names' => 'required',
-        'lastnames' => 'required',
-        'email' => 'email|required',
+        'names' => 'required|max:100',
+        'lastnames' => 'required|max:100',
+        'email' => 'email|required|max:150',
         'password' => 'required'
     ];
     public $errors;
