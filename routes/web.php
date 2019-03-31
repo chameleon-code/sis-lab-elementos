@@ -64,6 +64,8 @@ Route::delete('/admin/subjectmatter/{id}','SubjectMatterController@destroy')->na
 
 //Gestiones
 Route::get('/admin/gestiones','ManagementController@index');
+ //Grupos
+ Route::resource('/admin/groups', 'GroupController');
 
 
 Route::get('/home', 'HomeController@index');
