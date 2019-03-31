@@ -72,4 +72,5 @@ Route::get('/home', 'HomeController@index');
 
 //registro de auxiliares
 Route::get('/admin/auxiliars','AuxiliarController@index');
-Route::get('/admin/auxiliar/register','AuxiliarController@create');
+Route::get('/admin/auxiliar/register', 'AuxiliarController@register');
+Route::post('/admin/auxiliar/store','AuxiliarController@store');
