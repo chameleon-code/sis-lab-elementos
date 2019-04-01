@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Professor;
+use App\Role;
+use App\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MailController;
+
 class ProfessorController extends Controller
 {
     /**
@@ -13,9 +16,8 @@ class ProfessorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(){
+        return view('components.sections.professorSection');
     }
 
     /**
@@ -41,14 +43,26 @@ class ProfessorController extends Controller
         if($professor->validate($input)){
             $data = array(
                 'names' => $request->names,
-                'lastnames'=> $request->lastnames,
+                'first_name'=> $request->first_name,
+                'second_name'=> $request->second_name,
                 'email' => $request->email,
                 'password' => $request->password
             );
+            $newProfessor = User::create( [
+                'role_id'=> Role::STUDENT,
+                'names' => $request->names,
+                'first_name'=> $request->first_name,
+                'second_name'=> $request->second_name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password)
+            ]);
+            Professor::create([
+                'user_id' => 13
+            ]);
             Mail::to($request->email)->send(new MailController($data));
-            return $request->all();
+            return redirect('/admin/professors/create');
         }else{
-            return redirect('/admin/professor/register')->withInput()->withErrors($professor->errors);
+            return redirect('/admin/professors/create')->withInput()->withErrors($professor->errors);
         }
     }
 
@@ -94,9 +108,8 @@ class ProfessorController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
-    public function home(){
-        return view('components.sections.professorSection');
+        $professor = Professor::findOrFail($id);
+        $professor->delete();
+        return redirect('/admin/professors');
     }
 }
