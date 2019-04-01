@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use App\User;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Routing\Router;
 /*
@@ -38,15 +39,13 @@ Route::get('admin', function () {
 Route::get('student', function () {
     return view('components.contents.student.studentContent');
 });
-Route::get('professor', function () {
-    return view('components.sections.professorSection');
-});
+Route::get('professor', ['uses'=> 'ProfessorController@index']);
+Route::get('/admin/professors/create', ['uses'=> 'ProfessorController@create']);
+Route::post('/admin/professors/create', ['uses'=> 'ProfessorController@store']);
+
+
 Route::get('auxiliar', function () {
     return view('components.sections.auxiliarSection');
-});
-//child roles
-Route::get('admin/lista', function () {
-    return view('components.contents.admin.adminContent');
 });
 
 Auth::routes();
@@ -59,13 +58,13 @@ Route::post('/admin/subjectmatter/create','SubjectMatterController@store')->name
 Route::get('/admin/subjectmatter/{id}','SubjectMatterController@show');
 Route::get('/admin/subjectmatter/{id}/edit','SubjectMatterController@edit');
 Route::post('/admin/subjectmatter/{id}/edit','SubjectMatterController@update')->name('subjectmatters.edit');
-
 Route::delete('/admin/subjectmatter/{id}','SubjectMatterController@destroy')->name('subjectmatters.destroy');
 
 //Gestiones
 Route::get('/admin/gestiones','ManagementController@index');
  //Grupos
- Route::resource('/admin/groups', 'GroupController');
+Route::resource('/admin/groups', 'GroupController');
 
 
 Route::get('/home', 'HomeController@index');
+
