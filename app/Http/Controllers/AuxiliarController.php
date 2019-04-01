@@ -10,7 +10,11 @@ use App\Role;
 class AuxiliarController extends Controller
 {
     public function index(){
-        return view('components.contents.auxiliar.index');
+        $auxiliars = Auxiliar::getAllAuxiliars();
+        
+        $data=['auxiliars' => $auxiliars,
+                'title' => 'Auxiliars Title'];
+        return view('components.contents.auxiliar.index', $data);
     }
     
     public function register(){

@@ -11,6 +11,6 @@ class Auxiliar extends Model
     ];
 
     public static function getAllAuxiliars(){
-        return self::all();
+        return Auxiliar::join('users','user_id','=','users.id')->get();
     }
 }
