@@ -46,4 +46,11 @@ class AuxiliarController extends Controller
 
         return redirect('/admin/auxiliars');
     }
+
+    public function destroy($id){
+            $auxiliar = Auxiliar::findOrFail($id);
+
+            $auxiliar->delete();
+        return redirect('/admin/auxiliars');
+    }
 }

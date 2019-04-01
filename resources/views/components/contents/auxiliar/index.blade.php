@@ -44,9 +44,9 @@
                                                           <a href="#" class="btn btn-warning btn-circle"><i class="fas fa-exclamation-triangle"></i></a>
                                                       </td>
                                                       <td style="width: 40px;" class="text-center">
-                                                          <form action="" method="POST">
-                                                              {{--  {{csrf_field()}}
-                                                              {{method_field('DELETE')}}  --}}
+                                                          <form action="{{route('auxiliar.destroy',[$item->id])}}" method="POST">
+                                                              {{csrf_field()}}
+                                                              {{method_field('DELETE')}}
                                                               <button class="btn btn-danger btn-circle" type="submit"><i class="fas fa-trash"></i></button>
                                                           </form>
                                                         </td>
