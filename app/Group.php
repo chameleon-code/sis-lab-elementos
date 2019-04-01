@@ -17,7 +17,8 @@ class Group extends Model
     ];
 
     public $errors;
-    public function validate($date){
+    public function validate($date)
+    {
         $v = Validator::make($date, $this->rules);
         if($v->fails()){
             $this->errors = $v->errors();
@@ -26,8 +27,13 @@ class Group extends Model
         return true;
     }
 
-    public static function getAllGroups(){
+    public static function getAllGroups()
+    {
         return self::all();
+    }
+    public function subjectMatter()
+    {
+        return $this->belongsTo('App\SubjectMatter', 'subject_matters_id');
     }
     
 }

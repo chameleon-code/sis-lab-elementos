@@ -30,5 +30,7 @@ class SubjectMatter extends Model
     public static function getAllSubjectMatters(){
         return self::all();
     }
-    
+    public function groups(){
+        return $this->hasMany('App\Group');
+    }
 }
