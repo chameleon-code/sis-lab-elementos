@@ -18,14 +18,15 @@ class SubjectMatterController extends Controller
         return view('components.contents.subjectMatter.index', $data);
     }
 
-    public function show(){
-
-    }
-
     public function create(){
         $managements = Management::getAllManagements();
         $data=['managements'=>$managements];
         return view('components.contents.subjectMatter.create', $data);
+
+    }
+
+    public function show($id){
+        dd($id);
     }
 
     public function store(Request $request){
