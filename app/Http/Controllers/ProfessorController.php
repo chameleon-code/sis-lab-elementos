@@ -57,7 +57,7 @@ class ProfessorController extends Controller
                 'password' => bcrypt($request->password)
             ]);
             Professor::create([
-                'user_id' => 13
+                'user_id' => $newProfessor['id']
             ]);
             Mail::to($request->email)->send(new MailController($data));
             return redirect('/admin/professors/create');
