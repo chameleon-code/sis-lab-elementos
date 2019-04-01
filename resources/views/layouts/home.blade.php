@@ -28,8 +28,9 @@
   <!-- Navigation -->
   <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Start Bootstrap</a>
-      <a class="btn btn-primary" href="#">Sign In</a>
+      <a class="navbar-brand" href="#">Lab-Sis v1.0</a>
+      <a class="btn btn-primary" href=" {{ url('/register') }} ">Register</a>
+      <a class="btn btn-primary" href=" {{ url('/login') }} ">Sign In</a>
     </div>
   </nav>
 
@@ -39,7 +40,7 @@
     <div class="container">
       <div class="row">
         <div class="col-xl-9 mx-auto">
-          <h1 class="mb-5">Build a landing page for your business or project and generate more leads!</h1>
+          <h1 class="mb-5">Sistema de Administración de Horarios de Laboratorio</h1>
         </div>
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
           <form>
