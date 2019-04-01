@@ -18,19 +18,12 @@ use Symfony\Component\Routing\Router;
 Route::get('/', function () {
     return view('layouts.home');
 });
-Route::get('admin', function () {
-    return view('layouts.logged');
-});
 Route::get('error', function () {
     return view('errors.404');
 });
 Route::get('register', function () {
     return view('layouts.register');
 });
-Route::get('login', function () {
-    return view('layouts.login');
-});
-
 
 //roles
 Route::get('admin', function () {
