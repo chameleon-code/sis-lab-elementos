@@ -97,7 +97,7 @@
                                     Registrar
                                 </button>
 
-                                <a class="btn btn-danger btn-user btn-block" href="#">Cancelar</a>
+                                <a class="btn btn-danger btn-user btn-block" href="{{ url('/admin/auxiliars') }}">Cancelar</a>
                     </form>
 
                 </div>
