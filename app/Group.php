@@ -5,20 +5,20 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 
-class SubjectMatter extends Model
+class Group extends Model
 {
-    
-    protected $fillable = ['managements_id','name'];
+    protected $fillable = ['name', 'subject_matters_id'];
 
-    protected $hidden = ['created_at','update_at'];
+    protected $hidden = ['created_at', 'updated_at'];
 
     protected $rules = [
         'name' => 'required|max:255|min:5',
-        'managements_id' => 'required|max:255'
+        'subject_matters_id' => 'required|max:255'
     ];
 
     public $errors;
-    public function validate($date){
+    public function validate($date)
+    {
         $v = Validator::make($date, $this->rules);
         if($v->fails()){
             $this->errors = $v->errors();
@@ -27,10 +27,13 @@ class SubjectMatter extends Model
         return true;
     }
 
-    public static function getAllSubjectMatters(){
+    public static function getAllGroups()
+    {
         return self::all();
     }
-    public function groups(){
-        return $this->hasMany('App\Group');
+    public function subjectMatter()
+    {
+        return $this->belongsTo('App\SubjectMatter', 'subject_matters_id');
     }
+    
 }
