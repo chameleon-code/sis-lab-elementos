@@ -1,12 +1,16 @@
 @extends('components.sections.adminSection')
 
 @section('userContent')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Subject-Mattter Create</div>
-                    <div class="panel-body">
+<div class="row justify-content-center">
+        <div class="col-xl-6 col-lg-10 col-md-9">
+          <div class="card o-hidden border-0 my-5">
+            <div class="card-body p-0">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="p-5">
+                    <div class="text-center">
+                      <h1 class="h4 text-gray-900 mb-4">Editar Materia</h1>
+                    </div>
                         @if (count($errors)>0)
                             <div class="alert alert-danger">
                                 <b>Ha ocurrido un error!</b>
@@ -45,10 +49,11 @@
                                     </div>
                                 </div>
                             </form>
+                        </div>
                     </div>
+                  </div>
+                </div>
             </div>
         </div>
     </div>
-    
-</div>
 @endsection

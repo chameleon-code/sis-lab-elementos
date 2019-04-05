@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
 
         <meta charset="utf-8">
@@ -48,7 +47,7 @@
                                         </div>
                                         <form class="user"  role="form" method="POST" action="{{ url('/login') }}">
                                                 {{ csrf_field() }}
-                                            <div class="form-group">
+                                            <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                                                 <input
                                                     type="email"
                                                     class="form-control form-control-user"
@@ -64,7 +63,7 @@
                                                             </span>
                                                         @endif
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
                                                 <input
                                                     type="password"
                                                     class="form-control form-control-user"

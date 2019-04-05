@@ -26,7 +26,7 @@
                                                 {{ csrf_field() }}
 
                                                 <div class="form-group row">
-                                                            <div class="{{ $errors->has('names') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
+                                                            <div class="{{ $errors->has('names') ? ' has-error' : '' }} col-sm-12 mb-3 mb-sm-0">
                                                                 <input
                                                                     id="names"
                                                                     type="text"
@@ -36,16 +36,15 @@
                                                                     placeholder="Nombres"
                                                                     required="required"
                                                                     autofocus="autofocus">
-
                                                                     @if ($errors->has('names'))
                                                                     <span class="help-block">
                                                                         <strong>{{ $errors->first('names') }}</strong>
                                                                     </span>
                                                                     @endif
                                                             </div>
-
-                                                            <div
-                                                                class="{{ $errors->has('first_name') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
+                                                </div>
+                                                <div class="form-group row">     
+                                                            <div class="{{ $errors->has('first_name') ? ' has-error' : '' }} col-sm-6">
 
                                                                 <input
                                                                     id="first_name"
@@ -64,8 +63,7 @@
                                                                     @endif
                                                             </div>
 
-                                                            <div
-                                                                class="group{{ $errors->has('second_name') ? ' has-error' : '' }} col-sm-6">
+                                                            <div class="{{ $errors->has('second_name') ? ' has-error' : '' }} col-sm-6">
 
                                                                 <input
                                                                     id="second_name"
@@ -84,24 +82,41 @@
                                                                     @endif
                                                             </div>
                                                 </div>
-                                                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-
-                                                        <input
-                                                            id="email"
-                                                            type="email"
-                                                            class="form-control form-control-user"
-                                                            name="email"
-                                                            value="{{ old('email') }}"
-                                                            placeholder="Dirección Email"
-                                                            required="required">
-
-                                                            @if ($errors->has('email'))
-                                                            <span class="help-block">
-                                                                <strong>{{ $errors->first('email') }}</strong>
-                                                            </span>
-                                                            @endif
-                                                    </div>
-                                                    <div class="form-group row">
+                                                <div class="form-group row">
+                                                        <div class="{{ $errors->has('sis') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
+                                                            <input
+                                                                id="sis"
+                                                                type="text"
+                                                                class="form-control form-control-user"
+                                                                name="sis"
+                                                                value="{{ old('sis') }}"
+                                                                placeholder="Codigo SIS"
+                                                                required="required"
+                                                                autofocus="autofocus">
+                                                                @if ($errors->has('sis'))
+                                                                <span class="help-block">
+                                                                    <strong>{{ $errors->first('sis') }}</strong>
+                                                                </span>
+                                                                @endif
+                                                        </div>
+                                                        <div class="{{ $errors->has('email') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
+                                                                <input
+                                                                id="email"
+                                                                type="email"
+                                                                class="form-control form-control-user"
+                                                                name="email"
+                                                                value="{{ old('email') }}"
+                                                                placeholder="Dirección de Correo"
+                                                                required="required">
+    
+                                                                @if ($errors->has('email'))
+                                                                <span class="help-block">
+                                                                    <strong>{{ $errors->first('email') }}</strong>
+                                                                </span>
+                                                                @endif
+                                                        </div>
+                                                </div>
+                                                <div class="form-group row">
                                                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
                                                                 <input
                                                                     id="password"
@@ -126,10 +141,10 @@
                                                                     placeholder="Repetir Contraseña"
                                                                     required="required">
                                                             </div>
-                                                    </div>
-                                                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary btn-user btn-block">
                                                         Registrar
-                                                    </button>
+                                                </button>
                                             </form>
                                             <hr>
                                             <div class="text-center">
