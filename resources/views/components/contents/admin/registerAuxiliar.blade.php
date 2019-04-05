@@ -93,7 +93,7 @@
                         </div>
 <hr>
 <hr>
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                <button type="submit" class="btn btn-mary btn-user btn-block">
                                     Registrar
                                 </button>
 

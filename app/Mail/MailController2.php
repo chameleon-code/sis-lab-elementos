@@ -8,7 +8,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use phpDocumentor\Reflection\Types\This;
 
-class MailController extends Mailable
+class MailController2 extends Mailable
 {
     use Queueable, SerializesModels;
     public $data;
@@ -29,7 +29,7 @@ class MailController extends Mailable
      */
     public function build()
     {
-        return $this->from('chameleon.code.soft@gmail.com')->subject('Registro Docente')->view('mails.templateCreateProfessor')
+        return $this->from('chameleon.code.soft@gmail.com')->subject('Registro Auxiliar')->view('mails.templateCreateAuxiliar')
         ->with('data',$this->data);
     }
 }
