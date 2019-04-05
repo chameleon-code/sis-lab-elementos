@@ -18,7 +18,7 @@
                         <h1 class="h4 text-gray-900 mb-4">Registro de Auxiliar</h1>
                     </div>
 
-                    <form class="user text-center" role="form" method="POST" action="{{ url('/admin/auxiliar/store') }}">
+                    <form class="user text-center" role="form" method="POST" action="{{ url('/admin/auxiliars/store') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group row">

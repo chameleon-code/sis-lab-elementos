@@ -50,7 +50,7 @@ class AuxiliarController extends Controller
             Mail::to($request->email)->send(new MailController2($data));
             return redirect('/admin/auxiliars');
         } else {
-            return redirect('admin/auxiliar/register')->withInput()->withErrors($auxiliar->errors);
+            return redirect('admin/auxiliars/register')->withInput()->withErrors($auxiliar->errors);
         }
     }
 
@@ -63,5 +63,33 @@ class AuxiliarController extends Controller
         $user->delete();
         
         return redirect('/admin/auxiliars');
+    }
+
+    public function edit($id){
+        
+        $auxiliar = Auxiliar::findOrFail($id);
+        $user_id=$auxiliar->user_id;
+        $user = User::findOrFail($user_id);
+        
+        $data=['auxiliar' => $auxiliar,
+            'user' => $user
+        ];
+        
+        return view('components.contents.auxiliar.edit')->withTitle('Editar Auxiliar')->with($data);
+    }
+
+    public function update(Request $request, $id){
+        $subjectMatter = SubjectMatter::find($id);
+        $input = $request->all();
+
+        if($subjectMatter->validate($input)){
+            $subjectMatter->name = $request->name;
+            $subjectMatter->subject_matters_id = $request->subject_matters_id;
+            $subjectMatter->save();
+
+            Session::flash('status_message', 'Subject-Matter Editado!');
+            return redirect('/admin/subjectmatters');
+        }
+        return black()->withInput($input)->withErrors($subjectMatter->errors);
     }
 }

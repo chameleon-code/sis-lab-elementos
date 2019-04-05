@@ -41,7 +41,7 @@
                                                           <a href="#" class="btn btn-info btn-circle"><i title="Ver detalles" class="fas fa-info-circle"></i></a>
                                                       </td>
                                                       <td style="width: 40px;" class="text-center">
-                                                          <a href="#" class="btn btn-warning btn-circle"><i title="Modificar" class="fas fa-exclamation-triangle"></i></a>
+                                                          <a href="/admin/auxiliars/{{$item->id}}/edit" class="btn btn-warning btn-circle"><i title="Modificar" class="fas fa-exclamation-triangle"></i></a>
                                                       </td>
                                                       <td style="width: 40px;" class="text-center">
                                                           <form action="{{route('auxiliar.destroy',[$item->id])}}" method="POST">
