@@ -157,10 +157,67 @@
                                     </div>
                               </div>
                         </div>
-                  </div>
+
+                            <div class="group{{ $errors->has('second_name') ? ' has-error' : '' }} col-sm-6">
+
+                                <input id="second_name" type="text" class="form-control form-control-user"
+                                       name="second_name" value="{{ old('second_name') }}"
+                                       placeholder="Apellido Materno" required autofocus>
+
+                                @if ($errors->has('second_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('second_name') }}</strong>
+                                    </span>
+                                @endif
+                        </div>
+
+                    </div>
+
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+
+                                <input id="email" type="email" class="form-control form-control-user" name="email" value="{{ old('email') }}" placeholder="Dirección Email" required>
+
+                                @if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                        </div>
+
+                        <div class="form-group row">
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
+
+                                <input id="password" type="password" class="form-control form-control-user" name="password" placeholder="Contraseña" required>
+
+                                @if ($errors->has('password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                        </div>
+
+                        <div class="col-sm-6">
+                                <input id="password-confirm" type="password" class="form-control form-control-user" name="password_confirmation" placeholder="Repetir Contraseña" required>
+                            </div>
+                        </div>
+
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    Registrar
+                                </button>
+                    </form>
+
+                    <hr>
+              <div class="text-center">
+                  <a class="small" href="#">Olvidaste tu Contraseña?</a>
               </div>
-                                       
-        </body>
-       
-    
-                            
+              <div class="text-center">
+                <a class="small" href="{{ url('/login') }}">Ya tienes una Cuenta? Ingresa!</a>
+              </div>
+
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>

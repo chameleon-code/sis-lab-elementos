@@ -1,6 +1,9 @@
 function generatePassword(){
     var text=document.getElementById("password");
-    text.value=base64(45);
+    var text2=document.getElementById("password-confirm");
+    var t = base64(45);
+    text.value=t;
+    text2.value=t;
 }
 function base64(length) {
     var text = "";
