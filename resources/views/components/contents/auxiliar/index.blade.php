@@ -38,10 +38,10 @@
                                                       <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->email }}</font></font></td>
                                                       
                                                       <td style="width: 40px;" class="text-center">
-                                                          <a href="#" class="btn btn-info btn-circle"><i title="Ver detalles" class="fas fa-info-circle"></i></a>
+                                                          <a href="#" class="btn btn-info btn-circle"><i title="Ver detalles" class="fas fa-eye"></i></a>
                                                       </td>
                                                       <td style="width: 40px;" class="text-center">
-                                                          <a href="#" class="btn btn-warning btn-circle"><i title="Modificar" class="fas fa-exclamation-triangle"></i></a>
+                                                          <a href="#" class="btn btn-warning btn-circle"><i title="Modificar" class="fas fa-edit"></i></a>
                                                       </td>
                                                       <td style="width: 40px;" class="text-center">
                                                           <form action="{{route('auxiliar.destroy',[$item->id])}}" method="POST">
