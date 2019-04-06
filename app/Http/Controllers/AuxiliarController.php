@@ -8,6 +8,7 @@ use App\Auxiliar;
 use App\Role;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MailController2;
+use Illuminate\Support\Facades\Session;
 
 class AuxiliarController extends Controller
 {
@@ -19,8 +20,8 @@ class AuxiliarController extends Controller
         return view('components.contents.auxiliar.index', $data);
     }
     
-    public function register(){
-        return view('components.contents.admin.registerAuxiliar');
+    public function create(){
+        return view('components.contents.auxiliar.registerAuxiliar');
     }
 
     public function store(Request $request){
@@ -79,17 +80,20 @@ class AuxiliarController extends Controller
     }
 
     public function update(Request $request, $id){
-        $subjectMatter = SubjectMatter::find($id);
+        $user = User::find($id);
         $input = $request->all();
 
-        if($subjectMatter->validate($input)){
-            $subjectMatter->name = $request->name;
-            $subjectMatter->subject_matters_id = $request->subject_matters_id;
-            $subjectMatter->save();
+        if($user->validate($input)){
+            $user->names = $request->names;
+            $user->first_name = $request->first_name;
+            $user->second_name = $request->second_name;
+            $user->email = $request->email;
+            $user->password = $request->password;
+            $user->save();
 
-            Session::flash('status_message', 'Subject-Matter Editado!');
-            return redirect('/admin/subjectmatters');
+            Session::flash('status_message', 'Auxiliar Editado!');
+            return redirect('/admin/auxiliars');
         }
-        return black()->withInput($input)->withErrors($subjectMatter->errors);
+        return black()->withInput($input)->withErrors($user->errors);
     }
 }

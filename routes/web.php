@@ -70,8 +70,8 @@ Route::get('/home', 'HomeController@index');
 
 //registro de auxiliares
 Route::get('/admin/auxiliars','AuxiliarController@index');
-Route::get('/admin/auxiliars/register', 'AuxiliarController@register');
+Route::get('/admin/auxiliars/create', 'AuxiliarController@create');
 Route::post('/admin/auxiliars/store','AuxiliarController@store');
 Route::delete('/admin/auxiliars/{id}','AuxiliarController@destroy')->name('auxiliar.destroy');
 Route::get('/admin/auxiliars/{id}/edit','AuxiliarController@edit');
-Route::post('/admin/auxiliars/{id}/edit','AuxiliarController@update')->name('auxiliar.edit');
+Route::post('/admin/auxiliars/{id}/update','AuxiliarController@update')->name('auxiliar.update');
