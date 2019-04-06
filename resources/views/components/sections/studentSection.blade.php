@@ -1,6 +1,4 @@
 @extends('layouts.logged')
-
-
 @section('content')
   <!-- Divider -->
   <hr class="sidebar-divider my-0">
@@ -96,11 +94,4 @@
 
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">
-
-
 @endsection
-{{--
-@section('userContent')
-
-@endsection
---}}

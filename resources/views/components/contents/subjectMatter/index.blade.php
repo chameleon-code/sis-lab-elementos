@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <div class="panel-heading m-0 font-weight-bold text-primary">{{$title or 'Subject-Matters'}}</div>
+            <div class="panel-heading m-0 font-weight-bold text-primary">{{$title or 'users'}}</div>
             
             <div class="card-body">
                 @if (Session::has('status_message'))
@@ -31,35 +31,9 @@
                                         {{-- <tfoot>
                                           <tr><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nombre</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fecha de Creación</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fecha de Actualización</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ver</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Editar</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Eliminar</font></font></th></tr>
                                         </tfoot> --}}
-                                        <tbody> 
-                                            @foreach ($subjectMatters as $item)
-                                                <tr role="row" class="odd">
-                                                    <td class=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->name}}</font></font></td>
-                                                    <td class="sorting_1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->created_at}}</font></font></td>
-                                                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->updated_at}}</font></font></td>
-                                                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                                                        <a href="/admin/subjectmatter/{{$item->id}}" class="btn btn-info btn-user btn-block">Ver</a>
-                                                    </font></font></td>
-                                                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                                                        <a href="/admin/subjectmatter/{{$item->id}}/edit" class="btn btn-warning btn-user btn-block">Edit</a>
-                                                    </font></font></td>
-                                                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                                                        <form class="pull-right" action="{{route('subjectmatters.destroy',[$item->id])}}" method="POST">
-                                                            {{csrf_field()}}
-                                                            {{method_field('DELETE')}}
-                                                            <button class="btn btn-danger btn-user btn-block" type="submit">Borrar</button>
-                                                        </form>
-                                                    </font></font></td>
-                                                </tr>
-                                                <div class="col-lg-6 col-xs-6">
-                                                        <div class="pull-right">
-                                                            
-                                                            
-                                                            
-                                                        </div>
-                                                    </div>
-                                          @endforeach
-                                            
+                                        <tbody>
+
+
                                         </tbody>
                                 </table>
                         </div>
