@@ -18,19 +18,12 @@ use Symfony\Component\Routing\Router;
 Route::get('/', function () {
     return view('layouts.home');
 });
-Route::get('admin', function () {
-    return view('layouts.logged');
-});
 Route::get('error', function () {
     return view('errors.404');
 });
 Route::get('register', function () {
     return view('layouts.register');
 });
-Route::get('login', function () {
-    return view('layouts.login');
-});
-
 
 //roles
 Route::get('admin', function () {
@@ -48,8 +41,15 @@ Route::get('auxiliar', function () {
     return view('components.sections.auxiliarSection');
 });
 
+//child roles
+Route::get('admin/lista', function () {
+    return view('components.contents.admin.adminContent');
+});
+
+
 Auth::routes();
-//Materias
+
+//registro de materias
 Route::get('/admin/subjectmatters','SubjectMatterController@index');
 
 Route::get('/admin/subjectmatter/create','SubjectMatterController@create');
@@ -68,3 +68,8 @@ Route::resource('/admin/groups', 'GroupController');
 
 Route::get('/home', 'HomeController@index');
 
+//registro de auxiliares
+Route::get('/admin/auxiliars','AuxiliarController@index');
+Route::get('/admin/auxiliar/register', 'AuxiliarController@register');
+Route::post('/admin/auxiliar/store','AuxiliarController@store');
+Route::delete('/admin/auxiliar/{id}','AuxiliarController@destroy')->name('auxiliar.destroy');
