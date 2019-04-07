@@ -40,8 +40,12 @@
                           {!! $errors -> first('password','<label style="color:crimson">:message</label>')!!} 
                   </div>
                   <hr>
+                  <div class="form-group">
                   <button type="submit" class="btn btn-primary btn-user btn-block col-md-12">Registrar</button>
+                  </div>
+                  <div class="form-group">
                   <button type="submit" class="btn btn-danger btn-user btn-block col-md-12">Cancelar</button>
+                  </div>
                 </form>
               </div>
             </div>

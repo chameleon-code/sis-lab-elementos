@@ -17,7 +17,7 @@ class ProfessorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        return view('components.sections.professorSection');
+        return view('components.sections.index');
     }
 
     /**
@@ -27,7 +27,7 @@ class ProfessorController extends Controller
      */
     public function create()
     {
-        return view('components.contents.admin.registerProfessor');
+        return view('components.contents.professor.registerProfessor');
     }
 
     /**
