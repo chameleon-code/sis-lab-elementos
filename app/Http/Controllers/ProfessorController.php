@@ -49,7 +49,7 @@ class ProfessorController extends Controller
                 'password' => $request->password
             );
             $newProfessor = User::create( [
-                'role_id'=> Role::STUDENT,
+                'role_id'=> Role::PROFESSOR,
                 'names' => $request->names,
                 'first_name'=> $request->first_name,
                 'second_name'=> $request->second_name,
