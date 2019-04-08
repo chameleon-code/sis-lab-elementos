@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
-use App\User;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\Routing\Router;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,10 +34,20 @@ Route::get('student', function () {
 Route::get('professor', function () {
     return view('components.sections.professorSection');
 });
-
 Route::get('/admin/professors/create', ['uses'=> 'ProfessorController@create']);
 Route::post('/admin/professors/create', ['uses'=> 'ProfessorController@store']);
 
+//Estudiante
+Route::get('student', ['uses' => 'StudentController@index']);
+Route::get('/admin/student/create', ['uses' => 'StudentController@create']);
+Route::post('/admin/student/create', ['uses' => 'StudentController@store']);
+
+Route::get('student/create', 'StudentController@create');
+Route::post('student/register', 'StudentController@store')->name('student.register');
+Route::get('student/{id}', 'StudentController@show');
+Route::get('student/{id}/edit', 'StudentController@edit');
+Route::post('student/{id}/edit', 'StudentController@update')->name('student.edit');
+Route::delete('student/{id}', 'StudentController@destroy')->name('student.destroy');
 
 Route::get('auxiliar', function () {
     return view('components.sections.auxiliarSection');

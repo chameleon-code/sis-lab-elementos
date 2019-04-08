@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\SubjectMatter;
 use App\Management;
-use Symfony\Component\Console\Input\Input;
+use App\SubjectMatter;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -18,6 +17,11 @@ class SubjectMatterController extends Controller
         $data=['subjectMatters' => $subjectMatters,
                 'title' => 'Subject-Matters Title'];
         return view('components.contents.subjectMatter.index', $data);
+    }
+
+    public function show()
+    {
+
     }
 
     public function create(){

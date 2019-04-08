@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <div class="panel-heading m-0 font-weight-bold text-primary">{{$title or 'Subject-Matters'}}</div>
+            <div class="panel-heading m-0 font-weight-bold text-primary">{{$title or 'users'}}</div>
             
             <div class="card-body">
                 @if (Session::has('status_message'))
@@ -50,7 +50,6 @@
                                                     </font></font></td>
                                                 </tr>
                                           @endforeach
-                                            
                                         </tbody>
                                 </table>
                         </div>
