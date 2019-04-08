@@ -36,4 +36,10 @@ class SubjectMatter extends Model
     public function management(){
         return $this->belongsTo('App\Management','managements_id');
     }
+    public function professors(){
+        return $this->belongsToMany('App\Professor', 'professor_subject_matter', 'subject_matter_id', 'professor_id');
+    }
+    public static function getProfessors($id){
+        return self::professors()->where('professor_id', $id)->get();
+    }
 }

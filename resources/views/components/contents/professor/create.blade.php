@@ -35,13 +35,24 @@
                   <div class="form-group">
                       <button type="button" class="btn btn-warning btn-user btn-block col-md-12" onclick="generatePassword();">Generar Contraseña</button>
                   </div>  
+                  <div class="form_group">
+                    <select name="subject_matter_id" id="subjects">
+                      @foreach ($subjectMatters as $item)
+                          <option value="{{ $item->id }}">{{ $item->name }}</option>
+                      @endforeach
+                    </select>
+                  </div>                 
                   <div class="form-group">
                     <input type="text" id="password" onCopy="return false" readonly class="form-control col-md-12 form-control-user"  placeholder="Contraseña" name="password" >
                           {!! $errors -> first('password','<label style="color:crimson">:message</label>')!!} 
                   </div>
                   <hr>
+                  <div class="form-group">
                   <button type="submit" class="btn btn-primary btn-user btn-block col-md-12">Registrar</button>
+                  </div>
+                  <div class="form-group">
                   <button type="submit" class="btn btn-danger btn-user btn-block col-md-12">Cancelar</button>
+                  </div>
                 </form>
               </div>
             </div>

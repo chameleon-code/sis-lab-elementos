@@ -8,6 +8,7 @@ use App\Role;
 use App\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MailController;
+use App\SubjectMatter;
 
 class ProfessorController extends Controller
 {
@@ -17,7 +18,10 @@ class ProfessorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        return view('components.sections.professorSection');
+        $professors = Professor::getAllProfessors();
+        $data = ['auxiliars' => $professors,
+                'title' => 'Professors Title'];
+        return view('components.contents.professor.index',$data);
     }
 
     /**
@@ -27,7 +31,9 @@ class ProfessorController extends Controller
      */
     public function create()
     {
-        return view('components.contents.admin.registerProfessor');
+        $subjectMatters = SubjectMatter::getAllSubjectMatters();
+        $data=['subjectMatters'=>$subjectMatters];
+        return view('components.contents.admin.create', $data);
     }
 
     /**
@@ -38,6 +44,7 @@ class ProfessorController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $input =$request->all();
         $professor = new Professor();
         if($professor->validate($input)){
@@ -49,16 +56,17 @@ class ProfessorController extends Controller
                 'password' => $request->password
             );
             $newProfessor = User::create( [
-                'role_id'=> Role::STUDENT,
+                'role_id'=> Role::PROFESSOR,
                 'names' => $request->names,
                 'first_name'=> $request->first_name,
                 'second_name'=> $request->second_name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password)
             ]);
-            Professor::create([
-                'user_id' => $newProfessor['id']
-            ]);
+            $professor->user_id = $newProfessor->id;
+            $professor->save();
+            $subject = SubjectMatter::findOrFail($request->subject_matter_id);
+            $subject->professors()->attach($professor->id);
             Mail::to($request->email)->send(new MailController($data));
             return redirect('/admin/professors/create');
         }else{
@@ -85,7 +93,13 @@ class ProfessorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $professor = Professor::findOrFail($id);
+        $user_id=$professor->user_id;
+        $user = User::findOrFail($user_id);   
+        $data=['professor' => $professor,
+            'user' => $user
+        ];
+        return view('components.contents.auxiliar.edit')->withTitle('Editar Docente')->with($data);
     }
 
     /**
@@ -97,7 +111,7 @@ class ProfessorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
@@ -109,7 +123,10 @@ class ProfessorController extends Controller
     public function destroy($id)
     {
         $professor = Professor::findOrFail($id);
+        $user_id = $professor->user_id;
         $professor->delete();
-        return redirect('/admin/professors');
+        $user = User::findOrFail($user_id);
+        $user->delete();
+        return redirect('/admin/professors');   
     }
 }

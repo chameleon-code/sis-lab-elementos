@@ -32,7 +32,10 @@ Route::get('admin', function () {
 Route::get('student', function () {
     return view('components.contents.student.studentContent');
 });
-Route::get('professor', ['uses'=> 'ProfessorController@index']);
+Route::get('professor', function () {
+    return view('components.sections.professorSection');
+});
+
 Route::get('/admin/professors/create', ['uses'=> 'ProfessorController@create']);
 Route::post('/admin/professors/create', ['uses'=> 'ProfessorController@store']);
 
@@ -69,6 +72,10 @@ Route::get('/home', 'HomeController@index');
 
 //registro de auxiliares
 Route::get('/admin/auxiliars','AuxiliarController@index');
-Route::get('/admin/auxiliar/register', 'AuxiliarController@register');
-Route::post('/admin/auxiliar/store','AuxiliarController@store');
-Route::delete('/admin/auxiliar/{id}','AuxiliarController@destroy')->name('auxiliar.destroy');
+Route::get('/admin/auxiliars/create', 'AuxiliarController@create');
+Route::post('/admin/auxiliars/store','AuxiliarController@store');
+Route::delete('/admin/auxiliars/{id}','AuxiliarController@destroy')->name('auxiliar.destroy');
+Route::get('/admin/auxiliars/{id}/edit','AuxiliarController@edit');
+Route::post('/admin/auxiliars/{id}/update','AuxiliarController@update')->name('auxiliar.update');
+Route::get('/admin/groups/getCount/{id}', 'GroupController@getCountSubjects');
+Route::get('/admin/groups/getProfessors/{id}', 'GroupController@getProfessors');

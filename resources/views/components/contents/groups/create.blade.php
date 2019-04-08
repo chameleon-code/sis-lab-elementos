@@ -20,24 +20,32 @@
                         
                             <form class="form-horizontal" action="{{Route('groups.store')}}" method="post">
                                 {{ csrf_field() }}
-
-                                <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
-                                    <label for='name' class="col-md-4 control-label">Nombre</label>
-                                    <div class="col-md-6">
-                                        <input type="text" name="name" id="group-name" class="form-control" value="{{old('name')}}">
-                                    </div>
-                                </div>
-
                                 <div class="form-group" {{ $errors->has('group') ? 'has-error' : ''}}>
-                                    <label for="management" class="col-md-4 control-label">Materias</label>
+                                    <label for="subject_matters_id" class="col-md-4 control-label">Materias</label>
                                     <div class="col-md-6">
-                                            <select name="subject_matters_id">
+                                            <select name="subject_matters_id" id="subjects">
+                                                <option value="">--Seleccione una materia--</option>
                                                 @foreach ($subjectMatters as $subjectMatter)
                                                     <option class="form-control" value="{{$subjectMatter->id}}">{{$subjectMatter->name}}</option>
                                                 @endforeach
                                            </select>
                                     </div>
                                 </div>
+                                <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
+                                    <label for='name' class="col-md-4 control-label">Nombre</label>
+                                    <div class="col-md-6" id="contains">
+                                        <input type="text" name="name" id="group-name" class="form-control" value="Seleccione una materia" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group" {{ $errors->has('group') ? 'has-error' : ''}}>
+                                        <label for="professor_id" class="col-md-4 control-label">Docentes: </label>
+                                        <div class="col-md-6">
+                                                <select name="professor_id" id="professor_id">
+                                                    <option value="">--Seleccione una materia--</option>
+                                                </select>
+                                        </div>
+                                    </div>
+                                
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-2">
                                         <button type="submit" class="btn btn-primary btn-user btn-block">Enviar</button>
@@ -51,3 +59,6 @@
     
 </div>
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/dropdown.js') }}"></script>
+@endpush
