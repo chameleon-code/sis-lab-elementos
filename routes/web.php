@@ -28,10 +28,12 @@ Route::get('register', function () {
 Route::get('admin', function () {
     return view('components.sections.adminSection');
 });
-//Route::get('student', function () {
-//    return view('components.contents.student.studentContent');
-//});
-Route::get('professor', ['uses'=> 'ProfessorController@index']);
+Route::get('student', function () {
+    return view('components.contents.student.studentContent');
+});
+Route::get('professor', function () {
+    return view('components.sections.professorSection');
+});
 Route::get('/admin/professors/create', ['uses'=> 'ProfessorController@create']);
 Route::post('/admin/professors/create', ['uses'=> 'ProfessorController@store']);
 
@@ -63,11 +65,10 @@ Auth::routes();
 Route::get('/admin/subjectmatters','SubjectMatterController@index');
 
 Route::get('/admin/subjectmatter/create','SubjectMatterController@create');
-Route::post('/admin/subjectmatter/create','SubjectMatterController@store')->name('subjectmatters.create');
+Route::post('/admin/subjectmatter/create','SubjectMatterController@store')->name('subjectmatters.store');
 
-Route::get('/admin/subjectmatter/{id}','SubjectMatterController@show');
 Route::get('/admin/subjectmatter/{id}/edit','SubjectMatterController@edit');
-Route::post('/admin/subjectmatter/{id}/edit','SubjectMatterController@update')->name('subjectmatters.edit');
+Route::post('/admin/subjectmatter/{id}/edit','SubjectMatterController@update')->name('subjectmatters.update');
 Route::delete('/admin/subjectmatter/{id}','SubjectMatterController@destroy')->name('subjectmatters.destroy');
 
 //Gestiones
@@ -85,3 +86,5 @@ Route::post('/admin/auxiliars/store','AuxiliarController@store');
 Route::delete('/admin/auxiliars/{id}','AuxiliarController@destroy')->name('auxiliar.destroy');
 Route::get('/admin/auxiliars/{id}/edit','AuxiliarController@edit');
 Route::post('/admin/auxiliars/{id}/update','AuxiliarController@update')->name('auxiliar.update');
+Route::get('/admin/groups/getCount/{id}', 'GroupController@getCountSubjects');
+Route::get('/admin/groups/getProfessors/{id}', 'GroupController@getProfessors');

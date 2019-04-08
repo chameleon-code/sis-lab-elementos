@@ -21,7 +21,7 @@
                         </ul>
                     </div>
                     @endif
-                    <form class="user" action="{{Route('subjectmatters.create')}}" method="post">
+                    <form class="user" action="{{Route('subjectmatters.store')}}" method="post">
                         {{ csrf_field() }}
 
                         <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>

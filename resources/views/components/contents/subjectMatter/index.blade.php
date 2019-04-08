@@ -18,10 +18,10 @@
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 99px;">
                                             <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nombre</font></font></th>
 
-                                            <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 137px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fecha de creación</font></font></th>
+                                            <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 137px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Gestión</font></font></th>
 
-                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fecha Actualizacion</font></font></th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 39px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ver</font></font></th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fecha de creación</font></font></th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 39px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fecha Actualizacion</font></font></th>
 
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 88px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Editar</font></font></th>
                                             
@@ -31,24 +31,28 @@
                                         {{-- <tfoot>
                                           <tr><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nombre</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fecha de Creación</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fecha de Actualización</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ver</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Editar</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Eliminar</font></font></th></tr>
                                         </tfoot> --}}
-                                        <tbody>
-
-
+                                        <tbody> 
+                                            @foreach ($subjectMatters as $item)
+                                                <tr role="row" class="odd">
+                                                    <td class=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->name}}</font></font></td>
+                                                    <td class="sorting_1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->management->semester}}-{{$item->management->managements}}</font></font></td>
+                                                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->created_at}}</font></font></td>
+                                                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->updated_at}}</font></font></td>
+                                                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                        <a href="/admin/subjectmatter/{{$item->id}}/edit" class="btn btn-warning btn-user btn-block">Edit</a>
+                                                    </font></font></td>
+                                                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                        <form class="pull-right" action="{{route('subjectmatters.destroy',[$item->id])}}" method="POST">
+                                                            {{csrf_field()}}
+                                                            {{method_field('DELETE')}}
+                                                            <button class="btn btn-danger btn-user btn-block" type="submit">Borrar</button>
+                                                        </form>
+                                                    </font></font></td>
+                                                </tr>
+                                          @endforeach
                                         </tbody>
                                 </table>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-
-                    <div class="panel-body">
-                        
                     </div>
                 </div>
             </div>

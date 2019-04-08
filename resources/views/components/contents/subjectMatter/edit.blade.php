@@ -21,8 +21,8 @@
                                 </ul>
                             </div>
                         @endif
-                        
-                            <form class="form-horizontal" action="{{Route('subjectmatters.edit',[$subjectMatter->subject_matters_id])}}" method="post">
+                            
+                            <form class="form-horizontal" action="{{Route('subjectmatters.update',[$subjectMatter->id])}}" method="post">
                                 {{ csrf_field() }}
 
                                 <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
@@ -37,7 +37,11 @@
                                     <div class="col-md-6">
                                             <select name="managements_id">
                                                 @foreach ($managements as $management)
-                                                    {{-- <option class="form-control" value="{{$management->managements_id}}">{{$management->semester}}-{{$management->managements}}</option> --}}
+                                                    @if ($management->id == $management_id)
+                                                    <option class="form-control" value="{{$management->id}}" selected>{{$management->semester}}-{{$management->managements}}</option>
+                                                    @continue
+                                                    @endif
+                                                    <option class="form-control" value="{{$management->id}}">{{$management->semester}}-{{$management->managements}}</option>
                                                 @endforeach
                                                 {{-- {{old('management_id',$management->managements_id) ? "" : ''}} --}}
                                             </select>

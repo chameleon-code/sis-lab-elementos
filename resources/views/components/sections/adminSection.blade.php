@@ -27,10 +27,8 @@
     <div id="collapseProfessors" class="collapse" aria-labelledby="headingProfessors" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
-        <a class="collapse-item" href="buttons.html"><i class="fas fa-eye"></i>  Ver</a>
+        <a class="collapse-item" href="buttons.html"><i class="fas fa-list"></i>  Listar</a>
         <a class="collapse-item" href="cards.html"><i class="fas fa-plus-square"></i>  Crear</a>
-        <a class="collapse-item" href="cards.html"><i class="fas fa-edit"></i>  Editar</a>
-        <a class="collapse-item" href="cards.html"><i class="fas fa-trash-alt"></i>  Eliminar</a>
       </div>
     </div>
   </li>
@@ -44,10 +42,8 @@
     <div id="collapseAuxiliars" class="collapse" aria-labelledby="headingAuxiliars" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
-        <a class="collapse-item" href="buttons.html"><i class="fas fa-eye"></i>  Ver</a>
+        <a class="collapse-item" href="buttons.html"><i class="fas fa-list"></i>  Listar</a>
         <a class="collapse-item" href="cards.html"><i class="fas fa-plus-square"></i>  Crear</a>
-        <a class="collapse-item" href="cards.html"><i class="fas fa-edit"></i>  Editar</a>
-        <a class="collapse-item" href="cards.html"><i class="fas fa-trash-alt"></i>  Eliminar</a>
       </div>
     </div>
   </li>
@@ -60,10 +56,8 @@
     <div id="collapseStudents" class="collapse" aria-labelledby="headingStudents" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
-        <a class="collapse-item" href="buttons.html"><i class="fas fa-eye"></i>  Ver</a>
+        <a class="collapse-item" href="buttons.html"><i class="fas fa-list"></i>  Listar</a>
         <a class="collapse-item" href="cards.html"><i class="fas fa-plus-square"></i>  Crear</a>
-        <a class="collapse-item" href="cards.html"><i class="fas fa-edit"></i>  Editar</a>
-        <a class="collapse-item" href="cards.html"><i class="fas fa-trash-alt"></i>  Eliminar</a>
       </div>
     </div>
   </li>
