@@ -47,20 +47,20 @@
                                     </thead>
                                     <tbody>
 
-                                    @foreach ($students as $item)
+                                    @foreach ($students as $student)
 
                                         <tr role="row" class="odd">
                                             <td class=""><font style="vertical-align: inherit;"><font
-                                                            style="vertical-align: inherit;">{{ $item->first_name }}</font></font>
+                                                            style="vertical-align: inherit;">{{ $student->first_name }}</font></font>
                                             </td>
                                             <td class="sorting_1"><font style="vertical-align: inherit;"><font
-                                                            style="vertical-align: inherit;">{{ $item->second_name }}</font></font>
+                                                            style="vertical-align: inherit;">{{ $student->second_name }}</font></font>
                                             </td>
                                             <td><font style="vertical-align: inherit;"><font
-                                                            style="vertical-align: inherit;">{{ $item->names }}</font></font>
+                                                            style="vertical-align: inherit;">{{ $student->names }}</font></font>
                                             </td>
                                             <td><font style="vertical-align: inherit;"><font
-                                                            style="vertical-align: inherit;">{{ $item->email }}</font></font>
+                                                            style="vertical-align: inherit;">{{ $student->email }}</font></font>
                                             </td>
 
                                             <td style="width: 40px;" class="text-center">
@@ -72,7 +72,7 @@
                                                                                                   class="fas fa-edit"></i></a>
                                             </td>
                                             <td style="width: 40px;" class="text-center">
-                                                <form action="{{route('student.destroy',[$item->id])}}" method="POST">
+                                                <form action="{{route('student.destroy',[$student->id])}}" method="POST">
                                                     {{csrf_field()}}
                                                     {{method_field('DELETE')}}
                                                     <button class="btn btn-danger btn-circle" type="submit"><i

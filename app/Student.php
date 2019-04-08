@@ -13,7 +13,10 @@ class Student extends Model
 
     public static function getAllStudents()
     {
-        return Student::join('users', 'user_id', '=', 'users.id')->select('users.role_id', 'users.names', 'users.first_name', 'users.second_name', 'users.email', 'users.password', 'users.img_path', 'users.remember_token', 'users.created_at', 'users.updated_at', 'students.id')->get();
+        return Student::join('users', 'user_id', '=', 'users.id')
+            ->select('users.role_id', 'users.names', 'users.first_name', 'users.second_name', 'users.email', 'users.password', 'users.img_path', 'users.remember_token', 'users.created_at', 'users.updated_at', 'students.id')
+            -> where('users.role_id', '=', 4)->get();
+        //return self::where('role_id', 4)->get();
     }
 
     protected $rules = [

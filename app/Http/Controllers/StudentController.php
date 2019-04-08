@@ -13,7 +13,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::getAllStudents();
-
+        //dd($students);
         $data = ['students' => $students,
             'title' => 'Students Title'];
         return view('components.contents.student.index', $data);
