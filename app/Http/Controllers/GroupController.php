@@ -109,7 +109,7 @@ class GroupController extends Controller
             Session::flash('status_message', 'Grupo Editado!');
             return redirect('/admin/groups');
         }
-        return black()->withInput($input)->withErrors($group->errors);
+        return back()->withInput($input)->withErrors($group->errors);
     }
 
     /**

@@ -13,4 +13,7 @@ class Management extends Model
     public static function getAllManagements(){
         return self::all();
     }
+    public function subjectMatters(){
+        return $this->hasMany('App\SubjectMatter');
+    }
 }

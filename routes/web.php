@@ -56,11 +56,10 @@ Auth::routes();
 Route::get('/admin/subjectmatters','SubjectMatterController@index');
 
 Route::get('/admin/subjectmatter/create','SubjectMatterController@create');
-Route::post('/admin/subjectmatter/create','SubjectMatterController@store')->name('subjectmatters.create');
+Route::post('/admin/subjectmatter/create','SubjectMatterController@store')->name('subjectmatters.store');
 
-Route::get('/admin/subjectmatter/{id}','SubjectMatterController@show');
 Route::get('/admin/subjectmatter/{id}/edit','SubjectMatterController@edit');
-Route::post('/admin/subjectmatter/{id}/edit','SubjectMatterController@update')->name('subjectmatters.edit');
+Route::post('/admin/subjectmatter/{id}/edit','SubjectMatterController@update')->name('subjectmatters.update');
 Route::delete('/admin/subjectmatter/{id}','SubjectMatterController@destroy')->name('subjectmatters.destroy');
 
 //Gestiones

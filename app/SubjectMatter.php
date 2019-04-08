@@ -13,7 +13,7 @@ class SubjectMatter extends Model
     protected $hidden = ['created_at','update_at'];
 
     protected $rules = [
-        'name' => 'required|max:255|min:5',
+        'name' => 'required|max:255|min:1',
         'managements_id' => 'required|max:255'
     ];
 
@@ -32,6 +32,9 @@ class SubjectMatter extends Model
     }
     public function groups(){
         return $this->hasMany('App\Group');
+    }
+    public function management(){
+        return $this->belongsTo('App\Management','managements_id');
     }
     public function professors(){
         return $this->belongsToMany('App\Professor', 'professor_subject_matter', 'subject_matter_id', 'professor_id');
