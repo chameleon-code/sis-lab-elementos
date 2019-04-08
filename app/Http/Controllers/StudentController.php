@@ -19,9 +19,10 @@ class StudentController extends Controller
         return view('components.contents.student.index', $data);
     }
 
-    public function register()
+    public function create()
     {
-        return view('components.contents.admin.registerAuxiliar');
+        //return view('components.contents.admin.registerStudent'); //si usamos register dentro de admin, no se sigue standares
+        return view('components.contents.student.create');
     }
 
     public function store(Request $request)
@@ -46,13 +47,13 @@ class StudentController extends Controller
                 'email' => $request['email'],
                 'password' => bcrypt($request['password']),
             ]);
-            Auxiliar::create([
-                'user_id' => $newsTUDENT['id'],
+            Student::create([
+                'user_id' => $newStudent['id'],
             ]);
             Mail::to($request->email)->send(new MailController2($data));
-            return redirect('/admin/students');
+            return redirect('student'); // analizar si se debe redirigir con user/student
         } else {
-            return redirect('admin/student/create')->withInput()->withErrors($auxiliar->errors);
+            return redirect('student/create')->withInput()->withErrors($auxiliar->errors);
         }
     }
 
