@@ -18,7 +18,10 @@ class ProfessorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        return view('components.sections.professorSection');
+        $professors = Professor::getAllProfessors();
+        $data = ['auxiliars' => $professors,
+                'title' => 'Professors Title'];
+        return view('components.contents.professor.index',$data);
     }
 
     /**
@@ -30,7 +33,7 @@ class ProfessorController extends Controller
     {
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
         $data=['subjectMatters'=>$subjectMatters];
-        return view('components.contents.admin.registerProfessor', $data);
+        return view('components.contents.admin.create', $data);
     }
 
     /**
@@ -90,7 +93,13 @@ class ProfessorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $professor = Professor::findOrFail($id);
+        $user_id=$professor->user_id;
+        $user = User::findOrFail($user_id);   
+        $data=['professor' => $professor,
+            'user' => $user
+        ];
+        return view('components.contents.auxiliar.edit')->withTitle('Editar Docente')->with($data);
     }
 
     /**
@@ -102,7 +111,7 @@ class ProfessorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
@@ -114,7 +123,10 @@ class ProfessorController extends Controller
     public function destroy($id)
     {
         $professor = Professor::findOrFail($id);
+        $user_id = $professor->user_id;
         $professor->delete();
-        return redirect('/admin/professors');
+        $user = User::findOrFail($user_id);
+        $user->delete();
+        return redirect('/admin/professors');   
     }
 }

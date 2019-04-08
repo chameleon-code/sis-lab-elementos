@@ -28,7 +28,6 @@ class AuxiliarController extends Controller
         
         $input = $request->all();
         $auxiliar = new Auxiliar();
-        
         if($auxiliar->validate($input)){
             $data = array(
                 'names' => $request->names,

@@ -177,5 +177,10 @@ return [
         'time'                  => 'hora',
         'subject'               => 'asunto',
         'message'               => 'mensaje',
+        'names'                 => 'nombres',
+        'first_name'               => 'apellido paterno',
+        'second_name'               => 'apellido materno',
+        
+        
     ],
 ];

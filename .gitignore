@@ -5,4 +5,4 @@
 /.idea
 Homestead.json
 Homestead.yaml
-/config/mail.php
+/app/config/mail.php

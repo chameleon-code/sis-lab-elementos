@@ -28,4 +28,7 @@ class Professor extends Model
     public function subjectMatters(){
         return $this->belongsToMany('App\SubjectMatter', 'professor_subject_matter', 'professor_id', 'subject_matter_id');
     }
+    public static function getAllProfessors(){
+        return Professor::join('users','user_id','=','users.id')->select('users.role_id', 'users.names', 'users.first_name', 'users.second_name', 'users.email', 'users.password', 'users.img_path', 'users.remember_token', 'users.created_at', 'users.updated_at', 'auxiliars.id')->get();
+    }
 }
