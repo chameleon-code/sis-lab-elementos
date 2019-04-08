@@ -32,7 +32,10 @@ Route::get('admin', function () {
 Route::get('student', function () {
     return view('components.contents.student.studentContent');
 });
-Route::get('professor', ['uses'=> 'ProfessorController@index']);
+Route::get('professor', function () {
+    return view('components.sections.professorSection');
+});
+
 Route::get('/admin/professors/create', ['uses'=> 'ProfessorController@create']);
 Route::post('/admin/professors/create', ['uses'=> 'ProfessorController@store']);
 
