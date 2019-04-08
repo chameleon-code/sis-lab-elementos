@@ -21,28 +21,26 @@
                             <form class="form-horizontal" action="{{Route('groups.update',[$group->id])}}" method="post">
                                 <input type="hidden" name="_method" value="PUT">
                                 {{ csrf_field() }}
-
+                                <div class="form-group" {{ $errors->has('subjectMatter') ? 'has-error' : ''}}>
+                                        <label for="management" class="col-md-4 control-label">Materia</label>
+                                        <div class="col-md-6">
+                                                <select name="subject_matters_id" >
+                                                    @foreach ($subjectMatters as $subjectMatter)
+                                                        @if ($subjectMatter->id == $subject_matter_id)
+                                                        <option class="form-control" value="{{$subjectMatter->id}}" selected>{{ $subjectMatter->name }}</option> --}}
+                                                        @continue
+                                                        @endif
+                                                        <option class="form-control" value="{{$subjectMatter->id}}">{{ $subjectMatter->name }}</option> --}}
+                                                    @endforeach
+                                                    {{-- {{old('management_id',$management->managements_id) ? "" : ''}} --}}
+                                                </select>
+                                        </div>
+                                    </div>
                                 <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
                                     <label for='name' class="col-md-4 control-label">Nombre</label>
                                     <div class="col-md-6">
                                         <input type="text" name="name" id="group-name" class="form-control" value="{{old('name',$group->name)}}">
                                     </div>{{old('descripcion',$group->descripcion)}}
-                                </div>
-
-                                <div class="form-group" {{ $errors->has('subjectMatter') ? 'has-error' : ''}}>
-                                    <label for="management" class="col-md-4 control-label">Materia</label>
-                                    <div class="col-md-6">
-                                            <select name="subject_matters_id" >
-                                                @foreach ($subjectMatters as $subjectMatter)
-                                                    @if ($subjectMatter->id == $subject_matter_id)
-                                                    <option class="form-control" value="{{$subjectMatter->id}}" selected>{{ $subjectMatter->name }}</option> --}}
-                                                    @continue
-                                                    @endif
-                                                    <option class="form-control" value="{{$subjectMatter->id}}">{{ $subjectMatter->name }}</option> --}}
-                                                @endforeach
-                                                {{-- {{old('management_id',$management->managements_id) ? "" : ''}} --}}
-                                            </select>
-                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-2">

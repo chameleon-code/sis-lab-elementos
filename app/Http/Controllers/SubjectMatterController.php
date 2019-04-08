@@ -2,20 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\SubjectMatter;
 use App\Management;
-use Symfony\Component\Console\Input\Input;
+use App\SubjectMatter;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SubjectMatterController extends Controller
 {
     public function index(){
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
         
+        
         $data=['subjectMatters' => $subjectMatters,
                 'title' => 'Subject-Matters Title'];
         return view('components.contents.subjectMatter.index', $data);
+    }
+
+    public function show()
+    {
+
     }
 
     public function create(){
@@ -23,10 +29,6 @@ class SubjectMatterController extends Controller
         $data=['managements'=>$managements];
         return view('components.contents.subjectMatter.create', $data);
 
-    }
-
-    public function show($id){
-        dd($id);
     }
 
     public function store(Request $request){
@@ -46,9 +48,10 @@ class SubjectMatterController extends Controller
         $subjectMatter = SubjectMatter::findOrFail($id);
         $managements_id=$subjectMatter->managements_id;
         $management = Management::findOrFail($managements_id);
-        
+        $managements = Management::getAllManagements();
         $data=['subjectMatter' => $subjectMatter,
-            'managements' => $management
+            'managements' => $managements,
+            'management_id' => $management->id
         ];
         
         return view('components.contents.subjectMatter.edit')->withTitle('Editar la Materia')->with($data);
@@ -60,13 +63,13 @@ class SubjectMatterController extends Controller
 
         if($subjectMatter->validate($input)){
             $subjectMatter->name = $request->name;
-            $subjectMatter->subject_matters_id = $request->subject_matters_id;
+            $subjectMatter->managements_id=$request->managements_id;
             $subjectMatter->save();
 
             Session::flash('status_message', 'Subject-Matter Editado!');
             return redirect('/admin/subjectmatters');
         }
-        return black()->withInput($input)->withErrors($subjectMatter->errors);
+        return back()->withInput($input)->withErrors($subjectMatter->errors);
     }
 
     public function destroy($id){

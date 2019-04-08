@@ -1,7 +1,24 @@
-<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-<link href="css/sb-admin-2.min.css" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Registro</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
         <body class="bg-gradient-primary">
 
                 <div class="container">
@@ -158,66 +175,13 @@
                               </div>
                         </div>
 
-                            <div class="group{{ $errors->has('second_name') ? ' has-error' : '' }} col-sm-6">
+                         <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-                                <input id="second_name" type="text" class="form-control form-control-user"
-                                       name="second_name" value="{{ old('second_name') }}"
-                                       placeholder="Apellido Materno" required autofocus>
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-                                @if ($errors->has('second_name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('second_name') }}</strong>
-                                    </span>
-                                @endif
-                        </div>
-
-                    </div>
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-
-                                <input id="email" type="email" class="form-control form-control-user" name="email" value="{{ old('email') }}" placeholder="Dirección Email" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                        </div>
-
-                        <div class="form-group row">
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
-
-                                <input id="password" type="password" class="form-control form-control-user" name="password" placeholder="Contraseña" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                        </div>
-
-                        <div class="col-sm-6">
-                                <input id="password-confirm" type="password" class="form-control form-control-user" name="password_confirmation" placeholder="Repetir Contraseña" required>
-                            </div>
-                        </div>
-
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Registrar
-                                </button>
-                    </form>
-
-                    <hr>
-              <div class="text-center">
-                  <a class="small" href="#">Olvidaste tu Contraseña?</a>
-              </div>
-              <div class="text-center">
-                <a class="small" href="{{ url('/login') }}">Ya tienes una Cuenta? Ingresa!</a>
-              </div>
-
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
 </body>

@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
-use App\User;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\Routing\Router;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,10 +31,23 @@ Route::get('admin', function () {
 Route::get('student', function () {
     return view('components.contents.student.studentContent');
 });
-Route::get('professor', ['uses'=> 'ProfessorController@index']);
+Route::get('professor', function () {
+    return view('components.sections.professorSection');
+});
 Route::get('/admin/professors/create', ['uses'=> 'ProfessorController@create']);
 Route::post('/admin/professors/create', ['uses'=> 'ProfessorController@store']);
 
+//Estudiante
+Route::get('student', ['uses' => 'StudentController@index']);
+Route::get('/admin/student/create', ['uses' => 'StudentController@create']);
+Route::post('/admin/student/create', ['uses' => 'StudentController@store']);
+
+Route::get('student/create', 'StudentController@create');
+Route::post('student/register', 'StudentController@store')->name('student.register');
+Route::get('student/{id}', 'StudentController@show');
+Route::get('student/{id}/edit', 'StudentController@edit');
+Route::post('student/{id}/edit', 'StudentController@update')->name('student.edit');
+Route::delete('student/{id}', 'StudentController@destroy')->name('student.destroy');
 
 Route::get('auxiliar', function () {
     return view('components.sections.auxiliarSection');
@@ -53,11 +65,10 @@ Auth::routes();
 Route::get('/admin/subjectmatters','SubjectMatterController@index');
 
 Route::get('/admin/subjectmatter/create','SubjectMatterController@create');
-Route::post('/admin/subjectmatter/create','SubjectMatterController@store')->name('subjectmatters.create');
+Route::post('/admin/subjectmatter/create','SubjectMatterController@store')->name('subjectmatters.store');
 
-Route::get('/admin/subjectmatter/{id}','SubjectMatterController@show');
 Route::get('/admin/subjectmatter/{id}/edit','SubjectMatterController@edit');
-Route::post('/admin/subjectmatter/{id}/edit','SubjectMatterController@update')->name('subjectmatters.edit');
+Route::post('/admin/subjectmatter/{id}/edit','SubjectMatterController@update')->name('subjectmatters.update');
 Route::delete('/admin/subjectmatter/{id}','SubjectMatterController@destroy')->name('subjectmatters.destroy');
 
 //Gestiones
@@ -75,3 +86,5 @@ Route::post('/admin/auxiliars/store','AuxiliarController@store');
 Route::delete('/admin/auxiliars/{id}','AuxiliarController@destroy')->name('auxiliar.destroy');
 Route::get('/admin/auxiliars/{id}/edit','AuxiliarController@edit');
 Route::post('/admin/auxiliars/{id}/update','AuxiliarController@update')->name('auxiliar.update');
+Route::get('/admin/groups/getCount/{id}', 'GroupController@getCountSubjects');
+Route::get('/admin/groups/getProfessors/{id}', 'GroupController@getProfessors');
