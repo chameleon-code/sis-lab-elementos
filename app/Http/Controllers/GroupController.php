@@ -7,6 +7,9 @@ use App\Management;
 use App\SubjectMatter;
 use Illuminate\Support\Facades\Session;
 use App\Group;
+use App\ProfessorSubjectMatter;
+use App\User;
+use App\Professor;
 
 class GroupController extends Controller
 {
@@ -128,5 +131,25 @@ class GroupController extends Controller
 
         Session::flash('status_message',$status_message);
         return redirect('/admin/groups');
+        }
+        public function getCountSubjects(Request $request, $id){
+            if($request->ajax()){
+                $count = Group::where('subject_matters_id', $id)->count();
+                return response()->json($count);
+            }
+        }
+        public function getProfessors(Request $request, $id){
+            if($request->ajax()){
+                $professors = ProfessorSubjectMatter::getAllProfessors($id);
+                $users = array();
+                $i = 0;
+                foreach($professors as $key=>$value){
+                    $usr = Professor::where('id', $value->professor_id)->firstOrFail();
+                    $user = User::findOrFail($usr->user_id);
+                    $users[$i] = $user;
+                    $i++;
+                }
+                return response()->json($users);
+            }
         }
 }
