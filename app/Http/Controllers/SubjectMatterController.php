@@ -65,7 +65,7 @@ class SubjectMatterController extends Controller
             Session::flash('status_message', 'Subject-Matter Editado!');
             return redirect('/admin/subjectmatters');
         }
-        return black()->withInput($input)->withErrors($subjectMatter->errors);
+        return back()->withInput($input)->withErrors($subjectMatter->errors);
     }
 
     public function destroy($id){

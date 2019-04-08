@@ -13,7 +13,7 @@ class SubjectMatter extends Model
     protected $hidden = ['created_at','update_at'];
 
     protected $rules = [
-        'name' => 'required|max:255',
+        'name' => 'required|max:255|min:1',
         'managements_id' => 'required|max:255'
     ];
 
