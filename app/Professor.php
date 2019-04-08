@@ -25,4 +25,7 @@ class Professor extends Model
         }
         return true;
     }
+    public function subjectMatters(){
+        return $this->belongsToMany('App\SubjectMatter', 'professor_subject_matter', 'professor_id', 'subject_matter_id');
+    }
 }

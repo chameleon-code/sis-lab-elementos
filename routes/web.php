@@ -75,3 +75,5 @@ Route::post('/admin/auxiliars/store','AuxiliarController@store');
 Route::delete('/admin/auxiliars/{id}','AuxiliarController@destroy')->name('auxiliar.destroy');
 Route::get('/admin/auxiliars/{id}/edit','AuxiliarController@edit');
 Route::post('/admin/auxiliars/{id}/update','AuxiliarController@update')->name('auxiliar.update');
+Route::get('/admin/groups/getCount/{id}', 'GroupController@getCountSubjects');
+Route::get('/admin/groups/getProfessors/{id}', 'GroupController@getProfessors');
