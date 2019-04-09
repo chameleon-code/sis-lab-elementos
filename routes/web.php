@@ -90,5 +90,5 @@ Route::get('/admin/auxiliars/{id}/edit','AuxiliarController@edit');
 Route::post('/admin/auxiliars/{id}/update','AuxiliarController@update')->name('auxiliar.update');
 Route::get('/admin/auxiliars/profile/{id}', 'AuxiliarController@show');
 
-//User
-Route::get('/users/profile/{id}', 'UserController@show');
+//Admin
+Route::get('/admin/show/{id}', 'AdminController@show');
