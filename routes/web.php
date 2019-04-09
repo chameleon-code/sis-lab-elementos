@@ -42,11 +42,13 @@ Route::get('student', ['uses' => 'StudentController@index']);
 Route::get('/admin/student/create', ['uses' => 'StudentController@create']);
 Route::post('/admin/student/create', ['uses' => 'StudentController@store']);
 
+Route::get('/admin/students/profile/{id}', 'StudentController@show');
+Route::get('/admin/students', 'StudentController@index');
 Route::get('student/create', 'StudentController@create');
 Route::post('student/register', 'StudentController@store')->name('student.register');
 Route::get('student/{id}', 'StudentController@show');
-Route::get('student/{id}/edit', 'StudentController@edit');
-Route::post('student/{id}/edit', 'StudentController@update')->name('student.edit');
+Route::get('admin/students/{id}/edit', 'StudentController@edit');
+Route::post('student/{id}/update', 'StudentController@update')->name('student.update');
 Route::delete('student/{id}', 'StudentController@destroy')->name('student.destroy');
 
 Route::get('auxiliar', function () {
