@@ -33,17 +33,17 @@ class DatabaseSeeder extends Seeder
             factory(\App\Admin::class, 1)->create(['user_id' => $u->id]);
         });
 
-        factory(\App\User::class, 5)->create()
+        factory(\App\User::class, 5)->create([ 'role_id' => \App\Role::PROFESSOR ])
         ->each(function (\App\User $u){
             factory(\App\Professor::class, 1)->create(['user_id' => $u->id]);
         });
 
-        factory(\App\User::class, 5)->create()
+        factory(\App\User::class, 5)->create([ 'role_id' => \App\Role::AUXILIAR ])
         ->each(function (\App\User $u){
             factory(\App\Auxiliar::class, 1)->create(['user_id' => $u->id]);
         });
 
-        factory(\App\User::class, 10)->create()
+        factory(\App\User::class, 10)->create([ 'role_id' => \App\Role::STUDENT ])
         ->each(function (\App\User $u){
             factory(\App\Student::class, 1)->create(['user_id' => $u->id]);
         });

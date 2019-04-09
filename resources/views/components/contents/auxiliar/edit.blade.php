@@ -9,9 +9,10 @@
           <!-- Nested Row within Card Body -->
           <div class="row">
             <div class="col-lg-12">
-              <div class="p-5">
+              <div class="px-5">
                 <div class="text-center">
-                  <h1 class="h4 text-gray-900 mb-4">Registrar Auxiliar</h1>
+                    <br>
+                  <h1 class="h4 text-gray-900 mb-4">Editar Auxiliar</h1>
                 </div>
                     <form class="user text-center" role="form" method="POST" action="{{ Route('auxiliar.update',[$user->id]) }}">
                         {{ csrf_field() }}
@@ -47,13 +48,13 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <button type="button" class="btn btn-warning btn-user btn-block col-md-12" onclick="generatePassword();">Generar Contraseña</button>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group row"> 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-sm-12 mb-3 mb-sm-0">
-                                <input id="password" type="text" class="form-control form-control-user" name="password" placeholder="Contraseña" required onCopy="return false" readonly>
+                                <input id="password" type="text" class="form-control form-control-user" name="password" value="{{ old('password') }}" placeholder="Contraseña" required onCopy="return false">
                                 @if ($errors->has('password'))
                                     <span class="help-block"> {{ $errors->first('password') }}</strong> </span>
                                 @endif
@@ -66,7 +67,7 @@
                         </button>
 
                         <a class="btn btn-danger btn-user btn-block" href="{{ url('/admin/auxiliars') }}">Cancelar</a>
-
+                        <br>
                     </form>
                 </div>
             </div>
