@@ -2,7 +2,7 @@ $(document).ready(function(){
     $("#subjects").change(function(event){
         $.get("getCount/"+event.target.value+"", function(response, subjects){
             $('#contains').empty();
-            $('#contains').append("<input type='text' name='name' class='form-control col-md-12 form-control-user' value='Grupo "+(response + 1)+"' readonly>");
+            $('#contains').append("<input type='text' name='name' class='form-control col-md-12 form-control-plaintext' value='Grupo "+(response + 1)+"' readonly>");
         })
     });
     $("#subjects").change(function(event){

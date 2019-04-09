@@ -56,8 +56,8 @@
     <div id="collapseStudents" class="collapse" aria-labelledby="headingStudents" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
-        <a class="collapse-item" href="buttons.html"><i class="fas fa-list"></i>  Listar</a>
-        <a class="collapse-item" href="cards.html"><i class="fas fa-plus-square"></i>  Crear</a>
+        <a class="collapse-item" href="{{url('/admin/students')}}"><i class="fas fa-list"></i>  Listar</a>
+        <a class="collapse-item" href="{{url('/admin/student/create ')}}"><i class="fas fa-plus-square"></i>  Crear</a>
       </div>
     </div>
   </li>
@@ -83,7 +83,7 @@
       </div>
     </div>
   </li>
-
+{{-- 
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagments" aria-expanded="true" aria-controls="collapseManagments">
       <i class="fas fa-fw fa-calendar-alt"></i>
@@ -99,7 +99,7 @@
       </div>
     </div>
   </li>
-  
+   --}}
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGroups" aria-expanded="true" aria-controls="collapseGroups">
       <i class="fas fa-fw fa-list-alt"></i>
