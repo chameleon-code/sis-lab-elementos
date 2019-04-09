@@ -10,6 +10,13 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+ select{
+  /* -moz-border-radius: 5px;
+  -webkit-border-radius: 5px; */
+  border-radius: 10rem;
+  font-size: 0.8rem;
+  padding: 1.5rem 1rem;
+}
 :root {
   --blue: #4e73df;
   --indigo: #6610f2;

@@ -34,8 +34,15 @@ Route::get('student', function () {
 Route::get('professor', function () {
     return view('components.sections.professorSection');
 });
+
+//Docente
+Route::get('/admin/professors','ProfessorController@index');
 Route::get('/admin/professors/create', ['uses'=> 'ProfessorController@create']);
 Route::post('/admin/professors/create', ['uses'=> 'ProfessorController@store']);
+Route::get('/admin/professors/{id}/edit','ProfessorController@edit');
+Route::post('/admin/professors/{id}/update','ProfessorController@update')->name('professor.update');
+Route::delete('/admin/professors/{id}','ProfessorController@destroy')->name('professor.destroy');
+Route::get('/admin/professors/profile/{id}', 'ProfessorController@show');
 
 //Estudiante
 Route::get('student', ['uses' => 'StudentController@index']);

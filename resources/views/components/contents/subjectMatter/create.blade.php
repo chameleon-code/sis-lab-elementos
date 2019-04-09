@@ -25,31 +25,24 @@
                         {{ csrf_field() }}
 
                         <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
-                            <label for='name' class="col-md-4 control-label">Nombre</label>
-                            <div class="col-md-12">
-                                <input
-                                    type="text"
+                            <label for='name' class="col-md-12 control-label">Nombre</label>
+                            <input  type="text"
                                     name="name"
                                     id="subjectmatter-name"
-                                    class="form-control"
-                                    value="{{old('name')}}">
-                            </div>
+                                    class="form-control col-md-12 form-control-user"
+                                    value="{{old('name')}}" >
                         </div>
-
                         <div class="form-group" {{ $errors->has('management') ? 'has-error' : ''}}>
-                            <label for="management" class="col-md-4 control-label">Gestión</label>
-                            <div class="col-md-6">
-                                <select name="managements_id">
+                            <label for="management" class="col-md-12 control-label">Gestión</label>
+                            <select class="form-control col-md-12" name="managements_id">
                                     @foreach ($managements as $management)
                                     <option class="form-control" value="{{$management->id}}">{{$management->semester}}-{{$management->managements}}</option>
                                     @endforeach
-                                </select>
-                            </div>
+                            </select>
                         </div>
+                        <hr>
                         <div class="form-group">
-                            <div class="col-md-12 col-md-offset-2">
-                                <button type="submit" class="btn btn-primary btn-user btn-block">Send</button>
-                            </div>
+                                <button type="submit" class="btn btn-primary btn-user btn-block col-md-12">Crear</button>
                         </div>
                      </form>
                     </div>

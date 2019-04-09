@@ -15,7 +15,7 @@ class SubjectMatterController extends Controller
         
         
         $data=['subjectMatters' => $subjectMatters,
-                'title' => 'Subject-Matters Title'];
+                'title' => 'Materias'];
         return view('components.contents.subjectMatter.index', $data);
     }
 
@@ -75,9 +75,8 @@ class SubjectMatterController extends Controller
     public function destroy($id){
         try{
             $subjectMatter = SubjectMatter::findOrFail($id);
-
             $subjectMatter->delete();
-            $status_message = 'Subject-matter borrado';
+            $status_message = 'Materia eliminada correctamente';
         }catch(ModelNotFoundException $e){
             $status_message = 'no Subject-matter with tha id';
         }

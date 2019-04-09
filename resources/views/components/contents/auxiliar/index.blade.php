@@ -17,11 +17,11 @@
                                   <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                       <thead>
                                           <tr role="row">
-                                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 99px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ap. Paterno</font></font></th>
+                                              <th class="sorting text-center" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 120px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ap. Paterno</font></font></th>
 
-                                              <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 137px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ap. Materno</font></font></th>
+                                              <th class="sorting_desc text-center" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 120px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ap. Materno</font></font></th>
 
-                                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nombres</font></font></th>
+                                              <th class="sorting text-center" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 140px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nombres</font></font></th>
 
                                               {{-- <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Email</font></font></th> --}}
 

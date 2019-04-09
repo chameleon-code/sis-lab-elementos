@@ -13,7 +13,7 @@
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">Registrar Docente</h1>
                 </div>
-                    <form class="user text-center" role="form" method="POST" action="{{ Route('auxiliar.update',[$user->id]) }}">
+                    <form class="user text-center" role="form" method="POST" action="{{ Route('professor.update',[$user->id]) }}">
                         {{ csrf_field() }}
 
                         <div class="form-group row">
@@ -47,13 +47,9 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
-                            <button type="button" class="btn btn-warning btn-user btn-block col-md-12" onclick="generatePassword();">Generar Contraseña</button>
-                        </div>
-
                         <div class="form-group row"> 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-sm-12 mb-3 mb-sm-0">
-                                <input id="password" type="text" class="form-control form-control-user" name="password" placeholder="Contraseña" required onCopy="return false" readonly>
+                                <input id="password" type="text" class="form-control form-control-user" name="password" placeholder="Contraseña" value="{{ old('password')}}"  onCopy="return false" required>
                                 @if ($errors->has('password'))
                                     <span class="help-block"> {{ $errors->first('password') }}</strong> </span>
                                 @endif
