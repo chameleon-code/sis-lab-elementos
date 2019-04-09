@@ -7,13 +7,14 @@ use App\Student;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class StudentController extends Controller
 {
     public function index()
     {
         $students = Student::getAllStudents();
-        //dd($students);
+
         $data = ['students' => $students,
             'title' => 'Students Title'];
         return view('components.contents.student.index', $data);
@@ -21,7 +22,6 @@ class StudentController extends Controller
 
     public function create()
     {
-        //return view('components.contents.admin.registerStudent'); //si usamos register dentro de admin, no se sigue standares
         return view('components.contents.student.create');
     }
 
@@ -30,7 +30,6 @@ class StudentController extends Controller
 
         $input = $request->all();
         $student = new Student();
-
         if ($student->validate($input)) {
             $data = array(
                 'names' => $request->names,
@@ -51,9 +50,9 @@ class StudentController extends Controller
                 'user_id' => $newStudent['id'],
             ]);
             Mail::to($request->email)->send(new MailController2($data));
-            return redirect('student'); // analizar si se debe redirigir con user/student
+            return redirect('/admin/students');
         } else {
-            return redirect('student/create')->withInput()->withErrors($auxiliar->errors);
+            return redirect('admin/students/register')->withInput()->withErrors($student->errors);
         }
     }
 
@@ -66,6 +65,51 @@ class StudentController extends Controller
         $user = User::findOrFail($user_id);
         $user->delete();
 
-        return redirect('students');
+        return redirect('/admin/students');
+    }
+
+    public function edit($id)
+    {
+        $student = Student::findOrFail($id);
+        $user_id = $student->user_id;
+        $user = User::findOrFail($user_id);
+
+        $data = ['student' => $student,
+            'user' => $user
+        ];
+
+        return view('components.contents.student.edit')->withTitle('Editar Estudiante')->with($data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = User::find($id);
+        $input = $request->all();
+
+        if ($user->validate($input)) {
+            $user->names = $request->names;
+            $user->first_name = $request->first_name;
+            $user->second_name = $request->second_name;
+            $user->email = $request->email;
+            $user->password = $request->password;
+            $user->save();
+
+            Session::flash('status_message', 'Estudiante Editado!');
+            return redirect('/admin/students');
+        }
+        return black()->withInput($input)->withErrors($user->errors);
+    }
+
+    public function show($id)
+    {
+        $student = Student::findOrFail($id);
+        $user_id = $student->user_id;
+        $user = User::findOrFail($user_id);
+
+        $data = ['student' => $student,
+            'user' => $user
+        ];
+
+        return view('components.contents.student.profile')->withTitle('Perfil de Estudiante')->with($data);
     }
 }

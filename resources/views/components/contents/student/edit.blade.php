@@ -1,57 +1,92 @@
 @extends('components.sections.adminSection')
-
 @section('userContent')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Subject-Mattter Create</div>
-                    <div class="panel-body">
-                        @if (count($errors)>0)
-                            <div class="alert alert-danger">
-                                <b>Ha ocurrido un error!</b>
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{$error}}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
 
-                        <form class="form-horizontal"
-                              action="{{Route('subjectmatters.edit',[$subjectMatter->subject_matters_id])}}"
-                              method="post">
-                            {{ csrf_field() }}
-
-                            <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
-                                <label for='name' class="col-md-4 control-label">Name</label>
-                                <div class="col-md-6">
-                                    <input type="text" name="name" id="subjectmatter-name" class="form-control"
-                                           value="{{old('name',$subjectMatter->name)}}">
-                                </div>{{old('descripcion',$subjectMatter->descripcion)}}
-                            </div>
-
-                            <div class="form-group" {{ $errors->has('management') ? 'has-error' : ''}}>
-                                <label for="management" class="col-md-4 control-label">Management</label>
-                                <div class="col-md-6">
-                                    <select name="managements_id">
-                                        @foreach ($managements as $management)
-                                            {{-- <option class="form-control" value="{{$management->managements_id}}">{{$management->semester}}-{{$management->managements}}</option> --}}
-                                        @endforeach
-                                        {{-- {{old('management_id',$management->managements_id) ? "" : ''}} --}}
-                                    </select>
+    <script src="/js/generatekey.js"></script>
+    <div class="row justify-content-center">
+        <div class="col-xl-6 col-lg-10 col-md-9">
+            <div class="card o-hidden border-0 my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="px-5">
+                                <div class="text-center">
+                                    <br>
+                                    <h1 class="h4 text-gray-900 mb-4">Editar Estudiante</h1>
                                 </div>
+                                <form class="user text-center" role="form" method="POST"
+                                      action="{{ Route('student.update',[$user->id]) }}">
+                                    {{ csrf_field() }}
+
+                                    <div class="form-group row">
+                                        <div class="{{ $errors->has('names') ? ' has-error' : '' }} col-sm-12 mb-3 mb-sm-0">
+                                            <input id="names" type="text" class="form-control form-control-user"
+                                                   name="names" value="{{ old('names', $user->names) }}"
+                                                   placeholder="Nombres" required autofocus>
+                                            @if ($errors->has('names'))
+                                                <span class="help-block"> {{ $errors->first('names') }} </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="{{ $errors->has('first_name') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
+                                            <input id="first_name" type="text" class="form-control form-control-user"
+                                                   name="first_name" value="{{ old('first_name', $user->first_name) }}"
+                                                   placeholder="Apellido Paterno" required autofocus>
+                                            @if ($errors->has('first_name'))
+                                                <span class="help-block"> {{ $errors->first('first_name') }} </span>
+                                            @endif
+                                        </div>
+                                        <div class="group{{ $errors->has('second_name') ? ' has-error' : '' }} col-sm-6">
+                                            <input id="second_name" type="text" class="form-control form-control-user"
+                                                   name="second_name"
+                                                   value="{{ old('second_name', $user->second_name) }}"
+                                                   placeholder="Apellido Materno" required autofocus>
+                                            @if ($errors->has('second_name'))
+                                                <span class="help-block"> {{ $errors->first('second_name') }} </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                        <input id="email" type="email" class="form-control form-control-user"
+                                               name="email" value="{{ old('email', $user->email) }}"
+                                               placeholder="Correo Electrónico" required>
+                                        @if ($errors->has('email'))
+                                            <span class="help-block"> {{ $errors->first('email') }} </span>
+                                        @endif
+                                    </div>
+
+                                    {{-- <div class="form-group">
+                                        <button type="button" class="btn btn-warning btn-user btn-block col-md-12" onclick="generatePassword();">Generar Contraseña</button>
+                                    </div> --}}
+
+                                    <div class="form-group row">
+                                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-sm-12 mb-3 mb-sm-0">
+                                            <input id="password" type="text" class="form-control form-control-user"
+                                                   name="password" value="{{ old('password') }}"
+                                                   placeholder="Contraseña" required onCopy="return false">
+                                            @if ($errors->has('password'))
+                                                <span class="help-block"> {{ $errors->first('password') }}</strong> </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <hr>
+                                    <button type="submit" class="btn btn-primary btn-user btn-block col-md-12">
+                                        Modificar
+                                    </button>
+
+                                    <a class="btn btn-danger btn-user btn-block" href="{{ url('/admin/students') }}">Cancelar</a>
+                                    <br>
+                                </form>
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-2">
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">Send</button>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+
 @endsection
