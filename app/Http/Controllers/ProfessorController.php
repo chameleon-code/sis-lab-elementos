@@ -9,7 +9,7 @@ use App\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MailController;
 use App\SubjectMatter;
-
+use Illuminate\Support\Facades\Session;
 class ProfessorController extends Controller
 {
     /**
@@ -19,8 +19,8 @@ class ProfessorController extends Controller
      */
     public function index(){
         $professors = Professor::getAllProfessors();
-        $data = ['auxiliars' => $professors,
-                'title' => 'Professors Title'];
+        $data = ['professors' => $professors,
+                'title' => 'Docentes'];
         return view('components.contents.professor.index',$data);
     }
 
@@ -33,7 +33,7 @@ class ProfessorController extends Controller
     {
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
         $data=['subjectMatters'=>$subjectMatters];
-        return view('components.contents.admin.create', $data);
+        return view('components.contents.professor.create', $data);
     }
 
     /**
@@ -44,7 +44,6 @@ class ProfessorController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
         $input =$request->all();
         $professor = new Professor();
         if($professor->validate($input)){
@@ -65,10 +64,12 @@ class ProfessorController extends Controller
             ]);
             $professor->user_id = $newProfessor->id;
             $professor->save();
-            $subject = SubjectMatter::findOrFail($request->subject_matter_id);
-            $subject->professors()->attach($professor->id);
+            if($request->subject_matter_id){
+                $subject = SubjectMatter::findOrFail($request->subject_matter_id);
+                $subject->professors()->attach($professor->id);
+            }
             Mail::to($request->email)->send(new MailController($data));
-            return redirect('/admin/professors/create');
+            return redirect('/admin/professors');
         }else{
             return redirect('/admin/professors/create')->withInput()->withErrors($professor->errors);
         }
@@ -82,7 +83,13 @@ class ProfessorController extends Controller
      */
     public function show($id)
     {
-        //
+        $professor = Professor::findOrFail($id);
+        $user_id=$professor->user_id;
+        $user = User::findOrFail($user_id);
+        $data=['professor' => $professor,
+            'user' => $user
+        ];
+        return view('components.contents.professor.profile')->withTitle('Perfil de Docente')->with($data);
     }
 
     /**
@@ -95,11 +102,11 @@ class ProfessorController extends Controller
     {
         $professor = Professor::findOrFail($id);
         $user_id=$professor->user_id;
-        $user = User::findOrFail($user_id);   
+        $user = User::findOrFail($user_id); 
         $data=['professor' => $professor,
             'user' => $user
         ];
-        return view('components.contents.auxiliar.edit')->withTitle('Editar Docente')->with($data);
+        return view('components.contents.professor.edit')->withTitle('Editar Docente')->with($data);
     }
 
     /**
@@ -111,7 +118,20 @@ class ProfessorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $user = User::find($id);
+        $professor = new Professor();
+        $input = $request->all();
+        if($professor->validate($input)){
+            $user->names = $request->names;
+            $user->first_name = $request->first_name;
+            $user->second_name = $request->second_name;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->save();
+            Session::flash('status_message', 'Docente '.$user->names.' editado correctamente!');
+            return redirect('/admin/professors');
+        }
+        return black()->withInput($input)->withErrors($professor->errors);
     }
 
     /**
@@ -127,6 +147,7 @@ class ProfessorController extends Controller
         $professor->delete();
         $user = User::findOrFail($user_id);
         $user->delete();
+        Session::flash('status_message', 'Docente eliminad@ correctamente');
         return redirect('/admin/professors');   
     }
 }

@@ -54,7 +54,7 @@
 
                         <div class="form-group row"> 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-sm-12 mb-3 mb-sm-0">
-                                <input id="password" type="text" class="form-control form-control-user" name="password" value="{{ old('password') }}" placeholder="Contraseña" required onCopy="return false">
+                                <input id="password" type="text" class="form-control form-control-user" name="password" value="{{ old('password')}}" placeholder="Contraseña" required onCopy="return false">
                                 @if ($errors->has('password'))
                                     <span class="help-block"> {{ $errors->first('password') }}</strong> </span>
                                 @endif

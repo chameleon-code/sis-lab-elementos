@@ -5,7 +5,7 @@
 
   <!-- Nav Item - Dashboard -->
   <li class="nav-item active">
-    <a class="nav-link" href="index.html">
+    <a class="nav-link" href="/admin">
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Inicio</span></a>
   </li>
@@ -27,8 +27,8 @@
     <div id="collapseProfessors" class="collapse" aria-labelledby="headingProfessors" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
-        <a class="collapse-item" href="#"><i class="fas fa-list"></i>  Listar</a>
-        <a class="collapse-item" href="#"><i class="fas fa-plus-square"></i>  Crear</a>
+        <a class="collapse-item" href="{{ url("/admin/professors")}}"><i class="fas fa-list"></i>  Listar</a>
+        <a class="collapse-item" href="{{ url("/admin/professors/create")}}"><i class="fas fa-plus-square"></i>  Crear</a>
       </div>
     </div>
   </li>

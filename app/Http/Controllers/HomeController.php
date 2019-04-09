@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Role;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('layouts.logged');
+        switch (Auth::user()->role_id) {
+            case Role::ADMIN:
+                return view('components.sections.adminSection');
+                break;
+            case Role::PROFESSOR:
+                return view('components.sections.professorSection');
+                break;
+            case Role::AUXILIAR:
+                return view('components.sections.auxiliarSection');
+                break;
+            default:
+                return view('components.sections.studentSection');
+                break;
+        }
     }
 }

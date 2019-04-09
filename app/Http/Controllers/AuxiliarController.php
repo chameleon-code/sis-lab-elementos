@@ -61,7 +61,7 @@ class AuxiliarController extends Controller
 
         $user = User::findOrFail($user_id);
         $user->delete();
-        
+        Session::flash('status_message', 'Auxiliar eliminad@ correctamente');
         return redirect('/admin/auxiliars');
     }
 
@@ -86,9 +86,8 @@ class AuxiliarController extends Controller
             $user->first_name = $request->first_name;
             $user->second_name = $request->second_name;
             $user->email = $request->email;
-            $user->password = $request->password;
+            $user->password = bcrypt($request->password);
             $user->save();
-
             Session::flash('status_message', 'Auxiliar Editado!');
             return redirect('/admin/auxiliars');
         }

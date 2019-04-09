@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
   <meta charset="utf-8">
@@ -33,7 +32,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('/')}}">
         <div class="sidebar-brand-icon rotate-n-0">
             {{-- <i class="fab fa-staylinked"></i> --}}
             <i class="fas fa-laptop-code"></i>
@@ -99,19 +98,21 @@
               @if (Auth::guest())
               <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Invitado </span>
               <img class="img-profile rounded-circle" src="https://avatars1.githubusercontent.com/u/14966182?s=460&v=4">
-                @else
+              @else
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{ Auth::user()->names }} </span>
                 <img class="img-profile rounded-circle" src="/users/{{ Auth::user()->img_path }}">
-                @endif
+              @endif
                
               
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-              @if(Auth::user()->role_id = 1)
-              <a class="dropdown-item" href="/admin/show/{{ Auth::user()->id }}">
+              @if (Auth::guest())
+                  <a class="dropdown-item" href="#">
               @else
-              <a class="dropdown-item" href="#">
+                @if(Auth::user()->role_id = 1)
+                  <a class="dropdown-item" href="/admin/show/{{ Auth::user()->id }}">
+                @endif
               @endif
                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                 Perfil
