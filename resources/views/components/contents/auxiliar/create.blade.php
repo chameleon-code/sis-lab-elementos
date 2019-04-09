@@ -8,8 +8,9 @@
           <!-- Nested Row within Card Body -->
           <div class="row">
             <div class="col-lg-12">
-              <div class="p-5">
+              <div class="px-5">
                 <div class="text-center">
+                    <br>
                   <h1 class="h4 text-gray-900 mb-4">Registrar Auxiliar</h1>
                 </div>
                     <form class="user text-center" role="form" method="POST" action="{{ url('/admin/auxiliars/store') }}">
@@ -62,8 +63,8 @@
                         <button type="submit" class="btn btn-primary btn-user btn-block col-md-12">
                                 Registrar
                         </button>
-
                         <a class="btn btn-danger btn-user btn-block" href="{{ url('/admin/auxiliars') }}">Cancelar</a>
+                        <br>
                     </form>
                 </div>
             </div>

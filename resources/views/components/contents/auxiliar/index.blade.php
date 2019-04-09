@@ -1,4 +1,4 @@
-@extends('components.sections.auxiliarSection')
+@extends('components.sections.adminSection')
 @section('userContent')
 
 <script src="/js/generatekey.js"></script>
@@ -23,7 +23,7 @@
 
                                               <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nombres</font></font></th>
 
-                                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Email</font></font></th>
+                                              {{-- <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Email</font></font></th> --}}
 
                                               <th class="sorting text-center" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="3" aria-label="Age: activate to sort column ascending" style="width: 39px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Acciones</font></font></th>
                                           </tr>
@@ -36,10 +36,10 @@
                                                       <td class=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->first_name }}</font></font></td>
                                                       <td class="sorting_1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->second_name }}</font></font></td>
                                                       <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->names }}</font></font></td>
-                                                      <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->email }}</font></font></td>
+                                                      {{-- <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->email }}</font></font></td> --}}
 
                                                       <td style="width: 40px;" class="text-center">
-                                                          <a href="#" class="btn btn-info btn-circle"><i title="Ver detalles" class="fas fa-eye"></i></a>
+                                                          <a href="/admin/auxiliars/profile/{{ $item->id }}" class="btn btn-info btn-circle"><i title="Ver detalles" class="fas fa-eye"></i></a>
                                                       </td>
                                                       <td style="width: 40px;" class="text-center">
                                                           <a href="/admin/auxiliars/{{$item->id}}/edit" class="btn btn-warning btn-circle"><i title="Modificar" class="fas fa-edit"></i></a>

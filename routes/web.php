@@ -61,7 +61,9 @@ Route::get('admin/lista', function () {
 
 Auth::routes();
 
-//registro de materias
+Route::get('/home', 'HomeController@index');
+
+//Materias
 Route::get('/admin/subjectmatters','SubjectMatterController@index');
 
 Route::get('/admin/subjectmatter/create','SubjectMatterController@create');
@@ -73,18 +75,20 @@ Route::delete('/admin/subjectmatter/{id}','SubjectMatterController@destroy')->na
 
 //Gestiones
 Route::get('/admin/gestiones','ManagementController@index');
+
  //Grupos
 Route::resource('/admin/groups', 'GroupController');
+Route::get('/admin/groups/getCount/{id}', 'GroupController@getCountSubjects');
+Route::get('/admin/groups/getProfessors/{id}', 'GroupController@getProfessors');
 
-
-Route::get('/home', 'HomeController@index');
-
-//registro de auxiliares
+//Auxiliares
 Route::get('/admin/auxiliars','AuxiliarController@index');
 Route::get('/admin/auxiliars/create', 'AuxiliarController@create');
 Route::post('/admin/auxiliars/store','AuxiliarController@store');
 Route::delete('/admin/auxiliars/{id}','AuxiliarController@destroy')->name('auxiliar.destroy');
 Route::get('/admin/auxiliars/{id}/edit','AuxiliarController@edit');
 Route::post('/admin/auxiliars/{id}/update','AuxiliarController@update')->name('auxiliar.update');
-Route::get('/admin/groups/getCount/{id}', 'GroupController@getCountSubjects');
-Route::get('/admin/groups/getProfessors/{id}', 'GroupController@getProfessors');
+Route::get('/admin/auxiliars/profile/{id}', 'AuxiliarController@show');
+
+//User
+Route::get('/users/profile/{id}', 'UserController@show');

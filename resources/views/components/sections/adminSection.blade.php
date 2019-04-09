@@ -27,8 +27,8 @@
     <div id="collapseProfessors" class="collapse" aria-labelledby="headingProfessors" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
-        <a class="collapse-item" href="buttons.html"><i class="fas fa-list"></i>  Listar</a>
-        <a class="collapse-item" href="cards.html"><i class="fas fa-plus-square"></i>  Crear</a>
+        <a class="collapse-item" href="#"><i class="fas fa-list"></i>  Listar</a>
+        <a class="collapse-item" href="#"><i class="fas fa-plus-square"></i>  Crear</a>
       </div>
     </div>
   </li>
@@ -42,8 +42,8 @@
     <div id="collapseAuxiliars" class="collapse" aria-labelledby="headingAuxiliars" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
-        <a class="collapse-item" href="buttons.html"><i class="fas fa-list"></i>  Listar</a>
-        <a class="collapse-item" href="cards.html"><i class="fas fa-plus-square"></i>  Crear</a>
+        <a class="collapse-item" href="/admin/auxiliars"><i class="fas fa-list"></i>  Listar</a>
+        <a class="collapse-item" href="/admin/auxiliars/create"><i class="fas fa-plus-square"></i>  Crear</a>
       </div>
     </div>
   </li>

@@ -21,7 +21,7 @@ class AuxiliarController extends Controller
     }
     
     public function create(){
-        return view('components.contents.auxiliar.registerAuxiliar');
+        return view('components.contents.auxiliar.create');
     }
 
     public function store(Request $request){
@@ -66,7 +66,6 @@ class AuxiliarController extends Controller
     }
 
     public function edit($id){
-        
         $auxiliar = Auxiliar::findOrFail($id);
         $user_id=$auxiliar->user_id;
         $user = User::findOrFail($user_id);
@@ -94,5 +93,17 @@ class AuxiliarController extends Controller
             return redirect('/admin/auxiliars');
         }
         return black()->withInput($input)->withErrors($user->errors);
+    }
+
+    public function show($id){
+        $auxiliar = Auxiliar::findOrFail($id);
+        $user_id=$auxiliar->user_id;
+        $user = User::findOrFail($user_id);
+        
+        $data=['auxiliar' => $auxiliar,
+            'user' => $user
+        ];
+        
+        return view('components.contents.auxiliar.profile')->withTitle('Perfil de Auxiliar')->with($data);
     }
 }
