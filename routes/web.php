@@ -51,7 +51,7 @@ Route::post('/admin/student/create', ['uses' => 'StudentController@store']);
 
 Route::get('/admin/students/profile/{id}', 'StudentController@show');
 Route::get('/admin/students', 'StudentController@index');
-Route::get('student/create', 'StudentController@create');
+Route::get('/admin/student/create', 'StudentController@create');
 Route::post('student/register', 'StudentController@store')->name('student.register');
 Route::get('student/{id}', 'StudentController@show');
 Route::get('admin/students/{id}/edit', 'StudentController@edit');

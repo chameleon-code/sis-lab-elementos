@@ -36,7 +36,7 @@
                                 <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
                                     <label for='name' class="col-md-4 control-label">Nombre</label>
                                     <div id="contains">
-                                        <input type="text" name="name" id="group-name" class="form-control col-md-12 form-control-user" value="Seleccione una materia" readonly>
+                                        <input type="text" name="name" id="group-name" class="form-control col-md-12 form-control-plaintext" value="Seleccione una materia" readonly>
                                     
                                     </div>
                                 </div>
@@ -48,9 +48,8 @@
                                     </div>
                                 
                                 <div class="form-group">
-                                    <div class="col-md-6 col-md-offset-2">
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">Enviar</button>
-                                    </div>
+                                     <button type="submit" class="col-md-12 btn btn-primary btn-user btn-block">Crear</button>
+                                   
                                 </div>
                             </form>
                         </div>

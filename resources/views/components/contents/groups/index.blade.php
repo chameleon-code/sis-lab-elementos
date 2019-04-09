@@ -28,9 +28,9 @@
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 57px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Eliminar</font></font></th>
                                         </tr>
                                     </thead>
-                                        <tfoot>
+                                        {{-- <tfoot>
                                           <tr><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nombre</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Materia</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fecha de Actualización</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ver</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Editar</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Eliminar</font></font></th></tr>
-                                        </tfoot>
+                                        </tfoot> --}}
                                         <tbody> 
                                             @foreach ($groups as $item)
                                                 <tr role="row" class="odd">
