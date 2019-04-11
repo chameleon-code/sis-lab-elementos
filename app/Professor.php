@@ -31,4 +31,8 @@ class Professor extends Model
     public static function getAllProfessors(){
         return Professor::join('users','user_id','=','users.id')->select('users.role_id', 'users.names', 'users.first_name', 'users.second_name', 'users.email', 'users.password', 'users.img_path', 'users.remember_token', 'users.created_at', 'users.updated_at', 'professors.id')->get();
     }
+    public static function getProfessor($id){
+        $professors = self::getAllProfessors();
+        return $professors->where('id', $id)->first();
+    }
 }

@@ -16,11 +16,12 @@ class CreateGroupsTable extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->unsignedInteger('subject_matters_id');
-            $table->foreign('subject_matters_id')->references('id')->on('subject_matters')->onDelete('cascade');
-            /* Docentes
-            $table->unsignedInteger('professors_id')->nullable();
-            $table->foreign('professors_id')->references('id')->on('professors')->onDelete('cascade');*/
+            $table->unsignedInteger('subject_matter_id');
+            $table->foreign('subject_matter_id')->references('id')->on('subject_matters')->onDelete('cascade');
+            $table->unsignedInteger('professor_id')->nullable();
+            $table->foreign('professor_id')->references('id')->on('professors')->onDelete('cascade');
+            $table->unsignedInteger('management_id')->nullable();
+            $table->foreign('management_id')->references('id')->on('managements')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -7,7 +7,6 @@ use App\Management;
 use App\SubjectMatter;
 use Illuminate\Support\Facades\Session;
 use App\Group;
-use App\ProfessorSubjectMatter;
 use App\User;
 use App\Professor;
 
@@ -21,7 +20,6 @@ class GroupController extends Controller
     public function index()
     {
         $groups = Group::getAllGroups();
-        
         $data=['groups' => $groups,
                 'title' => 'Grupos'];
         return view('components.contents.groups.index', $data);
@@ -35,7 +33,14 @@ class GroupController extends Controller
     public function create()
     {
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
-        $data=['subjectMatters'=>$subjectMatters];
+        $managements = Management::getAllManagements();
+        $professors = Professor::getAllProfessors();
+        $count = $this->getCountSubjects(new Request(), 1) + 1;
+        $data=['subjectMatters'=>$subjectMatters,
+                'managements' =>$managements,
+                'professors' => $professors,
+                'countGroups' => "Grupo " . $count 
+            ];
         return view('components.contents.groups.create', $data);
     }
 
@@ -80,10 +85,14 @@ class GroupController extends Controller
         $group = Group::findOrFail($id);
         $subject_matter_id=$group->subject_matters_id;
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
+        $managements = Management::getAllManagements();
+        $professors = Professor::getAllProfessors();
         
         $data=['group' => $group,
             'subject_matter_id' => $subject_matter_id,
-            'subjectMatters' => $subjectMatters
+            'subjectMatters' => $subjectMatters,
+            'managements' => $managements,
+            'professors' => $professors
         ];
         
         return view('components.contents.groups.edit')->withTitle('Editar la Materia')->with($data);
@@ -103,7 +112,9 @@ class GroupController extends Controller
 
         if($group->validate($input)){
             $group->name = $request->name;
-            $group->subject_matters_id = $request->subject_matters_id;
+            $group->subject_matter_id = $request->subject_matter_id;
+            $group->management_id = $request->management_id;
+            $group->professor_id = $request->professor_id;
             $group->save();
 
             Session::flash('status_message', 'Grupo Editado!');
@@ -133,12 +144,14 @@ class GroupController extends Controller
         return redirect('/admin/groups');
         }
         public function getCountSubjects(Request $request, $id){
+            $count = Group::where('subject_matter_id', $id)->count();
             if($request->ajax()){
-                $count = Group::where('subject_matters_id', $id)->count();
                 return response()->json($count);
             }
+            return $count;
         }
-        public function getProfessors(Request $request, $id){
+        //deprecated
+        /*public function getProfessors(Request $request, $id){
             if($request->ajax()){
                 $professors = ProfessorSubjectMatter::getAllProfessors($id);
                 $users = array();
@@ -151,5 +164,5 @@ class GroupController extends Controller
                 }
                 return response()->json($users);
             }
-        }
+        }*/
 }

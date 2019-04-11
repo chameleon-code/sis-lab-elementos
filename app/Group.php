@@ -7,14 +7,15 @@ use Illuminate\Support\Facades\Validator;
 
 class Group extends Model
 {
-    protected $fillable = ['name', 'subject_matters_id'];
+    protected $fillable = ['name', 'subject_matter_id', 'management_id', 'professor_id'];
 
     protected $hidden = ['created_at', 'updated_at'];
 
     protected $rules = [
         'name' => 'required|max:255|min:5',
-        'subject_matters_id' => 'required|max:255'
+        'subject_matter_id' => 'required|max:255'
     ];
+    protected $appends = ['subject', 'professor'];
 
     public $errors;
     public function validate($date)
@@ -31,9 +32,12 @@ class Group extends Model
     {
         return self::all();
     }
-    public function subjectMatter()
+    public function getSubjectAttribute()
     {
-        return $this->belongsTo('App\SubjectMatter', 'subject_matters_id');
+        return SubjectMatter::findOrFail($this->subject_matter_id)->name;
     }
-    
+    public function getProfessorAttribute()
+    {
+        return Professor::getProfessor($this->professor_id);
+    }
 }
