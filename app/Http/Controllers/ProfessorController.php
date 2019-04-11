@@ -64,10 +64,6 @@ class ProfessorController extends Controller
             ]);
             $professor->user_id = $newProfessor->id;
             $professor->save();
-            if($request->subject_matter_id){
-                $subject = SubjectMatter::findOrFail($request->subject_matter_id);
-                $subject->professors()->attach($professor->id);
-            }
             Mail::to($request->email)->send(new MailController($data));
             return redirect('/admin/professors');
         }else{

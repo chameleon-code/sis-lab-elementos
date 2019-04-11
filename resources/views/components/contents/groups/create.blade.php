@@ -9,7 +9,7 @@
             <div class="col-lg-12">
               <div class="p-5">
                 <div class="text-center">
-                  <h1 class="h4 text-gray-900 mb-4">Creación de Grupos</h1>
+                  <h1 class="h4 text-gray-900 mb-4">Creación de Grupos de materias</h1>
                 </div>
                         @if (count($errors)>0)
                             <div class="alert alert-danger">
@@ -24,26 +24,38 @@
                         
                             <form class="user" action="{{Route('groups.store')}}" method="post">
                                 {{ csrf_field() }}
-                                <div class="form-group" {{ $errors->has('group') ? 'has-error' : ''}}>
-                                    <label for="subject_matters_id" class="col-md-12 control-label">Materias</label>
-                                    <select name="subject_matters_id" class="form-control col-md-12" id="subjects">
-                                        <option value="">--Seleccione una materia--</option>
-                                        @foreach ($subjectMatters as $subjectMatter)
+                                <div class="form-group" {{ $errors->has('management') ? 'has-error' : ''}}>
+                                    <label for="management" class="col-md-12 control-label">Gestión</label>
+                                    <select class="form-control col-md-12" name="management_id">
+                                            @foreach ($managements as $management)
+                                            <option class="form-control" value="{{$management->id}}">{{$management->semester}}-{{$management->managements}}</option>
+                                            @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
+                                    <label for="subject_matter_id" class="col-md-12 control-label">Materias</label>
+                                    <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
+                                        @forelse ($subjectMatters as $subjectMatter)
                                             <option class="form-control" value="{{$subjectMatter->id}}">{{$subjectMatter->name}}</option>
-                                        @endforeach
+                                        @empty
+                                        <option class="form-control" value="">No existen materias registradas</option>
+                                        @endempty
+                                        @endforelse
                                     </select>
                                 </div>
                                 <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
-                                    <label for='name' class="col-md-4 control-label">Nombre</label>
+                                    <label for='name' class="col-md-4 control-label">Grupo: </label>
                                     <div id="contains">
-                                        <input type="text" name="name" id="group-name" class="form-control col-md-12 form-control-plaintext" value="Seleccione una materia" readonly>
+                                        <input type="text" name="name" id="group-name" class="form-control-plaintext col-md-12 form-control-plaintext" value="{{ $countGroups }}" readonly>
                                     
                                     </div>
                                 </div>
                                 <div class="form-group" {{ $errors->has('group') ? 'has-error' : ''}}>
                                         <label for="professor_id" class="col-md-12 control-label">Docentes: </label>
                                         <select class="form-control col-md-12" name="professor_id" id="professor_id">
-                                            <option value="">--Seleccione una materia--</option>
+                                            @foreach ($professors as $professor)
+                                            <option class="form-control" value="{{$professor->id}}">{{$professor->first_name . " ". $professor->second_name . " " . $professor->names}}</option>
+                                        @endforeach
                                         </select>
                                     </div>
                                 
