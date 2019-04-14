@@ -101,3 +101,7 @@ Route::get('/admin/auxiliars/profile/{id}', 'AuxiliarController@show');
 
 //Admin
 Route::get('/admin/show/{id}', 'AdminController@show');
+
+//Bloques
+Route::resource('/admin/blocks', 'BlockController');
+Route::get('/admin/blocks/getGroups/{id}', 'BlockController@getGroups');
