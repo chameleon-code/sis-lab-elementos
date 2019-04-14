@@ -36,6 +36,8 @@ class StudentController extends Controller
                 'first_name' => $request->first_name,
                 'second_name' => $request->second_name,
                 'email' => $request->email,
+                'code_sis' => $request->code_sis,
+                'ci' => $request->ci,
                 'password' => $request->password
             );
             $newStudent = User::create([
@@ -48,6 +50,8 @@ class StudentController extends Controller
             ]);
             Student::create([
                 'user_id' => $newStudent['id'],
+                'code_sis' => $newStudent['id'],
+                'ci' => $newStudent['id'],
             ]);
             Mail::to($request->email)->send(new MailController2($data));
             return redirect('/admin/students');
