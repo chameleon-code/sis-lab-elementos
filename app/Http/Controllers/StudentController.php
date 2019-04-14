@@ -16,7 +16,7 @@ class StudentController extends Controller
         $students = Student::getAllStudents();
 
         $data = ['students' => $students,
-            'title' => 'Students Title'];
+            'title' => 'Estudiantes'];
         return view('components.contents.student.index', $data);
     }
 
