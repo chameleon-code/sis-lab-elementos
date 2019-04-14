@@ -14,7 +14,7 @@
                                     <br>
                                     <h1 class="h4 text-gray-900 mb-4">Editar Estudiante</h1>
                                 </div>
-                                <form class="user text-center" role="form" method="POST"
+                                <form class="user" role="form" method="POST"
                                       action="{{ Route('student.update',[$user->id]) }}">
                                     {{ csrf_field() }}
 
