@@ -30,7 +30,10 @@ class Group extends Model
 
     public static function getAllGroups()
     {
-        return self::all();
+        return self::orderBy('subject_matter_id')->get();
+    }
+    public static function getGroupsBySubjects($id){
+        return self::where('subject_matter_id', $id)->orderBy('name')->get();
     }
     public function getSubjectAttribute()
     {

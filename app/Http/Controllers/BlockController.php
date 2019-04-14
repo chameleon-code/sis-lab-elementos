@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\SubjectMatter;
 use App\Group;
+use App\Block;
 
 class BlockController extends Controller
 {
@@ -39,6 +40,9 @@ class BlockController extends Controller
     public function store(Request $request)
     {
         dd($request->all());
+        $block = new Block();
+        $block->name = $request->name;
+        
     }
 
     /**
@@ -86,7 +90,7 @@ class BlockController extends Controller
         //
     }
     public function getGroups(Request $request, $id){
-        $groups = Group::getAllGroups()->where('subject_matter_id', $id)->all();
+        $groups = Group::getGroupsBySubjects($id);
         //if($request->ajax()){
             return response()->json($groups);
         //}

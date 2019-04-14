@@ -63,4 +63,5 @@
 @endsection
 @push('scripts')
     <script src="{{ asset('/js/addingObjs.js') }}"></script>
+    <script src="{{ asset('/js/dropdown.js') }}"></script>
 @endpush
