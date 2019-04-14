@@ -25,10 +25,11 @@
                                 {{ csrf_field() }}
 
                                 <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
-                                    <label for='name' class="col-md-4 control-label">Nombre</label>
+                                    {{-- <label for='name' class="col-md-4 control-label">Nombre</label> --}}
                                     <input type="text" name="name" id="subjectmatter-name" 
                                     class="form-control col-md-12 form-control-user" 
-                                    value="{{old('name',$subjectMatter->name)}}">
+                                    value="{{old('name',$subjectMatter->name)}}"
+                                    placeholder="Nombre">
                                     {{-- {{old('descripcion',$subjectMatter->descripcion)}} --}}
                                 </div>
 

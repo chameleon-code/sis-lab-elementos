@@ -26,7 +26,7 @@
                                 <h1 class="h4 text-gray-900 mb-4">Registro de Estudiante</h1>
                             </div>
 
-                            <form class="user" role="form" method="POST" action="{{ url('/register') }}">
+                            <form class="user" role="form" method="POST" action="{{ url('student/register') }}">
                                 {{ csrf_field() }}
 
                                 <div class="form-group row">

@@ -1,7 +1,7 @@
 function generatePassword(){
     var text=document.getElementById("password");
     //var text2=document.getElementById("password-confirm");
-    var t = base64(45);
+    var t = base64(15);
     text.value=t;
     //text2.value=t;
 }

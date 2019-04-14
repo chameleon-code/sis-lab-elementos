@@ -32,7 +32,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'names' => $names,
         'first_name' => $first_name,
         'second_name' => $second_name,
-        'role_id' => \App\Role::all()->random()->id,
+        'role_id' => \App\Role::all()->random()->id,|
         'email' => $faker->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
