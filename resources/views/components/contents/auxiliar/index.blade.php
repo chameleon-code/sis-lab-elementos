@@ -16,14 +16,14 @@
                   <div class="table-responsive table-striped table-secondary">
                       <div class="row">
                           <div class="col-sm-12">
-                                  <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                  <table class="table dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                       <thead class="">
                                           <tr role="row" class="bg-dark">
-                                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 175px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Ap. Paterno</font></font></th>
+                                              <th class="sorting_asc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column ascending" style="width: 215px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Ap. Paterno</font></font></th>
 
-                                              <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 175px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Ap. Materno</font></font></th>
+                                              <th class="sorting_asc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Position: activate to sort column ascending" style="width: 215px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Ap. Materno</font></font></th>
 
-                                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 350px;"><font style="vertical-align: inherit;"><font color: white; style="color: white; vertical-align: inherit;">Nombres</font></font></th>
+                                              <th class="sorting_asc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Office: activate to sort column ascending" style="width: 400px;"><font style="vertical-align: inherit;"><font color: white; style="color: white; vertical-align: inherit;">Nombres</font></font></th>
 
                                               <th class="sorting text-center" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="3" aria-label="Age: activate to sort column ascending"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Acciones</font></font></th>
                                           </tr>
@@ -33,21 +33,19 @@
                                                 @foreach ($auxiliars as $item)
 
                                                   <tr role="row" class="odd">
-                                                      <td class=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->first_name }}</font></font></td>
-                                                      <td class=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->second_name }}</font></font></td>
-                                                      <td class=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->names }}</font></font></td>
+                                                      <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->first_name }}</font></font></td>
+                                                      <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->second_name }}</font></font></td>
+                                                      <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->names }}</font></font></td>
 
                                                       <td class="text-center p-2">
-
                                                           <a href="/admin/auxiliars/profile/{{ $item->id }}" class="btn btn-info btn-circle btn-sm"><i title="Ver detalles" class="fas fa-eye"></i></a>
+                                                      </td>
 
-                                                    </td>
-
-                                                    <td class="p-2">
+                                                    <td class="text-center p-2">
                                                             <a href="/admin/auxiliars/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm"><i title="Modificar" class="fas fa-edit"></i></a>
                                                     </td>
 
-                                                    <td class="p-2">
+                                                    <td class="text-center p-2">
                                                             <button type="button" class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar{{ $item->id }}"> <i title="Eliminar" class="fas fa-trash"></i> </button>
 
                                                             <!-- Modal -->
@@ -87,6 +85,20 @@
       </div>
   </div>
 
-  
+  <!-- Bootstrap core JavaScript-->
+  <script src="/js/tables/jquery.min.js"></script>
+  <script src="/js/tables/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/js/tables/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts all pages-->
+
+  <!-- Page level plugins -->
+  <script src="/js/tables/jquery.dataTables.min.js"></script>
+  <script src="/js/tables/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="/js/tables/datatables-demo.js"></script>  
 
 @endsection
