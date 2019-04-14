@@ -62,8 +62,8 @@
 
                                         @if ($errors->has('first_name'))
                                             <span class="help-block">
-                                                                        <strong>{{ $errors->first('first_name') }}</strong>
-                                                                    </span>
+                                                <strong>{{ $errors->first('first_name') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
 
@@ -99,8 +99,8 @@
                                                 autofocus="autofocus">
                                         @if ($errors->has('sis'))
                                             <span class="help-block">
-                                                                    <strong>{{ $errors->first('sis') }}</strong>
-                                                                </span>
+                                                <strong>{{ $errors->first('sis') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
                                     <div class="{{ $errors->has('email') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
