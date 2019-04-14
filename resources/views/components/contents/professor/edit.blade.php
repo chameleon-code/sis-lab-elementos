@@ -55,14 +55,15 @@
                                 @endif
                             </div>
                         </div>
-
-                        <hr>
-                        <button type="submit" class="btn btn-primary btn-user btn-block col-md-12">
-                            Modificar
-                        </button>
-
-                        <a class="btn btn-danger btn-user btn-block" href="{{ url('/admin/professors') }}">Cancelar</a>
-
+                        <br>
+                        <div class="form-group row"> 
+                            <div class="group col-md-6">
+                                <button type="submit" class="btn btn-primary btn-user btn-block">Modificar</button>
+                            </div>
+                            <div class="group col-md-6">
+                                <a type="button" class="btn btn-danger btn-user btn-block" href="{{ url('/admin/professors') }}">Cancelar</a>        
+                            </div>                    
+                        </div>
                     </form>
                 </div>
             </div>
