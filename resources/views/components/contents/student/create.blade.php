@@ -30,7 +30,7 @@
                                 {{ csrf_field() }}
 
                                 <div class="form-group row">
-                                    <div class="{{ $errors->has('names') ? ' has-error' : '' }} col-sm-12 mb-3 mb-sm-0">
+                                    <div class="{{ $errors->has('names') ? ' has-error' : '' }} col-sm-6">
                                         <input
                                                 id="names"
                                                 type="text"
@@ -46,8 +46,6 @@
                                                                     </span>
                                         @endif
                                     </div>
-                                </div>
-                                <div class="form-group row">
                                     <div class="{{ $errors->has('first_name') ? ' has-error' : '' }} col-sm-6">
 
                                         <input
@@ -66,7 +64,8 @@
                                             </span>
                                         @endif
                                     </div>
-
+                                </div>
+                                <div class="form-group row">
                                     <div class="{{ $errors->has('second_name') ? ' has-error' : '' }} col-sm-6">
 
                                         <input
@@ -85,25 +84,7 @@
                                                                     </span>
                                         @endif
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="{{ $errors->has('sis') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
-                                        <input
-                                                id="sis"
-                                                type="text"
-                                                class="form-control form-control-user"
-                                                name="sis"
-                                                value="{{ old('sis') }}"
-                                                placeholder="Codigo SIS"
-                                                required="required"
-                                                autofocus="autofocus">
-                                        @if ($errors->has('sis'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('sis') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                    <div class="{{ $errors->has('email') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
+                                    <div class="{{ $errors->has('email') ? ' has-error' : '' }} col-sm-6">
                                         <input
                                                 id="email"
                                                 type="email"
@@ -121,6 +102,41 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <div class="{{ $errors->has('sis') ? ' has-error' : '' }} col-sm-6">
+                                        <input
+                                                id="sis"
+                                                type="text"
+                                                class="form-control form-control-user"
+                                                name="sis"
+                                                value="{{ old('sis') }}"
+                                                placeholder="Codigo SIS"
+                                                required="required"
+                                                autofocus="autofocus">
+                                        @if ($errors->has('sis'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('sis') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <div class="{{ $errors->has('ci') ? ' has-error' : '' }} col-sm-6">
+                                        <input
+                                                id="ci"
+                                                type="text"
+                                                class="form-control form-control-user"
+                                                name="ci"
+                                                value="{{ old('ci') }}"
+                                                placeholder="Carnet Identidad"
+                                                required="required"
+                                                autofocus="autofocus">
+                                        @if ($errors->has('ci'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('ci') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+
+                                </div>
+                                <div class="form-group row">
                                     <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
                                         <input
                                                 id="password"
@@ -132,8 +148,8 @@
 
                                         @if ($errors->has('password'))
                                             <span class="help-block">
-                                                                    <strong>{{ $errors->first('password') }}</strong>
-                                                                </span>
+                                                <strong>{{ $errors->first('password') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
                                     <div class="col-sm-6">
@@ -161,8 +177,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
     </body>

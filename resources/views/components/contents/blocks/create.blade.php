@@ -9,7 +9,7 @@
             <div class="col-lg-12">
               <div class="p-5">
                 <div class="text-center">
-                  <h1 class="h4 text-gray-900 mb-4">Creación de Grupos de materias</h1>
+                  <h1 class="h4 text-gray-900 mb-4">Creación de Bloques</h1>
                 </div>
                         @if (count($errors)>0)
                             <div class="alert alert-danger">
@@ -22,16 +22,8 @@
                             </div>
                         @endif
                         
-                            <form class="user" action="{{Route('groups.store')}}" method="post">
+                            <form class="user" action="{{Route('blocks.store')}}" method="post">
                                 {{ csrf_field() }}
-                                <div class="form-group" {{ $errors->has('management') ? 'has-error' : ''}}>
-                                    <label for="management" class="control-label">Gestión</label>
-                                    <select class="form-control col-md-12" name="management_id">
-                                            @foreach ($managements as $management)
-                                            <option class="form-control" value="{{$management->id}}">{{$management->semester}}-{{$management->managements}}</option>
-                                            @endforeach
-                                    </select>
-                                </div>
                                 <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
                                     <label for="subject_matter_id" class="control-label">Materias</label>
                                     <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
@@ -44,22 +36,19 @@
                                     </select>
                                 </div>
                                 <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
-                                    <label for='name' class="control-label">Grupo: </label>
-                                        <select class="form-control col-md-12" name="name" id="name">
-                                            @for ($i = 1; $i <= 10; $i++)
-                                                <option class="form-control" value="Grupo {{ $i }}">{{ $i }}</option>
-                                            @endfor
-                                        </select>
+                                    <label for='name' class="control-label">Nombre: </label>
+                                        <input type="text" class="form-control" name="name">
                                 </div>
-                                <div class="form-group" {{ $errors->has('professor_id') ? 'has-error' : ''}}>
-                                        <label for="professor_id" class="control-label">Docentes: </label>
-                                        <select class="form-control col-md-12" name="professor_id" id="professor_id">
-                                            @foreach ($professors as $professor)
-                                            <option class="form-control" value="{{$professor->id}}">{{$professor->first_name . " ". $professor->second_name . " " . $professor->names}}</option>
-                                        @endforeach
-                                        </select>
-                                    </div>
-                                
+                                <div class="form-group" {{ $errors->has('group_id') ? 'has-error' : ''}}>
+                                        <label for="group_id" class="control-label">Grupo: </label>
+                                        <a class="btn btn-md" id="addGroups" value="add"><i class="fa fa-plus" aria-hidden="true" aria-hidden="true"></i></a> </br></br>
+                                        <div id="groups_container">
+                                            <select class="form-control col-md-12" name="groups_id[]" id="group_id1">
+                                                <option class="form-control" value="">-- Seleccione una materia --</option>
+                                            </select>
+                                            </br>
+                                        </div>
+                                </div>
                                 <div class="form-group">
                                      <button type="submit" class="col-md-12 btn btn-primary btn-user btn-block">Crear</button>                                   
                                 </div>
@@ -72,3 +61,6 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script src="{{ asset('/js/addingObjs.js') }}"></script>
+@endpush

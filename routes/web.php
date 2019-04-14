@@ -29,7 +29,7 @@ Route::get('admin', function () {
     return view('components.sections.adminSection');
 });
 Route::get('student', function () {
-    return view('components.contents.student.studentContent');
+    return view('components.contents.student.studentSection');
 });
 Route::get('professor', function () {
     return view('components.sections.professorSection');
@@ -101,3 +101,7 @@ Route::get('/admin/auxiliars/profile/{id}', 'AuxiliarController@show');
 
 //Admin
 Route::get('/admin/show/{id}', 'AdminController@show');
+
+//Bloques
+Route::resource('/admin/blocks', 'BlockController');
+Route::get('/admin/blocks/getGroups/{id}', 'BlockController@getGroups');
