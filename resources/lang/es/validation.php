@@ -76,8 +76,8 @@ return [
     ],
     'max'                  => [
         'numeric' => ':attribute no debe ser mayor a :max.',
-        'file'    => ':attribute no debe ser mayor que :max kilobytes.',
-        'string'  => ':attribute no debe ser mayor que :max caracteres.',
+        'file'    => ':attribute no debe ser mayor de :max kilobytes.',
+        'string'  => ':attribute no debe ser mayor de :max caracteres.',
         'array'   => ':attribute no debe tener más de :max elementos.',
     ],
     'mimes'                => ':attribute debe ser un archivo con formato: :values.',
@@ -178,9 +178,10 @@ return [
         'subject'               => 'asunto',
         'message'               => 'mensaje',
         'names'                 => 'nombres',
-        'first_name'               => 'apellido paterno',
-        'second_name'               => 'apellido materno',
-        
+        'first_name'            => 'apellido paterno',
+        'second_name'           => 'apellido materno',
+        'ci'                    => 'cédula',
+        'code_sis'              => 'código SIS'
         
     ],
 ];

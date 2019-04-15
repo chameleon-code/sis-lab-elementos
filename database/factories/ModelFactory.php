@@ -26,8 +26,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     $names = $faker->name;
     $first_name = $faker->LastName;
     $second_name = $faker->LastName;
-
-
     return [
         'names' => $names,
         'first_name' => $first_name,
@@ -42,7 +40,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Admin::class, function (Faker\Generator $faker) {
     static $password;
-
     return [
         'user_id' => null,
     ];
@@ -68,7 +65,6 @@ $factory->define(App\Student::class, function (Faker\Generator $faker) {
     static $password;
     $code_sis = $faker->randomNumber();
     $ci = $faker->randomNumber();
-
     return [
         'user_id' => null,
         'code_sis' => $code_sis,
