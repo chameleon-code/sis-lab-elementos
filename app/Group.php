@@ -13,14 +13,16 @@ class Group extends Model
 
     protected $rules = [
         'name' => 'required|max:255|min:5',
-        'subject_matter_id' => 'required|max:255'
+        'subject_matter_id' => 'required|max:255',
+        'management_id' => 'required',
+        'professor_id' => 'required'
     ];
     protected $appends = ['subject', 'professor'];
 
     public $errors;
-    public function validate($date)
+    public function validate($data)
     {
-        $v = Validator::make($date, $this->rules);
+        $v = Validator::make($data, $this->rules);
         if($v->fails()){
             $this->errors = $v->errors();
             return false;
@@ -30,7 +32,10 @@ class Group extends Model
 
     public static function getAllGroups()
     {
-        return self::all();
+        return self::orderBy('subject_matter_id')->get();
+    }
+    public static function getGroupsBySubjects($id){
+        return self::where('subject_matter_id', $id)->orderBy('name')->get();
     }
     public function getSubjectAttribute()
     {
@@ -39,5 +44,8 @@ class Group extends Model
     public function getProfessorAttribute()
     {
         return Professor::getProfessor($this->professor_id);
+    }
+    public function blocks(){
+        return $this->belongsToMany('App\Block');
     }
 }

@@ -25,22 +25,16 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="row">
-                                <div class="group col-md-6 ">
-                                  <label for="">Apellido Paterno</label>
-                                </div>
-                                <div class="group col-md-6 ">
-                                    <label for="">Apellido Materno</label>                      
-                                </div>  
-                        </div>
                         <div class="form-group row">
                             <div class="{{ $errors->has('first_name') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
+                                <label for="">Apellido Paterno</label>
                                 <input id="first_name" type="text" class="form-control" name="first_name" value="{{ old('first_name', $user->first_name) }}" placeholder="Apellido Paterno" required autofocus>
                                     @if ($errors->has('first_name'))
                                         <span class="help-block"> {{ $errors->first('first_name') }} </span>
                                     @endif
                             </div>
                             <div class="group{{ $errors->has('second_name') ? ' has-error' : '' }} col-sm-6">
+                                <label for="">Apellido Materno</label>
                                 <input id="second_name" type="text" class="form-control" name="second_name" value="{{ old('second_name', $user->second_name) }}" placeholder="Apellido Materno" required autofocus>
                                     @if ($errors->has('second_name'))
                                         <span class="help-block"> {{ $errors->first('second_name') }} </span>
@@ -67,11 +61,11 @@
                         </div>
                         <br>
                         <div class="form-group row"> 
-                            <div class="group col-md-6">
+                            <div class="form-group col-md-6">
                                 <button type="submit" class="btn btn-primary btn-block">Modificar</button>
                             </div>
-                            <div class="group col-md-6">
-                                <a type="button" class="btn btn-danger btn-block" href="{{ url('/admin/professors') }}">Cancelar</a>        
+                            <div class="form-group col-md-6">
+                                <a class="btn btn-danger btn-block" href="{{ url('/admin/professors') }}">Cancelar</a>        
                             </div>                    
                         </div>
                     </form>

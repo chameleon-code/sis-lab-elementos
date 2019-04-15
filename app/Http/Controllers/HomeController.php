@@ -35,7 +35,7 @@ class HomeController extends Controller
             case Role::AUXILIAR:
                 return view('components.sections.auxiliarSection');
                 break;
-            default:
+            case Role::STUDENT:
                 return view('components.sections.studentSection');
                 break;
         }
