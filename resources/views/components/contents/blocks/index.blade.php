@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <div class="panel-heading m-0 font-weight-bold text-primary">{{$title or 'Grupos'}}</div>
+            <div class="panel-heading m-0 font-weight-bold text-primary">{{$title or 'Lista de Bloques'}}</div>
             
             <div class="card-body">
                 @if (Session::has('status_message'))
@@ -20,7 +20,7 @@
 
                                             <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 137px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nombre</font></font></th>
 
-                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Docente</font></font></th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Grupo</font></font></th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 39px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ver</font></font></th>
 
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 88px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Editar</font></font></th>
@@ -32,11 +32,25 @@
                                           <tr><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nombre</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Materia</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fecha de Actualización</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ver</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Editar</font></font></th><th rowspan="1" colspan="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Eliminar</font></font></th></tr>
                                         </tfoot> --}}
                                         <tbody> 
-                                            @foreach ($groups as $item)
+                                            @foreach ($blocks as $item)
                                                 <tr role="row" class="odd">
-                                                    <td class=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->subject}}</font></font></td>
+                                                    <td class=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                        @forelse ($item->groups as $group)
+                                                            @if($loop->first)
+                                                                {{$group->subject}}
+                                                            @endif
+                                                        @empty
+                                                            No existen grupos en el bloque
+                                                        @endforelse
+                                                    </font></font></td>
                                                     <td class="sorting_1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->name}}</font></font></td>
-                                                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->professor->first_name ." ". $item->professor->second_name ." ". $item->professor->names}}</font></font></td>
+                                                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                        @forelse ($item->groups as $group)
+                                                            {{ $group->name . " - " . $group->professor->names . " " . $group->professor->first_name . " " . $group->professor->second_name }} <br>
+                                                        @empty
+                                                            No existen grupos en el bloque
+                                                        @endforelse
+                                                    </font></font></td>
                                                     <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
                                                         <a href="/admin/groups/{{$item->id}}" class="btn btn-info btn-user btn-block">Ver</a>
                                                     </font></font></td>
