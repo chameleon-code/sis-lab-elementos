@@ -2,8 +2,21 @@ $(document).ready(function(){
     $("#subjects").change(function(event){
         $.get("getGroups/"+event.target.value+"", function(response, subjects){
             $("#groups_container").empty();
-            $('#group_id1').empty();
-            $('#group_id1').append("<input type='text' name='name' class='col-md-12 form-control-plaintext' value='Grupo "+(response + 1)+"' readonly>");
+            $('#groups_container').append(
+                "<select class='form-control col-md-12' name='groups_id[]' id='group_id1'></select></br>"
+            );
+            var subjectID = $("#subjects :selected").attr("value");
+            $.get("getGroups/"+subjectID+"", function(response, subjects){
+                if(response.length !== null){
+                    for(i=0; i<response.length; i++){
+                        $('#group_id1').append("<option value='"+response[i].id+"'>"+response[i].name +" - "+ response[i].professor.names +" "+ response[i].professor.first_name+" "+ response[i].professor.second_name+"</option>");
+                    }
+                }
+                else{
+                    $('#group_id1').append("<option value=''>No existen grupos para la materia seleccionada</option>");
+                }
+
+            });
         })
     });
     /*$("#subjects").change(function(event){

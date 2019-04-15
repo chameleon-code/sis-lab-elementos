@@ -16,7 +16,11 @@ class BlockController extends Controller
      */
     public function index()
     {
-        
+        $blocks = Block::getAllBlocks();
+        $data = [
+            'blocks' => $blocks
+        ];
+        return view('components.contents.blocks.index', $data);
     }
 
     /**
@@ -27,7 +31,9 @@ class BlockController extends Controller
     public function create()
     {
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
-        $data=['subjectMatters'=>$subjectMatters];
+        $groups = $this->getGroups(new Request(), 1);
+        $data=['subjectMatters'=>$subjectMatters,
+                'groups'=>$groups];
         return view('components.contents.blocks.create', $data);
     }
 
@@ -39,10 +45,21 @@ class BlockController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $input =$request->all();
         $block = new Block();
-        $block->name = $request->name;
-        
+        if($block->validate($input)){
+            $block->name = $request->name;
+            $groupsID = $request->groups_id;
+            $block->save();
+            foreach($groupsID as $key=>$value){
+                $group = Group::where('id', $value)->first();
+                $block->groups()->attach($group->id);
+            }
+            return redirect('/admin/blocks');
+        }
+        else{
+            return redirect('/admin/blocks/create')->withInput()->withErrors($block->errors);
+        }
     }
 
     /**
@@ -91,8 +108,9 @@ class BlockController extends Controller
     }
     public function getGroups(Request $request, $id){
         $groups = Group::getGroupsBySubjects($id);
-        //if($request->ajax()){
+        if($request->ajax()){
             return response()->json($groups);
-        //}
+        }
+        return $groups;
     }
 }
