@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Professor;
 use App\Role;
 use App\User;
+use App\Mail\ProfessorMailController;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\MailController;
 use App\SubjectMatter;
 use Illuminate\Support\Facades\Session;
 class ProfessorController extends Controller
@@ -64,7 +64,7 @@ class ProfessorController extends Controller
             ]);
             $professor->user_id = $newProfessor->id;
             $professor->save();
-            Mail::to($request->email)->send(new MailController($data));
+            Mail::to($request->email)->send(new ProfessorMailController($data,'register'));
             return redirect('/admin/professors');
         }else{
             return redirect('/admin/professors/create')->withInput()->withErrors($professor->errors);

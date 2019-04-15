@@ -7,7 +7,7 @@ use App\User;
 use App\Auxiliar;
 use App\Role;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\MailController2;
+use App\Mail\AuxiliarMailController;
 use Illuminate\Support\Facades\Session;
 
 class AuxiliarController extends Controller
@@ -47,7 +47,7 @@ class AuxiliarController extends Controller
             Auxiliar::create([
                 'user_id' => $newAuxiliar['id'],
             ]);
-            Mail::to($request->email)->send(new MailController2($data));
+            Mail::to($request->email)->send(new AuxiliarMailController($data, 'register'));
             return redirect('/admin/auxiliars');
         } else {
             return redirect('admin/auxiliars/register')->withInput()->withErrors($auxiliar->errors);

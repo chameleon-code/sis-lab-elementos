@@ -9,11 +9,13 @@ class Student extends Model
 {
     protected $fillable = [
         'user_id',
+        'code_sis',
+        'ci',
     ];
 
     public static function getAllStudents()
     {
-        return Student::join('users', 'user_id', '=', 'users.id')->select('users.role_id', 'users.names', 'users.first_name', 'users.second_name', 'users.email', 'users.password', 'users.img_path', 'users.remember_token', 'users.created_at', 'users.updated_at', 'students.id')->get();
+        return Student::join('users', 'user_id', '=', 'users.id')->select('users.role_id', 'users.names', 'users.first_name', 'users.second_name', 'users.email', 'users.password', 'users.img_path', 'users.remember_token', 'users.created_at', 'users.updated_at', 'students.id', 'code_sis', 'ci')->get();
     }
 
     protected $rules = [
@@ -21,7 +23,9 @@ class Student extends Model
         'first_name' => 'required|max:100',
         'second_name' => 'required|max:100',
         'email' => 'email|required|max:150',
-        'password' => 'required'
+        'code_sis' => 'required|max:10|min:8',
+        'ci' => 'required|max:9|min:6',
+        'password' => 'required|min:8'
     ];
 
     public $errors;

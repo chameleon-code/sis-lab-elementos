@@ -109,7 +109,7 @@
                                                     <tbody>
                                                         <tr>
                                                             <td style="width:600px;"><img alt height="auto"
-                                                                    src="https://raw.githubusercontent.com/chameleon-code/imagenes-sis-lab/master/welcome-sislab-autoridades.png"
+                                                                    src="https://raw.githubusercontent.com/chameleon-code/imagenes-sis-lab/master/welcome-sislab.png"
                                                                     style="border:none;border-radius:0px;display:block;font-size:13px;outline:none;text-decoration:none;width:100%;height:auto;"
                                                                     width="600"></td>
                                                         </tr>
@@ -122,9 +122,9 @@
                                                 align="left">
                                                 <div
                                                     style="cursor:auto;color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;">
-                                                    <p>Saludos {{$data['names']}} {{$data['first_name']}}, ha sido registrad@&#xA0;como docente exitosamente.
+                                                    <p>Saludos {{$data['names']}} {{$data['first_name']}}, ha sido registrad@&#xA0;como estudiante exitosamente.
                                                     </p>
-                                                    <p>Esta es su contrase&#xF1;a:</p>
+                                                    <p>Esta es su contrase&#xF1;a, procure no perderla:</p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -145,9 +145,9 @@
                                                     <tbody>
                                                         <tr>
                                                             <td style="border:0px solid #000;border-radius:8px;color:#fff;cursor:auto;padding:11px 32px;"
-                                                                align="center" valign="middle" bgcolor="#19b27b"><a
+                                                                align="center" valign="middle" bgcolor="#ffba10"><a
                                                                     href="http://www.chameleoncodesoft.com/"
-                                                                    style="text-decoration:none;background:#19b27b;color:#fff;font-family:Ubuntu, Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif;font-size:16px;font-weight:normal;line-height:120%;text-transform:none;margin:0px;"
+                                                                    style="text-decoration:none;background:#ffba10;color:#fff;font-family:Ubuntu, Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif;font-size:16px;font-weight:normal;line-height:120%;text-transform:none;margin:0px;"
                                                                     target="_blank">Ingresar</a></td>
                                                         </tr>
                                                     </tbody>

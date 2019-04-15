@@ -14,7 +14,7 @@ $(document).ready(function() {
                 var gpID = 'group_id' + iCnt;
                 for(i=0; i<response.length; i++){
                     console.log('Saludos');
-                    $('#'+gpID).append("<option value='"+response[i].id+"'>"+response[i].name +" "+ response[i].professor.names +" "+ response[i].professor.first_name+"</option>");
+                    $('#'+gpID).append("<option value='"+response[i].id+"'>"+response[i].name +" - "+ response[i].professor.names +" "+ response[i].professor.first_name+" "+ response[i].professor.second_name+"</option>");
                 }
             });
         }
