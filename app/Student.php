@@ -23,9 +23,9 @@ class Student extends Model
         'first_name' => 'required|max:100',
         'second_name' => 'required|max:100',
         'email' => 'email|required|max:150',
-        //'code_sis' => 'required|max:20',
-        //'ci' => 'required|max:20',
-        'password' => 'required'
+        'code_sis' => 'required|max:10|min:8',
+        'ci' => 'required|max:9|min:6',
+        'password' => 'required|min:8'
     ];
 
     public $errors;

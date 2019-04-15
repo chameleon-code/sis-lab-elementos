@@ -5,7 +5,6 @@
     <div class="col-xl-6 col-lg-10 col-md-9">
       <div class="card o-hidden border-0 my-5">
         <div class="card-body p-0">
-          <!-- Nested Row within Card Body -->
           <div class="row">
             <div class="col-lg-12">
               <div class="p-5">
@@ -26,7 +25,7 @@
                               <input type="text" class="form-control" name="first_name" required autofocus>
                                 {!! $errors -> first('first_name','<label style="color:crimson">:message</label>')!!}  
                           </div>
-                        </div>
+                      </div>
                       <div class="form-group col-md-6">
                           <div class="">
                             <label for="">Apellido Materno</label>  

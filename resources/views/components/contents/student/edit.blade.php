@@ -15,71 +15,65 @@
                                     <h1 class="h4 text-gray-900 mb-4">Editar Estudiante</h1>
                                 </div>
                                 <form class="user" role="form" method="POST"
-                                      action="{{ Route('student.update',[$user->id]) }}">
+                                      action="{{ Route('student.update',[$student->id]) }}">
                                     {{ csrf_field() }}
-
-                                    <div class="form-group row">
-                                        <div class="{{ $errors->has('names') ? ' has-error' : '' }} col-sm-12 mb-3 mb-sm-0">
-                                            <input id="names" type="text" class="form-control form-control-user"
-                                                   name="names" value="{{ old('names', $user->names) }}"
-                                                   placeholder="Nombres" required autofocus>
-                                            @if ($errors->has('names'))
-                                                <span class="help-block"> {{ $errors->first('names') }} </span>
-                                            @endif
+                                    <div class="form-group">
+                                            <label for="">Nombres</label>
+                                            <input type="text" class="form-control" name="names" value="{{ old('names', $user->names)}}" required autofocus>
+                                                {!! $errors -> first('names','<label style="color:crimson">:message</label>')!!} 
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                                <div class="">
+                                                    <label for="">Apellido Paterno</label>  
+                                                    <input type="text" class="form-control" name="first_name" value="{{ old('first_name', $user->first_name)}}" required autofocus>
+                                                        {!! $errors -> first('first_name','<label style="color:crimson">:message</label>')!!}  
+                                                </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                                <div class="">
+                                                    <label for="">Apellido Materno</label>  
+                                                    <input type="text" class="form-control" name="second_name" value="{{ old('second_name',$user->second_name)}}"required autofocus> 
+                                                    {!! $errors -> first('second_name','<label style="color:crimson">:message</label>')!!}  
+                                                </div>
                                         </div>
                                     </div>
-
-                                    <div class="form-group row">
-                                        <div class="{{ $errors->has('first_name') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
-                                            <input id="first_name" type="text" class="form-control form-control-user"
-                                                   name="first_name" value="{{ old('first_name', $user->first_name) }}"
-                                                   placeholder="Apellido Paterno" required autofocus>
-                                            @if ($errors->has('first_name'))
-                                                <span class="help-block"> {{ $errors->first('first_name') }} </span>
-                                            @endif
-                                        </div>
-                                        <div class="group{{ $errors->has('second_name') ? ' has-error' : '' }} col-sm-6">
-                                            <input id="second_name" type="text" class="form-control form-control-user"
-                                                   name="second_name"
-                                                   value="{{ old('second_name', $user->second_name) }}"
-                                                   placeholder="Apellido Materno" required autofocus>
-                                            @if ($errors->has('second_name'))
-                                                <span class="help-block"> {{ $errors->first('second_name') }} </span>
-                                            @endif
-                                        </div>
+                                    <div class="form-group">
+                                            <label for="">Correo Electrónico</label>
+                                            <input type="email" class="form-control" name="email" value="{{ old('email',$user->email)}}" required>
+                                                {!! $errors -> first('email','<label style="color:crimson">:message</label>')!!} 
                                     </div>
-
-                                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                        <input id="email" type="email" class="form-control form-control-user"
-                                               name="email" value="{{ old('email', $user->email) }}"
-                                               placeholder="Correo Electrónico" required>
-                                        @if ($errors->has('email'))
-                                            <span class="help-block"> {{ $errors->first('email') }} </span>
-                                        @endif
-                                    </div>
-
-                                    {{-- <div class="form-group">
-                                        <button type="button" class="btn btn-warning btn-user btn-block col-md-12" onclick="generatePassword();">Generar Contraseña</button>
-                                    </div> --}}
-
-                                    <div class="form-group row">
-                                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-sm-12 mb-3 mb-sm-0">
-                                            <input id="password" type="text" class="form-control form-control-user"
-                                                   name="password" value="{{ old('password') }}"
-                                                   placeholder="Contraseña" required onCopy="return false">
-                                            @if ($errors->has('password'))
-                                                <span class="help-block"> {{ $errors->first('password') }}</strong> </span>
-                                            @endif
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <div class="">
+                                                <label for="">Código SIS</label>  
+                                                <input type="number" class="form-control" name="code_sis" value="{{ old('code_sis',$student->code_sis)}}" required autofocus min="0">
+                                                    {!! $errors -> first('code_sis','<label style="color:crimson">:message</label>')!!}  
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <div class="">
+                                                <label for="">Cédula de Identidad</label>  
+                                                <input type="number" class="form-control" name="ci" value="{{ old('ci',$student->ci)}}" required autofocus min="0"> 
+                                                {!! $errors -> first('ci','<label style="color:crimson">:message</label>')!!}  
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <hr>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block col-md-12">
-                                        Modificar
-                                    </button>
-
-                                    <a class="btn btn-danger btn-user btn-block" href="{{ url('/admin/students') }}">Cancelar</a>
+                                    <label for="">Contraseña</label>
+                                    <div class="form-group ">
+                                            <input type="text" id="password" onCopy="return false" class="form-control col-md-12" name="password" required>
+                                            {!! $errors -> first('password','<label style="color:crimson">:message</label>')!!} 
+                                      
+                                    </div>
                                     <br>
+                                    <div class="form-group row"> 
+                                            <div class="form-group col-md-6">
+                                                <button type="submit" class="btn btn-primary btn-block">Modificar</button>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <a class="btn btn-danger btn-block" href="{{ url('/admin/students') }}">Cancelar</a>        
+                                            </div>                    
+                                    </div>
                                 </form>
                             </div>
                         </div>

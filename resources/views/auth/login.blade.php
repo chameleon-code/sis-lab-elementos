@@ -47,43 +47,30 @@
                                         </div>
                                         <form class="user"  role="form" method="POST" action="{{ url('/login') }}">
                                                 {{ csrf_field() }}
-                                            <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+                                            <div class="form-group">
+                                                <label for="">Dirección de Correo</label>
                                                 <input
                                                     type="email"
-                                                    class="form-control form-control-user"
+                                                    class="form-control"
                                                     id="email"
                                                     aria-describedby="emailHelp"
                                                     name="email"
-                                                    placeholder="Dirección de Correo"
                                                     value="{{ old('email') }}"
                                                     required autofocus>
-                                                        @if ($errors->has('email'))
-                                                            <span class="help-block">
-                                                            <strong>{{ $errors->first('email') }}</strong>
-                                                            </span>
-                                                        @endif
-                                            </div>
-                                            <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
-                                                <input
-                                                    type="password"
-                                                    class="form-control form-control-user"
-                                                    id="password"
-                                                    name="password"
-                                                    placeholder="Contraseña"
-                                                    required>
-                                                    @if ($errors->has('password'))
-                                                        <span class="help-block">
-                                                        <strong>{{ $errors->first('password') }}</strong>
-                                                        </span>
-                                                    @endif
                                             </div>
                                             <div class="form-group">
-                                                <div class="custom-control custom-checkbox small">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck" name="remember" {{ old('remember') ? 'checked' : ''}}>
-                                                    <label class="custom-control-label" for="customCheck">Recordar</label>
-                                                </div>
+                                                <label for="">Contraseña</label>
+                                                <input
+                                                    type="password"
+                                                    class="form-control"
+                                                    id="password"
+                                                    name="password"
+                                                    required>
+                                                                                                       
                                             </div>
-                                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                            {!! $errors -> first('email','<label style="color:crimson">:message</label>')!!} 
+                                            <br>
+                                            <button type="submit" class="btn btn-primary btn-block">
                                                     Ingresar
                                             </button>
                                         </form>
