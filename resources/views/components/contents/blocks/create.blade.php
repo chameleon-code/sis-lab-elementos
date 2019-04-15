@@ -24,9 +24,8 @@
                         
                             <form class="user" action="{{Route('blocks.store')}}" method="post">
                                 {{ csrf_field() }}
-                                
                                 <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
-                                    <label for='name' class="control-label">Nombre</label>
+                                    <label for='name' class="control-label">Nombre: </label>
                                         <input type="text" class="form-control" name="name">
                                 </div>
                                 <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
@@ -51,7 +50,12 @@
                                 <div class="form-group">
                                         <div id="groups_container">
                                             <select class="form-control col-md-12" name="groups_id[]" id="group_id1">
-                                                <option class="form-control" value="">-- Seleccione una materia --</option>
+                                                @forelse ($groups as $group)
+                                                    <option value="{{ $group->id }}" class="form-control">{{ $group->name . " - " . $group->professor->names . " " . $group->professor->first_name . " " . $group->professor->second_name}}</option>
+                                                @empty
+                                                <option class="form-control" value="">-- No existen grupos registrados --</option>
+                                                @endforelse
+                                                
                                             </select>
                                             </br>
                                         </div>
@@ -75,4 +79,5 @@
 @endsection
 @push('scripts')
     <script src="{{ asset('/js/addingObjs.js') }}"></script>
+    <script src="{{ asset('/js/dropdown.js') }}"></script>
 @endpush

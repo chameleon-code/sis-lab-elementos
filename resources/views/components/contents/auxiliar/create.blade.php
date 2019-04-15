@@ -13,12 +13,13 @@
                     <br>
                   <h1 class="h4 text-gray-900 mb-4">Registrar Auxiliar</h1>
                 </div>
-                    <form class="user text-center" role="form" method="POST" action="{{ url('/admin/auxiliars/store') }}">
+                    <form class="user" role="form" method="POST" action="{{ url('/admin/auxiliars/store') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group row">
                             <div class="{{ $errors->has('names') ? ' has-error' : '' }} col-sm-12 mb-3 mb-sm-0">
-                                <input id="names" type="text" class="form-control form-control-user" name="names" value="{{ old('names') }}" placeholder="Nombres" required autofocus>
+                                <label for="">Nombres</label>
+                                <input id="names" type="text" class="form-control col-md-12" name="names" value="{{ old('names') }}" required autofocus>
                                 @if ($errors->has('names'))
                                     <span class="help-block text-danger"> {{ $errors->first('names') }} </span>
                                 @endif
@@ -27,13 +28,15 @@
 
                         <div class="form-group row">
                             <div class="{{ $errors->has('first_name') ? ' has-error' : '' }} col-sm-6 mb-3 mb-sm-0">
-                                <input id="first_name" type="text" class="form-control form-control-user" name="first_name" value="{{ old('first_name') }}" placeholder="Apellido Paterno" required autofocus>
+                                <label for="">Apellido Paterno</label>
+                                <input id="first_name" type="text" class="form-control col-md-12" name="first_name" value="{{ old('first_name') }}" required autofocus>
                                     @if ($errors->has('first_name'))
                                         <span class="help-block text-danger"> {{ $errors->first('first_name') }} </span>
                                     @endif
                             </div>
                             <div class="group{{ $errors->has('second_name') ? ' has-error' : '' }} col-sm-6">
-                                <input id="second_name" type="text" class="form-control form-control-user" name="second_name" value="{{ old('second_name') }}" placeholder="Apellido Materno" required autofocus>
+                                <label for="">Apellido Materno</label>
+                                <input id="second_name" type="text" class="form-control col-md-12" name="second_name" value="{{ old('second_name') }}" required autofocus>
                                     @if ($errors->has('second_name'))
                                         <span class="help-block text-danger"> {{ $errors->first('second_name') }} </span>
                                     @endif
@@ -41,30 +44,41 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <input id="email" type="email" class="form-control form-control-user" name="email" value="{{ old('email') }}" placeholder="Correo Electrónico" required>
+                            <label for="">Correo Electrónico</label>
+                            <input id="email" type="email" class="form-control col-md-12r" name="email" value="{{ old('email') }}" required>
                             @if ($errors->has('email'))
                                 <span class="help-block text-danger"> {{ $errors->first('email') }} </span>
                             @endif
                         </div>
 
-                        <div class="form-group">
-                            <button type="button" class="btn btn-warning btn-user btn-block col-md-12" onclick="generatePassword();">Generar Contraseña</button>
-                        </div>
-
+                        <div class="row">
+                            <div class="group col-md-6 ">
+                                <label for="">Contraseña</label>
+                            </div>
+                        </div>                        
+                        
                         <div class="form-group row"> 
-                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-sm-12 mb-3 mb-sm-0">
-                                    <input id="password" type="text" class="form-control form-control-user" name="password" placeholder="Contraseña" required onCopy="return false" readonly>
+                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-md-9">
+                                    <input id="password" type="text" class="form-control col-sm-12" name="password" required onCopy="return false" readonly>
                                      @if ($errors->has('password'))
                                         <span class="help-block text-danger"> {{ $errors->first('password') }} </span>
                                     @endif
                             </div>
+                            <div class="form-group col-md-3">
+                                <button type="button" class="btn btn-warning btn-block col-md-12" onclick="generatePassword();"><i class="fas fa-key"></i></button>
+                            </div>
                         </div>
-                        <hr>
-                        <button type="submit" class="btn btn-primary btn-user btn-block col-md-12">
-                                Registrar
-                        </button>
-                        <a class="btn btn-danger btn-user btn-block" href="{{ url('/admin/auxiliars') }}">Cancelar</a>
-                        <br>
+                        <div class="form-group row">
+                            <div class="group col-md-6 ">
+                                <button type="submit" class="btn btn-primary btn-block col-md-12"> Registrar </button>
+                            </div>
+                            <div class="group col-md-6 ">
+                                <a class="btn btn-danger btn-block col-md-12" href="{{ url('/admin/auxiliars') }}">Cancelar</a>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
                     </form>
                 </div>
             </div>

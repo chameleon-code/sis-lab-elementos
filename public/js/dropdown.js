@@ -1,11 +1,25 @@
 $(document).ready(function(){
     $("#subjects").change(function(event){
-        $.get("getCount/"+event.target.value+"", function(response, subjects){
-            $('#contains').empty();
-            $('#contains').append("<input type='text' name='name' class='col-md-12 form-control-plaintext' value='Grupo "+(response + 1)+"' readonly>");
+        $.get("getGroups/"+event.target.value+"", function(response, subjects){
+            $("#groups_container").empty();
+            $('#groups_container').append(
+                "<select class='form-control col-md-12' name='groups_id[]' id='group_id1'></select></br>"
+            );
+            var subjectID = $("#subjects :selected").attr("value");
+            $.get("getGroups/"+subjectID+"", function(response, subjects){
+                if(response.length !== null){
+                    for(i=0; i<response.length; i++){
+                        $('#group_id1').append("<option value='"+response[i].id+"'>"+response[i].name +" - "+ response[i].professor.names +" "+ response[i].professor.first_name+" "+ response[i].professor.second_name+"</option>");
+                    }
+                }
+                else{
+                    $('#group_id1').append("<option value=''>No existen grupos para la materia seleccionada</option>");
+                }
+
+            });
         })
     });
-    $("#subjects").change(function(event){
+    /*$("#subjects").change(function(event){
         $.get("getProfessors/"+event.target.value+"", function(response, subjects){
             $('#professor_id').empty();
             for(i=0; i<response.length; i++){
@@ -13,5 +27,5 @@ $(document).ready(function(){
                 $('#professor_id').append("<option value='"+response[i].id+"'>"+response[i].names +" "+ response[i].first_name +" "+ response[i].second_name+"</option>");
             }
         })
-    });
+    });*/
 });
