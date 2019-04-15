@@ -65,6 +65,7 @@
                                     <button type="button" class="btn btn-warning btn-block col-md-12" onclick="generatePassword();" title="Generar Contraseña"><i class="fas fa-key"></i></button>
                                 </div>                
                             </div>  
+                            <br>
                             <div class="form-group row">
                                     <div class="form-group col-md-6 col">
                                       <button type="submit" class="form-control btn btn-primary btn-block col-md-12">Registrar</button>
