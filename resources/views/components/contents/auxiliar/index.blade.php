@@ -85,20 +85,4 @@
       </div>
   </div>
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="/js/tables/jquery.min.js"></script>
-  <script src="/js/tables/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="/js/tables/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts all pages-->
-
-  <!-- Page level plugins -->
-  <script src="/js/tables/jquery.dataTables.min.js"></script>
-  <script src="/js/tables/dataTables.bootstrap4.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="/js/tables/datatables-demo.js"></script>  
-
 @endsection

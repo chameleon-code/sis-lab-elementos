@@ -98,7 +98,6 @@ class AuxiliarController extends Controller
         $auxiliar = Auxiliar::findOrFail($id);
         $user_id=$auxiliar->user_id;
         $user = User::findOrFail($user_id);
-        
         $data=['auxiliar' => $auxiliar,
             'user' => $user
         ];
