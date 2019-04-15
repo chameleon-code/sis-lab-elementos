@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
 
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('role_id')->nullable();
+            $table->unsignedInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
             $table->string('names');
             $table->string('first_name');
