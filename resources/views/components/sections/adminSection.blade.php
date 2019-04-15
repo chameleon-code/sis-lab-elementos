@@ -113,6 +113,19 @@
       </div>
     </div>
   </li>
+  <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBlocks" aria-expanded="true" aria-controls="collapseBlocks">
+        <i class="fas fa-fw fa-boxes"></i>
+        <span>Bloques</span>
+      </a>
+      <div id="collapseBlocks" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <h6 class="collapse-header">Opciones:</h6>
+          <a class="collapse-item" href="{{url('/admin/blocks')}}"><i class="fas fa-list"></i>  Listar</a>
+          <a class="collapse-item" href="{{url('/admin/blocks/create')}}"><i class="fas fa-plus-square"></i>  Crear</a>
+        </div>
+      </div>
+  </li>
   
   <li class="nav-item">
     <a class="nav-link" href="charts.html">

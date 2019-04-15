@@ -24,8 +24,13 @@
                         
                             <form class="user" action="{{Route('blocks.store')}}" method="post">
                                 {{ csrf_field() }}
+                                
+                                <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
+                                    <label for='name' class="control-label">Nombre</label>
+                                        <input type="text" class="form-control" name="name">
+                                </div>
                                 <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
-                                    <label for="subject_matter_id" class="control-label">Materias</label>
+                                    <label for="subject_matter_id" class="control-label">Materia</label>
                                     <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
                                         @forelse ($subjectMatters as $subjectMatter)
                                             <option class="form-control" value="{{$subjectMatter->id}}">{{$subjectMatter->name}}</option>
@@ -35,13 +40,15 @@
                                         @endforelse
                                     </select>
                                 </div>
-                                <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
-                                    <label for='name' class="control-label">Nombre: </label>
-                                        <input type="text" class="form-control" name="name">
+                                <div class="form-group row">
+                                    <div class="group col-md-10">
+                                        <label for="">Grupos</label>
+                                    </div>
+                                    <div class="group col-md-2">
+                                        <button type="button" class="group btn btn-md btn-warning col-md-12" id="addGroups" value="add"><i class="fas fa-plus"></i></button>
+                                    </div>
                                 </div>
-                                <div class="form-group" {{ $errors->has('group_id') ? 'has-error' : ''}}>
-                                        <label for="group_id" class="control-label">Grupo: </label>
-                                        <a class="btn btn-md" id="addGroups" value="add"><i class="fa fa-plus" aria-hidden="true" aria-hidden="true"></i></a> </br></br>
+                                <div class="form-group">
                                         <div id="groups_container">
                                             <select class="form-control col-md-12" name="groups_id[]" id="group_id1">
                                                 <option class="form-control" value="">-- Seleccione una materia --</option>
@@ -49,9 +56,14 @@
                                             </br>
                                         </div>
                                 </div>
-                                <div class="form-group">
-                                     <button type="submit" class="col-md-12 btn btn-primary btn-user btn-block">Crear</button>                                   
-                                </div>
+                                <div class="form-group row">
+                                        <div class="form-group col-md-6 col">
+                                          <button type="submit" class="form-control btn btn-primary btn-block col-md-12">Crear</button>
+                                        </div>
+                                        <div class="form-group col-md-6 col">
+                                          <a class="form-control btn btn-danger btn-block col-md-12" href="{{ url('/admin/blocks') }}">Cancelar</a>    
+                                        </div>
+                                    </div>
                             </form>
                         </div>
                     </div>

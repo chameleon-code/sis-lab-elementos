@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
             factory(\App\Auxiliar::class, 1)->create(['user_id' => $u->id]);
         });
 
-        factory(\App\User::class, 10)->create([ 'role_id' => \App\Role::STUDENT ])
+        factory(\App\User::class, 5)->create([ 'role_id' => \App\Role::STUDENT ])
         ->each(function (\App\User $u){
             factory(\App\Student::class, 1)->create(['user_id' => $u->id]);
         });
