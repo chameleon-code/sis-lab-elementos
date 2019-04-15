@@ -15,8 +15,6 @@ class CreateSubjectMattersTable extends Migration
     {
         Schema::create('subject_matters', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('managements_id');
-            $table->foreign('managements_id')->references('id')->on('managements')->onDelete('cascade');
             $table->string('name');
             $table->timestamps();
         });
