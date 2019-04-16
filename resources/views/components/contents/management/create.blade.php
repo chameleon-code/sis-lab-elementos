@@ -9,7 +9,7 @@
                 <div class="col-lg-12">
                   <div class="p-5">
                     <div class="text-center">
-                      <h1 class="h4 text-gray-900 mb-4">Crear Materia</h1>
+                      <h1 class="h4 text-gray-900 mb-4">Crear Gestión</h1>
                     </div>
                     @if (count($errors)>0)
                     <div class="alert alert-danger">
@@ -21,17 +21,25 @@
                         </ul>
                     </div>
                     @endif
-                    <form class="user" action="{{Route('subjectmatters.store')}}" method="post">
+                    <form class="user" action="{{Route('managements.store')}}" method="post">
                         {{ csrf_field() }}
 
-                        <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
-                            {{-- <label for='name' class="col-md-12 control-label">Nombre</label> --}}
+                        <div class="form-group" {{ $errors->has('managements') ? 'has-error' : ''}}>
+                            <label for='name' class="col-md-12 control-label">Gestión</label>
                             <input  type="text"
-                                    name="name"
-                                    id="subjectmatter-name"
+                                    name="managements"
+                                    id="managements"
                                     class="form-control col-md-12 form-control-user"
-                                    placeholder="Nombre"
-                                    value="{{old('name')}}" >
+                                    placeholder="Gestión"
+                                    value="{{ old('managements', $managements) }}" readonly>
+                        </div>
+                        <div class="form-group" {{ $errors->has('semester') ? 'has-error' : ''}}>
+                            <label for='name' class="col-md-12 control-label">Semestre</label>
+                            <select class="form-control col-md-12" name="semester">
+                                @foreach ($semester as $item)
+                                    <option class="form-control" value="{{$item}}">{{$item}}</option>
+                                @endforeach
+                        </select>
                         </div>
                         <hr>
                         <div class="form-group">

@@ -3,10 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Validator;
+use App\Traits\ValidationTrait;
 
 class Student extends Model
 {
+    use ValidationTrait;
     protected $fillable = [
         'user_id',
         'code_sis',
@@ -28,15 +29,4 @@ class Student extends Model
         'password' => 'required|min:8'
     ];
 
-    public $errors;
-
-    public function validate($input)
-    {
-        $validator = Validator::make($input, $this->rules);
-        if ($validator->fails()) {
-            $this->errors = $validator->errors();
-            return false;
-        }
-        return true;
-    }
 }

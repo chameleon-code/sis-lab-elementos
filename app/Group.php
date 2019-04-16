@@ -3,10 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Validator;
+use App\Traits\ValidationTrait;
 
 class Group extends Model
 {
+    use ValidationTrait;
     protected $fillable = ['name', 'subject_matter_id', 'management_id', 'professor_id'];
 
     protected $hidden = ['created_at', 'updated_at'];
@@ -18,17 +19,6 @@ class Group extends Model
         'professor_id' => 'required'
     ];
     protected $appends = ['subject', 'professor'];
-
-    public $errors;
-    public function validate($data)
-    {
-        $v = Validator::make($data, $this->rules);
-        if($v->fails()){
-            $this->errors = $v->errors();
-            return false;
-        }
-        return true;
-    }
 
     public static function getAllGroups()
     {

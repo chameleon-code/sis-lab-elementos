@@ -10,7 +10,7 @@
                     <p class="alert alert-success">{{Session::get('status_message')}}</p>                           
                 @endif
                 <div class="table-responsive">
-                    <div class="row">
+                    
                         <div class="col-sm-12">
                                 <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                     <thead>
@@ -18,7 +18,7 @@
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 99px;">
                                             <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nombre</font></font></th>
 
-                                            <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 137px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Gestión</font></font></th>
+                                            {{-- <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 137px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Gestión</font></font></th> --}}
 
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fecha de creación</font></font></th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 39px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fecha Actualizacion</font></font></th>
@@ -35,7 +35,7 @@
                                             @foreach ($subjectMatters as $item)
                                                 <tr role="row" class="odd">
                                                     <td class=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->name}}</font></font></td>
-                                                    <td class="sorting_1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->management->semester}}-{{$item->management->managements}}</font></font></td>
+                                                    {{-- <td class="sorting_1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></td> --}}
                                                     <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->created_at}}</font></font></td>
                                                     <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->updated_at}}</font></font></td>
                                                     <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
@@ -49,11 +49,11 @@
                                                         </form>
                                                     </font></font></td>
                                                 </tr>
-                                          @endforeach
+                                            @endforeach
                                         </tbody>
                                 </table>
                         </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>

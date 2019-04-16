@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,3 +106,11 @@ Route::get('/admin/show/{id}', 'AdminController@show');
 //Bloques
 Route::resource('/admin/blocks', 'BlockController');
 Route::get('/admin/blocks/getGroups/{id}', 'BlockController@getGroups');
+
+//Gestion
+Route::get('/admin/managements','ManagementController@index');
+Route::get('/admin/management/create','ManagementController@create');
+Route::post('/admin/management/create','ManagementController@store')->name('managements.store');
+Route::get('/admin/management/{id}/edit','ManagementController@edit');
+Route::post('/admin/management/{id}/edit','ManagementController@update')->name('managements.update');
+Route::delete('/admin/management/{id}','ManagementController@destroy')->name('managements.destroy');

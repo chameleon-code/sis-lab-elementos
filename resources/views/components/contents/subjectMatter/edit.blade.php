@@ -25,26 +25,10 @@
                                 {{ csrf_field() }}
 
                                 <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
-                                    {{-- <label for='name' class="col-md-4 control-label">Nombre</label> --}}
                                     <input type="text" name="name" id="subjectmatter-name" 
                                     class="form-control col-md-12 form-control-user" 
                                     value="{{old('name',$subjectMatter->name)}}"
                                     placeholder="Nombre">
-                                    {{-- {{old('descripcion',$subjectMatter->descripcion)}} --}}
-                                </div>
-
-                                <div class="form-group" {{ $errors->has('management') ? 'has-error' : ''}}>
-                                    <label for="management" class="col-md-12 control-label">Gestión</label>
-                                    <select class="form-control col-md-12" name="managements_id">
-                                        @foreach ($managements as $management)
-                                            @if ($management->id == $management_id)
-                                            <option class="form-control" value="{{$management->id}}" selected>{{$management->semester}}-{{$management->managements}}</option>
-                                            @continue
-                                            @endif
-                                            <option class="form-control" value="{{$management->id}}">{{$management->semester}}-{{$management->managements}}</option>
-                                        @endforeach
-                                        {{-- {{old('management_id',$management->managements_id) ? "" : ''}} --}}
-                                    </select>
                                 </div>
                                 <hr>
                                 <div class="form-group">
