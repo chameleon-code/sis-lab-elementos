@@ -102,7 +102,7 @@
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{ Auth::user()->names }} </span>
                 <img class="img-profile rounded-circle" src=
                 @if(Auth::user()->img_path != null)
-                "/users/{{ Auth::user()->img_path }}"
+                "/storage/users/{{ Auth::user()->img_path }}"
                 @else
                 "/users/demo.png"
                 @endif

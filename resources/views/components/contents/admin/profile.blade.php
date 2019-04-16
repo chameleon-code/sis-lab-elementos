@@ -11,7 +11,7 @@
                             <div style="background-image: url(https://demo.bootstrapious.com/admin-premium/1-4-5/img/photos/paul-morris-116514-unsplash.jpg);" class="card-header"></div>
                             <div class="card-body text-center"><img src=
                                 @if(Auth::user()->img_path != null)
-                                "/users/{{ $user->img_path }}"
+                                "/storage/users/{{ $user->img_path }}"
                                 @else
                                 "/users/demo.png"
                                 @endif

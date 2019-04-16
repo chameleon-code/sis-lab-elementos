@@ -13,7 +13,7 @@
                             <div class="card-body text-center">
                                 <img class="card-profile-img" src=
                                 @if($user->img_path != null)
-                                "/users/{{ $user->img_path }}"
+                                "/storage/users/{{ $user->img_path }}"
                                 @else
                                 "/users/demo.png"
                                 @endif
