@@ -97,10 +97,16 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               @if (Auth::guest())
               <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Invitado </span>
-              <img class="img-profile rounded-circle" src="https://avatars1.githubusercontent.com/u/14966182?s=460&v=4">
+              <img class="img-profile rounded-circle" src="/users/demo.png">
               @else
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{ Auth::user()->names }} </span>
-                <img class="img-profile rounded-circle" src="/users/{{ Auth::user()->img_path }}">
+                <img class="img-profile rounded-circle" src=
+                @if(Auth::user()->img_path != null)
+                "/users/{{ Auth::user()->img_path }}"
+                @else
+                "/users/demo.png"
+                @endif
+                >
               @endif
                
               
