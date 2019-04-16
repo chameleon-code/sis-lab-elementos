@@ -3,9 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Validator;
+use App\Traits\ValidationTrait;
 class Professor extends Model
 {
+    use ValidationTrait;
     protected $fillable = [
         'user_id',
     ];
@@ -16,15 +17,7 @@ class Professor extends Model
         'email' => 'email|required|max:150',
         'password' => 'required'
     ];
-    public $errors;
-    public function validate($input){
-        $validator = Validator::make($input, $this->rules);
-        if($validator->fails()){
-            $this->errors = $validator->errors();
-            return false;
-        }
-        return true;
-    }
+
     public function subjectMatters(){
         return $this->belongsToMany('App\SubjectMatter', 'professor_subject_matter', 'professor_id', 'subject_matter_id');
     }

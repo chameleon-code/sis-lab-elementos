@@ -19,16 +19,8 @@ class SubjectMatterController extends Controller
         return view('components.contents.subjectMatter.index', $data);
     }
 
-    public function show()
-    {
-
-    }
-
     public function create(){
-        $managements = Management::getAllManagements();
-        $data=['managements'=>$managements];
-        return view('components.contents.subjectMatter.create', $data);
-
+        return view('components.contents.subjectMatter.create');
     }
 
     public function store(Request $request){
@@ -36,7 +28,7 @@ class SubjectMatterController extends Controller
         $subjectMatters = new SubjectMatter();
         if($subjectMatters->validate($input)){
             SubjectMatter::create($input);
-            Session::flash('status_message','Subject-Matter añadido!');
+            Session::flash('status_message','Materia añadida!');
             
             return redirect('/admin/subjectmatters');
         }
@@ -46,12 +38,7 @@ class SubjectMatterController extends Controller
     public function edit($id){
         
         $subjectMatter = SubjectMatter::findOrFail($id);
-        $managements_id=$subjectMatter->managements_id;
-        $management = Management::findOrFail($managements_id);
-        $managements = Management::getAllManagements();
-        $data=['subjectMatter' => $subjectMatter,
-            'managements' => $managements,
-            'management_id' => $management->id
+        $data=['subjectMatter' => $subjectMatter
         ];
         
         return view('components.contents.subjectMatter.edit')->withTitle('Editar la Materia')->with($data);
@@ -63,10 +50,9 @@ class SubjectMatterController extends Controller
 
         if($subjectMatter->validate($input)){
             $subjectMatter->name = $request->name;
-            $subjectMatter->managements_id=$request->managements_id;
             $subjectMatter->save();
 
-            Session::flash('status_message', 'Subject-Matter Editado!');
+            Session::flash('status_message', 'Materia Editada!');
             return redirect('/admin/subjectmatters');
         }
         return back()->withInput($input)->withErrors($subjectMatter->errors);

@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Validator;
+use App\Traits\ValidationTrait;
 
 class User extends Authenticatable
 {
+    use ValidationTrait;
     use Notifiable;
 
     /**
@@ -35,14 +36,4 @@ class User extends Authenticatable
         'email' => 'email|required|max:150',
         'password' => 'required'
     ];
-
-    public $errors;
-    public function validate($input){
-        $validator = Validator::make($input, $this->rules);
-        if($validator->fails()){
-            $this->errors = $validator->errors();
-            return false;
-        }
-        return true;
-    }
 }
