@@ -10,18 +10,17 @@
               <div class="p-5">
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">Creación de Bloques</h1>
-                </div>
-                        @if (count($errors)>0)
-                            <div class="alert alert-danger">
-                                <b>Ha ocurrido un error!</b>
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{$error}}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                        
+                    </div>
+                            @if (count($errors)>0)
+                                <div class="alert alert-danger">
+                                    <b>Ha ocurrido un error!</b>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{$error}}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <form class="user" action="{{Route('blocks.store')}}" method="post">
                                 {{ csrf_field() }}
                                 <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
@@ -39,25 +38,18 @@
                                         @endforelse
                                     </select>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="group col-md-10">
-                                        <label for="">Grupos</label>
-                                    </div>
-                                    <div class="group col-md-2">
-                                        <button type="button" class="group btn btn-md btn-warning col-md-12" id="addGroups" value="add"><i class="fas fa-plus"></i></button>
-                                    </div>
-                                </div>
-                                <div class="form-group">
+                                <div class="form-group" {{ $errors->has('group_id') ? 'has-error' : ''}}>
+                                        <label for="group_id" class="control-label">Grupo: </label>
+                                        <a class="btn btn-md" id="addGroups" value="add"><i class="fa fa-plus" aria-hidden="true" aria-hidden="true"></i></a>
+                                        <a class="btn btn-md" id="removeGroup"><i class="fas fa-minus-circle"></i></a>  </br></br>
                                         <div id="groups_container">
                                             <select class="form-control col-md-12" name="groups_id[]" id="group_id1">
                                                 @forelse ($groups as $group)
                                                     <option value="{{ $group->id }}" class="form-control">{{ $group->name . " - " . $group->professor->names . " " . $group->professor->first_name . " " . $group->professor->second_name}}</option>
                                                 @empty
-                                                <option class="form-control" value="">-- No existen grupos registrados --</option>
+                                                    <option class="form-control" value="">-- No existen grupos registrados --</option>
                                                 @endforelse
-                                                
                                             </select>
-                                            </br>
                                         </div>
                                 </div>
                                 <div class="form-group row">

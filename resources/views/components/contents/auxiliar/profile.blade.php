@@ -9,12 +9,19 @@
                     <div class="px-5">
                         <div class="card card-profile o-hidden border-0 my-3">
                             <div style="background-image: url(https://demo.bootstrapious.com/admin-premium/1-4-5/img/photos/paul-morris-116514-unsplash.jpg);" class="card-header"></div>
-                            <div class="card-body text-center"><img src="/users/{{ $user->img_path }}" class="card-profile-img">
+                            <div class="card-body text-center">
+                                <img class="card-profile-img" src=
+                                @if($user->img_path != null)
+                                "/storage/users/{{ $user->img_path }}"
+                                @else
+                                "/users/demo.png"
+                                @endif
+                                >
                                 <h3 class="mb-3"> {{ $user->names }} {{ $user->first_name }} {{ $user->second_name }} </h3>
                                 <p class=""> <strong> Tipo de Usuario: </strong> Auxiliar </p>
                                 <p class=""> <strong> Correo Electrónico: </strong> {{ $user->email }} </p>
                                 <br>
-                                <a href="/admin/auxiliars" class="btn btn-primary"> Volver </a>
+                                <a href="/admin/auxiliars" class="btn btn-primary"> Regresar </a>
                             </div>
                         </div>
                     </div>
