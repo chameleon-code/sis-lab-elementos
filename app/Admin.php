@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\ValidationTrait;
 
 class Admin extends Model
 {
+    use ValidationTrait;
     protected $fillable = [
         'user_id',
     ];
@@ -22,13 +24,4 @@ class Admin extends Model
         'password' => 'required'
     ];
 
-    public $errors;
-    public function validate($input){
-        $validator = Validator::make($input, $this->rules);
-        if($validator->fails()){
-            $this->errors = $validator->errors();
-            return false;
-        }
-        return true;
-    }
 }

@@ -33,7 +33,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
-                                    <label for="subject_matter_id" class="control-label">Materias</label>
+                                    <label for="subject_matter_id" class="control-label">Materia</label>
                                     <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
                                         @forelse ($subjectMatters as $subjectMatter)
                                             <option class="form-control" value="{{$subjectMatter->id}}">{{$subjectMatter->name}}</option>

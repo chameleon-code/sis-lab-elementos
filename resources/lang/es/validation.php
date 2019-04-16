@@ -181,7 +181,13 @@ return [
         'first_name'            => 'apellido paterno',
         'second_name'           => 'apellido materno',
         'ci'                    => 'cédula',
-        'code_sis'              => 'código SIS'
+        'code_sis'              => 'código SIS',
+        'semester'              => 'semestre',
+        'managemet'             => 'gestión',
+        'management_id'         => 'gestión',
+        'subject_matter_id'     => 'materia',
+        
+
         
     ],
 ];

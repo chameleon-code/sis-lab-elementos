@@ -3,10 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Validator;
+use App\Traits\ValidationTrait;
 
 class Auxiliar extends Model
 {
+    use ValidationTrait;
     protected $fillable = [
         'user_id',
     ];
@@ -23,13 +24,4 @@ class Auxiliar extends Model
         'password' => 'required'
     ];
 
-    public $errors;
-    public function validate($input){
-        $validator = Validator::make($input, $this->rules);
-        if($validator->fails()){
-            $this->errors = $validator->errors();
-            return false;
-        }
-        return true;
-    }
 }
