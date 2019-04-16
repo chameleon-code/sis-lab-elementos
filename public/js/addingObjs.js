@@ -7,7 +7,7 @@ $(document).ready(function() {
         if (iCnt <= 5) {                        
             iCnt = iCnt + 1;
             $(container).append(
-                '<select class="form-control col-md-12" name="groups_id[]" id="group_id'+iCnt+'"></select></br>'
+                '</br><select class="form-control col-md-12" name="groups_id[]" id="group_id'+iCnt+'"></select>'
             );
             $.get("getGroups/"+subjectID+"", function(response, subjects){
                 console.log(response);
@@ -18,6 +18,10 @@ $(document).ready(function() {
                 }
             });
         }
-    })
-    ;
+    });
+    $('#removeGroup').click(function(){
+        $('#group_id'+iCnt).remove();
+        $('#groups_container br').remove();
+        iCnt--;
+    });
 });

@@ -41,7 +41,8 @@
                                 </div>
                                 <div class="form-group" {{ $errors->has('group_id') ? 'has-error' : ''}}>
                                         <label for="group_id" class="control-label">Grupo: </label>
-                                        <a class="btn btn-md" id="addGroups" value="add"><i class="fa fa-plus" aria-hidden="true" aria-hidden="true"></i></a> </br></br>
+                                        <a class="btn btn-md" id="addGroups" value="add"><i class="fa fa-plus" aria-hidden="true" aria-hidden="true"></i></a>
+                                        <a class="btn btn-md" id="removeGroup"><i class="fas fa-minus-circle"></i></a>  </br></br>
                                         <div id="groups_container">
                                             <select class="form-control col-md-12" name="groups_id[]" id="group_id1">
                                                 @forelse ($groups as $group)
@@ -49,9 +50,7 @@
                                                 @empty
                                                 <option class="form-control" value="">-- No existen grupos registrados --</option>
                                                 @endforelse
-                                                
                                             </select>
-                                            </br>
                                         </div>
                                 </div>
                                 <div class="form-group">
