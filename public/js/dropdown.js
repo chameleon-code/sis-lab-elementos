@@ -7,7 +7,7 @@ $(document).ready(function(){
             );
             var subjectID = $("#subjects :selected").attr("value");
             $.get("getGroups/"+subjectID+"", function(response, subjects){
-                if(response.length !== null){
+                if(response.length > 0){
                     for(i=0; i<response.length; i++){
                         $('#group_id1').append("<option value='"+response[i].id+"'>"+response[i].name +" - "+ response[i].professor.names +" "+ response[i].professor.first_name+" "+ response[i].professor.second_name+"</option>");
                     }

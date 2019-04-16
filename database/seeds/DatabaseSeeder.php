@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
             'names' => 'admin',
             'first_name' => 'admin',
             'second_name' => 'admin',
-            'email'=>'admin@admin.com',
-            'password' => bcrypt('secret'),
+            'email'=>'admin@gmail.com',
+            'password' => bcrypt('admin'),
             'role_id' => \App\Role::ADMIN
         ])
         ->
