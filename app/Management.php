@@ -13,8 +13,8 @@ class Management extends Model
     protected $hidden = ['created_at','update_at'];
 
     protected $rules = [
-        'semester' => 'required|max:4|min:1',
-        'managements' => 'unique|managements'
+        'semester' => 'unique:managements|required|max:4|min:1',
+        'managements' => 'required|max:5|min:1'
     ];
 
     public static function getAllManagements(){

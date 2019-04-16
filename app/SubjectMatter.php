@@ -13,7 +13,7 @@ class SubjectMatter extends Model
     protected $hidden = ['created_at','update_at'];
 
     protected $rules = [
-        'name' => 'required|max:50|min:1'
+        'name' => 'unique:subject_matters|required|max:50|min:1'
     ];
 
     public static function getAllSubjectMatters(){

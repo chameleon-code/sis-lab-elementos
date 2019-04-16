@@ -32,21 +32,18 @@
                                     id="managements"
                                     class="form-control col-md-12 form-control-user"
                                     placeholder="Gestión"
-                                    value="{{ old('managements', $managements) }}" readonly>
+                                    value="{{ old('managements', $management->managements) }}" readonly>
                         </div>
                         <div class="form-group" {{ $errors->has('semester') ? 'has-error' : ''}}>
                             <label for='name' class="col-md-12 control-label">Semestre</label>
                             <select class="form-control col-md-12" name="semester">
-                                @foreach ($semester as $item)
-                                    <option class="form-control" value="{{$item}}">{{$item}}</option>
-                                @endforeach
-                                {{-- @foreach ($managements as $management)
-                                            @if ($management->id == $management_id)
-                                            <option class="form-control" value="{{$management->id}}" selected>{{$management->semester}}-{{$management->managements}}</option>
+                                @foreach ($semesters as $item)
+                                            @if ($management->semester== $item)
+                                            <option class="form-control" value="{{$item}}" selected>{{$item}}</option>
                                             @continue
                                             @endif
-                                            <option class="form-control" value="{{$management->id}}">{{$management->semester}}-{{$management->managements}}</option>
-                                @endforeach --}}
+                                            <option class="form-control" value="{{$item}}">{{$item}}</option>
+                                @endforeach
                         </select>
                         </div>
                         <hr>

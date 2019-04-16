@@ -18,10 +18,10 @@ class ManagementController extends Controller
     }
 
     public function create(){
-        $semester=['1','2','3','4'];
+        $semesters=['1','2','3','4'];
         $managements=Carbon::now()->format('Y');
         $data=[
-            'semester' => $semester,
+            'semesters' => $semesters,
             'managements' => $managements
         ];
         return view('components.contents.management.create',$data);
@@ -42,10 +42,13 @@ class ManagementController extends Controller
 
     public function edit($id){
         $management = Management::findOrFail($id);
-        $data=['subjectMatter' => $management
+        $semesters=['1','2','3','4'];
+        $data=[
+            'management' => $management,
+            'semesters' => $semesters
         ];
         
-        return view('components.contents.subjectMatter.edit')->withTitle('Editar la Materia')->with($data);
+        return view('components.contents.management.edit')->withTitle('Editar la Gestión')->with($data);
     }
 
     public function update(Request $request, $id){
@@ -59,7 +62,7 @@ class ManagementController extends Controller
             Session::flash('status_message', 'Gestión Editada!');
             return redirect('/admin/managements');
         }
-        return back()->withInput($input)->withErrors($subjectMatter->errors);
+        return back()->withInput($input)->withErrors($management->errors);
     }
 
     public function destroy($id){

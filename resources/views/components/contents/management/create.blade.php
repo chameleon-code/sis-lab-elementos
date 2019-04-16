@@ -36,7 +36,7 @@
                         <div class="form-group" {{ $errors->has('semester') ? 'has-error' : ''}}>
                             <label for='name' class="col-md-12 control-label">Semestre</label>
                             <select class="form-control col-md-12" name="semester">
-                                @foreach ($semester as $item)
+                                @foreach ($semesters as $item)
                                     <option class="form-control" value="{{$item}}">{{$item}}</option>
                                 @endforeach
                         </select>
