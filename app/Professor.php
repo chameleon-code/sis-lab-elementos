@@ -15,7 +15,7 @@ class Professor extends Model
         'first_name' => 'required|max:100',
         'second_name' => 'required|max:100',
         'email' => 'email|required|max:150',
-        'password' => 'required'
+        'password' => 'required|min:8'
     ];
 
     public function subjectMatters(){
