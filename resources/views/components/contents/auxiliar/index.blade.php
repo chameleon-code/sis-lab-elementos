@@ -33,9 +33,9 @@
                                                 @foreach ($auxiliars as $item)
 
                                                   <tr role="row" class="odd">
-                                                      <td class="mgx-1"><font style="vertical-align: inherit; "><font style="vertical-align: inherit; color: black;">{{ $item->first_name }}</font></font></td>
-                                                      <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: black;">{{ $item->second_name }}</font></font></td>
-                                                      <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: black;">{{ $item->names }}</font></font></td>
+                                                      <td class="mgx-1"><font style="vertical-align: inherit; "><font style="vertical-align: inherit;">{{ $item->first_name }}</font></font></td>
+                                                      <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->second_name }}</font></font></td>
+                                                      <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->names }}</font></font></td>
 
                                                       <td class="text-center p-2">
                                                           <a href="/admin/auxiliars/profile/{{ $item->id }}" class="btn btn-info btn-circle btn-sm"><i title="Ver detalles" class="fas fa-eye"></i></a>
@@ -84,21 +84,5 @@
           </div>
       </div>
   </div>
-
-  <!-- Bootstrap core JavaScript-->
-  <script src="/js/tables/jquery.min.js"></script>
-  <script src="/js/tables/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="/js/tables/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts all pages-->
-
-  <!-- Page level plugins -->
-  <script src="/js/tables/jquery.dataTables.min.js"></script>
-  <script src="/js/tables/dataTables.bootstrap4.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="/js/tables/datatables-demo.js"></script>  
 
 @endsection
