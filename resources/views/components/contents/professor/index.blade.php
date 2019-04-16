@@ -30,9 +30,9 @@
 
                                                 @foreach ($professors as $item)
                                                   <tr role="row" class="odd">
-                                                      <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: black;">{{ $item->first_name }}</font></font></td>
-                                                      <td class="mgx-1 sorting_1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: black;">{{ $item->second_name }}</font></font></td>
-                                                      <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: black;">{{ $item->names }}</font></font></td>
+                                                      <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->first_name }}</font></font></td>
+                                                      <td class="mgx-1 sorting_1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->second_name }}</font></font></td>
+                                                      <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->names }}</font></font></td>
                                                       {{-- <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->email }}</font></font></td> --}}
 
                                                       <td class="text-center p-2">

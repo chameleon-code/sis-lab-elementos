@@ -16,9 +16,9 @@
                                 <table class="table dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                     <thead>
                                         <tr role="row" class="bg-dark">
-                                            <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 280px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Nombre</font></font></th>
+                                            <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 260px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Nombre</font></font></th>
 
-                                            <th class="sorting_desc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 130px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Gestión</font></font></th>
+                                            <th class="sorting_desc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 110px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Gestión</font></font></th>
 
                                             <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 200px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Fecha de creación</font></font></th>
                                             
@@ -33,10 +33,10 @@
                                         <tbody> 
                                             @foreach ($subjectMatters as $item)
                                                 <tr role="row" class="odd">
-                                                    <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->name}}</font></font></td>
-                                                    <td class="sorting_1mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->management->semester}}-{{$item->management->managements}}</font></font></td>
-                                                    <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->created_at}}</font></font></td>
-                                                    <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->updated_at}}</font></font></td>
+                                                    <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color:">{{$item->name}}</font></font></td>
+                                                    <td class="sorting_1mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color:">{{$item->management->semester}}-{{$item->management->managements}}</font></font></td>
+                                                    <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color:">{{$item->created_at}}</font></font></td>
+                                                    <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color:">{{$item->updated_at}}</font></font></td>
                                                     <td>
                                                         <a href="/admin/subjectmatter/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm"> <i title="Modificar" class="fas fa-edit"></i> </a>
                                                     </td>

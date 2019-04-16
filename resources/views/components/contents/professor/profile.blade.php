@@ -22,7 +22,7 @@
                                 <p class=""> <strong> Tipo de Usuario: </strong> Docente </p>
                                 <p class=""> <strong> Correo Electrónico: </strong> {{ $user->email }} </p>
                                 <br>
-                                <a href="{{url('/admin/professors')}}" class="btn btn-primary"> Volver </a>
+                                <a href="{{url('/admin/professors')}}" class="btn btn-primary"> Regresar </a>
                             </div>
                         </div>
                     </div>

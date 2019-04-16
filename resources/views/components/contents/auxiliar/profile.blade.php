@@ -21,7 +21,7 @@
                                 <p class=""> <strong> Tipo de Usuario: </strong> Auxiliar </p>
                                 <p class=""> <strong> Correo Electrónico: </strong> {{ $user->email }} </p>
                                 <br>
-                                <a href="/admin/auxiliars" class="btn btn-primary"> Volver </a>
+                                <a href="/admin/auxiliars" class="btn btn-primary"> Regresar </a>
                             </div>
                         </div>
                     </div>
