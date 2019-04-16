@@ -10,18 +10,17 @@
               <div class="p-5">
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">Creación de Bloques</h1>
-                </div>
-                        @if (count($errors)>0)
-                            <div class="alert alert-danger">
-                                <b>Ha ocurrido un error!</b>
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{$error}}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                        
+                    </div>
+                            @if (count($errors)>0)
+                                <div class="alert alert-danger">
+                                    <b>Ha ocurrido un error!</b>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{$error}}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <form class="user" action="{{Route('blocks.store')}}" method="post">
                                 {{ csrf_field() }}
                                 <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
@@ -29,7 +28,7 @@
                                         <input type="text" class="form-control" name="name">
                                 </div>
                                 <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
-                                    <label for="subject_matter_id" class="control-label">Materias</label>
+                                    <label for="subject_matter_id" class="control-label">Materia</label>
                                     <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
                                         @forelse ($subjectMatters as $subjectMatter)
                                             <option class="form-control" value="{{$subjectMatter->id}}">{{$subjectMatter->name}}</option>
@@ -48,14 +47,19 @@
                                                 @forelse ($groups as $group)
                                                     <option value="{{ $group->id }}" class="form-control">{{ $group->name . " - " . $group->professor->names . " " . $group->professor->first_name . " " . $group->professor->second_name}}</option>
                                                 @empty
-                                                <option class="form-control" value="">-- No existen grupos registrados --</option>
+                                                    <option class="form-control" value="">-- No existen grupos registrados --</option>
                                                 @endforelse
                                             </select>
                                         </div>
                                 </div>
-                                <div class="form-group">
-                                     <button type="submit" class="col-md-12 btn btn-primary btn-user btn-block">Crear</button>                                   
-                                </div>
+                                <div class="form-group row">
+                                        <div class="form-group col-md-6 col">
+                                          <button type="submit" class="form-control btn btn-primary btn-block col-md-12">Crear</button>
+                                        </div>
+                                        <div class="form-group col-md-6 col">
+                                          <a class="form-control btn btn-danger btn-block col-md-12" href="{{ url('/admin/blocks') }}">Cancelar</a>    
+                                        </div>
+                                    </div>
                             </form>
                         </div>
                     </div>

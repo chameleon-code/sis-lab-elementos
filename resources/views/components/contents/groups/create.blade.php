@@ -9,7 +9,7 @@
             <div class="col-lg-12">
               <div class="p-5">
                 <div class="text-center">
-                  <h1 class="h4 text-gray-900 mb-4">Creación de Grupos de materias</h1>
+                  <h1 class="h4 text-gray-900 mb-4">Registro de Grupos de Materias</h1>
                 </div>
                         @if (count($errors)>0)
                             <div class="alert alert-danger">
@@ -33,7 +33,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
-                                    <label for="subject_matter_id" class="control-label">Materias</label>
+                                    <label for="subject_matter_id" class="control-label">Materia</label>
                                     <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
                                         @forelse ($subjectMatters as $subjectMatter)
                                             <option class="form-control" value="{{$subjectMatter->id}}">{{$subjectMatter->name}}</option>
@@ -59,9 +59,9 @@
                                         @endforeach
                                         </select>
                                     </div>
-                                
+                                <br>
                                 <div class="form-group">
-                                     <button type="submit" class="col-md-12 btn btn-primary btn-user btn-block">Crear</button>                                   
+                                     <button type="submit" class="col-md-12 btn btn-primary btn-block">Crear</button>                                   
                                 </div>
                             </form>
                         </div>

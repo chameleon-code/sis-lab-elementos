@@ -9,7 +9,7 @@
                 <div class="col-lg-12">
                   <div class="p-5">
                     <div class="text-center">
-                      <h1 class="h4 text-gray-900 mb-4">Crear Materia</h1>
+                      <h1 class="h4 text-gray-900 mb-4">Registrar Materia</h1>
                     </div>
                     @if (count($errors)>0)
                     <div class="alert alert-danger">
@@ -23,19 +23,18 @@
                     @endif
                     <form class="user" action="{{Route('subjectmatters.store')}}" method="post">
                         {{ csrf_field() }}
-
+                        <label for="">Nombre</label>
                         <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
                             {{-- <label for='name' class="col-md-12 control-label">Nombre</label> --}}
                             <input  type="text"
                                     name="name"
                                     id="subjectmatter-name"
-                                    class="form-control col-md-12 form-control-user"
-                                    placeholder="Nombre"
+                                    class="form-control col-md-12"
                                     value="{{old('name')}}" >
                         </div>
-                        <hr>
+                        <br>
                         <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-user btn-block col-md-12">Crear</button>
+                                <button type="submit" class="btn btn-primary btn-block col-md-12">Registrar</button>
                         </div>
                      </form>
                     </div>

@@ -9,7 +9,7 @@
                 <div class="col-lg-12">
                   <div class="p-5">
                     <div class="text-center">
-                      <h1 class="h4 text-gray-900 mb-4">Crear Gestión</h1>
+                      <h1 class="h4 text-gray-900 mb-4">Registrar Gestión</h1>
                     </div>
                     @if (count($errors)>0)
                     <div class="alert alert-danger">
@@ -23,27 +23,26 @@
                     @endif
                     <form class="user" action="{{Route('managements.store')}}" method="post">
                         {{ csrf_field() }}
-
+                        <label for='name' class="">Año</label>
                         <div class="form-group" {{ $errors->has('managements') ? 'has-error' : ''}}>
-                            <label for='name' class="col-md-12 control-label">Gestión</label>
-                            <input  type="text"
+                                    <input  type="text"
                                     name="managements"
                                     id="managements"
-                                    class="form-control col-md-12 form-control-user"
+                                    class="form-control col-md-12"
                                     placeholder="Gestión"
                                     value="{{ old('managements', $managements) }}" readonly>
                         </div>
+                        <label for='name' class="">Gestión</label>
                         <div class="form-group" {{ $errors->has('semester') ? 'has-error' : ''}}>
-                            <label for='name' class="col-md-12 control-label">Semestre</label>
                             <select class="form-control col-md-12" name="semester">
                                 @foreach ($semesters as $item)
                                     <option class="form-control" value="{{$item}}">{{$item}}</option>
                                 @endforeach
                         </select>
                         </div>
-                        <hr>
+                        <br>
                         <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-user btn-block col-md-12">Crear</button>
+                                <button type="submit" class="btn btn-primary btn-block col-md-12">Registrar</button>
                         </div>
                      </form>
                     </div>

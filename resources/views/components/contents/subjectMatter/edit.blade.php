@@ -23,16 +23,16 @@
                             @endif
                             <form class="user" action="{{Route('subjectmatters.update',[$subjectMatter->id])}}" method="post">
                                 {{ csrf_field() }}
-
+                                <label for="">Nombre</label>
                                 <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
                                     <input type="text" name="name" id="subjectmatter-name" 
-                                    class="form-control col-md-12 form-control-user" 
+                                    class="form-control col-md-12" 
                                     value="{{old('name',$subjectMatter->name)}}"
                                     placeholder="Nombre">
                                 </div>
-                                <hr>
+                                <br>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-user btn-block col-md-12">Editar</button>
+                                    <button type="submit" class="btn btn-primary btn-block col-md-12">Editar</button>
                                 </div>
                             </form>
                         </div>

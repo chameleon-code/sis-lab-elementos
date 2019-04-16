@@ -183,7 +183,11 @@ return [
         'ci'                    => 'cédula',
         'code_sis'              => 'código SIS',
         'semester'              => 'semestre',
-        'managemet'             => 'gestión' 
+        'managemet'             => 'gestión',
+        'management_id'         => 'gestión',
+        'subject_matter_id'     => 'materia',
+        
+
         
     ],
 ];

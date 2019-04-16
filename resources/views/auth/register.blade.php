@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+        <head>
 
-<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-      rel="stylesheet">
-<link href="/css/sb-admin-2.css" rel="stylesheet">
-
+                <meta charset="utf-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                <meta name="description" content="">
+                <meta name="author" content="">
+        
+                <title>Registro</title>
+                <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+                    type="text/css">
+                <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+                <link href="/css/sb-admin-2.css" rel="stylesheet">
+        </head>
 <body class="bg-gradient-success">
 <script src="/js/validateFields.js"></script>
 <div class="container">
-
     <div class="card o-hidden border-0 shadow-lg my-5">
-
         <div class="card-body p-0">
-
             <div class="row">
-
                 <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-
                 <div class="col-lg-7">
-
                     <div class="p-5">
-
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Registro de Estudiante</h1>
                         </div>
@@ -77,8 +80,8 @@
                                 <div class="col-md-2 col-sm-2 col-2">
                                     <button type="button" class="btn btn-secondary btn-circle" title="Revelar Contraseña" onclick="revelate();"><i id="eye" class="fa fa-eye"></i></button>
                                 </div>
-                                {!! $errors -> first('password','<label style="color:crimson">:message</label>')!!} 
                             </div>
+                            {!! $errors -> first('password','<label style="color:crimson">:message</label>')!!} 
                             <input type="text" name="mode" hidden value="register">
                             <br>
                             <div class="form-group row">
@@ -94,12 +97,13 @@
                         <div class="text-center">
                             <a class="small" href="{{ url('/login') }}">¿Ya tienes una Cuenta?, Ingresa</a>
                         </div>
+                        <div class="text-center">
+                                <a class="small" href="{{ url('/') }}">Volver</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
 </body>
