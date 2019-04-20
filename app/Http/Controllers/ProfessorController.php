@@ -46,13 +46,15 @@ class ProfessorController extends Controller
     {
         $input =$request->all();
         $professor = new Professor();
-        if($professor->validate($input)){
+        $user =new User();
+        if($user->validate($input)){
             $data = array(
                 'names' => $request->names,
                 'first_name'=> $request->first_name,
                 'second_name'=> $request->second_name,
                 'email' => $request->email,
-                'password' => $request->password
+                'password' => $request->password,
+                'code_sis' => $request->code_sis
             );
             $newProfessor = User::create( [
                 'role_id'=> Role::PROFESSOR,
@@ -60,14 +62,15 @@ class ProfessorController extends Controller
                 'first_name'=> $request->first_name,
                 'second_name'=> $request->second_name,
                 'email' => $request->email,
-                'password' => bcrypt($request->password)
+                'password' => bcrypt($request->password),
+                'code_sis' => $request->code_sis
             ]);
             $professor->user_id = $newProfessor->id;
             $professor->save();
             Mail::to($request->email)->send(new ProfessorMailController($data,'register'));
             return redirect('/admin/professors');
         }else{
-            return redirect('/admin/professors/create')->withInput()->withErrors($professor->errors);
+            return redirect('/admin/professors/create')->withInput()->withErrors($user->errors);
         }
     }
 
@@ -115,19 +118,19 @@ class ProfessorController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::find($id);
-        $professor = new Professor();
         $input = $request->all();
-        if($professor->validate($input)){
+        if($user->validate($input)){
             $user->names = $request->names;
             $user->first_name = $request->first_name;
             $user->second_name = $request->second_name;
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
+            $user->code_sis = $request->code_sis;
             $user->save();
             Session::flash('status_message', 'Docente '.$user->names.' editado correctamente!');
             return redirect('/admin/professors');
         }
-        return black()->withInput($input)->withErrors($professor->errors);
+        return black()->withInput($input)->withErrors($user->errors);
     }
 
     /**

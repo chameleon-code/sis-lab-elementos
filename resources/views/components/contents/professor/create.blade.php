@@ -39,6 +39,11 @@
                     <input type="email" class="form-control" name="email" required>
                           {!! $errors -> first('email','<label style="color:crimson">:message</label>')!!} 
                   </div>
+                  <div class="form-group">
+                    <label for="">Código SIS</label>
+                    <input type="number" class="form-control" name="code_sis" required autofocus>
+                      {!! $errors -> first('code_sis','<label style="color:crimson">:message</label>')!!} 
+                  </div>
                   <label for="">Contraseña</label>
                   <div class="form-group row">
                     <div class="group col-md-9 col-sm-9 col-8">

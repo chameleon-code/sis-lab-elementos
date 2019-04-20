@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'role_id', 'names', 'first_name', 'second_name', 'email', 'password',
+        'role_id', 'names', 'first_name', 'second_name', 'email', 'password','code_sis',
     ];
 
     /**
@@ -34,6 +34,7 @@ class User extends Authenticatable
         'first_name' => 'required|max:100',
         'second_name' => 'required|max:100',
         'email' => 'email|required|max:150',
-        'password' => 'required'
+        'password' => 'required',
+        'code_sis' => 'unique:users|required|max:10|min:8'
     ];
 }
