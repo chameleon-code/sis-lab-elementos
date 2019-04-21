@@ -11,6 +11,16 @@
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">Registrar Docente</h1>
                 </div>
+                @if (count($errors)>0)
+                    <div class="alert alert-danger">
+                        <b>Ha ocurrido un error!</b>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <form class="user" method="POST" action="">
                   {!! csrf_field() !!}
                   <div class="form-group">
@@ -23,27 +33,27 @@
                           <div class="">
                               <label for="">Apellido Paterno</label>  
                               <input type="text" class="form-control" name="first_name" required autofocus>
-                                {!! $errors -> first('first_name','<label style="color:crimson">:message</label>')!!}  
                           </div>
                       </div>
                       <div class="form-group col-md-6">
                           <div class="">
                             <label for="">Apellido Materno</label>  
                             <input type="text" class="form-control" name="second_name" required autofocus> 
-                              {!! $errors -> first('second_name','<label style="color:crimson">:message</label>')!!}  
                           </div>
                       </div>
                   </div>
                   <div class="form-group">
                     <label for="">Correo Electrónico</label>
                     <input type="email" class="form-control" name="email" required>
-                          {!! $errors -> first('email','<label style="color:crimson">:message</label>')!!} 
+                  </div>
+                  <div class="form-group">
+                    <label for="">Código SIS</label>
+                    <input type="number" class="form-control" name="code_sis" required autofocus>
                   </div>
                   <label for="">Contraseña</label>
                   <div class="form-group row">
                     <div class="group col-md-9 col-sm-9 col-8">
                         <input type="text" id="password" onCopy="return false" readonly class="form-control col-md-12" name="password" required>
-                        {!! $errors -> first('password','<label style="color:crimson">:message</label>')!!} 
                     </div>
                     <div class="group col-md-3 col-sm-3 col-4">
                         <button type="button" class="btn btn-warning btn-block col-md-12" onclick="generatePassword();" title="Generar Contraseña"><i class="fas fa-key"></i></button>
