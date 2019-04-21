@@ -21,7 +21,8 @@ class Auxiliar extends Model
         'first_name' => 'required|max:100',
         'second_name' => 'required|max:100',
         'email' => 'email|required|max:150',
-        'password' => 'required|min:8'
+        'password' => 'required|min:8',
+        'code_sis' => 'required|max:10|min:8'
     ];
 
 }
