@@ -81,6 +81,9 @@
                       </div>
                   </div>
               </div>
+              <div class="row justify-content-center">
+                {{ $auxiliars->links() }}
+              </div>
           </div>
       </div>
   </div>

@@ -9,6 +9,8 @@ use App\Role;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AuxiliarMailController;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class AuxiliarController extends Controller
 {
