@@ -26,6 +26,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     $names = $faker->name;
     $first_name = $faker->LastName;
     $second_name = $faker->LastName;
+    $code_sis = $faker->unique()->randomNumber(9);
     return [
         'names' => $names,
         'first_name' => $first_name,
@@ -34,6 +35,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'email' => $faker->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+        'code_sis' => $code_sis,
        // 'img_path' => \Faker\Provider\Image::image(storage_path() . '/app/public/users', 200, 200, 'people', false),
     ];
 });
@@ -63,11 +65,9 @@ $factory->define(App\Auxiliar::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Student::class, function (Faker\Generator $faker) {
     static $password;
-    $code_sis = $faker->randomNumber();
     $ci = $faker->randomNumber();
     return [
         'user_id' => null,
-        'code_sis' => $code_sis,
         'ci' => $ci,
     ];
 });
