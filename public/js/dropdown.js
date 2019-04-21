@@ -3,7 +3,7 @@ $(document).ready(function(){
         $.get("getGroups/"+event.target.value+"", function(response, subjects){
             $("#groups_container").empty();
             $('#groups_container').append(
-                "<select class='form-control col-md-12' name='groups_id[]' id='group_id1'></select></br>"
+                "<select class='form-control col-md-12' name='groups_id[]' id='group_id1'></select>"
             );
             var subjectID = $("#subjects :selected").attr("value");
             $.get("getGroups/"+subjectID+"", function(response, subjects){

@@ -90,6 +90,7 @@ Route::get('/admin/gestiones','ManagementController@index');
 Route::resource('/admin/groups', 'GroupController');
 Route::get('/admin/groups/getCount/{id}', 'GroupController@getCountSubjects');
 Route::get('/admin/groups/getProfessors/{id}', 'GroupController@getProfessors');
+Route::get('/admin/groups/getGroupsName/{id}', 'GroupController@getGroupsNameBySubjects');
 
 //Auxiliares
 Route::get('/admin/auxiliars','AuxiliarController@index');
