@@ -118,8 +118,9 @@ class ProfessorController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::find($id);
+        $professor = new Professor();
         $input = $request->all();
-        if($user->validate($input)){
+        if($professor->validate($input)){
             $user->names = $request->names;
             $user->first_name = $request->first_name;
             $user->second_name = $request->second_name;
@@ -130,7 +131,7 @@ class ProfessorController extends Controller
             Session::flash('status_message', 'Docente '.$user->names.' editado correctamente!');
             return redirect('/admin/professors');
         }
-        return black()->withInput($input)->withErrors($user->errors);
+        return back()->withInput($input)->withErrors($professor->errors);
     }
 
     /**
