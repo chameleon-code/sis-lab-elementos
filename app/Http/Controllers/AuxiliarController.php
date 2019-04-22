@@ -9,6 +9,8 @@ use App\Role;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AuxiliarMailController;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class AuxiliarController extends Controller
 {
@@ -28,13 +30,15 @@ class AuxiliarController extends Controller
         
         $input = $request->all();
         $auxiliar = new Auxiliar();
-        if($auxiliar->validate($input)){
+        $user = new User();
+        if($user->validate($input)){
             $data = array(
                 'names' => $request->names,
                 'first_name'=> $request->first_name,
                 'second_name'=> $request->second_name,
                 'email' => $request->email,
-                'password' => $request->password
+                'password' => $request->password,
+                'code_sis' => $request->code_sis
             );
             $newAuxiliar = User::create([
                 'role_id' => \App\Role::AUXILIAR,
@@ -43,6 +47,7 @@ class AuxiliarController extends Controller
                 'second_name' => $request['second_name'],
                 'email' => $request['email'],
                 'password' => bcrypt($request['password']),
+                'code_sis' => $request['code_sis']
             ]);
             Auxiliar::create([
                 'user_id' => $newAuxiliar['id'],
@@ -50,7 +55,7 @@ class AuxiliarController extends Controller
             Mail::to($request->email)->send(new AuxiliarMailController($data, 'register'));
             return redirect('/admin/auxiliars');
         } else {
-            return redirect('admin/auxiliars/register')->withInput()->withErrors($auxiliar->errors);
+            return redirect('admin/auxiliars/create')->withInput()->withErrors($user->errors);
         }
     }
 

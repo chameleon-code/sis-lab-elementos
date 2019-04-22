@@ -15,7 +15,6 @@
                 </div>
                     <form class="user" role="form" method="POST" action="{{ url('/admin/auxiliars/store') }}">
                         {{ csrf_field() }}
-
                         <div class="form-group row">
                             <div class="{{ $errors->has('names') ? ' has-error' : '' }} col-sm-12 mb-3 mb-sm-0">
                                 <label for="">Nombres</label>
@@ -48,6 +47,14 @@
                             <input id="email" type="email" class="form-control col-md-12r" name="email" value="{{ old('email') }}" required>
                             @if ($errors->has('email'))
                                 <span class="help-block text-danger"> {{ $errors->first('email') }} </span>
+                            @endif
+                        </div>
+
+                        <div class="form-group{{ $errors->has('code_sis') ? ' has-error' : '' }}">
+                            <label for="">Código SIS</label>
+                            <input id="code_sis" type="number" class="form-control col-md-12r" name="code_sis" value="{{ old('code_sis') }}" required>
+                            @if ($errors->has('code_sis'))
+                                <span class="help-block text-danger"> {{ $errors->first('code_sis') }} </span>
                             @endif
                         </div>
 

@@ -46,7 +46,7 @@ class ProfessorController extends Controller
     {
         $input =$request->all();
         $professor = new Professor();
-        $user =new User();
+        $user = new User();
         if($user->validate($input)){
             $data = array(
                 'names' => $request->names,

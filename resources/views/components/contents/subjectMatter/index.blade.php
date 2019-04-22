@@ -10,9 +10,10 @@
                 @if (Session::has('status_message'))
                     <p class="alert alert-success">{{Session::get('status_message')}}</p>                           
                 @endif
-                <div class="table-responsive table-striped table-secondary">
+
+                <div class="">
                     <div class="col-sm-12">
-                        <table class="table dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                        <table class="table table-responsive dataTable table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                             <thead>
                                 <tr role="row" class="bg-dark">
                                     <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 260px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Nombre</font></font></th>
@@ -21,7 +22,7 @@
                                     
                                     <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 200px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Fecha Actualizacion</font></font></th>
 
-                                    <th class="sorting text-center" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="2" aria-label="Start date: activate to sort column ascending" style="width: 88px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Acciones</font></font></th>
+                                    <th class="text-center" data-orderable="false" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 88px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Acciones</font></font></th>
                                 </tr>
                             </thead>
                                 {{-- <tfoot>
@@ -33,12 +34,10 @@
                                         <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color:">{{$item->name}}</font></font></td>
                                         <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color:">{{$item->created_at}}</font></font></td>
                                         <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color:">{{$item->updated_at}}</font></font></td>
-                                        <td class="text-center">
-                                            <a href="/admin/subjectmatter/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm"> <i title="Modificar" class="fas fa-edit"></i> </a>
-                                        </td>
+                                        <td class="p-2" style="text-align: center; display: flex;">
+                                            <a href="/admin/subjectmatter/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1"> <i title="Modificar" class="fas fa-edit"></i> </a>
 
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar{{ $item->id }}"> <i title="Eliminar" class="fas fa-trash"></i> </button>
+                                            <button type="button" class="btn btn-danger btn-circle btn-sm mx-1" data-toggle="modal" data-target="#eliminar{{ $item->id }}"> <i title="Eliminar" class="fas fa-trash"></i> </button>
 
                                             <!-- Modal -->
                                             <div class="modal fade" id="eliminar{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

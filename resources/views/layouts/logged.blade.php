@@ -20,6 +20,7 @@
   -->
   <link href="/css/sb-admin-2.css" rel="stylesheet">
   <link href="/css/profile.css" rel="stylesheet">
+  <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <script src="{{ asset('js/jquery.js') }}"></script>
   @stack('scripts')
 </head>
@@ -183,7 +184,6 @@
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="/vendor/jquery/jquery.min.js"></script>
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
@@ -198,6 +198,13 @@
   <!-- Page level custom scripts -->
   <script src="/js/demo/chart-area-demo.js"></script>
   <script src="/js/demo/chart-pie-demo.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="/vendor/datatables/jquery.dataTables.js"></script>
+  <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="/js/datatables-demo.js"></script>
 
 </body>
 

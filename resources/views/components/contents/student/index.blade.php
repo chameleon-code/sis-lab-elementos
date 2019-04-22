@@ -11,10 +11,10 @@
                     @if (Session::has('status_message'))
                         <p class="alert alert-success"><strong> {{Session::get('status_message')}} </strong></p>
                     @endif
-                    <div class="table-responsive table-striped table-secondary">
+                    <div class="">
                         <div class="row">
                             <div class="col-sm-12">
-                                <table class="table dataTable" id="dataTable" width="100%"
+                                <table class="table table-responsive dataTable table-striped table-secondary" id="dataTable" width="100%"
                                        cellspacing="0" role="grid" aria-describedby="dataTable_info"
                                        style="width: 100%;">
                                     <thead>
@@ -37,8 +37,8 @@
 
                                         {{-- <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Email</font></font></th> --}}
 
-                                        <th class="sorting text-center" tabindex="0" aria-controls="dataTable"
-                                            rowspan="1" colspan="3" aria-label="Age: activate to sort column ascending">
+                                        <th class="text-center" data-orderable="false"
+                                            rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending">
                                             <font style="vertical-align: inherit;"><font
                                             style="vertical-align: inherit; color: white;">Acciones</font></font></th>
                                     </tr>
@@ -53,14 +53,12 @@
                                             <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->names }}</font></font></td>
                                             {{-- <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->email }}</font></font></td> --}}
 
-                                            <td style="width: 40px;" class="text-center">
-                                                <a href="/admin/students/profile/{{ $item->id }}" class="btn btn-info btn-circle btn-sm"><i title="Ver detalles" class="fas fa-eye"></i></a>
-                                            </td>
-                                            <td style="width: 40px;" class="text-center">
-                                                <a href="/admin/students/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm"><i title="Modificar" class="fas fa-edit"></i></a>
-                                            </td>
-                                            <td style="width: 40px;" class="text-center">
-                                                <button type="button" class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar{{ $item->id }}"><i title="Eliminar" class="fas fa-trash"></i></button>
+                                            <td class="text-center" style="text-align: center; display: flex;">
+                                                <a href="/admin/students/profile/{{ $item->id }}" class="btn btn-info btn-circle btn-sm mx-1"><i title="Ver detalles" class="fas fa-eye"></i></a>
+
+                                                <a href="/admin/students/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1"><i title="Modificar" class="fas fa-edit"></i></a>
+
+                                                <button type="button" class="btn btn-danger btn-circle btn-sm mx-1" data-toggle="modal" data-target="#eliminar{{ $item->id }}"><i title="Eliminar" class="fas fa-trash"></i></button>
 
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="eliminar{{ $item->id }}" tabindex="-1"
@@ -94,8 +92,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-
                                             </td>
                                         </tr>
                                     @endforeach

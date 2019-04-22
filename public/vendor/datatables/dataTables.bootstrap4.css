@@ -1,7 +1,7 @@
 table.dataTable {
   clear: both;
-  margin-top: 6px !important;
-  margin-bottom: 6px !important;
+  margin-top: 15px !important;
+  margin-bottom: 35px !important;
   max-width: none !important;
   border-collapse: separate !important;
   border-spacing: 0;
@@ -55,6 +55,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
   margin: 2px 0;
   white-space: nowrap;
   justify-content: flex-end;
+  text-align: left;
 }
 div.dataTables_wrapper div.dataTables_processing {
   position: absolute;
@@ -115,6 +116,7 @@ table.dataTable thead .sorting_desc_disabled:after {
   right: 0.5em;
   content: "\2193";
 }
+
 table.dataTable thead .sorting_asc:before,
 table.dataTable thead .sorting_desc:after {
   opacity: 1;

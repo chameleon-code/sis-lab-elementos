@@ -11,10 +11,10 @@
                   @if (Session::has('status_message'))
                       <p class="alert alert-success"> <strong> {{Session::get('status_message')}} </strong> </p>
                   @endif
-                  <div class="table-responsive table-striped table-secondary">
+                  <div class="">
                       <div class="row">
                           <div class="col-sm-12">
-                                  <table class="table dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                  <table class="table table-responsive dataTable table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                       <thead>
                                           <tr role="row" class="bg-dark">
                                               <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 215px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Ap. Paterno</font></font></th>
@@ -23,7 +23,7 @@
 
                                               <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 400px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Nombres</font></font></th>
 
-                                              <th class="sorting text-center" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="3" aria-label="Age: activate to sort column ascending" style="width: 39px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Acciones</font></font></th>
+                                              <th class="text-center" data-orderable="false" rowspan="1" colspan="1" style="width: 39px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Acciones</font></font></th>
                                           </tr>
                                       </thead>
                                           <tbody>
@@ -35,40 +35,38 @@
                                                       <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->names }}</font></font></td>
                                                       {{-- <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->email }}</font></font></td> --}}
 
-                                                      <td class="text-center p-2">
-                                                          <a href="/admin/professors/profile/{{ $item->id }}" class="btn btn-info btn-circle btn-sm"><i title="Ver detalles" class="fas fa-eye"></i></a>
-                                                      </td>
-                                                      <td class="text-center p-2">
-                                                          <a href="/admin/professors/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm"><i title="Modificar" class="fas fa-edit"></i></a>
-                                                      </td>
-                                                      <td class="text-center p-2">
-                                                        <button type="button" class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar{{ $item->id }}"> <i title="Eliminar" class="fas fa-trash"></i> </button>
+                                                      <td class="p-2" style="text-align: center; display: flex;">
+                                                          <a href="/admin/professors/profile/{{ $item->id }}" class="btn btn-info btn-circle btn-sm mx-1"><i title="Ver detalles" class="fas fa-eye"></i></a>
 
-                                                        <!-- Modal -->
-                                                        <div class="modal fade" id="eliminar{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel"> Eliminar Docente </h5>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                                </div>
-                                                                <div class="modal-body text-left">
-                                                                    ¿Esta seguro que desea eliminar al docente {{ $item->names }} {{ $item->first_name }}?
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                                <input type="hidden" id="id_auxiliar">
-                                                                    <form action="{{route('professor.destroy', [$item->id])}}" method="POST">
-                                                                        {{csrf_field()}}
-                                                                        {{method_field('DELETE')}}
-                                                                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
+                                                          <a href="/admin/professors/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1"><i title="Modificar" class="fas fa-edit"></i></a>
+
+                                                          <button type="button" class="btn btn-danger btn-circle btn-sm mx-1" data-toggle="modal" data-target="#eliminar{{ $item->id }}"> <i title="Eliminar" class="fas fa-trash"></i> </button>
+
+                                                          <!-- Modal -->
+                                                          <div class="modal fade" id="eliminar{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                              <div class="modal-dialog" role="document">
+                                                              <div class="modal-content">
+                                                                  <div class="modal-header">
+                                                                  <h5 class="modal-title" id="exampleModalLabel"> Eliminar Docente </h5>
+                                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                      <span aria-hidden="true">&times;</span>
+                                                                  </button>
+                                                                  </div>
+                                                                  <div class="modal-body text-left">
+                                                                      ¿Esta seguro que desea eliminar al docente {{ $item->names }} {{ $item->first_name }}?
+                                                                  </div>
+                                                                  <div class="modal-footer">
+                                                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                                  <input type="hidden" id="id_auxiliar">
+                                                                      <form action="{{route('professor.destroy', [$item->id])}}" method="POST">
+                                                                          {{csrf_field()}}
+                                                                          {{method_field('DELETE')}}
+                                                                      <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                                      </form>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </td>
                                                   </tr>
                                               @endforeach
                                           </tbody>

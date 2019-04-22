@@ -26,7 +26,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     $names = $faker->name;
     $first_name = $faker->LastName;
     $second_name = $faker->LastName;
-    $code_sis = $faker->unique()->randomNumber(9);
+    $code_sis = $faker->unique()->randomNumber(8);
     return [
         'names' => $names,
         'first_name' => $first_name,
