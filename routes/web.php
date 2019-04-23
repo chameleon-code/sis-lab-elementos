@@ -107,6 +107,7 @@ Route::get('/admin/show/{id}', 'AdminController@show');
 //Bloques
 Route::resource('/admin/blocks', 'BlockController');
 Route::get('/admin/blocks/getGroups/{id}', 'BlockController@getGroups');
+Route::get('/admin/blocks/getGroupsId', 'BlockGroupController@getAllBlockGroups');
 
 //Gestion
 Route::get('/admin/managements','ManagementController@index');
