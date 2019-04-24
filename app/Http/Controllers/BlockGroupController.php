@@ -82,8 +82,10 @@ class BlockGroupController extends Controller
     {
         //
     }
+
+
+
     public function getAllBlockGroups(){
-        dd('sdf');
-       // return BlockGroup::getAllBlockGroups();
+        return BlockGroup::getAllBlockGroupsId();
     }
 }

@@ -8,8 +8,7 @@ class BlockGroup extends Model
 {
     protected $table = 'block_group';
 
-    public static function getAllBlockGroups(){
-        dd('Hi');
-        return self::select('group_id')->get();
+    public static function getAllBlockGroupsId(){
+        return array_pluck(self::select('group_id')->get(), 'group_id');
     }
 }

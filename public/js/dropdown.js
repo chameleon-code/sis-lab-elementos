@@ -1,4 +1,10 @@
 $(document).ready(function(){
+    var array = new Array();
+            $.get("getGroupsId", function(response, subjects){
+                for(i=0; i<response.length; i++){
+                    array[i] = response[i];
+                }
+            });            
     $("#subjects").change(function(event){
         $.get("getGroups/"+event.target.value+"", function(response, subjects){
             $("#groups_container").empty();
@@ -9,7 +15,9 @@ $(document).ready(function(){
             $.get("getGroups/"+subjectID+"", function(response, subjects){
                 if(response.length > 0){
                     for(i=0; i<response.length; i++){
-                        $('#group_id1').append("<option value='"+response[i].id+"'>"+response[i].name +" - "+ response[i].professor.names +" "+ response[i].professor.first_name+" "+ response[i].professor.second_name+"</option>");
+                        if( !array.includes(response[i].id)){
+                            $('#group_id1').append("<option value='"+response[i].id+"'>"+response[i].name +" - "+ response[i].professor.names +" "+ response[i].professor.first_name+" "+ response[i].professor.second_name+"</option>");
+                        }
                     }
                 }
                 else{
