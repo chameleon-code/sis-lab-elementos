@@ -63,6 +63,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             //$table->Integer('code_sis');
             $table->Integer('ci');
+            $table->string('folder_path')->nullable();
         });
     }
 

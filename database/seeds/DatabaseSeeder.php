@@ -13,8 +13,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Storage::deleteDirectory('users');
-        
         Storage::makeDirectory('users');
+
+        Storage::deleteDirectory('folders');
+        Storage::makeDirectory('folders');
 
         factory(\App\Role::class, 1)->create(['name' => 'admin']);
         factory(\App\Role::class, 1)->create(['name' => 'professor']);
@@ -28,11 +30,38 @@ class DatabaseSeeder extends Seeder
             'email'=>'admin@gmail.com',
             'password' => bcrypt('admin'),
             'role_id' => \App\Role::ADMIN
-        ])
-        ->
-        each(function (\App\User $u){
-            factory(\App\Admin::class, 1)->create(['user_id' => $u->id]);
-        });
+        ]);
+        factory(\App\Admin::class, 1)->create(['user_id' => 1]);
+
+        factory(\App\User::class, 1)->create([
+            'names' => 'professor',
+            'first_name' => 'professor',
+            'second_name' => 'professor',
+            'email'=>'professor@gmail.com',
+            'password' => bcrypt('professor'),
+            'role_id' => \App\Role::PROFESSOR
+        ]);
+        factory(\App\Professor::class, 1)->create(['user_id' => 2]);
+
+        factory(\App\User::class, 1)->create([
+            'names' => 'auxiliar',
+            'first_name' => 'auxiliar',
+            'second_name' => 'auxiliar',
+            'email'=>'auxiliar@gmail.com',
+            'password' => bcrypt('auxiliar'),
+            'role_id' => \App\Role::AUXILIAR
+        ]);
+        factory(\App\Auxiliar::class, 1)->create(['user_id' => 3]);
+
+        factory(\App\User::class, 1)->create([
+            'names' => 'student',
+            'first_name' => 'student',
+            'second_name' => 'student',
+            'email'=>'student@gmail.com',
+            'password' => bcrypt('student'),
+            'role_id' => \App\Role::STUDENT
+        ]);
+        factory(\App\Student::class, 1)->create(['user_id' => 4]);
 
         factory(\App\User::class, 5)->create([ 'role_id' => \App\Role::PROFESSOR ])
         ->each(function (\App\User $u){

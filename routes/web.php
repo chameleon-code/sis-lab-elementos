@@ -59,6 +59,8 @@ Route::get('admin/students/{id}/edit', 'StudentController@edit');
 Route::post('student/{id}/update', 'StudentController@update')->name('student.update');
 Route::delete('student/{id}', 'StudentController@destroy')->name('student.destroy');
 
+Route::get('/folder', 'StudentController@folder');
+
 Route::get('auxiliar', function () {
     return view('components.sections.auxiliarSection');
 });

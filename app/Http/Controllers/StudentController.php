@@ -9,6 +9,7 @@ use \App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
@@ -125,5 +126,10 @@ class StudentController extends Controller
         ];
 
         return view('components.contents.student.profile')->withTitle('Perfil de Estudiante')->with($data);
+    }
+
+    public function folder()
+    {
+        Storage::makeDirectory('folders/gg');
     }
 }
