@@ -12,7 +12,7 @@
 
   <!-- Custom fonts for this template-->
   <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  
+
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template
@@ -21,7 +21,9 @@
   <link href="/css/sb-admin-2.css" rel="stylesheet">
   <link href="/css/profile.css" rel="stylesheet">
   <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <link rel="stylesheet" href="/js/jquery-ui-1.12.1/jquery-ui.css" />
   <script src="{{ asset('js/jquery.js') }}"></script>
+  <script src="/js/jquery-ui-1.12.1/jquery-ui.js"></script>
   @stack('scripts')
 </head>
 
@@ -29,7 +31,7 @@
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-    
+
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
@@ -58,13 +60,13 @@
         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
           <i class="fa fa-bars"></i>
         </button>
-  
+
         <!-- Topbar Search -->
-        
-  
+
+
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
-  
+
           <!-- Nav Item - Search Dropdown (Visible Only XS) -->
           <li class="nav-item dropdown no-arrow d-sm-none">
             <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -84,15 +86,15 @@
               </form>
             </div>
           </li>
-  
+
           <!-- Nav Item - Alerts -->
-        
-  
+
+
           <!-- Nav Item - Messages -->
-          
-  
+
+
           <div class="topbar-divider d-none d-sm-block"></div>
-  
+
           <!-- Nav Item - User Information -->
           <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -109,8 +111,8 @@
                 @endif
                 >
               @endif
-               
-              
+
+
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -131,11 +133,11 @@
               </a>
             </div>
           </li>
-  
+
         </ul>
-  
+
       </nav>
-      <!-- End of Topbar -->  
+      <!-- End of Topbar -->
 
       @yield('userContent')
 
@@ -205,7 +207,8 @@
 
   <!-- Page level custom scripts -->
   <script src="/js/datatables-demo.js"></script>
-
+  {{-- para las fechas--}}
+  <script src="/js/datepicker/datepinker.js"></script>
 </body>
 
 </html>

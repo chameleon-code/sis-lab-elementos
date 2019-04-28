@@ -40,6 +40,24 @@
                                 @endforeach
                         </select>
                         </div>
+                        <label for='name' class="">Inicio de la Gestión</label>
+                        <div>
+                            <input  type="text"
+                                    name="start_management"
+                                    id="inicio_fecha"
+                                    class="form-control col-md-12"
+                                    placeholder="Inicio de la fecha"
+                                    value="{{ old('start_management') }}" required>
+                        </div>
+                        <label for='name' class="">Fin de la Gestión</label>
+                        <div>
+                            <input  type="text"
+                                    name="end_management"
+                                    id="fin_fecha"
+                                    class="form-control col-md-12"
+                                    placeholder="Fin de la fecha"
+                                    value="{{ old('end_management') }}" required>
+                        </div>
                         <br>
                         <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-block col-md-12">Registrar</button>
