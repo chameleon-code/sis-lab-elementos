@@ -77,5 +77,15 @@ class DatabaseSeeder extends Seeder
         ->each(function (\App\User $u){
             factory(\App\Student::class, 1)->create(['user_id' => $u->id]);
         });
+
+        factory(\App\Management::class, 1)->create([
+            'semester' => '1',
+            'managements' => '2019',
+        ]);
+
+        factory(\App\Management::class, 1)->create([
+            'semester' => '2',
+            'managements' => '2019',
+        ]);
     }
 }

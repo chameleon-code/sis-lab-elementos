@@ -71,3 +71,13 @@ $factory->define(App\Student::class, function (Faker\Generator $faker) {
         'ci' => $ci,
     ];
 });
+
+$factory->define(App\Management::class, function (Faker\Generator $faker) {
+    static $semester;
+    static $managements;
+    
+    return [
+        'semester' => $semester,
+        'managements' => $managements,
+    ];
+});
