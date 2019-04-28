@@ -21,18 +21,18 @@
                                     <tr role="row" class="bg-dark">
                                         <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1"
                                             colspan="1" aria-label="Name: activate to sort column ascending"
-                                            style="width: 215px;"><font style="vertical-align: inherit;"><font
-                                                        style="vertical-align: inherit; color: white;">Ap. Paterno</font></font></th>
+                                            style="width: 230px;"><font style="vertical-align: inherit;"><font
+                                                        style="vertical-align: inherit; color: white;">Código SIS</font></font></th>
 
                                         <th class="sorting_desc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1"
                                             colspan="1" aria-label="Position: activate to sort column ascending"
-                                            style="width: 215px;" aria-sort="descending"><font
+                                            style="width: 380px;" aria-sort="descending"><font
                                                     style="vertical-align: inherit;"><font
-                                                        style="vertical-align: inherit; color: white;">Ap. Materno</font></font></th>
+                                                        style="vertical-align: inherit; color: white;">Apellidos</font></font></th>
 
                                         <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1"
                                             colspan="1" aria-label="Office: activate to sort column ascending"
-                                            style="width: 400px;"><font style="vertical-align: inherit;"><font
+                                            style="width: 380px;"><font style="vertical-align: inherit;"><font
                                                         style="vertical-align: inherit; color: white;">Nombres</font></font></th>
 
                                         {{-- <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Email</font></font></th> --}}
@@ -48,8 +48,8 @@
                                     @foreach ($students as $item)
 
                                         <tr role="row" class="odd">
-                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->first_name }}</font></font></td>
-                                            <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->second_name }}</font></font></td>
+                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->code_sis }}</font></font></td>
+                                            <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->first_name }} {{ $item->second_name }}</font></font></td>
                                             <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->names }}</font></font></td>
                                             {{-- <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->email }}</font></font></td> --}}
 

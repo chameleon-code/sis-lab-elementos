@@ -16,7 +16,7 @@ class Student extends Model
 
     public static function getAllStudents()
     {
-        return Student::join('users', 'user_id', '=', 'users.id')->select('users.role_id', 'users.names', 'users.first_name', 'users.second_name', 'users.email', 'users.password', 'users.img_path', 'users.remember_token', 'users.created_at', 'users.updated_at', 'students.id', 'code_sis', 'ci')->get();
+        return Student::join('users', 'user_id', '=', 'users.id')->select('users.role_id', 'users.names', 'users.first_name', 'users.second_name', 'users.email', 'users.password', 'users.img_path', 'users.remember_token', 'users.created_at', 'users.updated_at', 'students.id', 'users.code_sis', 'ci')->get();
     }
 
     protected $rules = [
