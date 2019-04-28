@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\SubjectMatter;
 use App\Group;
 use App\Block;
+use App\BlockGroup;
 
 class BlockController extends Controller
 {
@@ -31,7 +32,10 @@ class BlockController extends Controller
     public function create()
     {
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
-        $groups = $this->getGroups(new Request(), 1);
+        $groupsID = BlockGroup::getAllBlockGroupsId();
+        $groups = Group::where('subject_matter_id', 1)
+                        ->whereNotIn('id', $groupsID)                        
+                        ->orderBy('name')->get();
         $data=['subjectMatters'=>$subjectMatters,
                 'groups'=>$groups];
         return view('components.contents.blocks.create', $data);
