@@ -18,11 +18,15 @@ class DatabaseSeeder extends Seeder
         Storage::deleteDirectory('folders');
         Storage::makeDirectory('folders');
 
+        // ROLES
+
         factory(\App\Role::class, 1)->create(['name' => 'admin']);
         factory(\App\Role::class, 1)->create(['name' => 'professor']);
         factory(\App\Role::class, 1)->create(['name' => 'auxiliar']);
         factory(\App\Role::class, 1)->create(['name' => 'student']);
         
+        // USUARIOS
+
         factory(\App\User::class, 1)->create([
             'names' => 'admin',
             'first_name' => 'admin',
@@ -78,14 +82,38 @@ class DatabaseSeeder extends Seeder
             factory(\App\Student::class, 1)->create(['user_id' => $u->id]);
         });
 
+        // GESTIONES
+
         factory(\App\Management::class, 1)->create([
             'semester' => '1',
             'managements' => '2019',
+            'start_management' => '2019-02-01',
+            'end_management' => '2019-06-01',
         ]);
 
         factory(\App\Management::class, 1)->create([
             'semester' => '2',
             'managements' => '2019',
+            'start_management' => '2019-07-01',
+            'end_management' => '2019-012-01',
+        ]);
+
+        // MATERIAS
+
+        factory(\App\SubjectMatter::class, 1)->create([
+            'name' => 'Introducción a la Programación',
+        ]);
+
+        factory(\App\SubjectMatter::class, 1)->create([
+            'name' => 'Elementos de Programación y Estructura de Datos',
+        ]);
+
+        factory(\App\SubjectMatter::class, 1)->create([
+            'name' => 'Base de Datos I',
+        ]);
+
+        factory(\App\SubjectMatter::class, 1)->create([
+            'name' => 'Taller de Sistemas Operativos',
         ]);
     }
 }
