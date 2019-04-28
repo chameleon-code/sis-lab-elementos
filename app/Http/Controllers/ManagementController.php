@@ -57,6 +57,8 @@ class ManagementController extends Controller
 
         if($management->validate($input)){
             $management->semester = $request->semester;
+            $management->start_management = $request->start_management;
+            $management->end_management = $request->end_management;
             $management->save();
 
             Session::flash('status_message', 'Gestión Editada!');
