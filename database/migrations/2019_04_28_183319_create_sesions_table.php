@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateManagementsTable extends Migration
+class CreateSesionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateManagementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('managements', function (Blueprint $table) {
+        Schema::create('sesions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('semester');
-            $table->integer('managements');
-            $table->date('start_management');
-            $table->date('end_management');
-            $table->string('management_path')->nullable();
+            $table->unsignedInteger('block_id');
+            $table->foreign('block_id')->references('id')->on('blocks')->onDelete('cascade');
+            $table->integer('number_sesion');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateManagementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('managements');
+        Schema::dropIfExists('sesions');
     }
 }

@@ -83,6 +83,7 @@ $factory->define(App\Management::class, function (Faker\Generator $faker) {
         'managements' => $managements,
         'start_management' => $start_management,
         'end_management' => $end_management,
+        'management_path' => null,
     ];
 });
 
