@@ -13,8 +13,8 @@ class Group extends Model
     protected $hidden = ['created_at', 'updated_at'];
 
     protected $rules = [
-        'name' => 'required|max:255|min:5',
-        'subject_matter_id' => 'required|max:255',
+        'name' => 'required',
+        'subject_matter_id' => 'required',
         'management_id' => 'required',
         'professor_id' => 'required'
     ];
@@ -37,5 +37,8 @@ class Group extends Model
     }
     public function blocks(){
         return $this->belongsToMany('App\Block');
+    }
+    public static function getGroupsNameBySubjects($id){
+       return self::where('subject_matter_id', $id)->select('name')->get();
     }
 }

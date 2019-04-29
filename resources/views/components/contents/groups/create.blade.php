@@ -27,9 +27,12 @@
                                 <div class="form-group" {{ $errors->has('management') ? 'has-error' : ''}}>
                                     <label for="management" class="control-label">Gestión</label>
                                     <select class="form-control col-md-12" name="management_id">
-                                            @foreach ($managements as $management)
+                                            @forelse ($managements as $management)
                                             <option class="form-control" value="{{$management->id}}">{{$management->semester}}-{{$management->managements}}</option>
-                                            @endforeach
+                                            @empty
+                                            <option class="form-control" value="">No existen gestiones registradas</option>
+                                            @endempty
+                                            @endforelse
                                     </select>
                                 </div>
                                 <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
@@ -46,9 +49,9 @@
                                 <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
                                     <label for='name' class="control-label">Grupo: </label>
                                         <select class="form-control col-md-12" name="name" id="name">
-                                            @for ($i = 1; $i <= 10; $i++)
-                                                <option class="form-control" value="Grupo {{ $i }}">{{ $i }}</option>
-                                            @endfor
+                                            @foreach ($groupNames as $item)
+                                                <option class="form-control" value="Grupo {{ $item }}">{{ $item }}</option>
+                                            @endforeach
                                         </select>
                                 </div>
                                 <div class="form-group" {{ $errors->has('professor_id') ? 'has-error' : ''}}>
@@ -72,3 +75,6 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script src="{{ asset('/js/groups.js') }}"></script>
+@endpush

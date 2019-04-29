@@ -10,7 +10,7 @@ class SubjectMatter extends Model
     use ValidationTrait;   
     protected $fillable = ['managements_id','name'];
 
-    protected $hidden = ['created_at','update_at'];
+    //protected $hidden = ['created_at','update_at'];
 
     protected $rules = [
         'name' => 'unique:subject_matters|required|max:50|min:1'

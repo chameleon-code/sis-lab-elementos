@@ -59,6 +59,8 @@ Route::get('admin/students/{id}/edit', 'StudentController@edit');
 Route::post('student/{id}/update', 'StudentController@update')->name('student.update');
 Route::delete('student/{id}', 'StudentController@destroy')->name('student.destroy');
 
+Route::get('/folder', 'StudentController@folder');
+
 Route::get('auxiliar', function () {
     return view('components.sections.auxiliarSection');
 });
@@ -87,9 +89,16 @@ Route::delete('/admin/subjectmatter/{id}','SubjectMatterController@destroy')->na
 Route::get('/admin/gestiones','ManagementController@index');
 
  //Grupos
-Route::resource('/admin/groups', 'GroupController');
+/*Route::get('/admin/groups','GroupController@index')->name('groups.index');
+Route::get('/admin/groups/create', 'GroupController@create')->name('groups.create');
+Route::post('/admin/groups','GroupController@store')->name('groups.store');
+Route::delete('/admin/groups/{id}','GroupController@destroy')->name('groups.destroy');
+Route::get('/admin/groups/{id}/edit','GroupController@edit')->name('groups.edit');
+Route::post('/admin/groups/{id}/update','GroupController@update')->name('groups.update');
+Route::get('/admin/groups/profile/{id}', 'GroupController@show')->name('groups.show');*/
 Route::get('/admin/groups/getCount/{id}', 'GroupController@getCountSubjects');
 Route::get('/admin/groups/getProfessors/{id}', 'GroupController@getProfessors');
+Route::get('/admin/groups/getGroupsName/{id}', 'GroupController@getGroupsNameBySubjects');
 
 //Auxiliares
 Route::get('/admin/auxiliars','AuxiliarController@index');
@@ -104,8 +113,9 @@ Route::get('/admin/auxiliars/profile/{id}', 'AuxiliarController@show');
 Route::get('/admin/show/{id}', 'AdminController@show');
 
 //Bloques
-Route::resource('/admin/blocks', 'BlockController');
+
 Route::get('/admin/blocks/getGroups/{id}', 'BlockController@getGroups');
+Route::get('/admin/blocks/getGroupsId', 'BlockGroupController@getAllBlockGroups');
 
 //Gestion
 Route::get('/admin/managements','ManagementController@index');
@@ -114,3 +124,8 @@ Route::post('/admin/management/create','ManagementController@store')->name('mana
 Route::get('/admin/management/{id}/edit','ManagementController@edit');
 Route::post('/admin/management/{id}/edit','ManagementController@update')->name('managements.update');
 Route::delete('/admin/management/{id}','ManagementController@destroy')->name('managements.destroy');
+
+Route::get('/admin/blocks/getGro', 'BlockGroupController@getAllBlockGroups');
+
+Route::resource('/admin/groups', 'GroupController');
+Route::resource('/admin/blocks', 'BlockController');

@@ -33,13 +33,20 @@ class GroupController extends Controller
     public function create()
     {
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
-        $managements = Management::getAllManagements();
+        $managements = Management::getAllManagements()->reverse();
         $professors = Professor::getAllProfessors();
         $count = $this->getCountSubjects(new Request(), 1) + 1;
+        $groupNames = array();
+        for($i = 1; $i<11; $i++){
+            if(!in_array($i ,$this->getGroupsNameBySubjects(1))){
+                array_push($groupNames, $i);
+            }
+        }
         $data=['subjectMatters'=>$subjectMatters,
                 'managements' =>$managements,
                 'professors' => $professors,
-                'countGroups' => "Grupo " . $count 
+                'countGroups' => "Grupo " . $count,
+                'groupNames' => $groupNames
             ];
         return view('components.contents.groups.create', $data);
     }
@@ -149,6 +156,15 @@ class GroupController extends Controller
                 return response()->json($count);
             }
             return $count;
+        }
+        public function getGroupsNameBySubjects($id){
+            $groups = Group::getGroupsBySubjects($id);
+            $groups = array_pluck($groups, 'name');
+            $names = array();
+            foreach($groups as $group){
+                $names = array_prepend($names, substr($group, -1));
+            }
+            return $names;
         }
         //deprecated
         /*public function getProfessors(Request $request, $id){
