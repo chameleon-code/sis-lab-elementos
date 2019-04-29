@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,15 +25,19 @@ Route::get('register', function () {
 });
 
 //roles
-Route::get('admin', function () {
-    return view('components.sections.adminSection');
-});
-Route::get('student', function () {
-    return view('components.contents.student.studentSection');
-});
-Route::get('professor', function () {
-    return view('components.sections.professorSection');
-});
+// Route::get('admin', function () {
+//     return view('components.sections.adminSection');
+// });
+// Route::get('student', function () {
+//     return view('components.sections.studentSection');
+// });
+// Route::get('professor', function () {
+//     return view('components.sections.professorSection');
+// });
+// Route::get('auxiliar', function () {
+//     return view('components.sections.auxiliarSection');
+// });
+
 
 //Docente
 Route::get('/admin/professors','ProfessorController@index');
@@ -46,10 +49,11 @@ Route::delete('/admin/professors/{id}','ProfessorController@destroy')->name('pro
 Route::get('/admin/professors/profile/{id}', 'ProfessorController@show');
 
 //Estudiante
-Route::get('student', ['uses' => 'StudentController@index']);
 Route::get('/admin/student/create', ['uses' => 'StudentController@create']);
 Route::post('/admin/student/create', ['uses' => 'StudentController@store']);
 
+
+Route::get('/student/activities', 'StudentController@activities');
 Route::get('/admin/students/profile/{id}', 'StudentController@show');
 Route::get('/admin/students', 'StudentController@index');
 Route::get('/admin/student/create', 'StudentController@create');
@@ -61,15 +65,11 @@ Route::delete('student/{id}', 'StudentController@destroy')->name('student.destro
 
 Route::get('/folder', 'StudentController@folder');
 
-Route::get('auxiliar', function () {
-    return view('components.sections.auxiliarSection');
-});
 
 //child roles
 Route::get('admin/lista', function () {
     return view('components.contents.admin.adminContent');
 });
-
 
 Auth::routes();
 

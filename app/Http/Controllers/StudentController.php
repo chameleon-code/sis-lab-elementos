@@ -22,11 +22,6 @@ class StudentController extends Controller
         return view('components.contents.student.index', $data);
     }
 
-    public function create()
-    {
-        return view('components.contents.student.create');
-    }
-
     public function store(Request $request)
     {
         $input = $request->all();
@@ -131,5 +126,10 @@ class StudentController extends Controller
     public function folder()
     {
         Storage::makeDirectory('folders/gg');
+    }
+    
+    public function activities()
+    {
+        return view('components.contents.student.activities');
     }
 }
