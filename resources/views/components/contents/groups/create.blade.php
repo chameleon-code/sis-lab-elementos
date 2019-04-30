@@ -24,7 +24,7 @@
                         
                             <form class="user" action="{{Route('groups.store')}}" method="post">
                                 {{ csrf_field() }}
-                                <div class="form-group" {{ $errors->has('management') ? 'has-error' : ''}}>
+                                {{-- <div class="form-group" {{ $errors->has('management') ? 'has-error' : ''}}>
                                     <label for="management" class="control-label">Gestión</label>
                                     <select class="form-control col-md-12" name="management_id">
                                             @forelse ($managements as $management)
@@ -34,7 +34,7 @@
                                             @endempty
                                             @endforelse
                                     </select>
-                                </div>
+                                </div> --}}
                                 <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
                                     <label for="subject_matter_id" class="control-label">Materia</label>
                                     <select name="subject_matter_id" class="form-control col-md-12" id="subjects">

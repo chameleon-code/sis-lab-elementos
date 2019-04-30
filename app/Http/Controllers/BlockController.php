@@ -7,6 +7,8 @@ use App\SubjectMatter;
 use App\Group;
 use App\Block;
 use App\BlockGroup;
+use App\Management;
+use Illuminate\Support\Facades\Storage;
 
 class BlockController extends Controller
 {
@@ -32,12 +34,15 @@ class BlockController extends Controller
     public function create()
     {
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
+        $managements = Management::getAllManagements()->reverse();
         $groupsID = BlockGroup::getAllBlockGroupsId();
         $groups = Group::where('subject_matter_id', 1)
                         ->whereNotIn('id', $groupsID)                        
                         ->orderBy('name')->get();
         $data=['subjectMatters'=>$subjectMatters,
-                'groups'=>$groups];
+                'groups'=>$groups,
+                'managements' =>$managements,
+            ];
         return view('components.contents.blocks.create', $data);
     }
 
@@ -51,10 +56,18 @@ class BlockController extends Controller
     {
         $input =$request->all();
         $block = new Block();
+        $man = Management::find($request->management_id);
+        $dir = $man->management_path.'/'.$request->name;
+
         if($block->validate($input)){
+            $block->management_id = $request->management_id;
             $block->name = $request->name;
+            $block->block_path = $dir;
             $groupsID = $request->groups_id;
             $block->save();
+
+            Storage::makeDirectory($dir);
+
             foreach($groupsID as $key=>$value){
                 $group = Group::where('id', $value)->first();
                 $block->groups()->attach($group->id);

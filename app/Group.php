@@ -15,8 +15,8 @@ class Group extends Model
     protected $rules = [
         'name' => 'required',
         'subject_matter_id' => 'required',
-        'management_id' => 'required',
-        'professor_id' => 'required'
+        //'management_id' => 'required',
+        'professor_id' => 'required',
     ];
     protected $appends = ['subject', 'professor'];
 

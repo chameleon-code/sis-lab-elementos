@@ -69,6 +69,8 @@ $factory->define(App\Student::class, function (Faker\Generator $faker) {
     return [
         'user_id' => null,
         'ci' => $ci,
+        'block_id' => null,
+        'student_path' => null,
     ];
 });
 
@@ -83,6 +85,7 @@ $factory->define(App\Management::class, function (Faker\Generator $faker) {
         'managements' => $managements,
         'start_management' => $start_management,
         'end_management' => $end_management,
+        'management_path' => null,
     ];
 });
 

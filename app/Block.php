@@ -8,8 +8,12 @@ use App\Traits\ValidationTrait;
 class Block extends Model
 {
     use ValidationTrait;
+
+    protected $fillable = ['management_id', 'name', 'block_path'];
+
     protected $rules = [
         'name' => 'required|max:255|min:3',
+        'management_id' => 'required',
         'groups_id' => 'required|max:255'
     ];
     
