@@ -20,8 +20,8 @@ class CreateGroupsTable extends Migration
             $table->foreign('subject_matter_id')->references('id')->on('subject_matters')->onDelete('cascade');
             $table->unsignedInteger('professor_id');
             $table->foreign('professor_id')->references('id')->on('professors')->onDelete('cascade');
-            $table->unsignedInteger('management_id');
-            $table->foreign('management_id')->references('id')->on('managements')->onDelete('cascade');
+            // $table->unsignedInteger('management_id');
+            // $table->foreign('management_id')->references('id')->on('managements')->onDelete('cascade');
             $table->timestamps();
         });
     }

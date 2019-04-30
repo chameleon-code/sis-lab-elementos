@@ -23,6 +23,19 @@
                             @endif
                             <form class="user" action="{{Route('blocks.store')}}" method="post">
                                 {{ csrf_field() }}
+
+                                <div class="form-group" {{ $errors->has('management') ? 'has-error' : ''}}>
+                                    <label for="management" class="control-label">Gestión</label>
+                                    <select class="form-control col-md-12" name="management_id">
+                                            @forelse ($managements as $management)
+                                            <option class="form-control" value="{{$management->id}}">{{$management->semester}}-{{$management->managements}}</option>
+                                            @empty
+                                            <option class="form-control" value="">No existen gestiones registradas</option>
+                                            @endempty
+                                            @endforelse
+                                    </select>
+                                </div>
+
                                 <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
                                     <label for='name' class="control-label">Nombre: </label>
                                         <input type="text" class="form-control" name="name">
