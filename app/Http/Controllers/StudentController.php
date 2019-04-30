@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Mail\StudentMailController;
 use App\Student;
 use App\User;
+use App\Management;
+use App\Block;
 use \App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
@@ -128,8 +131,29 @@ class StudentController extends Controller
         return view('components.contents.student.profile')->withTitle('Perfil de Estudiante')->with($data);
     }
 
-    public function folder()
+    public function registration()
     {
-        Storage::makeDirectory('folders/gg');
+        $managements = Management::getAllManagements()->reverse();
+        $blocks = Block::getAllBlocks();
+        $data=[ 'blocks' => $blocks,
+                'managements' =>$managements,
+            ];
+        return view('components.contents.student.registration', $data);
+        dd("gg");
+    }
+
+    public function confirm(Request $request)
+    {
+        $user = Auth::user();
+        $student = Student::find($user->id);
+
+        $student->block_id = $request->block_id;
+        $dir = Block::find($request->block_id)->block_path.'/'.$user->names;
+        $student->student_path = $dir;
+        $student->save();
+
+        Storage::makeDirectory($dir);
+
+        return redirect('/home');
     }
 }
