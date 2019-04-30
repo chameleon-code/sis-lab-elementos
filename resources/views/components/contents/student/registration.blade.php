@@ -1,4 +1,4 @@
-@extends('components.sections.adminSection')
+@extends('components.sections.studentSection')
 
 @section('userContent')
 <div class="row justify-content-center">
@@ -9,7 +9,7 @@
             <div class="col-lg-12">
               <div class="p-5">
                 <div class="text-center">
-                  <h1 class="h4 text-gray-900 mb-4">Creación de Bloques</h1>
+                  <h1 class="h4 text-gray-900 mb-4">Inscripción</h1>
                     </div>
                             @if (count($errors)>0)
                                 <div class="alert alert-danger">
@@ -21,9 +21,22 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form class="user" action="{{Route('blocks.store')}}" method="post">
+                            <form class="user" action="{{Route('student.reg.confirm')}}" method="post">
                                 {{ csrf_field() }}
 
+                                <div class="form-group" {{ $errors->has('block_id') ? 'has-error' : ''}}>
+                                    <label for="block_id" class="control-label">Bloques:</label>
+                                    <select name="block_id" class="form-control col-md-12" id="blocks">
+                                        @forelse ($blocks as $block)
+                                            <option class="form-control" value="{{$block->id}}">{{$block->name}}</option>
+                                        @empty
+                                        <option class="form-control" value="">No existen bloques registrados</option>
+                                        @endempty
+                                        @endforelse
+                                    </select>
+                                </div>
+
+{{-- 
                                 <div class="form-group" {{ $errors->has('management') ? 'has-error' : ''}}>
                                     <label for="management" class="control-label">Gestión</label>
                                     <select class="form-control col-md-12" name="management_id">
@@ -68,6 +81,15 @@
                                 <div class="form-group row">
                                         <div class="form-group col-md-6 col">
                                           <button type="submit" class="form-control btn btn-primary btn-block col-md-12">Crear</button>
+                                        </div>
+                                        <div class="form-group col-md-6 col">
+                                          <a class="form-control btn btn-danger btn-block col-md-12" href="{{ url('/admin/blocks') }}">Cancelar</a>    
+                                        </div>
+                                    </div> --}}
+
+                                    <div class="form-group row">
+                                        <div class="form-group col-md-6 col">
+                                          <button type="submit" class="form-control btn btn-primary btn-block col-md-12">Inscribirse</button>
                                         </div>
                                         <div class="form-group col-md-6 col">
                                           <a class="form-control btn btn-danger btn-block col-md-12" href="{{ url('/admin/blocks') }}">Cancelar</a>    

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Management;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class ManagementController extends Controller
 {
@@ -28,16 +29,27 @@ class ManagementController extends Controller
     }
 
     public function store(Request $request){
-        $input =$request->all();
+        $input = $request->all();
         $managements = new Management();
         if($managements->validate($input)){
-            Management::create($input);
+            $dir = 'folders/'.$request->managements.'-'.$request->semester;
+            //$input->management_path = $dir;
+            //dd($input);
+
+            Management::create([
+                'semester' => $request->semester,
+                'managements' => $request->managements,
+                'start_management' => $request->start_management,
+                'end_management' => $request->end_management,
+                'management_path' => $dir,
+            ]);
             Session::flash('status_message','Gestión añadida!');
+
+            Storage::makeDirectory($dir);
             
             return redirect('/admin/managements');
         }
             return redirect('/admin/management/create')->withInput()->withErrors($managements->errors);
-
     }
 
     public function edit($id){

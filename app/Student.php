@@ -10,8 +10,9 @@ class Student extends Model
     use ValidationTrait;
     protected $fillable = [
         'user_id',
-        'code_sis',
         'ci',
+        'block_id',
+        'student_path',
     ];
 
     public static function getAllStudents()
