@@ -117,17 +117,20 @@
                     </div>
                     <div class="card-body">
                         Procura subir un comprimido o archivador con tu ejercicio adentro, solo los siguientes formatos son admitidos: <strong>.zip .rar .tar.gz</strong> 
-                        <div class="form-group">
-                                <br>
-                                <input type="file" id="icondemo">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 offset-md-4">
-                                <button class="btn btn-primary btn-block">
-                                        <i class="fas fa-paper-plane"></i> Entregar  
-                                </button>
+                        <form class="form-group" method="POST" action="{{ url('/student/activities') }}" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <div class="form-group">
+                                    <br>
+                                    <input type="file" name="practice">
                             </div>
-                        </div>
+                            <div class="row">
+                                <div class="col-md-4 offset-md-4">
+                                    <button class="btn btn-primary btn-block" type="submit">
+                                            <i class="fas fa-paper-plane"></i> Entregar  
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

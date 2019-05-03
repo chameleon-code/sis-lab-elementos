@@ -54,6 +54,7 @@ Route::post('/admin/student/create', ['uses' => 'StudentController@store']);
 
 
 Route::get('/student/activities', 'StudentController@activities');
+Route::post('/student/activities', 'TaskController@store');
 
 Route::get('/admin/students/profile/{id}', 'StudentController@show');
 Route::get('/admin/students', 'StudentController@index');
