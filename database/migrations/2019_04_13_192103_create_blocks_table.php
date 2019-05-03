@@ -27,7 +27,6 @@ class CreateBlocksTable extends Migration
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
-            //$table->Integer('code_sis');
             $table->Integer('ci');
             $table->unsignedInteger('block_id')->nullable();
             $table->foreign('block_id')->references('id')->on('blocks')->onDelete('cascade');

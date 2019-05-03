@@ -28,8 +28,8 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $student = new Student();
-        if ($student->validate($input)) {
+        $user = new User();
+        if ($user->validate($input)) {
             $data = array(
                 'names' => $request->names,
                 'first_name' => $request->first_name,
@@ -46,10 +46,10 @@ class StudentController extends Controller
                 'second_name' => $request->second_name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
+                'code_sis' => $request->code_sis,
             ]);
             Student::create([
                 'user_id' => $newStudent->id,
-                'code_sis' => $request->code_sis,
                 'ci' => $request->ci,
             ]);
             Mail::to($request->email)->send(new StudentMailController($data,'register'));
@@ -60,9 +60,9 @@ class StudentController extends Controller
             }
         } else {
             if($request->mode=='register'){
-                return redirect('/register')->withInput($input)->withErrors($student->errors);
+                return redirect('/register')->withInput($input)->withErrors($user->errors);
             }else{
-                return redirect('/admin/student/create')->withInput($input)->withErrors($student->errors);
+                return redirect('/admin/student/create')->withInput($input)->withErrors($user->errors);
             }
         }
     }
@@ -97,20 +97,20 @@ class StudentController extends Controller
         $user_id = $student->user_id;
         $user = User::findOrFail($user_id);
         $input = $request->all();
-        if ($user->validate($input)) {
+        if ($student->validate($input)) {
             $user->names = $request->names;
             $user->first_name = $request->first_name;
             $user->second_name = $request->second_name;
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
+            $user->code_sis = $request->code_sis;
             $user->save();
-            $student->code_sis = $request->code_sis;
             $student->ci = $request->ci;
             $student->save();
             Session::flash('status_message', 'Estudiante Editado!');
             return redirect('/admin/students');
         }
-        return black()->withInput($input)->withErrors($user->errors);
+        return back()->withInput($input)->withErrors($student->errors);
     }
 
     public function show($id)
@@ -154,6 +154,16 @@ class StudentController extends Controller
     
     public function activities()
     {
-        return view('components.contents.student.activities');
+        $user = Auth::user();
+        $student = Student::where('user_id','=',$user->id)->first();
+        $data = ['student' => $student,
+            'user' => $user
+        ];
+        return view('components.contents.student.activities')->with($data);
+    }
+
+    public function create()
+    {
+        return view('components.contents.student.create');
     }
 }
