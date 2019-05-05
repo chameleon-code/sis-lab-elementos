@@ -146,7 +146,6 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $student = Student::find($user->id);
-
         $student->block_id = $request->block_id;
         $dir = Block::find($request->block_id)->block_path.'/'.$user->names;
         $student->student_path = $dir;

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Sesion;
+use App\Task;
 
 class SesionController extends Controller
 {
@@ -13,7 +15,15 @@ class SesionController extends Controller
      */
     public function index()
     {
-        //
+        $sesions = Sesion::all();
+        $tasks = Task::all();
+
+        $data = [
+            'sesions' => $sesions,
+            'tasks' => $tasks,
+        ];
+
+        return view('components.contents.professor.sesions', $data);
     }
 
     /**
