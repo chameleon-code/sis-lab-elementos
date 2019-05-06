@@ -34,12 +34,7 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->hasFile('practice')){
-            $file = $request->file('practice');
-            $name = $file->getClientOriginalName();
-            $file -> move(public_path().'/storage/',$name); 
-            return $name;
-        }
+        
     }
 
     /**
