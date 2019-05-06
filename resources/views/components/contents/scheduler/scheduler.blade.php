@@ -23,7 +23,7 @@
     <div class="dhx_cal_navline">
         <div class="dhx_cal_prev_button" style="background-color: #1cc88a;color: #ffffff">&nbsp;</div>
         <div class="dhx_cal_next_button" style="background-color: #1cc88a;color: #ffffff">&nbsp;</div>
-        <div class="dhx_cal_today_button" style="background-color: #4e73df;color: whitesmoke"></div>
+        <div class="dhx_cal_today_button" style="background-color: #4e73df;color: #ffffff"></div>
         <div class="dhx_cal_date"></div>
         <div class="dhx_cal_tab" name="day_tab"></div>
         <div class="dhx_cal_tab" name="week_tab"></div>
@@ -36,6 +36,14 @@
     scheduler.config.xml_date = "%Y-%m-%d %H:%i:%s";
     scheduler.config.first_hour = 7;
     scheduler.config.last_hour = 20;
+
+   // scheduler.config.x_step = 15;
+
+    // 0 refers to Sunday, 6 - to Saturday
+    scheduler.ignore_week = function(date){
+        if (date.getDay() == 0) //hides Saturdays and Sundays
+            return true;
+    };
 
     scheduler.setLoadMode("day");
 
