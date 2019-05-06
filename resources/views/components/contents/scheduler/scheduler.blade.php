@@ -36,7 +36,7 @@
     scheduler.config.xml_date = "%Y-%m-%d %H:%i:%s";
     scheduler.setLoadMode("day");
 
-    scheduler.init("scheduler_here", new Date(2018, 11, 3), "week");
+    scheduler.init("scheduler_here", new Date(2019, 5, 6), "week");
 
     scheduler.load("/api/events", "json");
     var dp = new dataProcessor("/api/events");
