@@ -34,9 +34,12 @@
 </div>
 <script type="text/javascript">
     scheduler.config.xml_date = "%Y-%m-%d %H:%i:%s";
+    scheduler.config.first_hour = 7;
+    scheduler.config.last_hour = 20;
+
     scheduler.setLoadMode("day");
 
-    scheduler.init("scheduler_here", new Date(2019, 5, 6), "week");
+    scheduler.init("scheduler_here", new Date(), "week");
 
     scheduler.load("/api/events", "json");
     var dp = new dataProcessor("/api/events");
