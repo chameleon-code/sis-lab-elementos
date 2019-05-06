@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
         Storage::deleteDirectory('folders');
         Storage::makeDirectory('folders');
 
+        //llamada al seeder de events
+        $this->call(EventsTableSeeder::class);
+
         // ROLES
 
         factory(\App\Role::class, 1)->create(['name' => 'admin']);

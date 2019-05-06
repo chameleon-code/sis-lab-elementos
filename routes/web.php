@@ -39,6 +39,13 @@ Route::get('register', function () {
 // });
 
 
+Route::get('scheduler', function () {
+    //return view('components.sections.schedulerSection');
+    return view('components.contents.scheduler.scheduler');
+});
+
+//Route::get('/scheduler','EventController@index');
+
 //Docente
 Route::get('/admin/professors','ProfessorController@index');
 Route::get('/admin/professors/create', ['uses'=> 'ProfessorController@create']);
