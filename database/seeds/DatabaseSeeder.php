@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
         Storage::deleteDirectory('folders');
         Storage::makeDirectory('folders');
 
+        //llamada al seeder de events
+        $this->call(EventsTableSeeder::class);
+
         // ROLES
 
         factory(\App\Role::class, 1)->create(['name' => 'admin']);
@@ -67,17 +70,17 @@ class DatabaseSeeder extends Seeder
         ]);
         factory(\App\Student::class, 1)->create(['user_id' => 4]);
 
-        factory(\App\User::class, 5)->create([ 'role_id' => \App\Role::PROFESSOR ])
+        factory(\App\User::class, 40)->create([ 'role_id' => \App\Role::PROFESSOR ])
         ->each(function (\App\User $u){
             factory(\App\Professor::class, 1)->create(['user_id' => $u->id]);
         });
 
-        factory(\App\User::class, 5)->create([ 'role_id' => \App\Role::AUXILIAR ])
+        factory(\App\User::class, 40)->create([ 'role_id' => \App\Role::AUXILIAR ])
         ->each(function (\App\User $u){
             factory(\App\Auxiliar::class, 1)->create(['user_id' => $u->id]);
         });
 
-        factory(\App\User::class, 5)->create([ 'role_id' => \App\Role::STUDENT ])
+        factory(\App\User::class, 40)->create([ 'role_id' => \App\Role::STUDENT ])
         ->each(function (\App\User $u){
             factory(\App\Student::class, 1)->create(['user_id' => $u->id]);
         });

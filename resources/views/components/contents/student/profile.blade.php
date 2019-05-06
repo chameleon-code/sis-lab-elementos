@@ -1,6 +1,5 @@
-@extends('components.sections.professorSection')
+@extends('components.sections.estudentSection')
 @section('userContent')
-
 <div class="row justify-content-center">
     <div class="col-xl-10 col-lg-10 col-md-9">
         <div class="card-body p-0">

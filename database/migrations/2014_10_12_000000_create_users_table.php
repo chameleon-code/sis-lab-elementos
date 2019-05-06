@@ -67,7 +67,6 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('admins');
         Schema::dropIfExists('professors');
         Schema::dropIfExists('auxiliars');
-        // Schema::dropIfExists('students');
         Schema::dropIfExists('users');
         Schema::dropIfExists('roles');
     }

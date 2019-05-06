@@ -1,4 +1,4 @@
-@extends('components.sections.adminSection')
+@extends('components.sections.'.$view)
 @section('userContent')
     
 <script src="/js/generatekey.js"></script>
@@ -13,8 +13,8 @@
                   @endif
                   <div class="">
                       <div class="row">
-                          <div class="col-sm-12">
-                                  <table class="table table-responsive dataTable table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                          <div class="col-sm-12 table-responsive text-center">
+                                  <table class="table dataTable table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                       <thead>
                                           <tr role="row" class="bg-dark">
                                               <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 230px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Código SIS</font></font></th>

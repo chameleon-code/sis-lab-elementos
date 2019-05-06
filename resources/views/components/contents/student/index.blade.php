@@ -6,15 +6,14 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <div class="panel-heading m-0 font-weight-bold text-primary">Estudiante</div>
-
                 <div class="card-body">
                     @if (Session::has('status_message'))
                         <p class="alert alert-success"><strong> {{Session::get('status_message')}} </strong></p>
                     @endif
                     <div class="">
                         <div class="row">
-                            <div class="col-sm-12">
-                                <table class="table table-responsive dataTable table-striped table-secondary" id="dataTable" width="100%"
+                            <div class="col-sm-12 table-responsive text-center">
+                                <table class="table dataTable table-striped table-secondary" id="dataTable" width="100%"
                                        cellspacing="0" role="grid" aria-describedby="dataTable_info"
                                        style="width: 100%;">
                                     <thead>

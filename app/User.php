@@ -35,6 +35,7 @@ class User extends Authenticatable
         'second_name' => 'required|max:100',
         'email' => 'email|required|max:150',
         'password' => 'required|min:8',
-        'code_sis' => 'unique:users|required|max:10|min:8'
+        'code_sis' => 'unique:users|required|max:10|min:8',
+        'ci' => 'unique:students|max:9|min:6', //test
     ];
 }
