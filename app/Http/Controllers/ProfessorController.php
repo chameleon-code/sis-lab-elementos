@@ -10,6 +10,8 @@ use App\Mail\ProfessorMailController;
 use Illuminate\Support\Facades\Mail;
 use App\SubjectMatter;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+
 class ProfessorController extends Controller
 {
     /**
@@ -19,8 +21,17 @@ class ProfessorController extends Controller
      */
     public function index(){
         $professors = Professor::getAllProfessors();
-        $data = ['professors' => $professors,
-                'title' => 'Docentes'];
+        if(Auth::user()->role_id==Role::ADMIN){
+            $data = ['professors' => $professors,
+            'title' => 'Docentes',
+            'view'  =>  'adminSection',
+            ];
+        }else{
+            $data = ['professors' => $professors,
+            'title' => 'Docentes',
+            'view'  =>  'professorSection',
+            ];
+        }
         return view('components.contents.professor.index',$data);
     }
 

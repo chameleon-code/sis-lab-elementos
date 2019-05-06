@@ -55,18 +55,6 @@ class CreateUsersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
-
-        // Schema::create('students', function (Blueprint $table){
-        //     $table->increments('id');
-        //     $table->unsignedInteger('user_id');
-        //     $table->foreign('user_id')->references('id')->on('users');
-        //     $table->timestamps();
-        //     //$table->Integer('code_sis');
-        //     $table->Integer('ci');
-        //     $table->unsignedInteger('block_id')->nullable();
-        //     $table->foreign('block_id')->references('id')->on('blocks');
-        //     $table->string('student_path')->nullable();
-        // });
     }
 
     /**
@@ -79,7 +67,6 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('admins');
         Schema::dropIfExists('professors');
         Schema::dropIfExists('auxiliars');
-        // Schema::dropIfExists('students');
         Schema::dropIfExists('users');
         Schema::dropIfExists('roles');
     }

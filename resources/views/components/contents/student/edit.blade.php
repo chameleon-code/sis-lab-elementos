@@ -47,7 +47,7 @@
                                         <div class="form-group col-md-6">
                                             <div class="">
                                                 <label for="">Código SIS</label>  
-                                                <input type="number" class="form-control" name="code_sis" value="{{ old('code_sis',$student->code_sis)}}" required autofocus min="0">
+                                                <input type="number" class="form-control" name="code_sis" value="{{ old('code_sis',$user->code_sis)}}" required autofocus min="0">
                                                     {!! $errors -> first('code_sis','<label style="color:crimson">:message</label>')!!}  
                                             </div>
                                         </div>

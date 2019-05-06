@@ -76,10 +76,10 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="group col-md-6 ">
+                            <div class="group col-md-6 col-6">
                                 <button type="submit" class="btn btn-primary btn-block col-md-12"> Registrar </button>
                             </div>
-                            <div class="group col-md-6 ">
+                            <div class="group col-md-6 col-6">
                                 <a class="btn btn-danger btn-block col-md-12" href="{{ url('/admin/auxiliars') }}">Cancelar</a>
                             </div>
                             <br>

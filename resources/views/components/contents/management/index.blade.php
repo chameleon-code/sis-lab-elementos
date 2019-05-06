@@ -3,15 +3,15 @@
 <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <div class="panel-heading m-0 font-weight-bold text-primary"><strong>{{$title or 'Gestión'}}</strong></div>
+                <div class="panel-heading m-0 font-weight-bold text-primary">{{$title or 'Gestión'}}</div>
                 
                 <div class="card-body">
                     @if (Session::has('status_message'))
                         <p class="alert alert-success">{{Session::get('status_message')}}</p>                           
                     @endif
                     <div class="">
-                        <div class="col-sm-12">
-                            <table class="table table-responsive dataTable table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                        <div class="col-sm-12 table-responsive text-center">
+                            <table class="table dataTable table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                     <thead>
                                         <tr role="row" class="bg-dark">
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 125px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Gestion</font></font></th>
