@@ -1,44 +1,52 @@
 @extends('components.sections.professorSection')
 @section('userContent')
 
+<style>
+        .accordion-body:after {
+            content: "\025bc";
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+          }
+          .active:after {
+              content: '\025b2';
+          }
+</style>
+
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <div class="panel-heading m-0 font-weight-bold text-primary">
                     <h5 style="margin-left: 20px;"><strong>Sesiones</strong></h5>
-                    <a href="#" class="btn btn-primary btn-icon-split btn-sm float-right" style="margin-top: -34px; margin-right: 20px;">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-plus"></i>
-                        </span>
-                        <span class="text">Añadir Sesión</span>
-                    </a>
+                </div>
+                <br><br>
+                <div>
+                    <a href="#" class="btn btn-danger btn-icon-split btn-sm float-right" style="margin-top: -34px; margin-right: 145px; font-size: 12px;" data-toggle="modal" data-target="#deleteSesion">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-minus"></i>
+                            </span>
+                            <span class="text">Quitar Sesión</span>
+                        </a>
+                        <a href="#" class="btn btn-primary btn-icon-split btn-sm float-right" style="margin-top: -34px; margin-right: 20px; font-size: 12px;" data-toggle="modal" data-target="#addSesion">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span class="text">Añadir Sesión</span>
+                        </a>
                 </div>
 
                 <div class="card-body">
                     @if (Session::has('status_message'))
                         <p class="alert alert-success"><strong> {{Session::get('status_message')}} </strong></p>
                     @endif
-                          
-                        {{-- <div class="accordion-body bg-gray-300 border-bottom-primary" style="margin-top: 8px;">Sesión 1</div>
-                        <div class="panel">
-                            <div class="my-3 mx-2" style="border-bottom: 1px solid #b5b5b5;"><a href="#">Tarea 1</a><br></div>
-                            <div class="my-3 mx-2" style="border-bottom: 1px solid #b5b5b5;"><a href="#">Tarea 2</a><br></div>
-                            <div class="my-3 mx-2" style="border-bottom: 1px solid #b5b5b5;"><a href="#">Tarea 3</a><br></div>
-                        </div>
-
-                        <div class="accordion-body bg-gray-300 border-bottom-primary" style="margin-top: 8px;">Sesión 2</div>
-                        <div class="panel">
-                            <div class="my-3 mx-2" style="border-bottom: 1px solid #b5b5b5;"><a href="#">Tarea 1</a><br></div>
-                            <div class="my-3 mx-2" style="border-bottom: 1px solid #b5b5b5;"><a href="#">Tarea 2</a><br></div>
-                            <div class="my-3 mx-2" style="border-bottom: 1px solid #b5b5b5;"><a href="#">Tarea 3</a><br></div>
-                        </div> --}}
 
                     @foreach ($sesions as $sesion)
                     <thead>
                         <tr>
                             <div class="accordion-body bg-gray-300 border-bottom-primary" style="margin-top: 8px;">
                                 <tr>
-                                    <th class=""> Sesión: {{ $sesion->number_sesion }} </th>
+                                    <th> <strong style="color: gray;"> Sesión: </strong> {{ $sesion->number_sesion }} </th>
                                 </tr>
                             </div>
                         </tr>
@@ -48,17 +56,73 @@
                     <div class="panel">
                         @foreach ($tasks as $task)
                             @if($task->sesion_id == $sesion->id)
-                                <div class="my-3 mx-2 row" style="border-bottom: 1px solid #b5b5b5; font-size: 15px;">
-                                    <tr>
-                                        <th><p> Tarea: {{ $task->title }} </p></th>
-                                        <th> <strong>&nbsp|</strong>&nbsp Entregados: <div class="progress progress-sm mb-2 mx-2" style="margin-top: 7px;"><div class="progress-bar" role="progressbar" style="width: 80px;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="14"></div></div> 0/14 </th>
-                                        <th><strong>&nbsp|</strong>&nbsp Fecha de entrega: {{$task->end}}</th>
-                                    </tr>
+                                <div class="my-2 mx-2" style="border-bottom: 1px solid #b5b5b5; font-size: 15px;">
+                                        <div style="margin-top: 12px; margin-bottom: -15px;"> <p> <strong> Tarea: </strong> <a href="#">{{ $task->title }}</a> </p> </div>
+                                        <div class="row" style="margin-top: -15px; margin-bottom: -15px;">
+                                            <div class="row" style="margin-left: 12px;">
+                                                <strong> Entregados: </strong>
+                                                <div class="progress progress-sm bg-gray-400" style="margin-top: 8px; margin-left: 15px; margin-right: 10px;">
+                                                    <div class="progress-bar" role="progressbar" style="width: 80px; margin-right: 30px;" aria-valuenow="8" aria-valuemin="0" aria-valuemax="14"></div>
+                                                </div>
+                                            </div>
+                                            <p style="margin-left: 12px;"> 8/14 </p>
+                                        </div>
+                                        <div> <p> <strong> Límite de entrega: </strong> {{$task->end}} </p> </div>
                                 </div>
                             @endif
                         @endforeach
                     </div>
                     @endforeach
+
+
+                    <div class="modal fade" id="deleteSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Sesión</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                                Las tareas pertenecientes a una sesión no serán elimindas. <br><br>
+                            @foreach ($sesions as $sesion)
+                                <p> Sesion {{ $sesion->number_sesion }} <input name={{ $sesion->id }} type="checkbox" class="float-right"> </p>
+                            @endforeach
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-danger">Eliminar</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+
+
+                    <div class="modal fade" id="addSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Añadir Sesión</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Se agregará la Sesión: {{ $sesion_max + 1 }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <form action="/sesions/store" method="POST">
+                                {{csrf_field()}}
+                                <input type="text" class="form-control" style="display: none;" name="block_id" value="1" required autofocus>
+                                <input type="text" class="form-control" style="display: none;" name="number_sesion" value="{{ $sesion_max + 1 }}" required autofocus>
+                                <button type="submit" class="btn btn-primary">Aceptar</button>  
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
                     
         </div>
     </div>

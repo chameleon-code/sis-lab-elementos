@@ -25,7 +25,7 @@
                                 {{ csrf_field() }}
 
                                 <div class="form-group" {{ $errors->has('block_id') ? 'has-error' : ''}}>
-                                    <label for="block_id" class="control-label">Bloques:</label>
+                                    <label for="block_id" class="control-label">Bloque / s:</label>
                                     <select name="block_id" class="form-control col-md-12" id="blocks">
                                         @forelse ($blocks as $block)
                                             <option class="form-control" value="{{$block->id}}">{{$block->name}}</option>
@@ -36,65 +36,27 @@
                                     </select>
                                 </div>
 
-{{-- 
-                                <div class="form-group" {{ $errors->has('management') ? 'has-error' : ''}}>
-                                    <label for="management" class="control-label">Gestión</label>
-                                    <select class="form-control col-md-12" name="management_id">
-                                            @forelse ($managements as $management)
-                                            <option class="form-control" value="{{$management->id}}">{{$management->semester}}-{{$management->managements}}</option>
-                                            @empty
-                                            <option class="form-control" value="">No existen gestiones registradas</option>
-                                            @endempty
-                                            @endforelse
-                                    </select>
-                                </div>
-
-                                <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
-                                    <label for='name' class="control-label">Nombre: </label>
-                                        <input type="text" class="form-control" name="name">
-                                </div>
-                                <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
-                                    <label for="subject_matter_id" class="control-label">Materia</label>
-                                    <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
-                                        @forelse ($subjectMatters as $subjectMatter)
-                                            <option class="form-control" value="{{$subjectMatter->id}}">{{$subjectMatter->name}}</option>
+                                <div class="form-group" {{ $errors->has('group_id') ? 'has-error' : ''}}>
+                                    <label for="group_id" class="control-label">Grupo / s:</label>
+                                    <select name="group_id" class="form-control col-md-12" id="groups">
+                                        @forelse ($groups as $group)
+                                            <option class="form-control" value="{{$group->id}}">{{$group->name}}</option>
                                         @empty
-                                        <option class="form-control" value="">No existen materias registradas</option>
+                                        <option class="form-control" value="">No existen bloques registrados</option>
                                         @endempty
                                         @endforelse
                                     </select>
                                 </div>
-                                <div class="form-group" {{ $errors->has('group_id') ? 'has-error' : ''}}>
-                                        <label for="group_id" class="control-label">Grupo: </label>
-                                        <a class="btn btn-md" id="addGroups" value="add"><i class="fa fa-plus" aria-hidden="true" aria-hidden="true"></i></a>
-                                        <a class="btn btn-md" id="removeGroup"><i class="fas fa-minus-circle"></i></a>  </br>
-                                        <div id="groups_container">
-                                            <select class="form-control col-md-12" name="groups_id[]" id="group_id1">
-                                                @forelse ($groups as $group)
-                                                    <option value="{{ $group->id }}" class="form-control">{{ $group->name . " - " . $group->professor->names . " " . $group->professor->first_name . " " . $group->professor->second_name}}</option>
-                                                @empty
-                                                    <option class="form-control" value="">-- No existen grupos registrados --</option>
-                                                @endforelse
-                                            </select>
-                                        </div>
-                                </div>
-                                <div class="form-group row">
-                                        <div class="form-group col-md-6 col">
-                                          <button type="submit" class="form-control btn btn-primary btn-block col-md-12">Crear</button>
-                                        </div>
-                                        <div class="form-group col-md-6 col">
-                                          <a class="form-control btn btn-danger btn-block col-md-12" href="{{ url('/admin/blocks') }}">Cancelar</a>    
-                                        </div>
-                                    </div> --}}
+                                <br>
 
-                                    <div class="form-group row">
-                                        <div class="form-group col-md-6 col">
-                                          <button type="submit" class="form-control btn btn-primary btn-block col-md-12">Inscribirse</button>
-                                        </div>
-                                        <div class="form-group col-md-6 col">
-                                          <a class="form-control btn btn-danger btn-block col-md-12" href="{{ url('/admin/blocks') }}">Cancelar</a>    
-                                        </div>
+                                <div class="form-group row">
+                                    <div class="form-group col-md-6 col">
+                                        <button type="submit" class="form-control btn btn-primary btn-block col-md-12">Inscribirse</button>
                                     </div>
+                                    <div class="form-group col-md-6 col">
+                                        <a class="form-control btn btn-danger btn-block col-md-12" href="{{ url('/admin/blocks') }}">Cancelar</a>    
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>

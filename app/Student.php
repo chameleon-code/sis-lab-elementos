@@ -12,6 +12,7 @@ class Student extends Model
         'user_id',
         'ci',
         'block_id',
+        'group_id',
         'student_path',
     ];
 

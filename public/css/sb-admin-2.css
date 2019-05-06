@@ -5120,17 +5120,6 @@ input[type="button"].btn-block {
   font-size: 15px;
   transition: 0.4s;
 }
-
-.accordion-body:after {
-  content: '\025b2';
-  color: #777;
-  font-weight: bold;
-  float: right;
-  margin-left: 5px;
-}
-.active:after {
-    content: "\025bc";
-}
   
 .panel {
 padding: 0 18px;

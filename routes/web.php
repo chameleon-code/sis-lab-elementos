@@ -133,3 +133,4 @@ Route::resource('/admin/blocks', 'BlockController');
 
 //Sesiones
 Route::get('/sesions', 'SesionController@index');
+Route::post('/sesions/store', 'SesionController@store');
