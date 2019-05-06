@@ -41,7 +41,7 @@ class CreateUsersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
-        
+
         Schema::create('professors', function (Blueprint $table){
             $table->increments('id');
             $table->unsignedInteger('user_id');

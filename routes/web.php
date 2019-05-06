@@ -138,3 +138,7 @@ Route::get('/admin/blocks/getGro', 'BlockGroupController@getAllBlockGroups');
 
 Route::resource('/admin/groups', 'GroupController');
 Route::resource('/admin/blocks', 'BlockController');
+
+//Sesiones
+Route::get('/sesions', 'SesionController@index');
+Route::post('/sesions/store', 'SesionController@store');

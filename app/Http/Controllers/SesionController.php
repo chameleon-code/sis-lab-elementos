@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Sesion;
+use App\Task;
 
 class SesionController extends Controller
 {
@@ -13,7 +15,17 @@ class SesionController extends Controller
      */
     public function index()
     {
-        //
+        $sesions = Sesion::all();
+        $tasks = Task::all();
+        $sesion_max = Sesion::max('number_sesion');
+
+        $data = [
+            'sesions' => $sesions,
+            'tasks' => $tasks,
+            'sesion_max' => $sesion_max,
+        ];
+
+        return view('components.contents.professor.sesions', $data);
     }
 
     /**
@@ -34,7 +46,12 @@ class SesionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Sesion::create([
+            'block_id' => $request->block_id,
+            'number_sesion' => $request->number_sesion,
+        ]);
+
+        return redirect('/sesions');
     }
 
     /**

@@ -30,6 +30,8 @@ class CreateBlocksTable extends Migration
             $table->Integer('ci');
             $table->unsignedInteger('block_id')->nullable();
             $table->foreign('block_id')->references('id')->on('blocks')->onDelete('cascade');
+            $table->unsignedInteger('group_id')->nullable();
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->string('student_path')->nullable();
         });
     }
@@ -41,7 +43,7 @@ class CreateBlocksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students');
         Schema::dropIfExists('blocks');
+        Schema::dropIfExists('students');
     }
 }

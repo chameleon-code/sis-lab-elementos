@@ -8,6 +8,7 @@ use App\User;
 use App\Management;
 use App\Block;
 use \App\Role;
+use App\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -130,7 +131,9 @@ class StudentController extends Controller
     {
         $managements = Management::getAllManagements()->reverse();
         $blocks = Block::getAllBlocks();
+        $groups = Group::all();
         $data=[ 'blocks' => $blocks,
+                'groups' => $groups,
                 'managements' =>$managements,
             ];
         return view('components.contents.student.registration', $data);
@@ -141,8 +144,8 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $student = Student::find($user->id);
-
         $student->block_id = $request->block_id;
+        $student->group_id = $request->group_id;
         $dir = Block::find($request->block_id)->block_path.'/'.$user->names;
         $student->student_path = $dir;
         $student->save();

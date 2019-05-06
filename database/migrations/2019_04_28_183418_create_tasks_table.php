@@ -21,6 +21,7 @@ class CreateTasksTable extends Migration
             $table->string('description');
             $table->date('start');
             $table->date('end');
+            $table->string('task_path')->nullable();
             $table->timestamps();
         });
     }
