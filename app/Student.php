@@ -9,6 +9,7 @@ class Student extends Model
 {
     use ValidationTrait;
     protected $fillable = [
+        'id',
         'user_id',
         'ci',
         'block_id',
