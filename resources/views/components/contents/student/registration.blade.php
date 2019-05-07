@@ -54,7 +54,7 @@
                                         <button type="submit" class="form-control btn btn-primary btn-block col-md-12">Inscribirse</button>
                                     </div>
                                     <div class="form-group col-md-6 col">
-                                        <a class="form-control btn btn-danger btn-block col-md-12" href="{{ url('/admin/blocks') }}">Cancelar</a>    
+                                        <a class="form-control btn btn-danger btn-block col-md-12" href="{{ url('/home') }}">Cancelar</a>    
                                     </div>
                                 </div>
                             </form>
