@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Sesion;
 use App\Task;
+use App\Student;
+use App\Block;
+use Illuminate\Support\Facades\Storage;
 
 class SesionController extends Controller
 {
@@ -50,6 +53,13 @@ class SesionController extends Controller
             'block_id' => $request->block_id,
             'number_sesion' => $request->number_sesion,
         ]);
+
+        $students = Student::where('block_id', '=', $request->block_id)->get();
+
+        foreach($students as $student)
+        {
+            Storage::makeDirectory($student->student_path.'/sesion-'.$request->number_sesion);
+        }
 
         return redirect('/sesions');
     }

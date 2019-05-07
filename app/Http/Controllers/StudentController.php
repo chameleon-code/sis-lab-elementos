@@ -144,7 +144,7 @@ class StudentController extends Controller
     public function confirm(Request $request)
     {
         $user = Auth::user();
-        $student = Student::find($user->id);
+        $student = Student::where('user_id', '=', $user->id)->get()->first();
         $student->block_id = $request->block_id;
         $student->group_id = $request->group_id;
         $dir = Block::find($request->block_id)->block_path.'/'.$user->names;
