@@ -9,7 +9,7 @@
             float: right;
             margin-left: 5px;
           }
-          .active:after {
+        .active:after {
               content: '\025b2';
           }
 </style>
@@ -27,13 +27,13 @@
                                 <i class="fas fa-minus"></i>
                             </span>
                             <span class="text">Quitar Sesión</span>
-                        </a>
-                        <a href="#" class="btn btn-primary btn-icon-split btn-sm float-right" style="margin-top: -34px; margin-right: 20px; font-size: 12px;" data-toggle="modal" data-target="#addSesion">
+                    </a>
+                    <a href="#" class="btn btn-primary btn-icon-split btn-sm float-right" style="margin-top: -34px; margin-right: 20px; font-size: 12px;" data-toggle="modal" data-target="#addSesion">
                             <span class="icon text-white-50">
                                 <i class="fas fa-plus"></i>
                             </span>
                             <span class="text">Añadir Sesión</span>
-                        </a>
+                    </a>
                 </div>
 
                 <div class="card-body">
@@ -50,10 +50,9 @@
                                 </tr>
                             </div>
                         </tr>
-                        
                     </thead>
                     
-                    <div class="panel">
+                    <div class="panel" style="max-height: 106px;">
                         @foreach ($tasks as $task)
                             @if($task->sesion_id == $sesion->id)
                                 <div class="my-2 mx-2" style="border-bottom: 1px solid #b5b5b5; font-size: 15px;">

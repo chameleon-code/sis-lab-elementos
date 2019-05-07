@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Student;
 
 class StudentTaskController extends Controller
 {
@@ -13,7 +15,12 @@ class StudentTaskController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $student = Student::where('user_id','=',$user->id)->first();
+        $data = ['student' => $student,
+            'user' => $user
+        ];
+        return view('components.contents.student.activities')->with($data);
     }
 
     /**
@@ -35,10 +42,12 @@ class StudentTaskController extends Controller
     public function store(Request $request)
     {
         if($request->hasFile('practice')){
+            $user = Auth::user();
+            $student = Student::where('user_id','=',$user->id)->first();
             $file = $request->file('practice');
             $name = $file->getClientOriginalName();
-            $file -> move(public_path().'/storage/',$name); 
-            return $name;
+            $file -> move(public_path().'/storage/'.$student->student_path,$name); 
+            return back();
         }
     }
 

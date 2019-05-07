@@ -1,4 +1,4 @@
-@extends('components.sections.adminSection')
+@extends('components.sections.professorSection')
 @section('userContent')
 
     <script src="/js/generatekey.js"></script>
