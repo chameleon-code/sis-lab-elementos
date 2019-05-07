@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Professor;
 use App\Role;
 use App\User;
+use App\Student;
 use App\Mail\ProfessorMailController;
 use Illuminate\Support\Facades\Mail;
 use App\SubjectMatter;
@@ -160,5 +161,13 @@ class ProfessorController extends Controller
         $user->delete();
         Session::flash('status_message', 'Docente eliminad@ correctamente');
         return redirect('/admin/professors');   
+    }
+
+    public function studentList(){
+        $students = Student::getAllStudents();
+
+        $data = ['students' => $students,
+            'title' => 'Estudiantes'];
+        return view('components.contents.professor.studentList', $data);
     }
 }

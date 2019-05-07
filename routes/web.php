@@ -45,6 +45,8 @@ Route::post('/admin/professors/{id}/update','ProfessorController@update')->name(
 Route::delete('/admin/professors/{id}','ProfessorController@destroy')->name('professor.destroy');
 Route::get('/admin/professors/profile/{id}', 'ProfessorController@show');
 
+Route::get('/students/list', 'ProfessorController@studentList');
+
 //Estudiante
 Route::get('student', ['uses' => 'StudentController@index']);
 Route::get('/admin/student/create', ['uses' => 'StudentController@create']);
