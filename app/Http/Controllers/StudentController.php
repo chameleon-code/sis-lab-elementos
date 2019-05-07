@@ -9,6 +9,7 @@ use App\Management;
 use App\Block;
 use \App\Role;
 use App\Group;
+use App\Sesion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -151,6 +152,13 @@ class StudentController extends Controller
         $student->save();
 
         Storage::makeDirectory($dir);
+        $sesions = Sesion::where('block_id', '=', $request->block_id)->get();
+        
+        foreach($sesions as $sesion)
+        {
+            $sesion_path = 'sesion-'.$sesion->number_sesion;
+            Storage::makeDirectory($dir.'/'.$sesion_path);
+        }
 
         return redirect('/home');
     }
