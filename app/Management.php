@@ -15,8 +15,8 @@ class Management extends Model
     protected $rules = [
         'semester' => 'unique:managements|required|max:4|min:1',
         'managements' => 'required|max:5|min:1',
-        'start_management' => 'required|date',
-        'end_management' => 'required|date'
+        'start_management' => 'required|date_format:Y-M-D',
+        'end_management' => 'required|date_format:Y-M-D'
     ];
 
     public static function getAllManagements(){
