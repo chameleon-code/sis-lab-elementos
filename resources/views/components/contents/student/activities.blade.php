@@ -8,6 +8,7 @@
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Actividades</h1>
         </div>
+       este es su CI: {{$student->ci }} 
         <div class="row">
                 <div class="col-xl-4 col-md-12 mb-4 col-12">
                 <div class="card border-left-primary shadow h-100 py-2">

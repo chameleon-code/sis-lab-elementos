@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Role;
-
+use App\Http\Controllers\StudentTaskController;
 class HomeController extends Controller
 {
     /**
@@ -36,7 +36,8 @@ class HomeController extends Controller
                 return view('components.sections.auxiliarSection');
                 break;
             case Role::STUDENT:
-                return view('components.contents.student.activities');
+                $controller = new StudentTaskController();
+                return $controller->index();
                 break;
         }
     }
