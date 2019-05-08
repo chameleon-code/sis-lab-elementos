@@ -1,4 +1,4 @@
-@extends('components.sections.adminSection')
+@extends('components.sections.'.$view)
 @section('userContent')
     
 <script src="/js/generatekey.js"></script>
@@ -13,15 +13,15 @@
                   @endif
                   <div class="">
                       <div class="row">
-                          <div class="col-sm-12">
-                                  <table class="table table-responsive dataTable table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                          <div class="col-sm-12 table-responsive text-center">
+                                  <table class="table dataTable table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                       <thead>
                                           <tr role="row" class="bg-dark">
-                                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 215px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Ap. Paterno</font></font></th>
+                                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 230px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Código SIS</font></font></th>
 
-                                              <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 215px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Ap. Materno</font></font></th>
+                                              <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 380px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Apellidos</font></font></th>
 
-                                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 400px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Nombres</font></font></th>
+                                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 380px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Nombres</font></font></th>
 
                                               <th class="text-center" data-orderable="false" rowspan="1" colspan="1" style="width: 39px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Acciones</font></font></th>
                                           </tr>
@@ -30,8 +30,8 @@
 
                                                 @foreach ($professors as $item)
                                                   <tr role="row" class="odd">
-                                                      <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->first_name }}</font></font></td>
-                                                      <td class="mgx-1 sorting_1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->second_name }}</font></font></td>
+                                                      <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->code_sis }}</font></font></td>
+                                                      <td class="mgx-1 sorting_1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->first_name }} {{ $item->second_name }}</font></font></td>
                                                       <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->names }}</font></font></td>
                                                       {{-- <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->email }}</font></font></td> --}}
 

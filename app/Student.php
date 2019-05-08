@@ -9,14 +9,17 @@ class Student extends Model
 {
     use ValidationTrait;
     protected $fillable = [
+        'id',
         'user_id',
-        'code_sis',
         'ci',
+        'block_id',
+        'group_id',
+        'student_path',
     ];
 
     public static function getAllStudents()
     {
-        return Student::join('users', 'user_id', '=', 'users.id')->select('users.role_id', 'users.names', 'users.first_name', 'users.second_name', 'users.email', 'users.password', 'users.img_path', 'users.remember_token', 'users.created_at', 'users.updated_at', 'students.id', 'code_sis', 'ci')->get();
+        return Student::join('users', 'user_id', '=', 'users.id')->select('users.role_id', 'users.names', 'users.first_name', 'users.second_name', 'users.email', 'users.password', 'users.img_path', 'users.remember_token', 'users.created_at', 'users.updated_at', 'students.id', 'users.code_sis', 'ci', 'students.group_id', 'students.block_id')->get();
     }
 
     protected $rules = [

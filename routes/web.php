@@ -45,6 +45,8 @@ Route::post('/admin/professors/{id}/update','ProfessorController@update')->name(
 Route::delete('/admin/professors/{id}','ProfessorController@destroy')->name('professor.destroy');
 Route::get('/admin/professors/profile/{id}', 'ProfessorController@show');
 
+Route::get('/students/list', 'ProfessorController@studentList');
+
 //Estudiante
 Route::get('student', ['uses' => 'StudentController@index']);
 Route::get('/admin/student/create', ['uses' => 'StudentController@create']);
@@ -58,6 +60,9 @@ Route::get('student/{id}', 'StudentController@show');
 Route::get('admin/students/{id}/edit', 'StudentController@edit');
 Route::post('student/{id}/update', 'StudentController@update')->name('student.update');
 Route::delete('student/{id}', 'StudentController@destroy')->name('student.destroy');
+
+Route::get('/students/registration', 'StudentController@registration');
+Route::post('/students/registration/confirm', 'StudentController@confirm')->name('student.reg.confirm');
 
 Route::get('auxiliar', function () {
     return view('components.sections.auxiliarSection');
@@ -127,3 +132,7 @@ Route::get('/admin/blocks/getGro', 'BlockGroupController@getAllBlockGroups');
 
 Route::resource('/admin/groups', 'GroupController');
 Route::resource('/admin/blocks', 'BlockController');
+
+//Sesiones
+Route::get('/sesions', 'SesionController@index');
+Route::post('/sesions/store', 'SesionController@store');

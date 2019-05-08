@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 
+Route::get('/data', 'EventController@index');
+Route::resource('events', 'EventController');
+
 /*
 |--------------------------------------------------------------------------
 | API Routes

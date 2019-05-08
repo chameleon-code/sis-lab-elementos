@@ -16,17 +16,17 @@
                   
                   <div class="">
                       <div class="row">
-                          <div class="col-sm-12">
-                                  <table class="table table-responsive dataTable table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%; margin-top: 15px; margin-bottom: 35px;">
+                          <div class="col-sm-12 table-responsive text-center">
+                                  <table class="table dataTable table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%; margin-top: 15px; margin-bottom: 35px;">
                                       <thead class="">
                                           <tr role="row" class="bg-dark">
-                                              <th class="sorting_asc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column ascending" style="width: 215px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Ap. Paterno</font></font></th>
+                                              <th class="sorting_asc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column ascending" style="width:230px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Código SIS</font></font></th>
 
-                                              <th class="sorting_asc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Position: activate to sort column ascending" style="width: 215px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Ap. Materno</font></font></th>
+                                              <th class="sorting_asc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Position: activate to sort column ascending" style="width: 380px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Apellidos</font></font></th>
 
-                                              <th class="sorting_asc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Office: activate to sort column ascending" style="width: 400px;"><font style="vertical-align: inherit;"><font color: white; style="color: white; vertical-align: inherit;">Nombres</font></font></th>
+                                              <th class="sorting_asc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Office: activate to sort column ascending" style="width: 380px;"><font style="vertical-align: inherit;"><font color: white; style="color: white; vertical-align: inherit;">Nombres</font></font></th>
 
-                                              <th class="text-center" data-orderable="false" id="arrow-hide" rowspan="1" colspan="1" style="background: none;" ><font style="vertical-align: inherit;"><font style="color: white; vertical-align; inherit;">Acciones</font></font></th>
+                                              <th class="text-center" data-orderable="false" id="arrow-hide" rowspan="1" colspan="1" style="background: none;" ><font style="vertical-align: inherit;"><font style=" width: 200px; color: white; vertical-align; inherit;">Acciones</font></font></th>
                                           </tr>
                                       </thead>
                                           <tbody>
@@ -34,18 +34,17 @@
                                                 @foreach ($auxiliars as $item)
 
                                                   <tr role="row" class="odd">
-                                                      <td class="mgx-1"><font style="vertical-align: inherit; "><font style="vertical-align: inherit;">{{ $item->first_name }}</font></font></td>
-                                                      <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->second_name }}</font></font></td>
+                                                      <td class="mgx-1"><font style="vertical-align: inherit; "><font style="vertical-align: inherit;">{{ $item->code_sis }}</font></font></td>
+                                                      <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->first_name }} {{ $item->second_name }}</font></font></td>
                                                       <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->names }}</font></font></td>
 
                                                       <td class="p-2" style="text-align: center; display: flex;">
-                                                          <a href="/admin/auxiliars/profile/{{ $item->id }}" class="btn btn-info btn-circle btn-sm mx-1"><i title="Ver detalles" class="fas fa-eye"></i></a>
+                                                            <a href="/admin/auxiliars/profile/{{ $item->id }}" class="btn btn-info btn-circle btn-sm mx-1"><i title="Ver detalles" class="fas fa-eye"></i></a>
                                                         
-                                                          <a href="/admin/auxiliars/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1"><i title="Modificar" class="fas fa-edit"></i></a>
-
-                                                          <button type="button" class="btn btn-danger btn-circle btn-sm mx-1" data-toggle="modal" data-target="#eliminar{{ $item->id }}"> <i title="Eliminar" class="fas fa-trash"></i> </button>
-
-                                                            <!-- Modal -->
+                                                            <a href="/admin/auxiliars/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1"><i title="Modificar" class="fas fa-edit"></i></a>
+  
+                                                            <button type="button" class="btn btn-danger btn-circle btn-sm mx-1" data-toggle="modal" data-target="#eliminar{{ $item->id }}"> <i title="Eliminar" class="fas fa-trash"></i> </button>
+                                                        <!-- Modal -->
                                                           <div class="modal fade" id="eliminar{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                               <div class="modal-dialog" role="document">
                                                               <div class="modal-content">

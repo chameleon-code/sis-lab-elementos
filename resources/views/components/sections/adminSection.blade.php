@@ -125,6 +125,13 @@
         </div>
       </div>
   </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="{{url('/scheduler')}}">
+      <i class="fas fa-fw fa-calendar-alt"></i>
+      <span>Horario</span>
+    </a>
+  </li>
   
   <li class="nav-item">
     <a class="nav-link" href="charts.html">

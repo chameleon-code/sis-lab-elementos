@@ -6,10 +6,15 @@ use Illuminate\Http\Request;
 use App\Professor;
 use App\Role;
 use App\User;
+use App\Student;
 use App\Mail\ProfessorMailController;
 use Illuminate\Support\Facades\Mail;
 use App\SubjectMatter;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use App\BlockGroup;
+use App\Group;
+
 class ProfessorController extends Controller
 {
     /**
@@ -19,8 +24,17 @@ class ProfessorController extends Controller
      */
     public function index(){
         $professors = Professor::getAllProfessors();
-        $data = ['professors' => $professors,
-                'title' => 'Docentes'];
+        if(Auth::user()->role_id==Role::ADMIN){
+            $data = ['professors' => $professors,
+            'title' => 'Docentes',
+            'view'  =>  'adminSection',
+            ];
+        }else{
+            $data = ['professors' => $professors,
+            'title' => 'Docentes',
+            'view'  =>  'professorSection',
+            ];
+        }
         return view('components.contents.professor.index',$data);
     }
 
@@ -149,5 +163,19 @@ class ProfessorController extends Controller
         $user->delete();
         Session::flash('status_message', 'Docente eliminad@ correctamente');
         return redirect('/admin/professors');   
+    }
+
+    public function studentList(){
+        $user = Auth::user();
+        $professor = Professor::where('user_id', '=', $user->id)->get()->first();
+        $group_professor = Group::where('professor_id', '=', $professor->id)->get()->first();
+        $block_professor = BlockGroup::where('group_id', '=', $group_professor->id)->get()->first();
+        //$students = Student::where('block_id', '=', $block_professor->block_id)->get();
+        $students = Student::getAllStudents();
+
+        $data = ['students' => $students,
+                'block_professor' => $block_professor,
+                'title' => 'Estudiantes'];
+        return view('components.contents.professor.studentList', $data);
     }
 }

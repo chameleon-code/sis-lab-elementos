@@ -69,5 +69,30 @@ $factory->define(App\Student::class, function (Faker\Generator $faker) {
     return [
         'user_id' => null,
         'ci' => $ci,
+        'block_id' => null,
+        'student_path' => null,
+    ];
+});
+
+$factory->define(App\Management::class, function (Faker\Generator $faker) {
+    static $semester;
+    static $managements;
+    static $start_management;
+    static $end_management;
+    
+    return [
+        'semester' => $semester,
+        'managements' => $managements,
+        'start_management' => $start_management,
+        'end_management' => $end_management,
+        'management_path' => null,
+    ];
+});
+
+$factory->define(App\SubjectMatter::class, function (Faker\Generator $faker) {
+    static $name;
+    
+    return [
+        'name' => $name
     ];
 });

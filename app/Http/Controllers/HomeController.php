@@ -36,7 +36,7 @@ class HomeController extends Controller
                 return view('components.sections.auxiliarSection');
                 break;
             case Role::STUDENT:
-                return view('components.sections.studentSection');
+                return view('components.contents.student.activities');
                 break;
         }
     }
