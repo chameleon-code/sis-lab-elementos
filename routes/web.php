@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +35,10 @@ Route::get('professor', function () {
     return view('components.sections.professorSection');
 });
 
+Route::get('scheduler', function () {
+    return view('components.contents.scheduler.scheduler');
+});
+
 //Docente
 Route::get('/admin/professors','ProfessorController@index');
 Route::get('/admin/professors/create', ['uses'=> 'ProfessorController@create']);
@@ -46,6 +49,7 @@ Route::delete('/admin/professors/{id}','ProfessorController@destroy')->name('pro
 Route::get('/admin/professors/profile/{id}', 'ProfessorController@show');
 
 //Estudiante
+Route::post('/student/activities',['uses' => 'StudentTaskController@store']);
 Route::get('student', ['uses' => 'StudentController@index']);
 Route::get('/admin/student/create', ['uses' => 'StudentController@create']);
 Route::post('/admin/student/create', ['uses' => 'StudentController@store']);

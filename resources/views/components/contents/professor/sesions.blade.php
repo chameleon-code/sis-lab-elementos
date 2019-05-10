@@ -50,10 +50,9 @@
                                 <strong style="color: gray;"> Sesión: </strong> {{ $sesion->number_sesion }}
                             </div>
                         </tr>
-                        
                     </thead>
                     
-                    <div class="panel">
+                    <div class="panel" style="max-height: 106px;">
                         @foreach ($tasks as $task)
                             @if($task->sesion_id == $sesion->id)
                                 <div class="my-2 mx-2" style="border-bottom: 1px solid #b5b5b5; font-size: 15px;">

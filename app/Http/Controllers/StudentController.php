@@ -138,7 +138,6 @@ class StudentController extends Controller
                 'managements' =>$managements,
             ];
         return view('components.contents.student.registration', $data);
-        dd("gg");
     }
 
     public function confirm(Request $request)
@@ -163,15 +162,6 @@ class StudentController extends Controller
         return redirect('/home');
     }
     
-    public function activities()
-    {
-        $user = Auth::user();
-        $student = Student::where('user_id','=',$user->id)->first();
-        $data = ['student' => $student,
-            'user' => $user
-        ];
-        return view('components.contents.student.activities')->with($data);
-    }
 
     public function create()
     {
