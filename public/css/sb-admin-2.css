@@ -2368,8 +2368,8 @@ textarea.form-control {
   margin-top: .1rem;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: #fff;
-  background-color: rgba(231, 74, 59, 0.9);
+  color: rgba(231, 74, 59, 0.9);
+  background-color: #fff;
   border-radius: 0.35rem;
 }
 
@@ -5112,7 +5112,8 @@ input[type="button"].btn-block {
   background-color: #eee;
   color: rgb(58, 58, 58);
   cursor: pointer;
-  padding: 18px;
+  padding: 13px;
+  margin: 3px 0px;
   width: 100%;
   border: none;
   text-align: left;
@@ -5122,7 +5123,7 @@ input[type="button"].btn-block {
 }
   
 .panel {
-padding: 0 18px;
+padding: 0 13px;
 background-color: white;
 max-height: 0;
 overflow: hidden;
@@ -6407,6 +6408,7 @@ a.close.disabled {
 
 .tooltip.show {
   opacity: 0.9;
+  color: #fff;
 }
 
 .tooltip .arrow {
@@ -6434,7 +6436,7 @@ a.close.disabled {
 .bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^="top"] .arrow::before {
   top: 0;
   border-width: 0.4rem 0.4rem 0;
-  border-top-color: #000;
+  border-top-color: rgb(90, 90, 90);
 }
 
 .bs-tooltip-right, .bs-tooltip-auto[x-placement^="right"] {
@@ -6486,9 +6488,10 @@ a.close.disabled {
 .tooltip-inner {
   max-width: 200px;
   padding: 0.25rem 0.5rem;
-  color: #fff;
+  color: #313131;
   text-align: center;
-  background-color: #000;
+  background-color: #fff;
+  border: 1px solid #777879;
   border-radius: 0.35rem;
 }
 
