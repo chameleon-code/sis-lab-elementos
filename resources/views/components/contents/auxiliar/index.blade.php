@@ -7,7 +7,7 @@
       <div class="card shadow mb-4">
           <div class="card-header py-3">
 
-                <div class="panel-heading m-0 font-weight-bold text-primary">>Auxiliares</div>
+                <div class="panel-heading m-0 font-weight-bold text-primary">Auxiliares</div>
 
               <div class="card-body">
                   @if (Session::has('status_message'))
