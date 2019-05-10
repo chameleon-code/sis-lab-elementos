@@ -46,8 +46,8 @@
                                     name="start_management"
                                     id="inicio_fecha"
                                     class="form-control col-md-12"
-                                    placeholder="Inicio de la fecha"
-                                    value="{{ old('start_management') }}" required>
+                                    placeholder=""
+                                    value="{{ old('start_management') }}" required readonly>
                         </div>
                         <label for='name' class="">Fin de la Gestión</label>
                         <div>
@@ -55,8 +55,8 @@
                                     name="end_management"
                                     id="fin_fecha"
                                     class="form-control col-md-12"
-                                    placeholder="Fin de la fecha"
-                                    value="{{ old('end_management') }}" required>
+                                    placeholder=""
+                                    value="{{ old('end_management') }}" required readonly>
                         </div>
                         <br>
                         <div class="form-group">
