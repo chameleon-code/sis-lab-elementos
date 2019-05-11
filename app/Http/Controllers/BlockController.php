@@ -125,9 +125,15 @@ class BlockController extends Controller
     }
     public function getGroups(Request $request, $id){
         $groups = Group::getGroupsBySubjects($id);
+        $groupsBlocks = BlockGroup::getAllBlockGroupsId();
+        //dd($groupsBlocks);
+        $groups2 = $groups->reject(function($item, $key) use ($groupsBlocks){
+            if (in_array($item->id, $groupsBlocks))
+                return true;
+        });
         if($request->ajax()){
-            return response()->json($groups);
+            return response()->json($groups2->values()->all());
         }
-        return $groups;
+        return $groups2->values()->all();
     }
 }
