@@ -142,5 +142,8 @@ Route::resource('/admin/groups', 'GroupController');
 Route::resource('/admin/blocks', 'BlockController');
 
 //Sesiones
-Route::get('/sesions', 'SesionController@index');
-Route::post('/sesions/store', 'SesionController@store');
+Route::get('/sesions','SesionController@index');
+Route::post('/sesions/store','SesionController@store');
+
+//Tareas o Practicas
+Route::get('/tasks','TaskController@index');

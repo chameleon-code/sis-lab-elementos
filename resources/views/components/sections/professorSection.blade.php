@@ -5,8 +5,8 @@
   <!-- Nav Item - Dashboard -->
   <li class="nav-item">
     <a class="nav-link" href="index.html">
-      <i class="fas fa-fw fa-tachometer-alt"></i>
-      <span>Dashboard</span></a>
+      <i class="fas fa-fw fa-chart-bar"></i>
+      <span>Desempeño</span></a>
   </li>
 
   <!-- Divider -->
@@ -19,14 +19,14 @@
 
   <!-- Nav Item - Pages Collapse Menu -->
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStudent" aria-expanded="true" aria-controls="collapseStudent">
       <i class="fas fa-fw fa-users"></i>
       <span>Estudiantes</span>
     </a>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+    <div id="collapseStudent" class="collapse" aria-labelledby="headingStudent" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
-        <a class="collapse-item" href="/professor/students/list"><i class="fas fa-list"></i>  Listar</a>
+        <a class="collapse-item" href="{{url("/professor/students/list")}}"><i class="fas fa-list"></i>  Listar</a>
         <a class="collapse-item" href="#"><i class="fas fa-briefcase"></i>  Portafolios</a>
         <a class="collapse-item" href="#"><i class="fas fa-star"></i>  Calificaciones</a>
       </div>
@@ -36,7 +36,7 @@
   <!-- Nav Item - Charts -->
   <li class="nav-item">
     <a class="nav-link" href="/sesions">
-      <i class="fas fa-fw fa-chart-area"></i>
+      <i class="fas fa-fw fa-calendar-day"></i>
       <span>Sesiones</span></a>
   </li>
 
@@ -48,56 +48,12 @@
       <div id="collapseTasks" class="collapse" aria-labelledby="headingTasks" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Opciones:</h6>
-          <a class="collapse-item" href="#"><i class="fas fa-list"></i>  Listar</a>
-          <a class="collapse-item" href="#"><i class="fas fa-plus"></i>  Crear</a>
+          <a class="collapse-item" href="#"><i class="fas fa-cogs"></i>  Administrar</a>
           <a class="collapse-item" href="#"><i class="fas fa-check"></i> Calificar</a>
         </div>
       </div>
     </li>
 
-  <!-- Divider -->
-  <hr class="sidebar-divider">
 
-  <!-- Heading -->
-  <div class="sidebar-heading">
-    Addons
-  </div>
-
-  <!-- Nav Item - Pages Collapse Menu -->
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-      <i class="fas fa-fw fa-folder"></i>
-      <span>Pages</span>
-    </a>
-    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">Login Screens:</h6>
-        <a class="collapse-item" href="login.html">Login</a>
-        <a class="collapse-item" href="register.html">Register</a>
-        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-        <div class="collapse-divider"></div>
-        <h6 class="collapse-header">Other Pages:</h6>
-        <a class="collapse-item" href="404.html">404 Page</a>
-        <a class="collapse-item" href="blank.html">Blank Page</a>
-      </div>
-    </div>
-  </li>
-
-  <!-- Nav Item - Charts -->
-  <li class="nav-item">
-    <a class="nav-link" href="charts.html">
-      <i class="fas fa-fw fa-chart-area"></i>
-      <span>Charts</span></a>
-  </li>
-
-  <!-- Nav Item - Tables -->
-  <li class="nav-item">
-    <a class="nav-link" href="tables.html">
-      <i class="fas fa-fw fa-table"></i>
-      <span>Tables</span></a>
-  </li>
-
-  <!-- Divider -->
-  <hr class="sidebar-divider d-none d-md-block">
 
 @endsection

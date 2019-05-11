@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 class TaskController extends Controller
 {
     /**
@@ -13,9 +12,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        return view('components.contents.professor.publishTasks');
     }
-
     /**
      * Show the form for creating a new resource.
      *
