@@ -43,7 +43,7 @@
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTasks" aria-expanded="true" aria-controls="collapseTasks">
       <i class="fas fa-fw fa-tasks"></i>
-      <span>Tareas</span>
+      <span>Prácticas</span>
     </a>
       <div id="collapseTasks" class="collapse" aria-labelledby="headingTasks" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
