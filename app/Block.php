@@ -14,9 +14,8 @@ class Block extends Model
     protected $rules = [
         'name' => 'required|max:255|min:3',
         'management_id' => 'required',
-        'groups_id' => 'required|max:255'
+        'groups_id.*' => 'distinct'
     ];
-    
     public static function getAllBlocks(){
         return self::all();
     }
