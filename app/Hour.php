@@ -16,4 +16,8 @@ class Hour extends Model
         'star' => 'required|time',
         'end' => 'required|time',
     ];
+
+    public static function getAllHours(){
+        return self::all();
+    }
 }

@@ -13,4 +13,8 @@ class Day extends Model
     protected $rules = [
         'name' => 'unique:name|required|max:10|min:1'
     ];
+
+    public static function getAllDays(){
+        return self::all();
+    }
 }

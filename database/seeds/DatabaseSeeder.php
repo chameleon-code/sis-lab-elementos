@@ -118,5 +118,34 @@ class DatabaseSeeder extends Seeder
         factory(\App\SubjectMatter::class, 1)->create([
             'name' => 'Taller de Sistemas Operativos',
         ]);
+
+        //Horarios
+        factory(\App\Laboratory::class, 1)->create([
+            'name' => 'Laboratorio - 1'
+        ]);
+        factory(\App\Laboratory::class, 1)->create([
+            'name' => 'Laboratorio - 2'
+        ]);
+        factory(\App\Laboratory::class, 1)->create([
+            'name' => 'Laboratorio - 3'
+        ]);
+            //Dias
+        factory(\App\Day::class, 1)->create([
+            'name' => 'Lunes'
+        ]);
+        factory(\App\Day::class, 1)->create([
+            'name' => 'Martes'
+        ]);
+        factory(\App\Day::class, 1)->create([
+            'name' => 'Miercoles'
+        ]);
+        factory(\App\Day::class, 1)->create([
+            'name' => 'Jueves'
+        ]);
+        factory(\App\Day::class, 1)->create([
+            'name' => 'Viernes'
+        ]);
+            //horas
+        
     }
 }

@@ -19,22 +19,24 @@
     </style>
 </head>
 <body>
+        
 <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;sha'>
     <div class="dhx_cal_navline">
-        <div class="dhx_cal_prev_button" style="background-color: #1cc88a;color: #ffffff">&nbsp;</div>
+        {{-- <div class="dhx_cal_prev_button" style="background-color: #1cc88a;color: #ffffff">&nbsp;</div>
         <div class="dhx_cal_next_button" style="background-color: #1cc88a;color: #ffffff">&nbsp;</div>
-        <div class="dhx_cal_today_button" style="background-color: #4e73df;color: #ffffff"></div>
+        <div class="dhx_cal_today_button" style="background-color: #4e73df;color: #ffffff"></div> --}}
         <div class="dhx_cal_date"></div>
-        <div class="dhx_cal_tab" name="day_tab"></div>
-        <div class="dhx_cal_tab" name="week_tab"></div>
-        <div class="dhx_cal_tab" name="month_tab"></div>
+        {{-- <div class="dhx_cal_tab" name="day_tab"></div> --}}
+        {{-- <div class="dhx_cal_tab" name="week_tab"></div>
+        <div class="dhx_cal_tab" name="month_tab"></div> --}}
     </div>
     <div class="dhx_cal_header"></div>
     <div class="dhx_cal_data"></div>
 </div>
 <script type="text/javascript">
+scheduler.templates.calendar_date = scheduler.date.date_to_str("%d");
     scheduler.config.xml_date = "%Y-%m-%d %H:%i:%s";
-    scheduler.config.first_hour = 7;
+    scheduler.config.first_hour = 6;
     scheduler.config.last_hour = 20;
 
    // scheduler.config.x_step = 15;

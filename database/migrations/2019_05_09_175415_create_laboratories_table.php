@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDayTable extends Migration
+class CreateLaboratoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateDayTable extends Migration
      */
     public function up()
     {
-        Schema::create('day', function (Blueprint $table) {
+        Schema::create('laboratories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateDayTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('day');
+        Schema::dropIfExists('laboratories');
     }
 }

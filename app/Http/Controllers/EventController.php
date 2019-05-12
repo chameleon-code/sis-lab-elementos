@@ -10,7 +10,6 @@ class EventController extends Controller
 
         $from = $request->from;
         $to = $request->to;
-
         return response()->json([
             "data" => $events->
             where("start_date", "<", $to)->

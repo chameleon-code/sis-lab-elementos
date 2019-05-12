@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLaboratoryTable extends Migration
+class CreateHoursTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateLaboratoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('laboratory', function (Blueprint $table) {
+        Schema::create('hours', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->time('start');
+            $table->time('end');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateLaboratoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('laboratoy');
+        Schema::dropIfExists('hours');
     }
 }
