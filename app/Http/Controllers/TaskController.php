@@ -34,7 +34,7 @@ class TaskController extends Controller
             'sesion_max'=>$sesion_max,
             'sesions'=>$sesions,
             'blockGroup'=>$blockGroup,
-            'task'=>$validTasks,
+            'tasks'=>$validTasks,
         ];
         return view('components.contents.professor.publishTasks', $data);
     }
@@ -56,7 +56,18 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        
+        if($request->hasFile('practice')){
+            $task = [
+                'title' => $request->title,
+                'description' => $request->description,
+                'sesion_id' => $request->sesion_id,
+            ];
+            Task::create($task);
+            $file = $request->file('practice');
+            $name = $file->getClientOriginalName();
+            $file -> move(public_path().'/storage/folders/2019-1/Bloque 1',$name);
+            return back();
+        }
     }
 
     /**

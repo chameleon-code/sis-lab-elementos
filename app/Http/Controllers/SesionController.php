@@ -21,18 +21,36 @@ class SesionController extends Controller
      */
     public function index()
     {
-        $sesions = Sesion::all();
-        $tasks = Task::all();
-        $sesion_max = Sesion::max('number_sesion');
+        // $sesions = Sesion::all();
+        // $tasks = Task::all();
+        // $sesion_max = Sesion::max('number_sesion');
+        // $blockGroup = Professor::getBlockProfessor();
+
+        // $data = [
+        //     'sesions' => $sesions,
+        //     'tasks' => $tasks,
+        //     'blockGroup' => $blockGroup,
+        //     'sesion_max' => $sesion_max,
+        // ];
         $blockGroup = Professor::getBlockProfessor();
-
+        $blockGroupId = Professor::getBlockProfessor()->block_id;
+        $sesions = Sesion::where('block_id','=',$blockGroupId)->get();
+        $tasks = Task::all();
+        $validTasks=[];
+        foreach ($tasks as $task) {
+            foreach($sesions as $sesion){
+                if($task->sesion_id==$sesion->id && $sesion->block_id==$blockGroupId){
+                    array_push($validTasks,$task);
+                }
+            }
+        }
+        $sesion_max = $sesions->count();
         $data = [
-            'sesions' => $sesions,
-            'tasks' => $tasks,
-            'blockGroup' => $blockGroup,
-            'sesion_max' => $sesion_max,
+            'sesion_max'=>$sesion_max,
+            'sesions'=>$sesions,
+            'blockGroup'=>$blockGroup,
+            'tasks'=>$validTasks,
         ];
-
         return view('components.contents.professor.sesions', $data);
     }
 
