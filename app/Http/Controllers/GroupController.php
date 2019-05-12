@@ -37,7 +37,7 @@ class GroupController extends Controller
         $professors = Professor::getAllProfessors();
         $count = $this->getCountSubjects(new Request(), 1) + 1;
         $groupNames = array();
-        for($i = 1; $i<10; $i++){
+        for($i = 1; $i<=15; $i++){
             if(!in_array($i ,$this->getGroupsNameBySubjects(1))){
                 array_push($groupNames, $i);
             }
@@ -45,7 +45,7 @@ class GroupController extends Controller
         $data=['subjectMatters'=>$subjectMatters,
                 'managements' =>$managements,
                 'professors' => $professors,
-                'countGroups' => "Grupo " . $count,
+                'countGroups' => $count,
                 'groupNames' => $groupNames
             ];
         return view('components.contents.groups.create', $data);
@@ -90,18 +90,21 @@ class GroupController extends Controller
     public function edit($id)
     {
         $group = Group::findOrFail($id);
-        $subject_matter_id=$group->subject_matters_id;
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
         $managements = Management::getAllManagements();
         $professors = Professor::getAllProfessors();
-        
+        $groupNames = array();
+        for($i = 1; $i<=15; $i++){
+            if(!in_array($i ,$this->getGroupsNameBySubjects(1))){
+                array_push($groupNames, $i);
+            }
+        }
         $data=['group' => $group,
-            'subject_matter_id' => $subject_matter_id,
             'subjectMatters' => $subjectMatters,
             'managements' => $managements,
-            'professors' => $professors
+            'professors' => $professors,
+            'groupNames' => $groupNames
         ];
-        
         return view('components.contents.groups.edit')->withTitle('Editar la Materia')->with($data);
     }
 
@@ -160,11 +163,7 @@ class GroupController extends Controller
         public function getGroupsNameBySubjects($id){
             $groups = Group::getGroupsBySubjects($id);
             $groups = array_pluck($groups, 'name');
-            $names = array();
-            foreach($groups as $group){
-                $names = array_prepend($names, substr($group, -1));
-            }
-            return $names;
+            return $groups;
         }
         //deprecated
         /*public function getProfessors(Request $request, $id){

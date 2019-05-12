@@ -52,14 +52,7 @@
                                                     
                                                     <td class="text-center" style="text-align: center; display: flex;">
                                                         <a href="/admin/groups/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1"><i title="Modificar" class="fas fa-edit"></i></a>
-
-                                                        <form class="pull-right" action="{{route('groups.destroy',[$item->id])}}" method="POST">
-                                                                {{csrf_field()}}
-                                                                {{method_field('DELETE')}}
-                                                                <button class="btn btn-danger btn-circle btn-sm mx-1" type="submit"><i title="Eliminar" class="fas fa-trash"></i></button>
-                                                        </form>
-                                                    </td>
-                                                    
+                                                    </td>                                                    
                                                 </tr>
                                           @endforeach
                                             

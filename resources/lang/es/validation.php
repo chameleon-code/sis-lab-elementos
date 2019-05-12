@@ -37,7 +37,7 @@ return [
     'digits'               => ':attribute debe tener :digits dígitos.',
     'digits_between'       => ':attribute debe tener entre :min y :max dígitos.',
     'dimensions'           => 'Las dimensiones de la imagen :attribute no son válidas.',
-    'distinct'             => 'No puede mandar valores duplicados para la creacion de un :attribute',
+    'distinct'             => 'No puede mandar :attribute' .'s duplicados para la creacion de un bloque.',
     'email'                => ':attribute no es un correo válido',
     'exists'               => ':attribute es inválido.',
     'file'                 => 'El campo :attribute debe ser un archivo.',

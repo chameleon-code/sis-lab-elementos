@@ -59,7 +59,7 @@ class BlockController extends Controller
         $block = new Block();
         $man = Management::find($request->management_id);
         $dir = $man->management_path.'/'.$request->name;
-        $name = 'Bloque ';
+        $name = 'Bloque';
         if($block->validate($input)){
             $block->management_id = $request->management_id;
             $block->block_path = $dir;
@@ -72,7 +72,7 @@ class BlockController extends Controller
             foreach($groupsID as $key=>$value){
                 $group = Group::where('id', $value)->first();
                 $block->groups()->attach($group->id);
-                $name .=$group->professor->first_name . '-';
+                $name .= ' - ' .$group->professor->first_name ;
             }
             $block->name = $name;
             $block->save();

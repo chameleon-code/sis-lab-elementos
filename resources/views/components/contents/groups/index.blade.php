@@ -16,7 +16,7 @@
                                 <table class="table dataTable table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" >
                                     <thead>
                                         <tr role="row" class="bg-dark">
-                                            <th class="sorting_desc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending"  aria-sort="descending" style="width: 15%;"><font style="vertical-align: inherit; color: white;"><font style="vertical-align: inherit;">Id</font></font></th>
+                                            <th class="sorting_desc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending"  aria-sort="descending" style="width: 15%;"><font style="vertical-align: inherit; color: white;"><font style="vertical-align: inherit;">Grupo</font></font></th>
 
                                             <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" ><font style="vertical-align: inherit;" style="width: 35%;"><font style="vertical-align: inherit; color: white;">Materia</font></font></th>
 
