@@ -138,17 +138,17 @@ Route::delete('/admin/management/{id}','ManagementController@destroy')->name('ma
 
 Route::get('/admin/blocks/getGro', 'BlockGroupController@getAllBlockGroups');
 
-Route::resource('/admin/groups', 'GroupController');
-Route::resource('/admin/blocks', 'BlockController');
-
 //Sesiones
 Route::get('/sesions','SesionController@index');
 Route::post('/sesions/store','SesionController@store');
 
 //Tareas o Practicas
 Route::get('/tasks','TaskController@index');
-
+Route::post('/tasks/create','TaskController@store')->name('tasks.create');
 /*Run
 php composer update
 php artisan config:clear
 */
+
+Route::resource('/admin/groups', 'GroupController');
+Route::resource('/admin/blocks', 'BlockController');
