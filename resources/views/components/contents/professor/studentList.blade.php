@@ -1,7 +1,11 @@
 @extends('components.sections.professorSection')
 @section('userContent')
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
 
-    <script src="/js/generatekey.js"></script>
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -12,8 +16,8 @@
                     @endif
                     <div class="">
                         <div class="row">
-                            <div class="col-sm-12 table-responsive text-center">
-                                <table class="table dataTable table-striped table-secondary" id="dataTable" width="100%"
+                            <div class="col-sm-12 table-responsive">
+                                <table class="table dataTable text-center table-striped table-secondary" id="dataTable" width="100%"
                                        cellspacing="0" role="grid" aria-describedby="dataTable_info"
                                        style="width: 100%;">
                                     <thead>
@@ -59,9 +63,9 @@
                                             {{-- <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->email }}</font></font></td> --}}
 
                                             <td class="text-center" style="text-align: center; display: flex;">
-                                                <a href="/admin/students/profile/{{ $item->id }}" class="btn btn-info btn-circle btn-sm mx-1"><i title="Ver Perfil" class="fas fa-eye"></i></a>
+                                                <a href="/professor/students/profile/{{ $item->id }}" class="btn btn-info btn-circle btn-sm mx-1" data-toggle="tooltip" title="Ver Perfil"><i class="fas fa-eye"></i></a>
 
-                                                <a href="/admin/students/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1"><i title="Ver Tareas" class="fas fa-edit"></i></a>
+                                                <a href="/professor/studentSesions/{{$item->id}}" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Ver Tareas"><i class="fas fa-edit"></i></a>
                                             </td>
                                         </tr>
                                         @endif
@@ -75,5 +79,4 @@
             </div>
         </div>
     </div>
-
 @endsection

@@ -4,9 +4,9 @@
   <hr class="sidebar-divider my-0">
 
   <!-- Nav Item - Dashboard -->
-  <li class="nav-item active">
+  <li class="nav-item">
     <a class="nav-link" href="/admin">
-      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <i class="fas fa-fw fa-home"></i>
       <span>Inicio</span></a>
   </li>
 
@@ -28,7 +28,7 @@
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="{{ url("/admin/professors")}}"><i class="fas fa-list"></i>  Listar</a>
-        <a class="collapse-item" href="{{ url("/admin/professors/create")}}"><i class="fas fa-plus-square"></i>  Crear</a>
+        <a class="collapse-item" href="{{ url("/admin/professors/create")}}"><i class="fas fa-plus"></i>  Crear</a>
       </div>
     </div>
   </li>
@@ -43,7 +43,7 @@
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="/admin/auxiliars"><i class="fas fa-list"></i>  Listar</a>
-        <a class="collapse-item" href="/admin/auxiliars/create"><i class="fas fa-plus-square"></i>  Crear</a>
+        <a class="collapse-item" href="/admin/auxiliars/create"><i class="fas fa-plus"></i>  Crear</a>
       </div>
     </div>
   </li>
@@ -57,7 +57,7 @@
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="{{url('/admin/students')}}"><i class="fas fa-list"></i>  Listar</a>
-        <a class="collapse-item" href="{{url('/admin/student/create ')}}"><i class="fas fa-plus-square"></i>  Crear</a>
+        <a class="collapse-item" href="{{url('/admin/student/create ')}}"><i class="fas fa-plus"></i>  Crear</a>
       </div>
     </div>
   </li>
@@ -79,7 +79,7 @@
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="{{url('/admin/managements')}}"><i class="fas fa-list"></i>  Listar</a>
-        <a class="collapse-item" href="{{url('/admin/management/create')}}"><i class="fas fa-plus-square"></i>  Crear</a>
+        <a class="collapse-item" href="{{url('/admin/management/create')}}"><i class="fas fa-plus"></i>  Crear</a>
       </div>
     </div>
   </li>
@@ -93,7 +93,7 @@
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="{{url('/admin/subjectmatters')}}"><i class="fas fa-list"></i>  Listar</a>
-        <a class="collapse-item" href="{{url('/admin/subjectmatter/create')}}"><i class="fas fa-plus-square"></i>  Crear</a>
+        <a class="collapse-item" href="{{url('/admin/subjectmatter/create')}}"><i class="fas fa-plus"></i>  Crear</a>
       </div>
     </div>
   </li>
@@ -107,7 +107,7 @@
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="{{url('/admin/groups')}}"><i class="fas fa-list"></i>  Listar</a>
-        <a class="collapse-item" href="{{url('/admin/groups/create')}}"><i class="fas fa-plus-square"></i>  Crear</a>
+        <a class="collapse-item" href="{{url('/admin/groups/create')}}"><i class="fas fa-plus"></i>  Crear</a>
       </div>
     </div>
   </li>
@@ -121,7 +121,7 @@
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Opciones:</h6>
           <a class="collapse-item" href="{{url('/admin/blocks')}}"><i class="fas fa-list"></i>  Listar</a>
-          <a class="collapse-item" href="{{url('/admin/blocks/create')}}"><i class="fas fa-plus-square"></i>  Crear</a>
+          <a class="collapse-item" href="{{url('/admin/blocks/create')}}"><i class="fas fa-plus"></i>  Crear</a>
         </div>
       </div>
   </li>

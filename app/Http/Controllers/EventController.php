@@ -26,6 +26,13 @@ class EventController extends Controller
         $event->end_date = $request->end_date;
         $event->save();
 
+        //codigo nuevo para guardar
+        $event_lab = create([
+            'laboratory_id'=>$request->laboratory_id, 'block_id'=>$request->block_id, 'event_id'=>$request->event_pid
+        ]);
+
+        //fin codigo nuevo para guardar
+
         return response()->json([
             "action"=> "inserted",
             "tid" => $event->id

@@ -26,7 +26,6 @@
                   <div class="form-group">
                     <label for="">Nombres</label>
                     <input type="text" class="form-control" name="names" required autofocus>
-                      {!! $errors -> first('names','<label style="color:crimson">:message</label>')!!} 
                   </div>
                   <div class="row">
                       <div class="form-group col-md-6">

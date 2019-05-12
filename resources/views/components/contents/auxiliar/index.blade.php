@@ -7,7 +7,7 @@
       <div class="card shadow mb-4">
           <div class="card-header py-3">
 
-                <div class="panel-heading m-0 font-weight-bold text-primary">>Auxiliares</div>
+                <div class="panel-heading m-0 font-weight-bold text-primary">Auxiliares</div>
 
               <div class="card-body">
                   @if (Session::has('status_message'))
@@ -16,8 +16,8 @@
                   
                   <div class="">
                       <div class="row">
-                          <div class="col-sm-12 table-responsive text-center">
-                                  <table class="table dataTable table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%; margin-top: 15px; margin-bottom: 35px;">
+                          <div class="col-sm-12 table-responsive">
+                                  <table class="table dataTable text-center table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%; margin-top: 15px; margin-bottom: 35px;">
                                       <thead class="">
                                           <tr role="row" class="bg-dark">
                                               <th class="sorting_asc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column ascending" style="width:230px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align: inherit;">Código SIS</font></font></th>

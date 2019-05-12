@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ValidationTrait;
+use Illuminate\Support\Facades\Auth;
+
 class Professor extends Model
 {
     use ValidationTrait;
@@ -27,5 +29,12 @@ class Professor extends Model
     public static function getProfessor($id){
         $professors = self::getAllProfessors();
         return $professors->where('id', $id)->first();
+    }
+
+    public static function getBlockProfessor()
+    {
+        $professor = Professor::where('user_id','=', Auth::user()->id)->get()->first();
+        $group = Group::where('professor_id', '=', $professor->id)->get()->first();
+        return BlockGroup::where('group_id', '=', $group->id)->get()->first();
     }
 }

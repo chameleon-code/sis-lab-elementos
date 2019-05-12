@@ -87,19 +87,19 @@ class DatabaseSeeder extends Seeder
 
         // GESTIONES
 
-        factory(\App\Management::class, 1)->create([
-            'semester' => '1',
-            'managements' => '2019',
-            'start_management' => '2019-02-01',
-            'end_management' => '2019-06-01',
-        ]);
+        // factory(\App\Management::class, 1)->create([
+        //     'semester' => '1',
+        //     'managements' => '2019',
+        //     'start_management' => '2019-02-01',
+        //     'end_management' => '2019-06-01',
+        // ]);
 
-        factory(\App\Management::class, 1)->create([
-            'semester' => '2',
-            'managements' => '2019',
-            'start_management' => '2019-07-01',
-            'end_management' => '2019-012-01',
-        ]);
+        // factory(\App\Management::class, 1)->create([
+        //     'semester' => '2',
+        //     'managements' => '2019',
+        //     'start_management' => '2019-07-01',
+        //     'end_management' => '2019-012-01',
+        // ]);
 
         // MATERIAS
 

@@ -178,4 +178,17 @@ class ProfessorController extends Controller
                 'title' => 'Estudiantes'];
         return view('components.contents.professor.studentList', $data);
     }
+
+    public function profileStudent($id)
+    {
+        $student = Student::findOrFail($id);
+        $user_id = $student->user_id;
+        $user = User::findOrFail($user_id);
+
+        $data = ['student' => $student,
+            'user' => $user
+        ];
+
+        return view('components.contents.professor.profileStudent')->withTitle('Perfil de Estudiante')->with($data);
+    }
 }
