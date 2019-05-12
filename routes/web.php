@@ -147,3 +147,8 @@ Route::post('/sesions/store','SesionController@store');
 
 //Tareas o Practicas
 Route::get('/tasks','TaskController@index');
+
+/*Run
+php composer update
+php artisan config:clear
+*/

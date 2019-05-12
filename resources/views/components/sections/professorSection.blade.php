@@ -48,7 +48,7 @@
       <div id="collapseTasks" class="collapse" aria-labelledby="headingTasks" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Opciones:</h6>
-          <a class="collapse-item" href="#"><i class="fas fa-cogs"></i>  Administrar</a>
+          <a class="collapse-item" href="{{url('/tasks')}}"><i class="fas fa-cogs"></i>  Administrar</a>
           <a class="collapse-item" href="#"><i class="fas fa-check"></i> Calificar</a>
         </div>
       </div>
