@@ -56,7 +56,7 @@
                         @foreach ($tasks as $task)
                             @if($task->sesion_id == $sesion->id)
                                 <div class="my-2 mx-2" style="border-bottom: 1px solid #b5b5b5; font-size: 15px;">
-                                        <div style="margin-top: 12px; margin-bottom: -15px;"> <p> <strong> Tarea: </strong> <a href="#">{{ $task->title }}</a> </p> </div>
+                                    <div style="margin-top: 12px; margin-bottom: -15px;"> <p> <strong> Tarea: </strong> <a href="#">{{ $task->title }}</a> </p> </div>
                                         <div class="row" style="margin-top: -15px; margin-bottom: -15px;">
                                             <div class="row" style="margin-left: 12px;">
                                                 <strong> Entregados: </strong>
@@ -66,7 +66,7 @@
                                             </div>
                                             <p style="margin-left: 12px;"> 8/14 </p>
                                         </div>
-                                        <div> <p> <strong> Límite de entrega: </strong> {{$task->end}} </p> </div>
+                                    <div> <p> <strong> Límite de entrega: </strong> {{$task->end}} </p> </div>
                                 </div>
                             @endif
                         @endforeach
@@ -132,5 +132,4 @@
         $('[data-toggle="tooltip"]').tooltip()
       })
 </script>
-
 @endsection
