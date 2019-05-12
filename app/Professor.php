@@ -33,7 +33,7 @@ class Professor extends Model
 
     public static function getBlockProfessor()
     {
-        $professor = Professor::find(Auth::user()->id);
+        $professor = Professor::where('user_id','=', Auth::user()->id)->get()->first();
         $group = Group::where('professor_id', '=', $professor->id)->get()->first();
         return BlockGroup::where('group_id', '=', $group->id)->get()->first();
     }

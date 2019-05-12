@@ -52,11 +52,11 @@
                         </tr>
                     </thead>
                     
-                    <div class="panel" style="max-height: 106px;">
+                    <div class="panel" style="max-height: 100%;">
                         @foreach ($tasks as $task)
                             @if($task->sesion_id == $sesion->id)
                                 <div class="my-2 mx-2" style="border-bottom: 1px solid #b5b5b5; font-size: 15px;">
-                                        <div style="margin-top: 12px; margin-bottom: -15px;"> <p> <strong> Tarea: </strong> <a href="#">{{ $task->title }}</a> </p> </div>
+                                    <div style="margin-top: 12px; margin-bottom: -15px;"> <p> <strong> Tarea: </strong> <a href="#">{{ $task->title }}</a> </p> </div>
                                         <div class="row" style="margin-top: -15px; margin-bottom: -15px;">
                                             <div class="row" style="margin-left: 12px;">
                                                 <strong> Entregados: </strong>
@@ -66,7 +66,7 @@
                                             </div>
                                             <p style="margin-left: 12px;"> 8/14 </p>
                                         </div>
-                                        <div> <p> <strong> Límite de entrega: </strong> {{$task->end}} </p> </div>
+                                    <div> <p> <strong> Límite de entrega: </strong> {{$task->end}} </p> </div>
                                 </div>
                             @endif
                         @endforeach
@@ -74,57 +74,56 @@
                     @endforeach
 
                     <div class="modal fade" id="deleteSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Sesión</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Sesión</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                        Las tareas pertenecientes a una sesión no serán elimindas. <br><br>
+                                    @foreach ($sesions as $sesion)
+                                        <p> Sesion {{ $sesion->number_sesion }} <input name={{ $sesion->id }} type="checkbox" class="float-right"> </p>
+                                    @endforeach
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-danger">Eliminar</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                                Las tareas pertenecientes a una sesión no serán elimindas. <br><br>
-                            @foreach ($sesions as $sesion)
-                                <p> Sesion {{ $sesion->number_sesion }} <input name={{ $sesion->id }} type="checkbox" class="float-right"> </p>
-                            @endforeach
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-danger">Eliminar</button>
-                        </div>
-                        </div>
-                    </div>
                     </div>
 
 
                     <div class="modal fade" id="addSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Añadir Sesión</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Añadir Sesión</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Se agregará la Sesión: {{ $sesion_max + 1 }}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <form action="/sesions/store" method="POST">
+                                        {{csrf_field()}}
+                                        <input type="text" class="form-control" style="display: none;" name="block_id" value="1" required autofocus>
+                                        <input type="text" class="form-control" style="display: none;" name="number_sesion" value="{{ $sesion_max + 1 }}" required autofocus>
+                                        <button type="submit" class="btn btn-primary">Aceptar</button>  
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            Se agregará la Sesión: {{ $sesion_max + 1 }}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <form action="/sesions/store" method="POST">
-                                {{csrf_field()}}
-                                <input type="text" class="form-control" style="display: none;" name="block_id" value="1" required autofocus>
-                                <input type="text" class="form-control" style="display: none;" name="number_sesion" value="{{ $sesion_max + 1 }}" required autofocus>
-                                <button type="submit" class="btn btn-primary">Aceptar</button>  
-                            </form>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                    
+                    </div>  
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
 <script src="/js/accordion.js"></script>
 <script>
@@ -132,5 +131,4 @@
         $('[data-toggle="tooltip"]').tooltip()
       })
 </script>
-
 @endsection

@@ -40,23 +40,29 @@
                                 @endforeach
                         </select>
                         </div>
-                        <label for='name' class="">Inicio de la Gestión</label>
-                        <div>
-                            <input  type="text"
-                                    name="start_management"
-                                    id="inicio_fecha"
-                                    class="form-control col-md-12"
-                                    placeholder="Inicio de la fecha"
-                                    value="{{ old('start_management') }}" required>
-                        </div>
-                        <label for='name' class="">Fin de la Gestión</label>
-                        <div>
-                            <input  type="text"
-                                    name="end_management"
-                                    id="fin_fecha"
-                                    class="form-control col-md-12"
-                                    placeholder="Fin de la fecha"
-                                    value="{{ old('end_management') }}" required>
+                        <div class="row">
+                          <div class="form-group col-md-6 col-6">
+                              <label for='name' class="">Inicio de la Gestión</label>
+                              <div>
+                                  <input  type="text"
+                                          name="start_management"
+                                          id="inicio_fecha"
+                                          class="form-control col-md-12"
+                                          placeholder=""
+                                          value="{{ old('start_management') }}" required readonly>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-6 col-6">
+                              <label for='name' class="">Fin de la Gestión</label>
+                              <div>
+                                  <input  type="text"
+                                          name="end_management"
+                                          id="fin_fecha"
+                                          class="form-control col-md-12"
+                                          placeholder=""
+                                          value="{{ old('end_management') }}" required readonly>
+                              </div>
+                          </div>
                         </div>
                         <br>
                         <div class="form-group">
