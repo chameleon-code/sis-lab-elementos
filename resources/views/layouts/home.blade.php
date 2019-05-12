@@ -32,7 +32,7 @@
           <a class="navbar-brand" href="#">Sis-Lab</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a class="btn btn-primary col-11" href=" {{ url('/login') }} ">Ingresa</a></li>
+          <li><a id="login" class="btn btn-primary col-11" href=" {{ url('/login') }} ">Ingresa</a></li>
           <li><a class="btn btn-success col-11" href=" {{ url('/register') }} ">Regístrate</a></li>
         </ul>
       </div>

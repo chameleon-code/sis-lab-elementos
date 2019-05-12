@@ -20,7 +20,7 @@
 
   <!-- Nav Item - Pages Collapse Menu -->
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProfessors" aria-expanded="true" aria-controls="collapseProfessors">
+    <a class="nav-link collapsed" id="professors" href="#" data-toggle="collapse" data-target="#collapseProfessors" aria-expanded="true" aria-controls="collapseProfessors">
       <i class="fas fa-fw fa-chalkboard-teacher"></i>
       <span>Docentes</span>
     </a>
@@ -28,7 +28,7 @@
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="{{ url("/admin/professors")}}"><i class="fas fa-list"></i>  Listar</a>
-        <a class="collapse-item" href="{{ url("/admin/professors/create")}}"><i class="fas fa-plus"></i>  Crear</a>
+        <a class="collapse-item" href="{{ url("/admin/professors/create")}}" id="createProfessor"><i class="fas fa-plus"></i>  Crear</a>
       </div>
     </div>
   </li>

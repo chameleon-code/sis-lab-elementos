@@ -18,11 +18,13 @@
         <div class="card shadow mb-4">
             <div class="card-header py-2">
                 <div class="panel-heading my-2 font-weight-bold text-primary container">
-                    Sesiones
+                    Portafolios
                 </div>
 
                 <div class="container">
-                    <strong>Estudiante: </strong> {{ $user->first_name.' '.$user->second_name.' '.$user->names }}
+                    <strong>Estudiante: </strong> {{ $user->first_name.' '.$user->second_name.' '.$user->names }} <br>
+                    <strong>Materia: </strong> {{ $subject_matter->name }} <br>
+                    <strong> {{ $group->name }} </strong>
                 </div>
 
                 <div class="card-body">
