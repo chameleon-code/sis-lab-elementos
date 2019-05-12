@@ -24,9 +24,7 @@ $(document).ready(function(){
     });
     $('#addGroups').click(function() {
         var subjectID = $("#subjects :selected").attr("value");
-        console.log(subjectID);
-        $.get("getGroups/"+subjectID+"", function(response, subjects){ 
-            console.log(response);
+        $.get("getGroups/"+subjectID+"", function(response, subjects){
             if (iCnt < response.length) {                            
             iCnt = iCnt + 1;  
             $(container).append(
@@ -45,13 +43,4 @@ $(document).ready(function(){
             iCnt--;
         }
     });
-    /*$("#subjects").change(function(event){
-        $.get("getProfessors/"+event.target.value+"", function(response, subjects){
-            $('#professor_id').empty();
-            for(i=0; i<response.length; i++){
-                console.log(response[i]);
-                $('#professor_id').append("<option value='"+response[i].id+"'>"+response[i].names +" "+ response[i].first_name +" "+ response[i].second_name+"</option>");
-            }
-        })
-    });*/
 });

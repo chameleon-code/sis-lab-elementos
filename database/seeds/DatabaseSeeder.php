@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
-
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -19,7 +18,7 @@ class DatabaseSeeder extends Seeder
         Storage::makeDirectory('folders');
 
         //llamada al seeder de events
-        $this->call(EventsTableSeeder::class);
+        //$this->call(EventsTableSeeder::class);
 
         // ROLES
 

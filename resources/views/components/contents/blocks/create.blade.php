@@ -35,21 +35,16 @@
                                             @endforelse
                                     </select>
                                 </div>
-
-                                <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
-                                    <label for='name' class="control-label">Nombre: </label>
-                                        <input type="text" class="form-control" name="name">
-                                </div>
                                 <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
-                                    <label for="subject_matter_id" class="control-label">Materia</label>
-                                    <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
-                                        @forelse ($subjectMatters as $subjectMatter)
-                                            <option class="form-control" value="{{$subjectMatter->id}}">{{$subjectMatter->name}}</option>
-                                        @empty
-                                        <option class="form-control" value="">No existen materias registradas</option>
-                                        @endempty
-                                        @endforelse
-                                    </select>
+                                <label for="subject_matter_id" class="control-label">Materia</label>
+                                <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
+                                    @forelse ($subjectMatters as $subjectMatter)
+                                        <option class="form-control" value="{{$subjectMatter->id}}">{{$subjectMatter->name}}</option>
+                                    @empty
+                                    <option class="form-control" value="">No existen materias registradas</option>
+                                    @endempty
+                                    @endforelse
+                                </select>
                                 </div>
                                 <div class="form-group" {{ $errors->has('group_id') ? 'has-error' : ''}}>
                                         <label for="group_id" class="control-label">Grupo: </label>
@@ -60,7 +55,7 @@
                                                 @forelse ($groups as $group)
                                                     <option value="{{ $group->id }}" class="form-control">{{ $group->name . " - " . $group->professor->names . " " . $group->professor->first_name . " " . $group->professor->second_name}}</option>
                                                 @empty
-                                                    <option class="form-control" value="">-- No existen grupos registrados --</option>
+                                                    <option class="form-control" value=""> No existen grupos para la materia seleccionada</option>
                                                 @endforelse
                                             </select>
                                         </div>

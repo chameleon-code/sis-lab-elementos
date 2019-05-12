@@ -12,9 +12,8 @@ class Block extends Model
     protected $fillable = ['management_id', 'name', 'block_path'];
 
     protected $rules = [
-        'name' => 'required|max:255|min:3',
         'management_id' => 'required',
-        'groups_id.*' => 'distinct'
+        'groups_id.*' => 'required|distinct'
     ];
     public static function getAllBlocks(){
         return self::all();

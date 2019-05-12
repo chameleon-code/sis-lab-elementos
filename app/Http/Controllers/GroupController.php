@@ -37,7 +37,7 @@ class GroupController extends Controller
         $professors = Professor::getAllProfessors();
         $count = $this->getCountSubjects(new Request(), 1) + 1;
         $groupNames = array();
-        for($i = 1; $i<11; $i++){
+        for($i = 1; $i<10; $i++){
             if(!in_array($i ,$this->getGroupsNameBySubjects(1))){
                 array_push($groupNames, $i);
             }

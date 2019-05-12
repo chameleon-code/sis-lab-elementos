@@ -54,15 +54,16 @@ class BlockController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->groups_id);
         $input =$request->all();
         $block = new Block();
         $man = Management::find($request->management_id);
         $dir = $man->management_path.'/'.$request->name;
-
+        $name = 'Bloque ';
         if($block->validate($input)){
             $block->management_id = $request->management_id;
-            $block->name = $request->name;
             $block->block_path = $dir;
+            $block->name = $name;
             $groupsID = $request->groups_id;
             $block->save();
 
@@ -71,7 +72,10 @@ class BlockController extends Controller
             foreach($groupsID as $key=>$value){
                 $group = Group::where('id', $value)->first();
                 $block->groups()->attach($group->id);
+                $name .=$group->professor->first_name . '-';
             }
+            $block->name = $name;
+            $block->save();
             return redirect('/admin/blocks');
         }
         else{
