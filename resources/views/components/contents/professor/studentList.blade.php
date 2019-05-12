@@ -16,8 +16,8 @@ $(function () {
                     @endif
                     <div class="">
                         <div class="row">
-                            <div class="col-sm-12 table-responsive text-center">
-                                <table class="table dataTable table-striped table-secondary" id="dataTable" width="100%"
+                            <div class="col-sm-12 table-responsive">
+                                <table class="table dataTable text-center table-striped table-secondary" id="dataTable" width="100%"
                                        cellspacing="0" role="grid" aria-describedby="dataTable_info"
                                        style="width: 100%;">
                                     <thead>
