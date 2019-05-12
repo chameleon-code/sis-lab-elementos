@@ -140,4 +140,16 @@ class BlockController extends Controller
         }
         return $groups2->values()->all();
     }
+    public function getBlocksBySubjects(Request $request, $id){
+        $blocks = Block::getAllBlocks();
+        $blocks2 = $blocks->reject(function($item, $key) use ($id){
+            if($item->groups->first()->subject_matter_id != $id)
+                return true; 
+            });
+            if($request->ajax()){
+                return response()->json($blocks2->values()->all());
+            }
+            return $blocks2->values()->all();
+       
+    }
 }

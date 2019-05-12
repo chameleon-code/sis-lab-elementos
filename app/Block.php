@@ -21,4 +21,7 @@ class Block extends Model
     public function groups(){
         return $this->belongsToMany('App\Group');
     }
+    /*public static function getBlocksBySubjects($id){
+        $blocks = self::where();
+    }*/
 }
