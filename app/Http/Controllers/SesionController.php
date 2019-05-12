@@ -7,6 +7,9 @@ use App\Sesion;
 use App\Task;
 use App\Student;
 use App\Block;
+use App\Professor;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class SesionController extends Controller
@@ -18,16 +21,36 @@ class SesionController extends Controller
      */
     public function index()
     {
-        $sesions = Sesion::all();
+        // $sesions = Sesion::all();
+        // $tasks = Task::all();
+        // $sesion_max = Sesion::max('number_sesion');
+        // $blockGroup = Professor::getBlockProfessor();
+
+        // $data = [
+        //     'sesions' => $sesions,
+        //     'tasks' => $tasks,
+        //     'blockGroup' => $blockGroup,
+        //     'sesion_max' => $sesion_max,
+        // ];
+        $blockGroup = Professor::getBlockProfessor();
+        $blockGroupId = Professor::getBlockProfessor()->block_id;
+        $sesions = Sesion::where('block_id','=',$blockGroupId)->get();
         $tasks = Task::all();
-        $sesion_max = Sesion::max('number_sesion');
-
+        $validTasks=[];
+        foreach ($tasks as $task) {
+            foreach($sesions as $sesion){
+                if($task->sesion_id==$sesion->id && $sesion->block_id==$blockGroupId){
+                    array_push($validTasks,$task);
+                }
+            }
+        }
+        $sesion_max = $sesions->count();
         $data = [
-            'sesions' => $sesions,
-            'tasks' => $tasks,
-            'sesion_max' => $sesion_max,
+            'sesion_max'=>$sesion_max,
+            'sesions'=>$sesions,
+            'blockGroup'=>$blockGroup,
+            'tasks'=>$validTasks,
         ];
-
         return view('components.contents.professor.sesions', $data);
     }
 
@@ -107,5 +130,25 @@ class SesionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function showStudentSesions($id)
+    {
+        $student = Student::find($id);
+        $user = User::where('id', '=', $student->user_id)->get()->first();
+        $sesions = Sesion::all();
+        $tasks = Task::all();
+        $sesion_max = Sesion::max('number_sesion');
+        $blockGroup = Professor::getBlockProfessor();
+
+        $data = [
+            'user' => $user,
+            'sesions' => $sesions,
+            'tasks' => $tasks,
+            'blockGroup' => $blockGroup,
+            'sesion_max' => $sesion_max,
+        ];
+
+        return view('components.contents.professor.studentSesions', $data);
     }
 }

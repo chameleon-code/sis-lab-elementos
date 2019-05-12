@@ -18,9 +18,9 @@ class CreateTasksTable extends Migration
             $table->unsignedInteger('sesion_id');
             $table->foreign('sesion_id')->references('id')->on('sesions')->onDelete('cascade');
             $table->string('title');
-            $table->string('description');
-            $table->date('start');
-            $table->date('end');
+            $table->string('description')->nullable();;
+            $table->date('start')->nullable();
+            $table->date('end')->nullable();
             $table->string('task_path')->nullable();
             $table->timestamps();
         });

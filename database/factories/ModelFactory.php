@@ -60,6 +60,7 @@ $factory->define(App\Auxiliar::class, function (Faker\Generator $faker) {
 
     return [
         'user_id' => null,
+        'type' => null
     ];
 });
 

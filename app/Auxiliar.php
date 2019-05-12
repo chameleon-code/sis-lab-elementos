@@ -9,7 +9,7 @@ class Auxiliar extends Model
 {
     use ValidationTrait;
     protected $fillable = [
-        'user_id',
+        'user_id','type'
     ];
 
     public static function getAllAuxiliars(){
@@ -22,7 +22,7 @@ class Auxiliar extends Model
         'second_name' => 'required|max:100',
         'email' => 'email|required|max:150',
         'password' => 'required|min:8',
-        'code_sis' => 'required|max:10|min:8'
+        'code_sis' => 'required|max:10|min:8',
     ];
 
 }

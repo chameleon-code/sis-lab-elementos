@@ -29,7 +29,6 @@ class AuxiliarController extends Controller
     public function store(Request $request){
         
         $input = $request->all();
-        $auxiliar = new Auxiliar();
         $user = new User();
         if($user->validate($input)){
             $data = array(
@@ -38,7 +37,8 @@ class AuxiliarController extends Controller
                 'second_name'=> $request->second_name,
                 'email' => $request->email,
                 'password' => $request->password,
-                'code_sis' => $request->code_sis
+                'code_sis' => $request->code_sis,
+                'type' => $request->type,
             );
             $newAuxiliar = User::create([
                 'role_id' => \App\Role::AUXILIAR,
@@ -51,6 +51,7 @@ class AuxiliarController extends Controller
             ]);
             Auxiliar::create([
                 'user_id' => $newAuxiliar['id'],
+                'type' => $request->type,
             ]);
             Mail::to($request->email)->send(new AuxiliarMailController($data, 'register'));
             return redirect('/admin/auxiliars');
@@ -85,18 +86,22 @@ class AuxiliarController extends Controller
     public function update(Request $request, $id){
         $user = User::find($id);
         $input = $request->all();
-
-        if($user->validate($input)){
+        $auxiliar = Auxiliar::where('user_id','=',$user->id)->get()->first();
+        if($auxiliar->validate($input)){
             $user->names = $request->names;
             $user->first_name = $request->first_name;
             $user->second_name = $request->second_name;
             $user->email = $request->email;
+            $user->code_sis = $request->code_sis;
             $user->password = bcrypt($request->password);
             $user->save();
+            $auxiliar->user_id=$auxiliar->user_id;
+            $auxiliar->type=$request->type;
+            $auxiliar->save();
             Session::flash('status_message', 'Auxiliar Editado!');
             return redirect('/admin/auxiliars');
         }
-        return black()->withInput($input)->withErrors($user->errors);
+        return back()->withInput($input)->withErrors($auxiliar->errors);
     }
 
     public function show($id){

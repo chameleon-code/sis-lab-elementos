@@ -48,8 +48,6 @@ Route::post('/admin/professors/{id}/update','ProfessorController@update')->name(
 Route::delete('/admin/professors/{id}','ProfessorController@destroy')->name('professor.destroy');
 Route::get('/admin/professors/profile/{id}', 'ProfessorController@show');
 
-Route::get('/students/list', 'ProfessorController@studentList');
-
 //Estudiante
 Route::post('/student/activities',['uses' => 'StudentTaskController@store']);
 Route::get('student', ['uses' => 'StudentController@index']);
@@ -64,6 +62,12 @@ Route::get('student/{id}', 'StudentController@show');
 Route::get('admin/students/{id}/edit', 'StudentController@edit');
 Route::post('student/{id}/update', 'StudentController@update')->name('student.update');
 Route::delete('student/{id}', 'StudentController@destroy')->name('student.destroy');
+
+
+Route::get('/professor/students/profile/{id}', 'ProfessorController@profileStudent');
+Route::get('/professor/students/list', 'ProfessorController@studentList');
+Route::get('/professor/studentSesions/{id}', 'SesionController@showStudentSesions');
+
 
 Route::get('/students/registration', 'StudentController@registration');
 Route::post('/students/registration/confirm', 'StudentController@confirm')->name('student.reg.confirm');
@@ -134,9 +138,17 @@ Route::delete('/admin/management/{id}','ManagementController@destroy')->name('ma
 
 Route::get('/admin/blocks/getGro', 'BlockGroupController@getAllBlockGroups');
 
+//Sesiones
+Route::get('/sesions','SesionController@index');
+Route::post('/sesions/store','SesionController@store');
+
+//Tareas o Practicas
+Route::get('/tasks','TaskController@index');
+Route::post('/tasks/create','TaskController@store')->name('tasks.create');
+/*Run
+php composer update
+php artisan config:clear
+*/
+
 Route::resource('/admin/groups', 'GroupController');
 Route::resource('/admin/blocks', 'BlockController');
-
-//Sesiones
-Route::get('/sesions', 'SesionController@index');
-Route::post('/sesions/store', 'SesionController@store');

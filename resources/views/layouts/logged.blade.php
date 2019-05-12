@@ -31,16 +31,32 @@
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
+    <ul id="accordionSidebar" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion  
+      @if(Agent::isMobile())
+        toggled
+      @endif
+      "
+      >
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('/')}}">
         <div class="sidebar-brand-icon rotate-n-0">
             {{-- <i class="fab fa-staylinked"></i> --}}
             <i class="fas fa-laptop-code"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">Tipo de Usuario</div>
+        <div class="sidebar-brand-text mx-3">
+        @if (Auth::user()->role_id == 1)
+            Administrador
+        @endif  
+        @if (Auth::user()->role_id == 2)
+            Docente
+        @endif 
+        @if (Auth::user()->role_id == 3)
+            Auxiliar
+        @endif
+        @if (Auth::user()->role_id == 4)
+            Estudiante
+        @endif
+        </div>
       </a>
       @yield('content')
       <!-- Sidebar Toggler (Sidebar) -->
@@ -75,13 +91,13 @@
               <img class="img-profile rounded-circle" src="/users/demo.png">
               @else
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{ Auth::user()->names }} </span>
-                <img class="img-profile rounded-circle" src=
+                <img class="img-profile rounded-circle" src="
                 @if(Auth::user()->img_path != null)
-                "/storage/users/{{ Auth::user()->img_path }}"
+                /storage/users/{{ Auth::user()->img_path }}
                 @else
-                "/users/demo.png"
+                /users/demo.png
                 @endif
-                >
+                ">
               @endif
 
 
@@ -144,7 +160,7 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Selecciona "Cerra Sesión" si desea salir de su cuenta.</div>
+        <div class="modal-body">Selecciona <b>Cerrar Sesión</b> si desea salir de su cuenta.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
           <a class="btn btn-primary" href="{{ url('/logout') }}"
