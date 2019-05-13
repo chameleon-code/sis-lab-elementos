@@ -12,15 +12,16 @@ class Block extends Model
     protected $fillable = ['management_id', 'name', 'block_path'];
 
     protected $rules = [
-        'name' => 'required|max:255|min:3',
         'management_id' => 'required',
-        'groups_id' => 'required|max:255'
+        'groups_id.*' => 'required|distinct'
     ];
-    
     public static function getAllBlocks(){
         return self::all();
     }
     public function groups(){
         return $this->belongsToMany('App\Group');
     }
+    /*public static function getBlocksBySubjects($id){
+        $blocks = self::where();
+    }*/
 }

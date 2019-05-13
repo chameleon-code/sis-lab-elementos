@@ -54,7 +54,7 @@
                                             </div>
                                             {!! $errors -> first('email','<label style="color:crimson">:message</label>')!!} 
                                             <br>
-                                            <button type="submit" class="btn btn-primary btn-block">
+                                            <button id="login" type="submit" class="btn btn-primary btn-block">
                                                     Ingresar
                                             </button>
                                         </form>

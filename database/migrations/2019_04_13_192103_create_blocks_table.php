@@ -43,7 +43,7 @@ class CreateBlocksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blocks');
         Schema::dropIfExists('students');
+        Schema::dropIfExists('blocks');
     }
 }

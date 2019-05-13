@@ -35,7 +35,8 @@
                 </div>
 
                 <div class="container">
-                    <strong>Bloque: </strong> {{ $blockGroup->block_id }}
+                    <strong>Materia: </strong> {{ $subject_matter->name }} <br>
+                    <strong>{{ $block->name }} </strong>
                 </div>
 
                 <div class="card-body">

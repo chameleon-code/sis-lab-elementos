@@ -55,13 +55,13 @@
                         <input type="text" id="password" onCopy="return false" readonly class="form-control col-md-12" name="password" required>
                     </div>
                     <div class="group col-md-3 col-sm-3 col-4">
-                        <button type="button" class="btn btn-warning btn-block col-md-12" onclick="generatePassword();" title="Generar Contraseña"><i class="fas fa-key"></i></button>
+                        <button type="button" class="btn btn-warning btn-block col-md-12" onclick="generatePassword();" title="Generar Contraseña" id="genPass"><i class="fas fa-key"></i></button>
                     </div>                
                   </div>  
                   <br>
                   <div class="form-group row">
                       <div class="form-group col-md-6 col">
-                        <button type="submit" class="form-control btn btn-primary btn-block col-md-12">Registrar</button>
+                        <button type="submit" class="form-control btn btn-primary btn-block col-md-12" id="confirmCreate">Registrar</button>
                       </div>
                       <div class="form-group col-md-6 col">
                         <a class="form-control btn btn-danger btn-block col-md-12" href="{{ url('/admin/professors') }}">Cancelar</a>    

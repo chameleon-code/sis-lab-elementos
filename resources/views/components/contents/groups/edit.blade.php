@@ -1,81 +1,70 @@
 @extends('components.sections.adminSection')
 
 @section('userContent')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Editar grupo</div>
-                    <div class="panel-body">
-                        @if (count($errors)>0)
-                            <div class="alert alert-danger">
-                                <b>Ha ocurrido un error!</b>
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{$error}}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                        
-                            <form class="form-horizontal" action="{{Route('groups.update',[$group->id])}}" method="post">
-                                <input type="hidden" name="_method" value="PUT">
-                                {{ csrf_field() }}
-                                <div class="col-md-6" {{ $errors->has('management') ? 'has-error' : ''}}>
-                                    <label for="management" class="col-md-12 control-label">Gestión</label>
-                                    <select class="form-control col-md-12" name="management_id">
-                                            @foreach ($managements as $management)
-                                            @if ($management->id == $group->management_id)
-                                                <option class="form-control" value="{{$management->id}}" selected>{{ $management->semester}} - {{$management->managements}}</option>
-                                            @continue
-                                            @endif
-                                            <option class="form-control" value="{{$management->id}}">{{$management->semester}}-{{$management->managements}}</option>
-                                            @endforeach
-                                    </select>
+<div class="row justify-content-center">
+        <div class="col-xl-6 col-lg-10 col-md-9">
+            <div class="card o-hidden border-0 my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="p-5">
+                                <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Registro de Grupos de Materias</h1>
                                 </div>
-                                <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
-                                        <label for="subject_matter_id" class="col-md-4 control-label">Materia</label>
-                                        <div class="col-md-6">
-                                                <select name="subject_matter_id" class="form-control col-md-12" id="subject_matter_id">
-                                                    @foreach ($subjectMatters as $subjectMatter)
-                                                        @if ($subjectMatter->id == $group->subject_matter_id)
-                                                            <option class="form-control" value="{{$subjectMatter->id}}" selected>{{ $subjectMatter->name }}</option>
+                                @if (count($errors)>0)
+                                    <div class="alert alert-danger">
+                                        <b>Ha ocurrido un error!</b>
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{$error}}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                                <form class="form-horizontal" action="{{Route('groups.update',[$group->id])}}" method="post">
+                                        <input type="hidden" name="_method" value="PUT">
+                                        {{ csrf_field() }}
+                                    <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
+                                        <label for="subject_matter_id" class="control-label">Materia</label>
+                                        <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
+                                            @forelse ($subjectMatters as $subjectMatter)
+                                                <option class="form-control" value="{{$subjectMatter->id}}">{{$subjectMatter->name}}</option>
+                                            @empty
+                                            <option class="form-control" value="">No existen materias registradas</option>
+                                            @endempty
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                    <div class="form-group" {{ $errors->has('name') ? 'has-error' : ''}}>
+                                        <label for='name' class="control-label">Grupo: </label>
+                                            <select class="form-control col-md-12" name="name" id="name">
+                                                @foreach ($groupNames as $item)
+                                                    @if ($loop->first)
+                                                        <option class="form-control" value="{{ $item }}" selected>{{ $item }}</option>
                                                         @continue
-                                                        @endif
-                                                        <option class="form-control" value="{{$subjectMatter->id}}">{{ $subjectMatter->name }}</option> --}}
-                                                    @endforeach
-                                                </select>
-                                        </div>
+                                                    @endif  
+                                                    <option class="form-control" value="{{ $item }}">{{ $item }}</option>
+                                                @endforeach
+                                            </select>
                                     </div>
-                                    <div class="col-md-6" {{ $errors->has('name') ? 'has-error' : ''}}>
-                                        <label for='name' class="col-md-4 control-label">Grupo: </label>
-                                        <div id="contains">
-                                            <input type="text" name="name" id="group-name" class="form-control-plaintext col-md-12 form-control-plaintext" value="{{ $group->name }}" readonly>
-                                        
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6" {{ $errors->has('group') ? 'has-error' : ''}}>
-                                            <label for="professor_id" class="col-md-12 control-label">Docentes: </label>
+                                    <div class="form-group" {{ $errors->has('professor_id') ? 'has-error' : ''}}>
+                                            <label for="professor_id" class="control-label">Docentes: </label>
                                             <select class="form-control col-md-12" name="professor_id" id="professor_id">
                                                 @foreach ($professors as $professor)
-                                                @if ($professor->id == $group->professor_id)
-                                                    <option class="form-control" value="{{$professor->id}}">{{$professor->first_name . " ". $professor->second_name . " " . $professor->names}} selected</option>
-                                                    @continue
-                                                @endif
                                                 <option class="form-control" value="{{$professor->id}}">{{$professor->first_name . " ". $professor->second_name . " " . $professor->names}}</option>
                                             @endforeach
                                             </select>
                                         </div>
-                                <div class="form-group">
-                                    <div class="col-md-6 col-md-offset-2">
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">Send</button>
+                                    <br>
+                                    <div class="form-group">
+                                            <button type="submit" class="col-md-12 btn btn-primary btn-block">Crear</button>                                   
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                        </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
-    
 </div>
 @endsection
