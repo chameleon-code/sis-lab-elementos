@@ -65,7 +65,7 @@ $(function () {
                                             <td class="text-center" style="text-align: center; display: flex;">
                                                 <a href="/professor/students/profile/{{ $item->id }}" class="btn btn-info btn-circle btn-sm mx-1" data-toggle="tooltip" title="Ver Perfil"><i class="fas fa-eye"></i></a>
 
-                                                <a href="/professor/studentSesions/{{$item->id}}" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Ver Tareas"><i class="fas fa-edit"></i></a>
+                                                <a href="/professor/studentSesions/{{$item->id}}" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Portafolios"><i class="fas fa-briefcase"></i></a>
                                             </td>
                                         </tr>
                                         @endif

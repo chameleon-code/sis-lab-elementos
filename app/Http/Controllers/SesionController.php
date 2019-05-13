@@ -9,8 +9,10 @@ use App\Student;
 use App\Block;
 use App\Professor;
 use App\User;
+use App\Group;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\SubjectMatter;
 
 class SesionController extends Controller
 {
@@ -139,6 +141,8 @@ class SesionController extends Controller
         $sesions = Sesion::all();
         $tasks = Task::all();
         $sesion_max = Sesion::max('number_sesion');
+        $group = Group::find($student->group_id);
+        $subjectMatter = SubjectMatter::where('id', '=', $group->subject_matter_id)->get()->first();
         $blockGroup = Professor::getBlockProfessor();
 
         $data = [
@@ -147,6 +151,8 @@ class SesionController extends Controller
             'tasks' => $tasks,
             'blockGroup' => $blockGroup,
             'sesion_max' => $sesion_max,
+            'group' => $group,
+            'subject_matter' => $subjectMatter,
         ];
 
         return view('components.contents.professor.studentSesions', $data);

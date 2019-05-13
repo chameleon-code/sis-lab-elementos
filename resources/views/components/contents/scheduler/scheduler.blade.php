@@ -1,47 +1,46 @@
 @extends('components.sections.adminSection')
 @section('userContent')
-<!DOCTYPE html>
-<head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 
-    <script src="https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler.js"></script>
-    <link href="https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler.css"
-          rel="stylesheet">
+<script src="/js/schedule/dhtmlxscheduler.js"></script>
+<link href="/js/schedule/dhtmlxscheduler.css" rel="stylesheet">
 
-    <style type="text/css">
-        html, body{
-            height:100%;
-            padding:0px;
-            margin:0px;
-            overflow: hidden;
-        }
+<div class="container-fluid" style="height: 800px;">
+        <div class="card shadow mb-4" style="height: 800px;">
+            <div class="card-header py-3" style="height: 800px;">
+                <div class="panel-heading m-0 font-weight-bold text-primary container">Horarios</div>
+                <div class="card-body" style="height: 95%;">
 
-    </style>
-</head>
-<body>
-<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;sha'>
-    <div class="dhx_cal_navline">
-        <div class="dhx_cal_prev_button" style="background-color: #1cc88a;color: #ffffff">&nbsp;</div>
-        <div class="dhx_cal_next_button" style="background-color: #1cc88a;color: #ffffff">&nbsp;</div>
-        <div class="dhx_cal_today_button" style="background-color: #4e73df;color: #ffffff"></div>
-        <div class="dhx_cal_date"></div>
-        {{--<div class="dhx_cal_tab" name="day_tab"></div>--}}
-        {{--<div class="dhx_cal_tab" name="week_tab"></div>--}}
-        {{--<div class="dhx_cal_tab" name="month_tab"></div>--}}
-        <div>
-            <select class="browser-default custom-select">
-                <option selected>Seleccionar Horario</option>
-                <option value="1">Laboratorio 1</option>
-                <option value="2">Laboratorio 2</option>
-                <option value="3">Laboratorio 3</option>
-                <option value="3">Laboratorio 4</option>
-            </select>
+                <div id="scheduler_here" class="dhx_cal_container" style='height:100%;'>
+                    <div class="dhx_cal_navline">
+                        {{-- <div class="dhx_cal_prev_button" style="background-color: #1cc88a;color: #ffffff">&nbsp;</div>
+                        <div class="dhx_cal_next_button" style="background-color: #1cc88a;color: #ffffff">&nbsp;</div>
+                        <div class="dhx_cal_today_button" style="background-color: #4e73df;color: #ffffff"></div> --}}
+                        <div class="dhx_cal_date"></div>
+                        {{--<div class="dhx_cal_tab" name="day_tab"></div>--}}
+                        {{--<div class="dhx_cal_tab" name="week_tab"></div>--}}
+                        {{--<div class="dhx_cal_tab" name="month_tab"></div>--}}
+
+                        <div class="form-group" {{ $errors->has('lab_id') ? 'has-error' : ''}} style="margin-top: -10px;">
+                                <select name="lab_id" class="form-control col-md-12" id="labs" onchange="location = this.value;">
+                                    <option value="" selected>- Seleccione Laboratorio -</option>
+                                    @forelse ($labs as $lab)
+                                        <option class="form-control" value="/scheduler/{{$lab->id}}">{{'Laboratorio '.$lab->id}}</option>
+                                    @empty
+                                    <option class="form-control" value="">No existen Laboratorios Registrados registrados</option>
+                                    @endempty
+                                    @endforelse
+                                </select>
+                        </div>
+                    </div>
+                    <div class="dhx_cal_header"></div>
+                    <div class="dhx_cal_data"></div>
+                </div>
+
+            </div>
         </div>
-
     </div>
-    <div class="dhx_cal_header"></div>
-    <div class="dhx_cal_data"></div>
 </div>
+
 <script type="text/javascript">
     scheduler.config.xml_date = "%Y-%m-%d %H:%i:%s";
     //cambiar nombre de columna y especificar solo día
@@ -58,7 +57,7 @@
 
     //Establecer titulo del horario
     scheduler.templates.week_date = function(start, end){
-        return "Laboratorio 1";
+        return "";
     };
 
 
@@ -85,10 +84,9 @@
 
     scheduler.init("scheduler_here", new Date(), "week");
 
-    scheduler.load("/api/events", "json");
+    //scheduler.load("/api/events", "json");
     var dp = new dataProcessor("/api/events");
     dp.init(scheduler);
     dp.setTransactionMode("REST");
 </script>
-</body>
 @endsection
