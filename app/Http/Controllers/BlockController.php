@@ -57,16 +57,15 @@ class BlockController extends Controller
         //dd($request->groups_id);
         $input =$request->all();
         $block = new Block();
-        $man = Management::find($request->management_id);
-        $dir = $man->management_path.'/'.$request->name;
         $name = 'Bloque';
-        if($block->validate($input)){
+        if($block->validate($input)){   
+            $man = Management::find($request->management_id);
+            $dir = $man->management_path.'/'.$request->name;
             $block->management_id = $request->management_id;
             $block->block_path = $dir;
             $block->name = $name;
             $groupsID = $request->groups_id;
-            $block->save();
-
+            $block->save();         
             Storage::makeDirectory($dir);
 
             foreach($groupsID as $key=>$value){
