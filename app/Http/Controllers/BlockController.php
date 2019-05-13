@@ -149,7 +149,13 @@ class BlockController extends Controller
             if($request->ajax()){
                 return response()->json($blocks2->values()->all());
             }
-            return $blocks2->values()->all();
-       
+            return $blocks2->values()->all();       
+    }
+    public function getGroupsByBlocks(Request $request, $id){
+        $block = Block::findOrFail($id);
+        if($request->ajax()){
+            return response()->json($block->groups);
+        }
+        return $block->groups;
     }
 }
