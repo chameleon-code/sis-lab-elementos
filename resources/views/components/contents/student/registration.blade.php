@@ -51,7 +51,7 @@
                                     <label for="group_id" class="control-label">Grupo / s:</label>
                                     <select name="group_id" class="form-control col-md-12" id="groups">
                                         @forelse ($groups as $group)
-                                            <option class="form-control" value="{{$group->id}}">{{$group->name}}</option>
+                                            <option class="form-control" value="{{$group->id}}">{{ $group->name . " - " . $group->professor->names . " " . $group->professor->first_name . " " . $group->professor->second_name}}</option>
                                         @empty
                                         <option class="form-control" value="">No existen bloques registrados</option>
                                         @endempty
