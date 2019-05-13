@@ -26,11 +26,6 @@
         <div class="dhx_cal_next_button" style="background-color: #1cc88a;color: #ffffff">&nbsp;</div>
         <div class="dhx_cal_today_button" style="background-color: #4e73df;color: #ffffff"></div> --}}
         <div class="dhx_cal_date"></div>
-<<<<<<< HEAD
-        {{-- <div class="dhx_cal_tab" name="day_tab"></div> --}}
-        {{-- <div class="dhx_cal_tab" name="week_tab"></div>
-        <div class="dhx_cal_tab" name="month_tab"></div> --}}
-=======
         {{--<div class="dhx_cal_tab" name="day_tab"></div>--}}
         {{--<div class="dhx_cal_tab" name="week_tab"></div>--}}
         {{--<div class="dhx_cal_tab" name="month_tab"></div>--}}
@@ -44,7 +39,6 @@
             </select>
         </div>
 
->>>>>>> develop
     </div>
     <div class="dhx_cal_header"></div>
     <div class="dhx_cal_data"></div>
@@ -52,13 +46,9 @@
 <script type="text/javascript">
 scheduler.templates.calendar_date = scheduler.date.date_to_str("%d");
     scheduler.config.xml_date = "%Y-%m-%d %H:%i:%s";
-<<<<<<< HEAD
-    scheduler.config.first_hour = 6;
-=======
     //cambiar nombre de columna y especificar solo día
     scheduler.config.day_date = "%D";
     scheduler.config.first_hour = 7;
->>>>>>> develop
     scheduler.config.last_hour = 20;
 
     //scheduler.config.hour_size_px = 70;

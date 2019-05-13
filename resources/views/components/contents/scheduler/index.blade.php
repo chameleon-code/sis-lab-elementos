@@ -69,10 +69,10 @@
                                 @foreach ($hours as $item)
                                 <tr class="sortable connectedSortable" >
                                     <td class="hours">{{$item->start}}-{{$item->end}}</td>
-                                    <td class="">item 1</td>
-                                    <td class="">item 2</td>
-                                    <td class="">item 3</td>
-                                    <td class="">item 4</td>
+                                    <td class="">Item 1</td>
+                                    <td class="">Item 2</td>
+                                    <td class="">Item 3</td>
+                                    <td class="">Item 4</td>
                                     <td class=""></td>
                                     <td class=""></td>
                                 </tr>
@@ -85,22 +85,6 @@
         </div>
     </div>
 </div>
- 
-   
-  <ul id="sortable1" class="connectedSortable">
-    <li class="ui-state-default">Item 1</li>
-    <li class="ui-state-default">Item 2</li>
-    <li class="ui-state-default">Item 3</li>
-    <li class="ui-state-default">Item 4</li>
-    <li class="ui-state-default">Item 5</li>
-  </ul>
-   
-  <ul id="sortable2" class="connectedSortable">
-    <li class="ui-state-highlight">Item 1</li>
-    <li class="ui-state-highlight">Item 2</li>
-    <li class="ui-state-highlight">Item 3</li>
-    <li class="ui-state-highlight">Item 4</li>
-    <li class="ui-state-highlight">Item 5</li>
-  </ul>
+
 
 @endsection
