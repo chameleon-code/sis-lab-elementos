@@ -71,6 +71,8 @@ Route::get('/professor/studentSesions/{id}', 'SesionController@showStudentSesion
 
 Route::get('/students/registration', 'StudentController@registration');
 Route::post('/students/registration/confirm', 'StudentController@confirm')->name('student.reg.confirm');
+Route::get('/students/registration/getBlocksBySubjects/{id}', 'BlockController@getBlocksBySubjects');
+Route::get('/students/registration/getGroups/{id}', 'BlockController@getGroupsByBlocks');
 
 Route::get('auxiliar', function () {
     return view('components.sections.auxiliarSection');

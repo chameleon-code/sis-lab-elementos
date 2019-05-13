@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\SubjectMatter;
 
 class StudentController extends Controller
 {
@@ -133,9 +134,11 @@ class StudentController extends Controller
         $managements = Management::getAllManagements()->reverse();
         $blocks = Block::getAllBlocks();
         $groups = Group::all();
+        $subjectMatters = SubjectMatter::getAllSubjectMatters();
         $data=[ 'blocks' => $blocks,
                 'groups' => $groups,
                 'managements' =>$managements,
+                'subjectMatters' => $subjectMatters
             ];
         return view('components.contents.student.registration', $data);
     }
