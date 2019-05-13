@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Professor;
 use App\Sesion;
 use App\Task;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -57,15 +58,17 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         if($request->hasFile('practice')){
+            //$userId=Auth::user()->id;
+            //$professor = Professor::where('user_id','=',$userId)->get()->first(); 
+            $file = $request->file('practice');
+            $name = $file->getClientOriginalName();
+            $file -> move(public_path().'/storage/folders/2019-1/Bloque 1/practices',$name);
             $task = [
                 'title' => $request->title,
                 'description' => $request->description,
                 'sesion_id' => $request->sesion_id,
             ];
             Task::create($task);
-            $file = $request->file('practice');
-            $name = $file->getClientOriginalName();
-            $file -> move(public_path().'/storage/folders/2019-1/Bloque 1',$name);
             return back();
         }
     }
