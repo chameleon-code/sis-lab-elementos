@@ -27,7 +27,7 @@ class CreateEventLabsTable extends Migration
 
             //id Events
             $table->unsignedInteger('event_id')->nullable();
-            $table->foreign('event_id')->references('id')->on('events');
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');;
 
         });
     }

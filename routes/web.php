@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Laboratory;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,8 +37,12 @@ Route::get('professor', function () {
 });
 
 Route::get('scheduler', function () {
-    return view('components.contents.scheduler.scheduler');
+    $labs = Laboratory::all();
+    $data = ['labs' => $labs];
+    return view('components.contents.scheduler.scheduler', $data);
 });
+Route::get('scheduler/{id}', 'EventController@loadScheduler');
+Route::get('scheduler2/{id}', 'EventController@loadScheduler2');
 
 //Docente
 Route::get('/admin/professors','ProfessorController@index');
