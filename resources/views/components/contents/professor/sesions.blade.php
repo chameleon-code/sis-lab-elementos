@@ -17,6 +17,12 @@
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-2">
+                @if ($blockGroup==null)
+                    <div class="alert alert-danger">
+                        <b>Alerta</b>   
+                        <ul>Aun no esta asignado a un bloque</ul>
+                    </div>
+                @else
                 <div class="panel-heading my-2 font-weight-bold text-primary container">
                     Sesiones
                     <div class="float-right">
@@ -35,8 +41,7 @@
                 </div>
 
                 <div class="container">
-                    {{--  <strong>Materia: </strong> {{ $subject_matter->name }} <br>  --}}
-                    <strong>Bloque: </strong> {{ $blockGroup->block_id }}
+                        <strong>Bloque: </strong> {{ $blockGroup->block_id }}
                 </div>
 
                 <div class="card-body">
@@ -123,6 +128,7 @@
                         </div>
                     </div>  
                 </div>
+                @endif
             </div>
         </div>
 

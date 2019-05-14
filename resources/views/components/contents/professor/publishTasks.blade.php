@@ -18,6 +18,12 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-2">
+            @if ($blockGroup==null)
+                <div class="alert alert-danger">
+                    <b>Alerta</b>   
+                    <ul>Aun no esta asignado a un bloque</ul>
+                </div>
+            @else
             <div class="panel-heading my-2 font-weight-bold text-primary container">
                 Administrar Prácticas
             </div>
@@ -49,10 +55,16 @@
                                         <textarea name="description" id="description" class="form-control col-md-12" cols="30" rows="3" autofocus></textarea>
                                 </div>
                                 <div class="group col-sm-12">
+                                        <label for="">
+                                            Solo los siguientes formatos son admitidos: <strong>.zip .rar .pdf</strong> 
+                                        </label>
+                                </div>
+                                <div class="group col-sm-12">
                                     <br>
                                     <input type="file" name="practice" style="margin-bottom:8px;" required>
                                 </div>
                                 <input type="text" name="sesion_id" value="{{$sesion->id}}" hidden>
+                                <input type="text" name="number_sesion" value="{{$sesion->number_sesion}}" hidden>
                                 @if (Agent::isMobile())
                                     <div class="group col-md-12 col-12">
                                         <button type="submit" class="btn btn-primary btn-block col-md-12" style="margin-bottom:10px;">Publicar</button>
@@ -67,6 +79,7 @@
                     </div>
                 @endforeach
             </div>
+            @endif
         </div>
     </div>
 </div>       

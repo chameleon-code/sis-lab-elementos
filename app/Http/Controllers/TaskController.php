@@ -17,27 +17,38 @@ class TaskController extends Controller
      */
     public function index()
     {
-        
         $blockGroup = Professor::getBlockProfessor();
-        $blockGroupId = Professor::getBlockProfessor()->block_id;
-        $sesions = Sesion::where('block_id','=',$blockGroupId)->get();
-        $tasks = Task::all();
-        $validTasks=[];
-        foreach ($tasks as $task) {
-            foreach($sesions as $sesion){
-                if($task->sesion_id==$sesion->id && $sesion->block_id==$blockGroupId){
-                    array_push($validTasks,$task);
+        if($blockGroup!=null){
+            $blockGroupId = $blockGroup->block_id;
+            $sesions = Sesion::where('block_id','=',$blockGroupId)->get();
+            $tasks = Task::all();
+            $validTasks=[];
+            foreach ($tasks as $task) {
+                foreach($sesions as $sesion){
+                    if($task->sesion_id==$sesion->id && $sesion->block_id==$blockGroupId){
+                        array_push($validTasks,$task);
+                    }
                 }
             }
+            $sesion_max = $sesions->count();
+            $data = [
+                'sesion_max'=>$sesion_max,
+                'sesions'=>$sesions,
+                'blockGroup'=>$blockGroup,
+                'tasks'=>$validTasks,
+                'blockId' => $blockGroupId,
+            ];
+            return view('components.contents.professor.publishTasks', $data);
+        }else{
+            $data = [
+                'sesion_max' => 0,
+                'sesions' => [],
+                'blockGroup' => [],
+                'tasks' =>[],
+                'blockId' => 0,
+            ];
+            return view('components.contents.professor.publishTasks', $data);
         }
-        $sesion_max = $sesions->count();
-        $data = [
-            'sesion_max'=>$sesion_max,
-            'sesions'=>$sesions,
-            'blockGroup'=>$blockGroup,
-            'tasks'=>$validTasks,
-        ];
-        return view('components.contents.professor.publishTasks', $data);
     }
     /**
      * Show the form for creating a new resource.
@@ -60,22 +71,24 @@ class TaskController extends Controller
         $blockGroupId = Professor::getBlockProfessor()->block_id;
         $dir = Block::where('id', '=', $blockGroupId)->get()->first()->block_path;
         if($request->hasFile('practice')){
-            //$userId=Auth::user()->id;
-            //$professor = Professor::where('user_id','=',$userId)->get()->first(); 
             $file = $request->file('practice');
-            $name = $file->getClientOriginalName();
-            $file -> move(public_path().'/storage/folders/2019-1/Bloque 1/practices',$name);
-            $task = [
-                'title' => $request->title,
-                'description' => $request->description,
-                'sesion_id' => $request->sesion_id,
-            ];
-            Task::create($task);
-            $file = $request->file('practice');
-            $name = $file->getClientOriginalName();
-            $file -> move(public_path().'/storage/'.$dir ,$name);
-            return back();
+            $extension = $file->getClientOriginalExtension();
+            if($extension=='rar'||$extension=='zip'||$extension=='tar.gz'||$extension=='pdf'){
+                $file = $request->file('practice');
+                $name = $file->getClientOriginalName();
+                $semiPath ='/storage/'.$dir.'/practice/sesion-'.$request->number_sesion.'/';
+                $path = public_path().$semiPath;
+                $file -> move($path,$name);
+                $task = [
+                    'title' => $request->title,
+                    'description' => $request->description,
+                    'sesion_id' => $request->sesion_id,
+                    'task_path' => $semiPath,
+                ];
+                Task::create($task);
+            }
         }
+        return back();
     }
 
     /**

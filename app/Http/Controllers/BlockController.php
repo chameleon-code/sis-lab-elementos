@@ -70,7 +70,8 @@ class BlockController extends Controller
             foreach($groupsID as $key=>$value){
                 $group = Group::where('id', $value)->first();
                 $block->groups()->attach($group->id);
-                $name .= '-'.$group->professor->first_name[0];
+                //$name .= '-'.$group->professor->first_name[0];
+                $name .= '-'.$block->id;
             }
 
             $dir = $man->management_path.'/'.$name;
@@ -78,10 +79,7 @@ class BlockController extends Controller
             $block->block_path = $dir;
             $block->name = $name;
             $block->save();
-
-            
             Storage::makeDirectory($dir);
-
             return redirect('/admin/blocks');
         }
         else{

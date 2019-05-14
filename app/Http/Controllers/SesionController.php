@@ -23,38 +23,39 @@ class SesionController extends Controller
      */
     public function index()
     {
-        // $sesions = Sesion::all();
-        // $tasks = Task::all();
-        // $sesion_max = Sesion::max('number_sesion');
-        // $blockGroup = Professor::getBlockProfessor();
-
-        // $data = [
-        //     'sesions' => $sesions,
-        //     'tasks' => $tasks,
-        //     'blockGroup' => $blockGroup,
-        //     'sesion_max' => $sesion_max,
-        // ];
         $blockGroup = Professor::getBlockProfessor();
-        $blockGroupId = Professor::getBlockProfessor()->block_id;
-        $sesions = Sesion::where('block_id','=',$blockGroupId)->get();
-        $tasks = Task::all();
-        $validTasks=[];
-        foreach ($tasks as $task) {
-            foreach($sesions as $sesion){
-                if($task->sesion_id==$sesion->id && $sesion->block_id==$blockGroupId){
-                    array_push($validTasks,$task);
+        if($blockGroup!=null){
+            $blockGroupId = $blockGroup->block_id;
+            $sesions = Sesion::where('block_id','=',$blockGroupId)->get();
+            $tasks = Task::all();
+            $validTasks=[];
+            foreach ($tasks as $task) {
+                foreach($sesions as $sesion){
+                    if($task->sesion_id==$sesion->id && $sesion->block_id==$blockGroupId){
+                        array_push($validTasks,$task);
+                    }
                 }
             }
+            $sesion_max = $sesions->count();
+            $data = [
+                'sesion_max'=>$sesion_max,
+                'sesions'=>$sesions,
+                'blockGroup'=>$blockGroup,
+                'tasks'=>$validTasks,
+                'blockId' => $blockGroupId,
+            ];
+            return view('components.contents.professor.sesions', $data);
+        }else{
+            $data = [
+                'sesion_max' => 0,
+                'sesions' => [],
+                'blockGroup' => [],
+                'tasks' =>[],
+                'blockId' => 0,
+            ];
+            return view('components.contents.professor.sesions', $data);
         }
-        $sesion_max = $sesions->count();
-        $data = [
-            'sesion_max'=>$sesion_max,
-            'sesions'=>$sesions,
-            'blockGroup'=>$blockGroup,
-            'tasks'=>$validTasks,
-            'blockId' => $blockGroupId,
-        ];
-        return view('components.contents.professor.sesions', $data);
+        
     }
 
     /**
@@ -75,8 +76,6 @@ class SesionController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->block_id);
-        //dd($request->number_sesion);
         Sesion::create([
             'block_id' => $request->block_id,
             'number_sesion' => $request->number_sesion,
