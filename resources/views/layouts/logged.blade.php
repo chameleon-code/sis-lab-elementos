@@ -22,10 +22,10 @@
   <link href="/css/profile.css" rel="stylesheet">
   <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <link rel="stylesheet" href="/js/jquery-ui-1.12.1/jquery-ui.css" />
-  <link rel="stylesheet" href="/css/preloadWindow/preload.css"/>
   <script src="{{ asset('js/jquery.js') }}"></script>
   <script src="/js/jquery-ui-1.12.1/jquery-ui.js"></script>
   <script src="/js/preloadWindow/preload.js"></script>
+  <link rel="stylesheet" href="/css/preloadWindow/preload.css"/>
   
   @stack('scripts')
 </head>
