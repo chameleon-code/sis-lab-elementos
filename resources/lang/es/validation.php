@@ -186,8 +186,8 @@ return [
         'managemet'             => 'gestión',
         'management_id'         => 'gestión',
         'subject_matter_id'     => 'materia',
-        'groups_id.*'           => 'grupo'
-
-        
+        'groups_id.*'           => 'grupo',
+        'start_management'      => 'fecha de inicio',
+        'end_management'        => 'fecha de inicio',
     ],
 ];
