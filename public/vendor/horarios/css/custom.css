@@ -1,0 +1,76 @@
+body{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
+}
+
+.changethetime{
+	display: none;
+}
+
+.guardarhorario{
+	display: none;
+}
+      
+.purple-label{
+   background: #8452D4;
+   color: #FFF;
+}
+
+.red-label{
+   background: #D45252;
+   color: #FFF; 
+}
+
+.blue-label{
+  background: #52B6D4;
+  color: #FFF;    
+}
+
+.pink-label{
+  background: #D659AA;
+  color: #FFF;    
+}
+
+.green-label{
+    background: #46BD28;
+    color: #FFF;   
+}
+
+.label-desc {
+    text-align: center;
+    width: 100%;
+    display: block;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 100;
+    font-size: 14px;
+}
+
+.nopadding{
+    padding:0px;
+}
+
+.horarioheader {
+    color: #FFF;
+    background: #5cb85c;
+}
+
+.thead {
+    font-size: 16px;
+    background: #000;
+    color: #FFF;
+}
+
+.td-time {
+    background: #ffffff;
+    color: #838383;
+    font-size: 16px;
+    text-align: center;
+}
+
+
+.addinfo{
+  display: none;
+}

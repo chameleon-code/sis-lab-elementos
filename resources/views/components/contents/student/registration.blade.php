@@ -23,7 +23,18 @@
                             @endif
                             <form class="user" action="{{Route('student.reg.confirm')}}" method="post">
                                 {{ csrf_field() }}
-
+                                <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
+                                        <label for="subject_matter_id" class="control-label">Materia: </label>
+                                        <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
+                                            <option class="form-control" value="">Seleccione una materia (opcional).</option>
+                                            @forelse ($subjectMatters as $subjectMatter)
+                                                <option class="form-control" value="{{$subjectMatter->id}}">{{$subjectMatter->name}}</option>
+                                            @empty
+                                            <option class="form-control" value="">No existen materias registradas</option>
+                                            @endempty
+                                            @endforelse
+                                        </select>
+                                    </div>
                                 <div class="form-group" {{ $errors->has('block_id') ? 'has-error' : ''}}>
                                     <label for="block_id" class="control-label">Bloque / s:</label>
                                     <select name="block_id" class="form-control col-md-12" id="blocks">
@@ -67,6 +78,5 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="{{ asset('/js/addingObjs.js') }}"></script>
-    <script src="{{ asset('/js/dropdown.js') }}"></script>
+    <script src="{{ asset('/js/students.js') }}"></script>
 @endpush

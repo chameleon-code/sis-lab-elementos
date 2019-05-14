@@ -1,0 +1,293 @@
+@import url('/public/vendor/horarios/css/bootstrap-datetimepicker.css');
+@import url('/public/vendor/horarios/css/font-awesome.min.css');
+@import url('/public/vendor/horarios/css/bootstrap.min.css');
+@import url('/public/vendor/horarios/css/animate.css');
+body {
+    font-family: 'Maven Pro', sans-serif;
+    background: url(images/bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+a {
+    -moz-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+    border: 1px solid #777;
+    color: #777;
+}
+
+a:hover {
+    color: #777;
+}
+
+button {
+    -moz-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+}
+
+label {
+    float: left;
+    margin-top: 2px;
+    margin-bottom: 0px;
+}
+
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th {
+    padding: 3px 3px 8px 3px;
+}
+
+.bootstrap-datetimepicker-widget a[data-action] {
+    border: none;
+}
+
+.modal-backdrop {
+    background-color: #AD0000;
+}
+
+.modal-content {
+    float: left;
+    width: 100%;
+}
+
+.modal-header {
+    background: #0A961A;
+    color: #FFF;
+    float: left;
+    width: 100%;
+}
+
+.modal-body {
+    float: left;
+    width: 100%;
+}
+
+.modal-footer {
+    float: left;
+    width: 100%;
+}
+
+#menu {
+    margin-top: 30px;
+}
+
+#days-chose {
+    display: none;
+}
+
+#days-list {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+#days-list .day-option {
+    display: inline-block;
+    width: 13.5%;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 2px 0px 3px 0px;
+}
+
+.active-day,
+.active-day:hover,
+.active-day:focus,
+.active-day:active {
+    border: 1px solid #EC901D;
+    background: #EC901D;
+    color: #fff;
+}
+
+.error {
+    float: left;
+    width: 100%;
+    color: #F50000;
+}
+
+#mynew {
+    margin-top: 30px;
+    width: 100%;
+    float: left;
+    display: none;
+}
+
+.td-time {
+    width: 230px;
+    text-align: center;
+}
+
+.table-bordered {
+    background: #FFF;
+}
+
+#alert-error {
+    color: #fff;
+    background: #C31313;
+    position: absolute;
+    font-size: 18px;
+    border-radius: 4px;
+    text-align: center;
+    padding: 5px 15px;
+    bottom: 15px;
+    right: 15px;
+    display: none;
+    z-index: 9999999;
+}
+
+#mynew .btn-group-xs>.btn,
+.btn-xs {
+    padding: 0px 3px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 0px;
+    margin: 5px auto;
+}
+
+.nopadding {
+    padding: 0px;
+}
+
+.opacityelement {
+    opacity: 0.5;
+}
+
+.addinfo {
+    display: none;
+}
+
+.delinfo {
+    display: none;
+}
+
+.label-desc {
+    text-align: center;
+    width: 100%;
+    display: block;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 100;
+    font-size: 12px;
+}
+
+.label-desc a {
+    color: #FFF;
+    float: right;
+    margin-right: 5px;
+    cursor: pointer;
+    border: none;
+    display: none;
+}
+
+.label-desc:hover a {
+    display: block;
+}
+
+.horario-name {
+    color: #FFF;
+}
+
+.purple-label {
+    background: #8452D4;
+    color: #FFF;
+}
+
+.red-label {
+    background: #D45252;
+    color: #FFF;
+}
+
+.blue-label {
+    background: #52B6D4;
+    color: #FFF;
+}
+
+.pink-label {
+    background: #D659AA;
+    color: #FFF;
+}
+
+.green-label {
+    background: #46BD28;
+    color: #FFF;
+}
+
+.horarioheader {
+    color: #FFF;
+    background: #5cb85c;
+}
+
+.thead {
+    font-size: 16px;
+    background: #000;
+    color: #FFF;
+}
+
+.td-time {
+    background: #ffffff;
+    color: #3392b7;
+    font-size: 16px;
+}
+
+.hideedittime {
+    display: none;
+}
+
+.td-line {
+    width: 111px;
+}
+
+.panel {
+    float: left;
+    width: 100%;
+}
+
+.panel-body {
+    float: left;
+    width: 100%;
+}
+
+.panel-heading {
+    float: left;
+    width: 100%;
+}
+
+.panel-info>.panel-heading {
+    color: #FFF;
+    background-color: #31708f;
+    border-color: #31708f;
+}
+
+.icon-clock-index {
+    color: rgb(255, 255, 255);
+    font-size: 7em;
+    margin-top: 185px;
+}
+
+.modal-lg {
+    width: 99%;
+    margin-left: 0px;
+}
+
+#modalblue {
+    background: #257dc7;
+}
+
+.changethetime {
+    display: none;
+}
+
+.td-time:hover .changethetime {
+    display: inline-block;
+}

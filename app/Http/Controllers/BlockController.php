@@ -54,15 +54,16 @@ class BlockController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->groups_id);
         $input =$request->all();
         $block = new Block();
         $man = Management::find($request->management_id);
         $dir = $man->management_path.'/'.$request->name;
-
+        $name = 'Bloque';
         if($block->validate($input)){
             $block->management_id = $request->management_id;
-            $block->name = $request->name;
             $block->block_path = $dir;
+            $block->name = $name;
             $groupsID = $request->groups_id;
             $block->save();
 
@@ -71,7 +72,10 @@ class BlockController extends Controller
             foreach($groupsID as $key=>$value){
                 $group = Group::where('id', $value)->first();
                 $block->groups()->attach($group->id);
+                $name .= ' - ' .$group->professor->first_name ;
             }
+            $block->name = $name;
+            $block->save();
             return redirect('/admin/blocks');
         }
         else{
@@ -125,9 +129,34 @@ class BlockController extends Controller
     }
     public function getGroups(Request $request, $id){
         $groups = Group::getGroupsBySubjects($id);
+        $groupsBlocks = BlockGroup::getAllBlockGroupsId();
+        //dd($groupsBlocks);
+        $groups2 = $groups->reject(function($item, $key) use ($groupsBlocks){
+            if (in_array($item->id, $groupsBlocks))
+                return true;
+        });
         if($request->ajax()){
-            return response()->json($groups);
+            return response()->json($groups2->values()->all());
         }
-        return $groups;
+        return $groups2->values()->all();
     }
+    public function getBlocksBySubjects(Request $request, $id){
+        $blocks = Block::getAllBlocks();
+        $blocks2 = $blocks->reject(function($item, $key) use ($id){
+            if($item->groups->first()->subject_matter_id != $id)
+                return true; 
+            });
+            if($request->ajax()){
+                return response()->json($blocks2->values()->all());
+            }
+            return $blocks2->values()->all();       
+    }
+    public function getGroupsByBlocks(Request $request, $id){
+        $block = Block::findOrFail($id);
+        if($request->ajax()){
+            return response()->json($block->groups);
+        }
+        return $block->groups;
+    }
+
 }

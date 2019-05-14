@@ -37,7 +37,7 @@ return [
     'digits'               => ':attribute debe tener :digits dígitos.',
     'digits_between'       => ':attribute debe tener entre :min y :max dígitos.',
     'dimensions'           => 'Las dimensiones de la imagen :attribute no son válidas.',
-    'distinct'             => 'El campo :attribute contiene un valor duplicado.',
+    'distinct'             => 'No puede mandar :attribute' .'s duplicados para la creacion de un bloque.',
     'email'                => ':attribute no es un correo válido',
     'exists'               => ':attribute es inválido.',
     'file'                 => 'El campo :attribute debe ser un archivo.',
@@ -186,7 +186,9 @@ return [
         'managemet'             => 'gestión',
         'management_id'         => 'gestión',
         'subject_matter_id'     => 'materia',
-        
+        'groups_id.*'           => 'grupo',
+        'start_management'      => 'inicio de la gestión',
+        'end_management'        => 'fin de la gestión'
 
         
     ],

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Hour;
 use App\Day;
 use App\Laboratory;
+use App\ScheduleRecord;
 
 class ScheduleRecordController extends Controller
 {
@@ -17,14 +18,17 @@ class ScheduleRecordController extends Controller
         return view('components.contents.management.index',$data);
     }
 
-    public function create(){
+    public function create(Request $request,$laboratory_id=1){
+        // dd($request->block_id);
+        // $scheduleRecords = ScheduleRecord::getSchedulesByLaboratory($laboratory_id);
         $laboratorys=Laboratory::getAllLaboratory();
         $days=Day::getAllDays();
         $hours=Hour::getAllHours();
         $data=[
-            'laboratories'   => $laboratorys,
-            'days'          => $days,
-            'hours'         => $hours
+            // 'scheduleRecords' => $scheduleRecords,
+            'laboratories'    => $laboratorys,
+            'days'            => $days,
+            'hours'           => $hours
         ];
         return view('components.contents.scheduler.index',$data);
     }

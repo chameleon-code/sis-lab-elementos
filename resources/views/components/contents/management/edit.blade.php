@@ -24,7 +24,7 @@
                     @endif
                     <form class="user" action="{{Route('managements.update',[$management->id])}}" method="post">
                         {{ csrf_field() }}
-                        <label for="management">Gestión</label>
+                        <label for="management">Año</label>
                         <div class="form-group" {{ $errors->has('managements') ? 'has-error' : ''}}>
                             <input  type="text"
                                     name="managements"
@@ -33,7 +33,7 @@
                                     placeholder="Gestión"
                                     value="{{ old('managements', $management->managements) }}" readonly>
                         </div>
-                        <label for='name'>Semestre</label>
+                        <label for='name'>Gestión</label>
                         <div class="form-group" {{ $errors->has('semester') ? 'has-error' : ''}}>
                             <select class="form-control col-md-12" name="semester">
                                 @foreach ($semesters as $item)
@@ -43,8 +43,32 @@
                                             @endif
                                             <option class="form-control" value="{{$item}}">{{$item}}</option>
                                 @endforeach
-                        </select>
+                            </select>
+                            <div class="row">
+                                    <div class="form-group col-md-6 col-6">
+                                        <label for='name' class="">Inicio de la Gestión</label>
+                                        <div>
+                                            <input  type="text"
+                                                    name="start_management"
+                                                    id="inicio_fecha"
+                                                    class="form-control col-md-12"
+                                                    placeholder=""
+                                                    value="{{ old('start_management',$management->start_management) }}" required readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6 col-6">
+                                        <label for='name' class="">Fin de la Gestión</label>
+                                        <div>
+                                            <input  type="text"
+                                                    name="end_management"
+                                                    id="fin_fecha"
+                                                    class="form-control col-md-12"
+                                                    placeholder=""
+                                                    value="{{ old('end_management',$management->end_management) }}" required readonly>
+                                        </div>
+                                    </div>
                         </div>
+
                         <hr>
                         <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-user btn-block col-md-12">Modificar</button>
