@@ -26,7 +26,7 @@
   <script src="/js/jquery-ui-1.12.1/jquery-ui.js"></script>
   <script src="/js/preloadWindow/preload.js"></script>
   <link rel="stylesheet" href="/css/preloadWindow/preload.css"/>
-  
+ 
   @stack('scripts')
 </head>
 
@@ -191,7 +191,7 @@
   <!-- Page level custom scripts -->
   <script src="/js/demo/chart-area-demo.js"></script>
   <script src="/js/demo/chart-pie-demo.js"></script>
-
+  <script src="/js/demo/chart-bar-demo.js"></script>
   <!-- Page level plugins -->
   <script src="/vendor/datatables/jquery.dataTables.js"></script>
   <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
