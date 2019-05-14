@@ -24,7 +24,7 @@
                 <div class="container">
                     <strong>Estudiante: </strong> {{ $user->first_name.' '.$user->second_name.' '.$user->names }} <br>
                     <strong>Materia: </strong> {{ $subject_matter->name }} <br>
-                    <strong> {{ $group->name }} </strong>
+                    <strong>Grupo: </strong> {{ $group->name }}
                 </div>
 
                 <div class="card-body">
@@ -46,7 +46,7 @@
                         @foreach ($tasks as $task)
                             @if($task->sesion_id == $sesion->id)
                                 <div class="my-2 mx-2" style="border-bottom: 1px solid #b5b5b5; font-size: 15px;">
-                                        <div style="margin-top: 12px; margin-bottom: -15px;"> <p> <strong> Estado de tarea: </strong> <a href="#">{{ $task->title }}</a> </p> </div>
+                                        <div style="margin-top: 12px; margin-bottom: -15px;"> <p> <strong> Estado de tarea: </strong> <a href="/professor/student/{{$student->id}}/task/{{$task->id}}">{{ $task->title }}</a> </p> </div>
                                         <div class="row" style="margin-top: -15px;">
                                             <div class="row" style="margin-left: 12px;">
                                                 <strong> Entregado: &#10003 &#10005 </strong>

@@ -52,6 +52,7 @@ class SesionController extends Controller
             'sesions'=>$sesions,
             'blockGroup'=>$blockGroup,
             'tasks'=>$validTasks,
+            'blockId' => $blockGroupId,
         ];
         return view('components.contents.professor.sesions', $data);
     }
@@ -74,6 +75,8 @@ class SesionController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->block_id);
+        //dd($request->number_sesion);
         Sesion::create([
             'block_id' => $request->block_id,
             'number_sesion' => $request->number_sesion,
@@ -146,6 +149,7 @@ class SesionController extends Controller
         $blockGroup = Professor::getBlockProfessor();
 
         $data = [
+            'student' => $student,
             'user' => $user,
             'sesions' => $sesions,
             'tasks' => $tasks,

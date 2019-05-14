@@ -35,8 +35,8 @@
                 </div>
 
                 <div class="container">
-                    <strong>Materia: </strong> {{ $subject_matter->name }} <br>
-                    <strong>{{ $block->name }} </strong>
+                    {{--  <strong>Materia: </strong> {{ $subject_matter->name }} <br>  --}}
+                    <strong>Bloque: </strong> {{ $blockGroup->block_id }}
                 </div>
 
                 <div class="card-body">
@@ -114,7 +114,7 @@
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                     <form action="/sesions/store" method="POST">
                                         {{csrf_field()}}
-                                        <input type="text" class="form-control" style="display: none;" name="block_id" value="1" required autofocus>
+                                        <input type="text" class="form-control" style="display: none;" name="block_id" value="{{ $blockId }}" required autofocus>
                                         <input type="text" class="form-control" style="display: none;" name="number_sesion" value="{{ $sesion_max + 1 }}" required autofocus>
                                         <button type="submit" class="btn btn-primary">Aceptar</button>  
                                     </form>

@@ -57,7 +57,8 @@
 
     //Establecer titulo del horario
     scheduler.templates.week_date = function(start, end){
-        return "";
+        var title = 'Laboratorio ' + {!! json_encode($selected_lab) !!};
+        return title;
     };
 
 

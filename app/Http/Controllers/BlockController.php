@@ -57,24 +57,31 @@ class BlockController extends Controller
         //dd($request->groups_id);
         $input =$request->all();
         $block = new Block();
+        $man = Management::find($request->management_id);
         $name = 'Bloque';
         if($block->validate($input)){   
             $man = Management::find($request->management_id);
             $dir = $man->management_path.'/'.$request->name;
             $block->management_id = $request->management_id;
-            $block->block_path = $dir;
             $block->name = $name;
             $groupsID = $request->groups_id;
-            $block->save();         
-            Storage::makeDirectory($dir);
+            $block->save();
 
             foreach($groupsID as $key=>$value){
                 $group = Group::where('id', $value)->first();
                 $block->groups()->attach($group->id);
-                $name .= ' - ' .$group->professor->first_name ;
+                $name .= '-'.$group->professor->first_name[0];
             }
+
+            $dir = $man->management_path.'/'.$name;
+
+            $block->block_path = $dir;
             $block->name = $name;
             $block->save();
+
+            
+            Storage::makeDirectory($dir);
+
             return redirect('/admin/blocks');
         }
         else{

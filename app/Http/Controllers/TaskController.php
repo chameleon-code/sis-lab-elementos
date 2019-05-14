@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Professor;
 use App\Sesion;
 use App\Task;
-use Illuminate\Support\Facades\Auth;
+use App\Block;
 
 class TaskController extends Controller
 {
@@ -57,6 +57,8 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        $blockGroupId = Professor::getBlockProfessor()->block_id;
+        $dir = Block::where('id', '=', $blockGroupId)->get()->first()->block_path;
         if($request->hasFile('practice')){
             //$userId=Auth::user()->id;
             //$professor = Professor::where('user_id','=',$userId)->get()->first(); 
@@ -69,6 +71,9 @@ class TaskController extends Controller
                 'sesion_id' => $request->sesion_id,
             ];
             Task::create($task);
+            $file = $request->file('practice');
+            $name = $file->getClientOriginalName();
+            $file -> move(public_path().'/storage/'.$dir ,$name);
             return back();
         }
     }
@@ -116,5 +121,23 @@ class TaskController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function showStudentTask($idStudent, $idTask)
+    {
+        $student = Student::find($idStudent);
+        $user = User::where('id', '=', $student->user_id)->get()->first();
+        $task = Task::find($idTask);
+        $group = Group::find($student->first()->group_id);
+        $subjectMatter = SubjectMatter::where('id', '=', $group->subject_matter_id)->get()->first();
+
+        $data = [
+            'student' => $student,
+            'user' => $user,
+            'task' => $task,
+            'group' => $group,
+            'subject_matter' => $subjectMatter,
+        ];
+        return view('components.contents.professor.studentTask', $data);
     }
 }
