@@ -72,6 +72,7 @@ Route::delete('student/{id}', 'StudentController@destroy')->name('student.destro
 Route::get('/professor/students/profile/{id}', 'ProfessorController@profileStudent');
 Route::get('/professor/students/list', 'ProfessorController@studentList');
 Route::get('/professor/studentSesions/{id}', 'SesionController@showStudentSesions');
+Route::get('/professor/student/{idStudent}/task/{idTask}', 'TaskController@showStudentTask');
 
 
 Route::get('/students/registration', 'StudentController@registration');
