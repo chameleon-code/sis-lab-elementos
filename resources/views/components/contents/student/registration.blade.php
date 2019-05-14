@@ -26,7 +26,7 @@
                                 <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
                                         <label for="subject_matter_id" class="control-label">Materia: </label>
                                         <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
-                                            <option class="form-control" value="">Seleccione una materia (opcional).</option>
+                                            <option class="form-control" value="">Seleccione una materia (opcional)</option>
                                             @forelse ($subjectMatters as $subjectMatter)
                                                 <option class="form-control" value="{{$subjectMatter->id}}">{{$subjectMatter->name}}</option>
                                             @empty

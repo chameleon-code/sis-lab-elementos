@@ -1,6 +1,7 @@
 @extends('components.sections.adminSection')
 @section('userContent')
 <script src="/js/generatekey.js"></script>
+<div class="loader"></div>
 <div class="row justify-content-center">
     <div class="col-xl-6 col-lg-10 col-md-9">
       <div class="card o-hidden border-0 my-5">
@@ -88,7 +89,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="group col-md-6 col-6">
-                                <button type="submit" class="btn btn-primary btn-block col-md-12"> Registrar </button>
+                                <button id="register" type="submit" class="btn btn-primary btn-block col-md-12"> Registrar </button>
                             </div>
                             <div class="group col-md-6 col-6">
                                 <a class="btn btn-danger btn-block col-md-12" href="{{ url('/admin/auxiliars') }}">Cancelar</a>
@@ -105,5 +106,4 @@
       </div>
     </div>
 </div>
-
 @endsection

@@ -42,11 +42,16 @@ class StudentTaskController extends Controller
     public function store(Request $request)
     {
         if($request->hasFile('practice')){
-            $user = Auth::user();
-            $student = Student::where('user_id','=',$user->id)->first();
             $file = $request->file('practice');
-            $name = $file->getClientOriginalName();
-            $file -> move(public_path().'/storage/'.$student->student_path,$name); 
+            $extension = $file->getClientOriginalExtension();
+            if($extension=='rar'||$extension=='zip'||$extension=='tar.gz'){
+                $user = Auth::user();
+                $student = Student::where('user_id','=',$user->id)->first();
+                if($student->student_path!=null){
+                    $name = $file->getClientOriginalName();
+                    $file -> move(public_path().'/storage/'.$student->student_path,$name);
+                }
+            }
             return back();
         }
     }

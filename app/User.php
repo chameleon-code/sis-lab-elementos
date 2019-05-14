@@ -33,7 +33,7 @@ class User extends Authenticatable
         'names' => 'required|max:100',
         'first_name' => 'required|max:100',
         'second_name' => 'required|max:100',
-        'email' => 'email|required|max:150',
+        'email' => 'unique:users|email|required|max:150',
         'password' => 'required|min:8',
         'code_sis' => 'unique:users|required|max:10|min:8',
         'ci' => 'unique:students|max:9|min:6',

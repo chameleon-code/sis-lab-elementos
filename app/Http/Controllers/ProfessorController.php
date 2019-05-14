@@ -169,14 +169,21 @@ class ProfessorController extends Controller
         $user = Auth::user();
         $professor = Professor::where('user_id', '=', $user->id)->get()->first();
         $group_professor = Group::where('professor_id', '=', $professor->id)->get()->first();
-        $block_professor = BlockGroup::where('group_id', '=', $group_professor->id)->get()->first();
-        //$students = Student::where('block_id', '=', $block_professor->block_id)->get();
-        $students = Student::getAllStudents();
-
-        $data = ['students' => $students,
-                'block_professor' => $block_professor,
-                'title' => 'Estudiantes'];
-        return view('components.contents.professor.studentList', $data);
+        if($group_professor!=null){
+            $block_professor = BlockGroup::where('group_id', '=', $group_professor->id)->get()->first();
+            //$students = Student::where('block_id', '=', $block_professor->block_id)->get();
+            $students = Student::getAllStudents();
+            $data = ['students' => $students,
+                    'block_professor' => $block_professor,
+                    'title' => 'Estudiantes'];
+            return view('components.contents.professor.studentList', $data);
+        }else{
+            $data = ['students' => [],
+                    'block_professor' => [],
+                    'title' => 'Estudiantes'];
+            return view('components.contents.professor.studentList',$data);
+        }
+        
     }
 
     public function profileStudent($id)

@@ -8,7 +8,6 @@
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Actividades</h1>
         </div>
-       este es su CI: {{$student->ci }} 
         <div class="row">
                 <div class="col-xl-4 col-md-12 mb-4 col-12">
                 <div class="card border-left-primary shadow h-100 py-2">
@@ -111,26 +110,35 @@
                     </div>
                     </div>
                 </div>
-
+                
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Entregar Práctica</h6>
                     </div>
                     <div class="card-body">
-                        Procura subir un comprimido o archivador con tu ejercicio adentro, solo los siguientes formatos son admitidos: <strong>.zip .rar .tar.gz</strong> 
-                        <form class="form-group" method="POST" action="{{ url('/student/activities') }}" enctype="multipart/form-data">
+                        <form class="user" method="POST" action="{{ url('/student/activities') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
-                            <div class="form-group">
-                                    <br>
-                                    <input type="file" name="practice">
+                            <div class="group col-sm-12">
+                                <label for="">Descripción</label>
+                                <textarea name="description" class="form-control col-md-12" id="" cols="30" rows="2"></textarea>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4 offset-md-4">
-                                    <button class="btn btn-primary btn-block" type="submit">
-                                            <i class="fas fa-paper-plane"></i> Entregar  
-                                    </button>
+                            <div class="group col-sm-12">
+                                    <label for="">
+                                        Procura subir un comprimido o archivador con tu ejercicio adentro, solo los siguientes formatos son admitidos: <strong>.zip .rar .tar.gz</strong> 
+                                    </label>
+                            </div>
+                            <div class="group col-sm-12">
+                                    <input type="file" name="practice" style="margin-bottom:10px;" >
+                            </div>
+                            @if (Agent::isMobile())
+                                <div class="group col-md-12 col-12">
+                                    <button type="submit" class="btn btn-primary btn-block col-md-12" style="margin-bottom:10px;">Entregar</button>
                                 </div>
-                            </div>
+                            @else
+                                <div class="group col-md-4 col-4 offset-md-4 offset-4">
+                                    <button type="submit" class="btn btn-primary btn-block col-md-12" style="margin-bottom:10px;">Entregar</button>
+                                </div>
+                            @endif
                         </form>
                     </div>
                 </div>

@@ -149,10 +149,9 @@ class StudentController extends Controller
         $student = Student::where('user_id', '=', $user->id)->get()->first();
         $student->block_id = $request->block_id;
         $student->group_id = $request->group_id;
-        $dir = Block::find($request->block_id)->block_path.'/'.$user->names;
+        $dir = Block::find($request->block_id)->block_path.'/'.base64_encode($user->code_sis);
         $student->student_path = $dir;
         $student->save();
-
         Storage::makeDirectory($dir);
         $sesions = Sesion::where('block_id', '=', $request->block_id)->get();
         
