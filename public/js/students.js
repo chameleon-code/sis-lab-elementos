@@ -1,6 +1,4 @@
 function setGroups(item) {
-    console.log(item);
-    //$('#groups').empty();
     item.forEach(function(element){
         $('#groups').append("<option value='"+element.id+"'>"+element.name +" - "+ element.professor.names +" "+ element.professor.first_name+" "+ element.professor.second_name+"</option>");
     });

@@ -59,7 +59,9 @@ class BlockController extends Controller
         $block = new Block();
         $man = Management::find($request->management_id);
         $name = 'Bloque';
-        if($block->validate($input)){
+        if($block->validate($input)){   
+            $man = Management::find($request->management_id);
+            $dir = $man->management_path.'/'.$request->name;
             $block->management_id = $request->management_id;
             $block->name = $name;
             $groupsID = $request->groups_id;
