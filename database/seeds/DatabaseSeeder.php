@@ -95,5 +95,15 @@ class DatabaseSeeder extends Seeder
         // GRUPOS
 
         factory(\App\Group::class, 20)->create();
+
+        // BLOQUES
+
+        factory(\App\Block::class, 5)->create()
+        ->each(function (\App\Block $b){
+            Storage::makeDirectory($b->block_path);
+        });
+
+        factory(\App\BlockGroup::class, 20)->create();
+        
     }
 }
