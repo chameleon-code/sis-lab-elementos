@@ -145,7 +145,6 @@ class StudentController extends Controller
 
     public function confirm(Request $request)
     {
-        dd($request->all());
         $messages = [
             'group_id.required' => 'No puede inscribirse al grupo de la materia seleccionada. ',
         ];
