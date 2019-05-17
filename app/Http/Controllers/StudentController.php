@@ -134,7 +134,7 @@ class StudentController extends Controller
         $managements = Management::getAllManagements()->reverse();
         $blocks = Block::getAllBlocks();
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
-        $groups = Block::findOrFail(1)->groups;
+        $groups = Group::getAllGroups();
         $data=[ 'blocks' => $blocks,
                 'groups' => $groups,
                 'managements' =>$managements,
@@ -145,6 +145,13 @@ class StudentController extends Controller
 
     public function confirm(Request $request)
     {
+        dd($request->all());
+        $messages = [
+            'group_id.required' => 'No puede inscribirse al grupo de la materia seleccionada. ',
+        ];
+        $this->validate($request, [
+            'group_id' => 'required'
+        ], $messages);
         $user = Auth::user();
         $student = Student::where('user_id', '=', $user->id)->get()->first();
         $student->block_id = $request->block_id;

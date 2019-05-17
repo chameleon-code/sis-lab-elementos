@@ -26,7 +26,7 @@
                                 <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
                                         <label for="subject_matter_id" class="control-label">Materia: </label>
                                         <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
-                                            <option class="form-control" value="">Seleccione una materia (opcional)</option>
+                                            <option class="form-control" value=""> Seleccione una materia </option>
                                             @forelse ($subjectMatters as $subjectMatter)
                                                 <option class="form-control" value="{{$subjectMatter->id}}">{{$subjectMatter->name}}</option>
                                             @empty
@@ -36,26 +36,18 @@
                                         </select>
                                     </div>
                                 <div class="form-group" {{ $errors->has('block_id') ? 'has-error' : ''}}>
-                                    <label for="block_id" class="control-label">Bloque / s:</label>
-                                    <select name="block_id" class="form-control col-md-12" id="blocks">
-                                        @forelse ($blocks as $block)
-                                            <option class="form-control" value="{{$block->id}}">{{$block->name}}</option>
-                                        @empty
-                                        <option class="form-control" value="">No existen bloques registrados</option>
-                                        @endempty
-                                        @endforelse
-                                    </select>
+                                    <input type="hidden" name="block_id" value="" id="block_id"/>
                                 </div>
 
-                                <div class="form-group" {{ $errors->has('group_id') ? 'has-error' : ''}}>
+                                <div class="form-group" id="groups_ids" {{ $errors->has('group_id') ? 'has-error' : ''}}>
                                     <label for="group_id" class="control-label">Grupo / s:</label>
                                     <select name="group_id" class="form-control col-md-12" id="groups">
-                                        @forelse ($groups as $group)
-                                            <option class="form-control" value="{{$group->id}}">{{ $group->name . " - " . $group->professor->names . " " . $group->professor->first_name . " " . $group->professor->second_name}}</option>
-                                        @empty
+                                        {{--@forelse ($groups as $group)--}}
+                                            <option class="form-control" value=""></option>
+                                        {{--@empty
                                         <option class="form-control" value="">No existen bloques registrados</option>
                                         @endempty
-                                        @endforelse
+                                        @endforelse --}}
                                     </select>
                                 </div>
                                 <br>

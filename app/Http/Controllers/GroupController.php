@@ -165,6 +165,12 @@ class GroupController extends Controller
             $groups = array_pluck($groups, 'name');
             return $groups;
         }
+        public static function getBlockBygroupId(Request $request, $id){
+            $group = Group::findOrFail($id);
+            if($request->ajax()){
+                return response()->json($group->blocks()->first());
+            }
+        }
         //deprecated
         /*public function getProfessors(Request $request, $id){
             if($request->ajax()){
