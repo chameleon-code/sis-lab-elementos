@@ -13,7 +13,7 @@
                 <div class="">
                     <div class="row">
                         <div class="col-sm-12 table-responsive">
-                                <table class="table dataTable text-centertable-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" >
+                                <table class="table dataTable text-center table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" >
                                     <thead>
                                         <tr role="row" class="bg-dark">
                                             <th class="sorting_desc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending"  aria-sort="descending" style="width: 15%;"><font style="vertical-align: inherit; color: white;"><font style="vertical-align: inherit;">Grupo</font></font></th>
