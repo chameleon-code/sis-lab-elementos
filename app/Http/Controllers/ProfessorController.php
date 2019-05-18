@@ -170,7 +170,7 @@ class ProfessorController extends Controller
         $professor = Professor::where('user_id', '=', $user->id)->get()->first();
         $group_professor = Group::where('professor_id', '=', $professor->id)->get()->first();
         if($group_professor!=null){
-            $block_professor = BlockGroup::where('group_id', '=', $group_professor->id)->get()->first();
+            $block_professor = BlockGroup::where('group_id', '=', $group_professor->id)->get();
             //$students = Student::where('block_id', '=', $block_professor->block_id)->get();
             $students = Student::getAllStudents();
             $data = ['students' => $students,

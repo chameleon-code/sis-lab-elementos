@@ -54,7 +54,8 @@ $(function () {
                                     <tbody>
 
                                     @foreach ($students as $item)
-                                        @if($item->block_id == $block_professor->block_id)
+                                    @foreach ($block_professor as $item2)
+                                        @if($item->block_id == $item2->block_id)
                                         <tr role="row" class="odd">
                                             <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->group_id }}</font></font></td>
                                             <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->code_sis }}</font></font></td>
@@ -69,6 +70,7 @@ $(function () {
                                             </td>
                                         </tr>
                                         @endif
+                                    @endforeach
                                     @endforeach
                                     </tbody>
                                 </table>
