@@ -7,6 +7,8 @@ use App\Hour;
 use App\Day;
 use App\Laboratory;
 use App\ScheduleRecord;
+use App\BlockSchedule;
+use App\Block;
 
 class ScheduleRecordController extends Controller
 {
@@ -34,27 +36,45 @@ class ScheduleRecordController extends Controller
     }
 
     public function store(Request $request){
-        $input = $request->all();
-        $managements = new Management();
-        if($managements->validate($input)){
-            $dir = 'folders/'.$request->managements.'-'.$request->semester;
-            //$input->management_path = $dir;
-            //dd($input);
-
-            Management::create([
-                'semester' => $request->semester,
-                'managements' => $request->managements,
-                'start_management' => $request->start_management,
-                'end_management' => $request->end_management,
-                'management_path' => $dir,
+        //return view('components.contents.scheduler.index');
+        if($request->ajax()){
+            $id=ScheduleRecord::create([
+                'laboratory_id' => $request->laboratory_id,
+                'day_id' => $request->day_id,
+                'hour_id' => $request->hour_id,
+                'availability' => true
+            ])->id;
+            BlockSchedule::create([
+                'schedule_id' => $id,
+                'block_id' => $request->block_id
             ]);
-            Session::flash('status_message','Gestión añadida!');
-
-            Storage::makeDirectory($dir);
-            
-            return redirect('/admin/managements');
+            //ScheduleRecord::create($request->all());
+            return response()->json([
+                "success" => $request->all()
+            ]);
         }
-            return redirect('/admin/management/create')->withInput()->withErrors($managements->errors);
+        // $input = $request->all();
+        // $scheduleRecords = new ScheduleRecord();
+        // $blockSchedule = new BlockSchedule();
+        // if($scheduleRecords->validate($input)){
+
+        //     $id = Management::create([
+        //         'laboratory_id' => $request->laboratory_id,
+        //         'day_id' => $request->day_id,
+        //         'hour_id' => $request->hour_id,
+        //         'availability' => true
+        //     ])->id;
+        //     BlockSchedule::create([
+        //         'schedule_id' => $id,
+        //         'block_id' => $request->block_id
+        //     ]);
+
+
+            Session::flash('status_message','Gestión añadida!');
+            
+        //     return redirect('/admin/managements');
+        // }
+        //     return redirect('/admin/management/create')->withInput()->withErrors($managements->errors);
     }
 
     public function edit($id){

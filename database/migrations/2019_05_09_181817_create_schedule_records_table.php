@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSchedulesRecordTable extends Migration
+class CreateScheduleRecordsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateSchedulesRecordTable extends Migration
      */
     public function up()
     {
-        Schema::create('schedules_record', function (Blueprint $table) {
+        Schema::create('schedule_records', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('laboratory_id');
-            $table->foreign('laboratory_id')->references('id')->on('laboratories')->onDelete('cascade');
+            $table->foreign('laboratory_id')->references('id')->on('laboratories');
             $table->unsignedInteger('day_id');
-            $table->foreign('day_id')->references('id')->on('days')->onDelete('cascade');
+            $table->foreign('day_id')->references('id')->on('days');
             $table->unsignedInteger('hour_id');
-            $table->foreign('hour_id')->references('id')->on('hours')->onDelete('cascade');
+            $table->foreign('hour_id')->references('id')->on('hours');
             $table->boolean('availability');
             $table->timestamps();
         });

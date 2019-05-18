@@ -8,7 +8,7 @@ use App\Traits\ValidationTrait;
 class ScheduleRecord extends Model
 {
     use ValidationTrait;
-    // protected $table=
+    //protected $table= 'schedules_record';
     protected $fillable = ['laboratory_id','day_id','hour_id','availability'];
     protected $hidden = ['created_at','update_at'];
     protected $rules = [
