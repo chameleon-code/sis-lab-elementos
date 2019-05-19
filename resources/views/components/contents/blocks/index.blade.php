@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <div class="panel-heading m-0 font-weight-bold text-primary">{{$title or 'Lista de Bloques'}}</div>
+            <div class="panel-heading m-0 font-weight-bold text-primary container">{{$title or 'Lista de Bloques'}}</div>
             
             <div class="card-body">
                 @if (Session::has('status_message'))
@@ -51,7 +51,7 @@
                                                     </td>
                                                     
                                                     <td class="text-center" style="text-align: center; display: flex;">
-                                                        <a href="/admin/groups/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1"><i title="Modificar" class="fas fa-edit"></i></a>
+                                                        <a href="/admin/groups/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Editar"><i class="fas fa-edit"></i></a>
                                                     </td>                                                    
                                                 </tr>
                                           @endforeach

@@ -16,13 +16,15 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\SubjectMatter;
+use Illuminate\Support\Facades\Cache;
 
 class StudentController extends Controller
 {
     public function index()
     {
-        $students = Student::getAllStudents();
+        self::rememberNav();
 
+        $students = Student::getAllStudents();
         $data = ['students' => $students,
             'title' => 'Estudiantes'];
         return view('components.contents.student.index', $data);
@@ -160,6 +162,18 @@ class StudentController extends Controller
 
     public function create()
     {
+        self::rememberNav();
         return view('components.contents.student.create');
+    }
+
+    public function rememberNav(){
+        $tmp = 0.05;
+        Cache::put('professor_nav', '', $tmp);
+        Cache::put('auxiliar_nav', '', $tmp);
+        Cache::put('student_nav', ' show', $tmp);
+        Cache::put('management_nav', '', $tmp);
+        Cache::put('subject_matter_nav', '', $tmp);
+        Cache::put('group_nav', '', $tmp);
+        Cache::put('block_nav', '', $tmp);
     }
 }

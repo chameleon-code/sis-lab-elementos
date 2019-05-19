@@ -11,23 +11,27 @@ use App\Mail\AuxiliarMailController;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class AuxiliarController extends Controller
 {
     public function index(){
-        $auxiliars = Auxiliar::getAllAuxiliars();
+        self::rememberNav();
         
+        $auxiliars = Auxiliar::getAllAuxiliars();
         $data=['auxiliars' => $auxiliars,
                 'title' => 'Auxiliars Title'];
+        
         return view('components.contents.auxiliar.index', $data);
     }
     
     public function create(){
+        self::rememberNav();
+
         return view('components.contents.auxiliar.create');
     }
 
     public function store(Request $request){
-        
         $input = $request->all();
         $user = new User();
         if($user->validate($input)){
@@ -113,5 +117,16 @@ class AuxiliarController extends Controller
         ];
         
         return view('components.contents.auxiliar.profile')->withTitle('Perfil de Auxiliar')->with($data);
+    }
+
+    public function rememberNav(){
+        $tmp = 0.5;
+        Cache::put('professor_nav', '', $tmp);
+        Cache::put('auxiliar_nav', ' show', 0.1);
+        Cache::put('student_nav', '', $tmp);
+        Cache::put('management_nav', '', $tmp);
+        Cache::put('subject_matter_nav', '', $tmp);
+        Cache::put('group_nav', '', $tmp);
+        Cache::put('block_nav', '', $tmp);
     }
 }

@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <div class="panel-heading m-0 font-weight-bold text-primary">{{$title or 'Grupos'}}</div>
+            <div class="panel-heading m-0 font-weight-bold text-primary container">{{$title or 'Grupos'}}</div>
             
             <div class="card-body">
                 @if (Session::has('status_message'))
@@ -34,11 +34,11 @@
                                                     <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->professor->first_name ." ". $item->professor->second_name ." ". $item->professor->names}}</font></font></td>
                                                     
                                                     <td class="text-center" style="text-align: center; display: flex;">
-                                                        <a href="/admin/groups/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1"> <i title="Modificar" class="fas fa-edit"></i> </a>
+                                                        <a href="/admin/groups/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Editar"> <i class="fas fa-edit"></i> </a>
                                                         <form class="pull-right" action="{{route('groups.destroy',[$item->id])}}" method="POST">
                                                                 {{csrf_field()}}
                                                                 {{method_field('DELETE')}}
-                                                                <button class="btn btn-danger btn-circle btn-sm mx-1" type="submit"> <i title="Eliminar" class="fas fa-trash"></i> </button>
+                                                                <button class="btn btn-danger btn-circle btn-sm mx-1" type="submit" data-toggle="tooltip" title="Eliminar"> <i class="fas fa-trash"></i> </button>
                                                         </form>
                                                     </td>
                                                 </tr>

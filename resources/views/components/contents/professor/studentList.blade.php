@@ -1,10 +1,5 @@
 @extends('components.sections.professorSection')
 @section('userContent')
-<script>
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  })
-</script>
 
     <div class="container-fluid">
         <div class="card shadow mb-4">
@@ -64,7 +59,7 @@ $(function () {
                                             {{-- <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->email }}</font></font></td> --}}
 
                                             <td class="text-center" style="text-align: center; display: flex;">
-                                                <a href="/professor/students/profile/{{ $item->id }}" class="btn btn-info btn-circle btn-sm mx-1" data-toggle="tooltip" title="Ver Perfil"><i class="fas fa-eye"></i></a>
+                                                <a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick="loadProfile({{ $item }})"><i class="fas fa-eye"></i></a>
 
                                                 <a href="/professor/studentSesions/{{$item->id}}" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Portafolios"><i class="fas fa-briefcase"></i></a>
                                             </td>
@@ -81,4 +76,31 @@ $(function () {
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="studentProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="pointer-events: inherit;">
+              <div class="card card-profile o-hidden border-0 my-3 rounded">
+                  <div style="background-image: url(/img/lab.jpg);" class="card-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: black; margin-top: -5px;">
+                      <span aria-hidden="true"><strong>&times;</strong></span>
+                    </button>
+                  </div>
+                  <div class="card-body text-center"><img src="/users/demo.png" class="card-profile-img">
+                      <h3 class="mb-3" id="namesProfile"></h3>
+                      <div><strong> Tipo de Usuario: </strong> <p> Estudiante </p></div>
+                      <div><strong> Código Sis: </strong> <p id="codeSisProfile"></p></div>
+                      <div><strong> Correo Electrónico: </strong> <p id="emailProfile"></p></div>
+                  </div>
+              </div>
+            </div>
+          </div>
+    
+    <script>
+        function loadProfile(item){
+            document.getElementById('namesProfile').innerHTML=item.names+' '+item.first_name+' '+item.second_name;
+            document.getElementById('codeSisProfile').innerHTML=item.code_sis;
+            document.getElementById('emailProfile').innerHTML=item.email;
+        }
+    </script>
+
 @endsection

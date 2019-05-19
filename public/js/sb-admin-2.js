@@ -47,3 +47,11 @@
   });
 
 })(jQuery); // End of use strict
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
+$(function () {
+  $('[data-toggle-2="tooltip"]').tooltip()
+})
