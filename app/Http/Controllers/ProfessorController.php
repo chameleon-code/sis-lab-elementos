@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App\BlockGroup;
 use App\Group;
+use Illuminate\Support\Facades\Cache;
 
 class ProfessorController extends Controller
 {
@@ -23,6 +24,8 @@ class ProfessorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
+        self::rememberNav();
+
         $professors = Professor::getAllProfessors();
         if(Auth::user()->role_id==Role::ADMIN){
             $data = ['professors' => $professors,
@@ -45,6 +48,8 @@ class ProfessorController extends Controller
      */
     public function create()
     {
+        self::rememberNav();
+
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
         $data=['subjectMatters'=>$subjectMatters];
         return view('components.contents.professor.create', $data);
@@ -170,7 +175,7 @@ class ProfessorController extends Controller
         $professor = Professor::where('user_id', '=', $user->id)->get()->first();
         $group_professor = Group::where('professor_id', '=', $professor->id)->get()->first();
         if($group_professor!=null){
-            $block_professor = BlockGroup::where('group_id', '=', $group_professor->id)->get()->first();
+            $block_professor = BlockGroup::where('group_id', '=', $group_professor->id)->get();
             //$students = Student::where('block_id', '=', $block_professor->block_id)->get();
             $students = Student::getAllStudents();
             $data = ['students' => $students,
@@ -197,5 +202,16 @@ class ProfessorController extends Controller
         ];
 
         return view('components.contents.professor.profileStudent')->withTitle('Perfil de Estudiante')->with($data);
+    }
+
+    public function rememberNav(){
+        $tmp = 0.05;
+        Cache::put('professor_nav', ' show', $tmp);
+        Cache::put('auxiliar_nav', '', $tmp);
+        Cache::put('student_nav', '', $tmp);
+        Cache::put('management_nav', '', $tmp);
+        Cache::put('subject_matter_nav', '', $tmp);
+        Cache::put('group_nav', '', $tmp);
+        Cache::put('block_nav', '', $tmp);
     }
 }

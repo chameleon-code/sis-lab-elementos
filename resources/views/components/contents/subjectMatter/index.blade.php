@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <div class="panel-heading m-0 font-weight-bold text-primary"><strong>{{$title or 'Materias'}}</strong></div>
+            <div class="panel-heading m-0 font-weight-bold text-primary container">{{$title or 'Materias'}}</div>
             
             <div class="card-body">
                 @if (Session::has('status_message'))
@@ -34,9 +34,9 @@
                                         <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color:">{{$item->created_at}}</font></font></td>
                                         <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color:">{{$item->updated_at}}</font></font></td>
                                         <td class="p-2" style="text-align: center; display: flex;">
-                                            <a href="/admin/subjectmatter/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1"> <i title="Modificar" class="fas fa-edit"></i> </a>
+                                            <a href="/admin/subjectmatter/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Editar"> <i class="fas fa-edit"></i> </a>
 
-                                            <button type="button" class="btn btn-danger btn-circle btn-sm mx-1" data-toggle="modal" data-target="#eliminar{{ $item->id }}"> <i title="Eliminar" class="fas fa-trash"></i> </button>
+                                            <button type="button" class="btn btn-danger btn-circle btn-sm mx-1" data-toggle="modal" data-toggle-2="tooltip" title="Eliminar" data-target="#eliminar{{ $item->id }}"> <i class="fas fa-trash"></i> </button>
 
                                             <!-- Modal -->
                                             <div class="modal fade" id="eliminar{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
