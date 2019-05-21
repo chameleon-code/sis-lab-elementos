@@ -107,13 +107,7 @@
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-              @if (Auth::guest())
-                  <a class="dropdown-item" href="#">
-              @else
-                @if(Auth::user()->role_id = 1)
-                  <a class="dropdown-item" href="/admin/show/{{ Auth::user()->id }}">
-                @endif
-              @endif
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profile">
                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                 Perfil
               </a>
@@ -176,6 +170,36 @@
     </div>
   </div>
 
+<div class="modal fade" id="profile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="pointer-events: inherit;">
+    <div class="card card-profile o-hidden border-0 my-3 rounded">
+        <div style="background-image: url(/img/lab.jpg);" class="card-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: black; margin-top: -5px;">
+            <span aria-hidden="true"><strong>&times;</strong></span>
+          </button>
+        </div>
+        <div class="card-body text-center"><img src="/users/demo.png" class="card-profile-img">
+            <h3 class="mb-3"> {{ Auth::user()->names }} {{ Auth::user()->first_name }} {{ Auth::user()->second_name }} </h3>
+            <p class=""> <strong> Tipo de Usuario: </strong>
+              @if(Auth::user()->role_id == 1)
+                Administrador
+              @elseif(Auth::user()->role_id == 2)
+                Docente
+              @elseif(Auth::user()->role_id == 3)
+                Auxiliar
+              @elseif(Auth::user()->role_id == 4)
+                Estudiante
+              @endif
+            </p>
+            <p class=""> <strong> Código Sis: </strong> {{ Auth::user()->code_sis }} </p>
+            <p class=""> <strong> Correo Electrónico: </strong> {{ Auth::user()->email }} </p>
+            <a href="#" class="btn-sm btn-primary"> Editar Información </a>
+        </div>
+    </div>
+  </div>
+</div>
+
+
   <!-- Bootstrap core JavaScript-->
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -183,7 +207,7 @@
   <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="/js/sb-admin-2.min.js"></script>
+  <script src="/js/sb-admin-2.js"></script>
 
   <!-- Page level plugins -->
   <script src="/vendor/chart.js/Chart.min.js"></script>

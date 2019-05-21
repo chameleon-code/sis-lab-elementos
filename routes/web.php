@@ -36,13 +36,6 @@ Route::get('professor', function () {
     return view('components.sections.professorSection');
 });
 
-Route::get('scheduler', function () {
-    $labs = Laboratory::all();
-    $data = ['labs' => $labs];
-    return view('components.contents.scheduler.scheduler', $data);
-});
-Route::get('scheduler/{id}', 'EventController@loadScheduler');
-Route::get('scheduler2/{id}', 'EventController@loadScheduler2');
 
 //Docente
 Route::get('/admin/professors','ProfessorController@index');
@@ -80,80 +73,33 @@ Route::post('/students/registration/confirm', 'StudentController@confirm')->name
 Route::get('/students/registration/getBlocksBySubjects/{id}', 'BlockController@getBlocksBySubjects');
 Route::get('/students/registration/getGroups/{id}', 'BlockController@getGroupsByBlocks');
 Route::get('/students/registration/getGroup/{id}', 'GroupController@getBlockByGroupId');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+// child roles
+
+Route::get('admin/lista', function () {
+    return view('components.contents.admin.adminContent');
+});
+
+// Secciones
 
 Route::get('auxiliar', function () {
     return view('components.sections.auxiliarSection');
 });
 
-//child roles
-Route::get('admin/lista', function () {
-    return view('components.contents.admin.adminContent');
+// Horario
+
+Route::get('scheduler', function () {
+    $labs = Laboratory::all();
+    $data = ['labs' => $labs];
+    return view('components.contents.scheduler.scheduler', $data);
 });
+Route::get('scheduler/{id}', 'EventController@loadScheduler');
+Route::get('scheduler2/{id}', 'EventController@loadScheduler2');
 
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
-
-//Materias
-Route::get('/admin/subjectmatters','SubjectMatterController@index');
-
-Route::get('/admin/subjectmatter/create','SubjectMatterController@create');
-Route::post('/admin/subjectmatter/create','SubjectMatterController@store')->name('subjectmatters.store');
-
-Route::get('/admin/subjectmatter/{id}/edit','SubjectMatterController@edit');
-Route::post('/admin/subjectmatter/{id}/edit','SubjectMatterController@update')->name('subjectmatters.update');
-Route::delete('/admin/subjectmatter/{id}','SubjectMatterController@destroy')->name('subjectmatters.destroy');
-
-//Gestiones
-Route::get('/admin/gestiones','ManagementController@index');
-
- //Grupos
-/*Route::get('/admin/groups','GroupController@index')->name('groups.index');
-Route::get('/admin/groups/create', 'GroupController@create')->name('groups.create');
-Route::post('/admin/groups','GroupController@store')->name('groups.store');
-Route::delete('/admin/groups/{id}','GroupController@destroy')->name('groups.destroy');
-Route::get('/admin/groups/{id}/edit','GroupController@edit')->name('groups.edit');
-Route::post('/admin/groups/{id}/update','GroupController@update')->name('groups.update');
-Route::get('/admin/groups/profile/{id}', 'GroupController@show')->name('groups.show');*/
-Route::get('/admin/groups/getCount/{id}', 'GroupController@getCountSubjects');
-Route::get('/admin/groups/getProfessors/{id}', 'GroupController@getProfessors');
-Route::get('/admin/groups/getGroupsName/{id}', 'GroupController@getGroupsNameBySubjects');
-
-//Auxiliares
-Route::get('/admin/auxiliars','AuxiliarController@index');
-Route::get('/admin/auxiliars/create', 'AuxiliarController@create');
-Route::post('/admin/auxiliars/store','AuxiliarController@store');
-Route::delete('/admin/auxiliars/{id}','AuxiliarController@destroy')->name('auxiliar.destroy');
-Route::get('/admin/auxiliars/{id}/edit','AuxiliarController@edit');
-Route::post('/admin/auxiliars/{id}/update','AuxiliarController@update')->name('auxiliar.update');
-Route::get('/admin/auxiliars/profile/{id}', 'AuxiliarController@show');
-
-//Admin
-Route::get('/admin/show/{id}', 'AdminController@show');
-
-//Bloques
-
-Route::get('/admin/blocks/getGroups/{id}', 'BlockController@getGroups');
-Route::get('/admin/blocks/getGroupsId', 'BlockGroupController@getAllBlockGroups');
-
-//Gestion
-Route::get('/admin/managements','ManagementController@index');
-Route::get('/admin/management/create','ManagementController@create');
-Route::post('/admin/management/create','ManagementController@store')->name('managements.store');
-Route::get('/admin/management/{id}/edit','ManagementController@edit');
-Route::post('/admin/management/{id}/edit','ManagementController@update')->name('managements.update');
-Route::delete('/admin/management/{id}','ManagementController@destroy')->name('managements.destroy');
-
-Route::get('/admin/blocks/getGro', 'BlockGroupController@getAllBlockGroups');
-
-//Sesiones
-Route::get('/sesions','SesionController@index');
-Route::post('/sesions/store','SesionController@store');
-
-//Tareas o Practicas
-Route::get('/tasks','TaskController@index');
-Route::post('/tasks/create','TaskController@store')->name('tasks.create');
 /*Run
 php composer update
 php artisan config:clear

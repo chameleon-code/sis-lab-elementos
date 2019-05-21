@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use App\Professor;
+use App\Student;
 use App\Sesion;
 use App\Task;
 use App\Block;
+use App\Group;
+use App\SubjectMatter;
 
 class TaskController extends Controller
 {

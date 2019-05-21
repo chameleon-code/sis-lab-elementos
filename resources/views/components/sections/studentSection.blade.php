@@ -18,19 +18,18 @@
     Interface
   </div>
 
-  <!-- Nav Item - Pages Collapse Menu -->
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInscription" aria-expanded="true" aria-controls="collapseTwo">
-      <i class="fas fa-fw fa-scroll"></i>
-      <span>Inscripción</span>
-    </a>
-    <div id="collapseInscription" class="collapse" aria-labelledby="headingInscription" data-parent="#accordionSidebar">
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">Opciones:</h6>
-        <a class="collapse-item" href="{{url("/students/registration")}}">Bloque</a>
-        <a class="collapse-item" href="">Horario</a>
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBlocks" aria-expanded="true" aria-controls="collapseBlocks">
+        <i class="fas fa-fw fa-address-card"></i>
+        <span>Inscripción</span>
+      </a>
+      <div id="collapseBlocks" class="collapse{{Cache::get('block_nav')}}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <h6 class="collapse-header">Opciones:</h6>
+          <a class="collapse-item" href="{{url("/students/registration")}}"><i class="fas fa-book"></i> Materia </a>
+          <a class="collapse-item" href="#"><i class="fas fa-calendar"></i> Elegir Horarios </a>
+        </div>
       </div>
-    </div>
   </li>
 
 @endsection

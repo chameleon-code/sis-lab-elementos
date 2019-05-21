@@ -9,6 +9,7 @@ use App\Block;
 use App\BlockGroup;
 use App\Management;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 class BlockController extends Controller
 {
@@ -19,6 +20,8 @@ class BlockController extends Controller
      */
     public function index()
     {
+        self::rememberNav();
+
         $blocks = Block::getAllBlocks();
         $data = [
             'blocks' => $blocks
@@ -33,6 +36,8 @@ class BlockController extends Controller
      */
     public function create()
     {
+        self::rememberNav();
+
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
         $managements = Management::getAllManagements()->reverse();
         $groupsID = BlockGroup::getAllBlockGroupsId();
@@ -70,8 +75,8 @@ class BlockController extends Controller
             foreach($groupsID as $key=>$value){
                 $group = Group::where('id', $value)->first();
                 $block->groups()->attach($group->id);
-                //$name .= '-'.$group->professor->first_name[0];
-                $name .= '-'.$block->id;
+                $name .= '-'.$group->professor->first_name[0];
+                //$name .= '-'.$block->id;
             }
 
             $dir = $man->management_path.'/'.$name;
@@ -161,5 +166,16 @@ class BlockController extends Controller
             return response()->json($block->groups);
         }
         return $block->groups;
+    }
+
+    public function rememberNav(){
+        $tmp = 0.05;
+        Cache::put('professor_nav', '', $tmp);
+        Cache::put('auxiliar_nav', '', $tmp);
+        Cache::put('student_nav', '', $tmp);
+        Cache::put('management_nav', '', $tmp);
+        Cache::put('subject_matter_nav', '', $tmp);
+        Cache::put('group_nav', '', $tmp);
+        Cache::put('block_nav', ' show', $tmp);
     }
 }
