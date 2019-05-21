@@ -12,26 +12,21 @@ $(document).ready(function(){
             rmv = false;
         }
         document.getElementById('groups_ids').style.visibility = 'visible';
-        //$('#blocks').empty();
         $('#groups').empty(); 
-        $.get("getBlocksBySubjects/"+event.target.value+"", function(response, blocks){
-            if(response.length == 0)
-                $('#groups').append("<option value=''> No existen grupos disponibles para la materia seleccionada </option>");
-            else{                
-            for(i=0; i<response.length; i++){
-                setGroups(response[i].groups);
-            }
-            $('#block_id').attr('value',response[0].id);
-            }
+        $.ajax({
+            url : 'http://127.0.0.1:8000/students/registration/getBlocksBySubjects/'+event.target.value+'',
+            success: function (response){
+                if(response.length == 0)
+                    $('#groups').append("<option value=''> No existen grupos disponibles para la materia seleccionada </option>");
+                else{                
+                    for(i=0; i<response.length; i++){
+                        setGroups(response[i].groups);
+                    }
+                    $('#block_id').attr('value',response[0].id);
+                    }
+                }
+            });
         });
-
-    });
-    /*$('#blocks').change(function(event) {
-        $('#groups').empty();
-        $.get("registration/getGroups/"+event.target.value+"", function(response, subjects){
-            setGroups(response);
-        });
-    });*/
     $('#groups').change(function(event) {
         $.get('getGroup/'+event.target.value+'', function(response, groups){
             console.log(response);
