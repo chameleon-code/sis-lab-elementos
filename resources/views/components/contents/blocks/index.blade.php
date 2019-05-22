@@ -35,7 +35,7 @@
                                                     <td class="mx-1">
                                                         @forelse ($item->groups as $group)
                                                             @if($loop->first)
-                                                                {{$group->subject}}
+                                                                {{$group->subject->name}}
                                                             @endif
                                                         @empty
                                                             No existen grupos en el bloque
