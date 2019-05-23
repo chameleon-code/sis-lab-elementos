@@ -36,7 +36,6 @@ Route::get('professor', function () {
     return view('components.sections.professorSection');
 });
 
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
