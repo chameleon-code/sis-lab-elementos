@@ -163,7 +163,7 @@ class BlockController extends Controller
             return redirect('/admin/blocks');
         }
         else{
-            return redirect('/admin/blocks/create')->withInput()->withErrors($block->errors);
+            return back()->withInput()->withErrors($block->errors);
         }
     }
 

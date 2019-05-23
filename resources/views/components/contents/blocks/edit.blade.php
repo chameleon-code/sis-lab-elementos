@@ -60,7 +60,9 @@
                                         <a class="btn btn-md" id="removeGroup"><i class="fas fa-minus-circle"></i></a>  </br>
                                         <div id="groups_container">
                                             @foreach ($block->groups as $item)
-                                                <select class="form-control col-md-12" name="groups_id[]" id="group_id{{ $loop->iteration }}">
+                                                <div id="divgroup{{ $loop->iteration }}"> 
+                                                    <br>
+                                                    <select class="form-control col-md-12" name="groups_id[]" id="group_id{{ $loop->iteration }}">
                                                     @forelse ($groups as $group)
                                                     @if ($item->id == $group->id)
                                                         <option value="{{ $group->id }}" class="form-control" selected>{{ $group->name . " - " . $group->professor->names . " " . $group->professor->first_name . " " . $group->professor->second_name}}</option>
@@ -70,8 +72,8 @@
                                                     @empty
                                                         <option class="form-control" value=""> No existen grupos para la materia seleccionada</option>
                                                     @endforelse
-                                                </select> 
-                                                <br>   
+                                                    </select>
+                                                </div>   
                                             @endforeach
                                         </div>
                                 </div>
