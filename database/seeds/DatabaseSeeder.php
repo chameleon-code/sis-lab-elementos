@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => \App\Role::PROFESSOR
         ]);
         factory(\App\Professor::class, 1)->create(['user_id' => 2]);
-
+        
         factory(\App\User::class, 1)->create([
             'names' => 'auxiliar',
             'first_name' => 'auxiliar',
@@ -56,16 +56,6 @@ class DatabaseSeeder extends Seeder
         ]);
         factory(\App\Auxiliar::class, 1)->create(['user_id' => 3]);
 
-        factory(\App\User::class, 1)->create([
-            'names' => 'student',
-            'first_name' => 'student',
-            'second_name' => 'student',
-            'email'=>'student@gmail.com',
-            'password' => bcrypt('student'),
-            'role_id' => \App\Role::STUDENT
-        ]);
-        factory(\App\Student::class, 1)->create(['user_id' => 4]);
-
         factory(\App\User::class, 15)->create([ 'role_id' => \App\Role::PROFESSOR ])
         ->each(function (\App\User $u){
             factory(\App\Professor::class, 1)->create(['user_id' => $u->id]);
@@ -74,11 +64,6 @@ class DatabaseSeeder extends Seeder
         factory(\App\User::class, 15)->create([ 'role_id' => \App\Role::AUXILIAR ])
         ->each(function (\App\User $u){
             factory(\App\Auxiliar::class, 1)->create(['user_id' => $u->id]);
-        });
-
-        factory(\App\User::class, 150)->create([ 'role_id' => \App\Role::STUDENT ])
-        ->each(function (\App\User $u){
-            factory(\App\Student::class, 1)->create(['user_id' => $u->id]);
         });
 
         // GESTIONES
@@ -104,6 +89,21 @@ class DatabaseSeeder extends Seeder
         });
 
         factory(\App\BlockGroup::class, 20)->create();
+
+        factory(\App\User::class, 1)->create([
+            'names' => 'student',
+            'first_name' => 'student',
+            'second_name' => 'student',
+            'email'=>'student@gmail.com',
+            'password' => bcrypt('student'),
+            'role_id' => \App\Role::STUDENT
+        ]);
+        factory(\App\Student::class, 1)->create(['user_id' => 4]);
+
+        factory(\App\User::class, 150)->create([ 'role_id' => \App\Role::STUDENT ])
+        ->each(function (\App\User $u){
+            factory(\App\Student::class, 1)->create(['user_id' => $u->id]);
+        });
         
     }
 }
