@@ -51,7 +51,7 @@
                                                     </td>
                                                     
                                                     <td class="text-center" style="text-align: center; display: flex;">
-                                                        <a href="/admin/groups/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Editar"><i class="fas fa-edit"></i></a>
+                                                        <a href="/admin/blocks/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Editar"><i class="fas fa-edit"></i></a>
                                                     </td>                                                    
                                                 </tr>
                                           @endforeach

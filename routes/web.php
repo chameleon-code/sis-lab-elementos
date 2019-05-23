@@ -36,43 +36,6 @@ Route::get('professor', function () {
     return view('components.sections.professorSection');
 });
 
-
-//Docente
-Route::get('/admin/professors','ProfessorController@index');
-Route::get('/admin/professors/create', ['uses'=> 'ProfessorController@create']);
-Route::post('/admin/professors/create', ['uses'=> 'ProfessorController@store']);
-Route::get('/admin/professors/{id}/edit','ProfessorController@edit');
-Route::post('/admin/professors/{id}/update','ProfessorController@update')->name('professor.update');
-Route::delete('/admin/professors/{id}','ProfessorController@destroy')->name('professor.destroy');
-Route::get('/admin/professors/profile/{id}', 'ProfessorController@show');
-
-//Estudiante
-Route::post('/student/activities',['uses' => 'StudentTaskController@store']);
-Route::get('student', ['uses' => 'StudentController@index']);
-Route::get('/admin/student/create', ['uses' => 'StudentController@create']);
-Route::post('/admin/student/create', ['uses' => 'StudentController@store']);
-
-Route::get('/admin/students/profile/{id}', 'StudentController@show');
-Route::get('/admin/students', 'StudentController@index');
-Route::get('/admin/student/create', 'StudentController@create');
-Route::post('student/register', 'StudentController@store')->name('student.register');
-Route::get('student/{id}', 'StudentController@show');
-Route::get('admin/students/{id}/edit', 'StudentController@edit');
-Route::post('student/{id}/update', 'StudentController@update')->name('student.update');
-Route::delete('student/{id}', 'StudentController@destroy')->name('student.destroy');
-
-
-Route::get('/professor/students/profile/{id}', 'ProfessorController@profileStudent');
-Route::get('/professor/students/list', 'ProfessorController@studentList');
-Route::get('/professor/studentSesions/{id}', 'SesionController@showStudentSesions');
-Route::get('/professor/student/{idStudent}/task/{idTask}', 'TaskController@showStudentTask');
-
-
-Route::get('/students/registration', 'StudentController@registration');
-Route::post('/students/registration/confirm', 'StudentController@confirm')->name('student.reg.confirm');
-Route::get('/students/registration/getBlocksBySubjects/{id}', 'BlockController@getBlocksBySubjects');
-Route::get('/students/registration/getGroups/{id}', 'BlockController@getGroupsByBlocks');
-Route::get('/students/registration/getGroup/{id}', 'GroupController@getBlockByGroupId');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
