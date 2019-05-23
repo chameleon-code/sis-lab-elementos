@@ -24,6 +24,7 @@ class SesionController extends Controller
     public function index()
     {
         $blockGroup = Professor::getBlockProfessor();
+        dd(Professor::getBlocksProfessor());
         if($blockGroup!=null){
             $blockGroupId = $blockGroup->block_id;
             $sesions = Sesion::where('block_id','=',$blockGroupId)->get();

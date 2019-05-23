@@ -62,7 +62,8 @@ class BlockController extends Controller
         //dd($request->groups_id);
         $input =$request->all();
         $block = new Block();
-        $name = 'Bloque';
+        $man = Management::find($request->management_id);
+        $name = 'Bloque-';
         if($block->validate($input)){   
             $man = Management::find($request->management_id);
             $dir = $man->management_path.'/'.$request->name;
@@ -70,16 +71,13 @@ class BlockController extends Controller
             $block->name = $name;
             $groupsID = $request->groups_id;
             $block->save();
-
             foreach($groupsID as $key=>$value){
                 $group = Group::where('id', $value)->first();
                 $block->groups()->attach($group->id);
-                $name .= '-'.$group->professor->first_name[0];
-                //$name .= '-'.$block->id;
+                //$name .= '-'.$group->professor->first_name[0];
             }
-
+            $name .= $block->id;
             $dir = $man->management_path.'/'.$name;
-
             $block->block_path = $dir;
             $block->name = $name;
             $block->save();
