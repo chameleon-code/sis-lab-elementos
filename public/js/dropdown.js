@@ -4,6 +4,7 @@ $(document).ready(function(){
     var container = document.getElementById('groups_container');
     $("#subjects").change(function(event){
         iCnt = 1;
+        added = false;
         $.ajax({
             url: 'http://127.0.0.1:8000/admin/blocks/getGroups/'+event.target.value+'',
             success: function (response){
@@ -32,7 +33,7 @@ $(document).ready(function(){
                     count = iCnt + response.length;
                     added = true;
                 }
-                if (iCnt < count) {                            
+                if (iCnt < count ) {                            
                     iCnt = iCnt + 1;  
                     $(container).append(
                         '<div id="divgroup'+iCnt+'" ></br><select class="form-control col-md-12" name="groups_id[]" id="group_id'+iCnt+'"></select></div>'
