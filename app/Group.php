@@ -28,7 +28,7 @@ class Group extends Model
     }
     public function getSubjectAttribute()
     {
-        return SubjectMatter::findOrFail($this->subject_matter_id)->name;
+        return SubjectMatter::findOrFail($this->subject_matter_id);
     }
     public function getProfessorAttribute()
     {
