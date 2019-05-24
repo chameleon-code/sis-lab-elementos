@@ -62,7 +62,7 @@
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="{{url('/admin/students')}}"><i class="fas fa-list"></i>  Listar</a>
-        <a class="collapse-item" href="{{url('/admin/student/create ')}}"><i class="fas fa-plus"></i>  Crear</a>
+        <a class="collapse-item" href="{{url('/admin/student/create')}}"><i class="fas fa-plus"></i>  Crear</a>
       </div>
     </div>
   </li>
@@ -129,6 +129,13 @@
           <a class="collapse-item" href="{{url('/admin/blocks/create')}}"><i class="fas fa-plus"></i>  Crear</a>
         </div>
       </div>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="#">
+      <i class="fas fa-fw fa-address-card"></i>
+      <span>Inscripciones</span>
+    </a>
   </li>
 
   <li class="nav-item">
