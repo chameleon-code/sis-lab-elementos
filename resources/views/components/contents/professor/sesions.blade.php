@@ -25,6 +25,12 @@
                 @else
                 <div class="panel-heading my-2 font-weight-bold text-primary container">
                     Sesiones
+                    <select name="" id="">
+                        @foreach ($block as $blocks)
+                            
+                        @endforeach
+                    </select>
+
                     <div class="float-right">
                         <a href="#" class="btn btn-danger btn-icon-split btn-sm" data-toggle="modal" data-target="#deleteSesion">
                                 <span class="icon text-white-50" data-toggle="tooltip" title="Quitar Sesión">

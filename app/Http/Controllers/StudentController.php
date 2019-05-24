@@ -148,6 +148,12 @@ class StudentController extends Controller
 
     public function confirm(Request $request)
     {
+        $messages = [
+            'group_id.required' => 'No puede inscribirse al grupo de la materia seleccionada. ',
+        ];
+        $this->validate($request, [
+            'group_id' => 'required'
+        ], $messages);
         $user = Auth::user();
         $student = Student::where('user_id', '=', $user->id)->get()->first();
 

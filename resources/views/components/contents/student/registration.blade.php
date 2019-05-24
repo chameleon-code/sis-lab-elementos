@@ -46,19 +46,46 @@
                             @endforelse
                         </select>
                     </div>
+                            @if (count($errors)>0)
+                                <div class="alert alert-danger">
+                                    <b>Ha ocurrido un error!</b>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{$error}}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <form class="user" action="{{Route('student.reg.confirm')}}" method="post">
+                                {{ csrf_field() }}
+                                <div class="form-group" {{ $errors->has('subject_matter_id') ? 'has-error' : ''}}>
+                                        <label for="subject_matter_id" class="control-label">Materia: </label>
+                                        <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
+                                            <option class="form-control" value=""> Seleccione una materia </option>
+                                            @forelse ($subjectMatters as $subjectMatter)
+                                                <option class="form-control" value="{{$subjectMatter->id}}">{{$subjectMatter->name}}</option>
+                                            @empty
+                                            <option class="form-control" value="">No existen materias registradas</option>
+                                            @endempty
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                <div class="form-group" {{ $errors->has('block_id') ? 'has-error' : ''}}>
+                                    <input type="hidden" name="block_id" value="" id="block_id"/>
+                                </div>
 
-                    <div class="form-group" {{ $errors->has('group_id') ? 'has-error' : ''}}>
-                        <label for="group_id" class="control-label">Grupo / s:</label>
-                        <select name="group_id" class="form-control col-md-12" id="groups">
-                            @forelse ($groups as $group)
-                                <option class="form-control" value="{{$group->id}}">{{ $group->name . " - " . $group->professor->names . " " . $group->professor->first_name . " " . $group->professor->second_name}}</option>
-                            @empty
-                            <option class="form-control" value="">No existen bloques registrados</option>
-                            @endempty
-                            @endforelse
-                        </select>
-                    </div>
-                    <br>
+                                <div class="form-group" id="groups_ids" {{ $errors->has('group_id') ? 'has-error' : ''}}>
+                                    <label for="group_id" class="control-label">Grupo / s:</label>
+                                    <select name="group_id" class="form-control col-md-12" id="groups">
+                                        {{--@forelse ($groups as $group)--}}
+                                         {{--   <option class="form-control" value=""></option> --}}
+                                        {{--@empty
+                                        <option class="form-control" value="">No existen bloques registrados</option>
+                                        @endempty
+                                        @endforelse
+                                    </select>
+                                </div>
+                                <br>
 
                     <div class="form-group row">
                         <div class="form-group col-md-6 col">
