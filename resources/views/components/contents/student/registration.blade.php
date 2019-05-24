@@ -148,7 +148,7 @@
         <div class="modal-footer">
             <form method="POST" action="{{ url('/students/registration/confirm') }}">
                 {{ csrf_field() }}
-                <input id="group_id_input" type="number" name="group_id">
+                <input id="group_id_input" type="number" name="group_id" style="display: none;">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_cancel">Cancelar</button>
                 <button type="submit" class="btn btn-primary" id="btn_confirm">Confirmar</button>
             </form>
