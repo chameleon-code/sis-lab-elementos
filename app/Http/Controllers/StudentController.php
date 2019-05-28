@@ -137,7 +137,7 @@ class StudentController extends Controller
         $managements = Management::getAllManagements()->reverse();
         $blocks = Block::getAllBlocks();
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
-        $groups = Group::all();
+        $groups = Group::getGroupBlocks();
         $data=[ 'blocks' => $blocks,
                 'groups' => $groups,
                 'managements' =>$managements,
