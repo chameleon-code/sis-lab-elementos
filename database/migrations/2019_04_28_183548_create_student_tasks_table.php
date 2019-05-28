@@ -19,8 +19,9 @@ class CreateStudentTasksTable extends Migration
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->unsignedInteger('task_id');
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
-            $table->integer('score');
-            $table->string('observation');
+            $table->string('description')->nullable();
+            $table->integer('score')->nullable();
+            $table->string('observation')->nullable();
             $table->timestamps();
         });
     }

@@ -35,6 +35,24 @@ class Professor extends Model
     {
         $professor = Professor::where('user_id','=', Auth::user()->id)->get()->first();
         $group = Group::where('professor_id', '=', $professor->id)->get()->first();
-        return BlockGroup::where('group_id', '=', $group->id)->get()->first();
+        if($group!=null){
+            return BlockGroup::where('group_id', '=', $group->id)->get()->first(); //cambie le first
+        }else{
+            return null;
+        }
     }
+    public static function getBlocksProfessor()
+    {
+        $professor = Professor::where('user_id','=', Auth::user()->id)->get()->first();
+        $groups = Group::where('professor_id', '=', $professor->id)->get();
+        $blocks=[];
+        foreach ($groups as $group) {
+            $blockGroup= BlockGroup::where('group_id', '=', $group->id)->get()->first();
+            if($blockGroup!=null){
+                array_push($blocks,$blockGroup);
+            }
+        }
+        return  $blocks;
+    }
+    
 }

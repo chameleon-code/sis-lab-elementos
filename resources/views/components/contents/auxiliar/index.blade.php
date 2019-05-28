@@ -1,13 +1,11 @@
 @extends('components.sections.adminSection')
 @section('userContent')
 
-<script src="/js/generatekey.js"></script>
-
 <div class="container-fluid">
       <div class="card shadow mb-4">
           <div class="card-header py-3">
 
-                <div class="panel-heading m-0 font-weight-bold text-primary">Auxiliares</div>
+                <div class="panel-heading m-0 font-weight-bold text-primary container">Auxiliares</div>
 
               <div class="card-body">
                   @if (Session::has('status_message'))
@@ -39,11 +37,11 @@
                                                       <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->names }}</font></font></td>
 
                                                       <td class="p-2" style="text-align: center; display: flex;">
-                                                            <a href="/admin/auxiliars/profile/{{ $item->id }}" class="btn btn-info btn-circle btn-sm mx-1"><i title="Ver detalles" class="fas fa-eye"></i></a>
+                                                            <a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Pefil" data-toggle="modal" data-target="#auxiliarProfile" onclick="loadProfile({{ $item }})"><i class="fas fa-eye"></i></a>
                                                         
-                                                            <a href="/admin/auxiliars/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1"><i title="Modificar" class="fas fa-edit"></i></a>
+                                                            <a href="/admin/auxiliars/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Editar"><i class="fas fa-edit"></i></a>
   
-                                                            <button type="button" class="btn btn-danger btn-circle btn-sm mx-1" data-toggle="modal" data-target="#eliminar{{ $item->id }}"> <i title="Eliminar" class="fas fa-trash"></i> </button>
+                                                            <button type="button" class="btn btn-danger btn-circle btn-sm mx-1" data-toggle="modal" data-toggle-2="tooltip" title="Eliminar" data-target="#eliminar{{ $item->id }}"> <i class="fas fa-trash"></i> </button>
                                                         <!-- Modal -->
                                                           <div class="modal fade" id="eliminar{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                               <div class="modal-dialog" role="document">
@@ -80,19 +78,50 @@
                   </div>
               </div>
 
-              <script>
-                $.noConflict();
-                jQuery( document ).ready(function( $ ) {
-                    $('#dataTable').DataTable();
-                });
-                // Code that uses other library's $ can follow here.
-              </script>
+              
+              
+              {{--  <script>
+                  $.noConflict();
+                  jQuery( document ).ready(function( $ ) {
+                      $('#dataTable').DataTable();
+                    });
+                    // Code that uses other library's $ can follow here.
+                </script>  --}}
+                
+                {{-- <div class="row justify-content-center">
+                    {{ $auxiliars->links() }}
+                </div> --}}
+            </div>
+        </div>
+    </div>
 
-              {{-- <div class="row justify-content-center">
-                {{ $auxiliars->links() }}
-              </div> --}}
-          </div>
-      </div>
-  </div>
+    <div class="modal fade" id="auxiliarProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="pointer-events: inherit;">
+        <div class="card card-profile o-hidden border-0 my-3 rounded">
+            <div style="background-image: url(/img/lab.jpg);" class="card-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: black; margin-top: -5px;">
+                <span aria-hidden="true"><strong>&times;</strong></span>
+                </button>
+            </div>
+            <div class="card-body text-center"><img src="/users/demo.png" class="card-profile-img">
+                <h3 class="mb-3" id="namesProfile"> {{ Auth::user()->names }} {{ Auth::user()->first_name }} {{ Auth::user()->second_name }} </h3>
+                <div><strong> Tipo de Usuario: </strong> <p> Auxiliar </p></div>
+                <div><strong> Código Sis: </strong> <p id="codeSisProfile" ></p></div>
+                <div><strong> Correo Electrónico: </strong> <p id="emailProfile"></p></div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+<script>
+    function loadProfile(item){
+        {{-- $(document).ready(function){
+            $("#namesProfile").innerHTML=item.names+' '+item.first_name+' '+item.second_name;
+        } --}}
+        document.getElementById('namesProfile').innerHTML=item.names+' '+item.first_name+' '+item.second_name;
+        document.getElementById('codeSisProfile').innerHTML=item.code_sis;
+        document.getElementById('emailProfile').innerHTML=item.email;
+    }
+</script>
 
 @endsection

@@ -187,9 +187,9 @@ return [
         'management_id'         => 'gestión',
         'subject_matter_id'     => 'materia',
         'groups_id.*'           => 'grupo',
-        'start_management'      => 'inicio de la gestión',
-        'end_management'        => 'fin de la gestión'
-
-        
+        'start_management'      => 'fecha de inicio',
+        'end_management'        => 'fecha de fin',
+        'date_start'            => 'fecha de inicio',
+        'date_end'              => 'fecha de fin',
     ],
 ];

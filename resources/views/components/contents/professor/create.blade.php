@@ -1,6 +1,7 @@
 @extends('components.sections.adminSection')
 @section('userContent')
 <script src="/js/generatekey.js"></script>
+<div class="loader"></div>
 <div class="row justify-content-center">
     <div class="col-xl-6 col-lg-10 col-md-9">
       <div class="card o-hidden border-0 my-5">

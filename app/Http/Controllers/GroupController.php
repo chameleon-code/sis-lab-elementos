@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use App\Group;
 use App\User;
 use App\Professor;
+use Illuminate\Support\Facades\Cache;
 
 class GroupController extends Controller
 {
@@ -19,6 +20,8 @@ class GroupController extends Controller
      */
     public function index()
     {
+        self::rememberNav();
+
         $groups = Group::getAllGroups();
         $data=['groups' => $groups,
                 'title' => 'Grupos'];
@@ -32,8 +35,9 @@ class GroupController extends Controller
      */
     public function create()
     {
+        self::rememberNav();
+
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
-        $managements = Management::getAllManagements()->reverse();
         $professors = Professor::getAllProfessors();
         $count = $this->getCountSubjects(new Request(), 1) + 1;
         $groupNames = array();
@@ -43,7 +47,6 @@ class GroupController extends Controller
             }
         }
         $data=['subjectMatters'=>$subjectMatters,
-                'managements' =>$managements,
                 'professors' => $professors,
                 'countGroups' => $count,
                 'groupNames' => $groupNames
@@ -90,18 +93,18 @@ class GroupController extends Controller
     public function edit($id)
     {
         $group = Group::findOrFail($id);
+        //dd($group->subject);
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
-        $managements = Management::getAllManagements();
         $professors = Professor::getAllProfessors();
-        $groupNames = array();
+        $groupNames = array($group->name);
         for($i = 1; $i<=15; $i++){
-            if(!in_array($i ,$this->getGroupsNameBySubjects(1))){
+            if(!in_array($i ,$this->getGroupsNameBySubjects($group->subject->id))){
                 array_push($groupNames, $i);
             }
         }
-        $data=['group' => $group,
+        $data=[
+            'group' => $group,
             'subjectMatters' => $subjectMatters,
-            'managements' => $managements,
             'professors' => $professors,
             'groupNames' => $groupNames
         ];
@@ -123,7 +126,6 @@ class GroupController extends Controller
         if($group->validate($input)){
             $group->name = $request->name;
             $group->subject_matter_id = $request->subject_matter_id;
-            $group->management_id = $request->management_id;
             $group->professor_id = $request->professor_id;
             $group->save();
 
@@ -152,20 +154,41 @@ class GroupController extends Controller
 
         Session::flash('status_message',$status_message);
         return redirect('/admin/groups');
+    }
+
+    public function getCountSubjects(Request $request, $id){
+        $count = Group::where('subject_matter_id', $id)->count();
+        if($request->ajax()){
+            return response()->json($count);
         }
-        public function getCountSubjects(Request $request, $id){
-            $count = Group::where('subject_matter_id', $id)->count();
-            if($request->ajax()){
-                return response()->json($count);
-            }
-            return $count;
+        return $count;
+    }
+
+    public function getGroupsNameBySubjects($id){
+        $groups = Group::getGroupsBySubjects($id);
+        $groups = array_pluck($groups, 'name');
+        return $groups;
+    }
+
+    public function rememberNav(){
+        $tmp = 0.05;
+        Cache::put('professor_nav', '', $tmp);
+        Cache::put('auxiliar_nav', '', $tmp);
+        Cache::put('student_nav', '', $tmp);
+        Cache::put('management_nav', '', $tmp);
+        Cache::put('subject_matter_nav', '', $tmp);
+        Cache::put('group_nav', ' show', $tmp);
+        Cache::put('block_nav', '', $tmp);
+    }
+
+    
+    public static function getBlockBygroupId(Request $request, $id){
+        $group = Group::findOrFail($id);
+        if($request->ajax()){
+            return response()->json($group->blocks()->first());
         }
-        public function getGroupsNameBySubjects($id){
-            $groups = Group::getGroupsBySubjects($id);
-            $groups = array_pluck($groups, 'name');
-            return $groups;
-        }
-        //deprecated
+    }        
+//deprecated
         /*public function getProfessors(Request $request, $id){
             if($request->ajax()){
                 $professors = ProfessorSubjectMatter::getAllProfessors($id);
