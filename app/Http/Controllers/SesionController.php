@@ -26,20 +26,20 @@ class SesionController extends Controller
     {
         $blockGroups = Professor::getBlocksProfessor();
         $sesionsBlocks=[];
-        $dateInit = '';
+        $dateStart = '';
         $dateEnd = '';
         if($blockGroups!=null){
             foreach ($blockGroups as $blockGroup) {
                 $blockId = $blockGroup->block_id;
                 array_push($sesionsBlocks, Sesion::where('block_id','=',$blockId)->get());
                 $management_id = Block::where('id','=',$blockId)->get()->first()->management_id;
-                $dateInit = Management::where('id','=',$management_id)->get()->first()->start_management;
+                $dateStart = Management::where('id','=',$management_id)->get()->first()->start_management;
                 $dateEnd = Management::where('id','=',$management_id)->get()->first()->end_management;
             }
             $data = [
                 'blocks' => $blockGroups,
                 'sesions' => $sesionsBlocks,
-                'init' => $dateInit,
+                'start' => $dateStart,
                 'end' => $dateEnd
             ];
             return view('components.contents.professor.sesions', $data);
@@ -109,19 +109,38 @@ class SesionController extends Controller
      */
     public function store(Request $request)
     {
-        Sesion::create([
-            'block_id' => $request->block_id,
-            'number_sesion' => $request->number_sesion,
-        ]);
-
-        $students = Student::where('block_id', '=', $request->block_id)->get();
-
-        foreach($students as $student)
-        {
-            Storage::makeDirectory($student->student_path.'/sesion-'.$request->number_sesion);
+        $input = $request->all();
+        $sesion = new Sesion();
+        if($sesion->validate($input)){
+            $start = $request->date_start;
+            $end = $request->date_end;
+            $sesions = Sesion::autodate($start,$end);
+            $index=1;
+            foreach ($sesions as $value) {
+                Sesion::create([
+                    'number_sesion' => $index,
+                    'block_id' => $request->block_id,
+                    'date_start'=> $value['start'],
+                    'date_end'=> $value['end'],
+                ]);
+                $index++;
+            }
+            return back();
+        }else{
+            return back()->withInput()->withErrors($sesion->errors);
         }
+        
+        // Sesion::create([
+        //     'block_id' => $request->block_id,
+        //     'number_sesion' => $request->number_sesion,
+        // ]);
 
-        return redirect('/sesions');
+        // $students = Student::where('block_id', '=', $request->block_id)->get();
+
+        // foreach($students as $student)
+        // {
+        //     Storage::makeDirectory($student->student_path.'/sesion-'.$request->number_sesion);
+        // }
     }
 
     /**

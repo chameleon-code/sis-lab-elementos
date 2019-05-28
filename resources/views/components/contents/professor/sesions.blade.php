@@ -37,35 +37,47 @@
                         <div id="block-{{$block->block_id}}" class="blocks-sesions">
                             <hr>
                             <div class="text-center">
-                                    <label class="h5 text-gray-900 mb-4">Creación Automática de Sesiones</label>
+                                <label class="h5 text-gray-900 mb-4">Creación Automática de Sesiones</label>
                             </div>
-                            <form class="user" action="">
+                            @if (count($errors)>0)
+                            <div class="alert alert-danger">
+                                <b>Ha ocurrido un Error!</b>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{$error}}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
+                            <form class="user" action="/sesions/store" method="POST">
+                                {{csrf_field()}}
                                 <div class="row">
                                     <div class="form-group col-md-4 col-6">
                                         <label for='name' class="">Inicio de las Sesiones</label>
                                         <div>
                                             <input  type="text"
-                                                    name="start_management"
+                                                    name="date_start"
                                                     id="inicio_fecha"
                                                     class="form-control col-md-12"
                                                     placeholder=""
-                                                    value="{{$init}}" required readonly>
+                                                    value="{{$start}}" required readonly>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4 col-6">
                                         <label for='name' class="">Fin de las Sesiones</label>
                                         <div>
                                             <input  type="text"
-                                                    name="end_management"
+                                                    name="date_end"
                                                     id="fin_fecha"
                                                     class="form-control col-md-12"
                                                     placeholder=""
                                                     value="{{$end}}" required readonly>
                                         </div>
                                     </div>
+                                    <input name="block_id" value="{{$block->block_id}}"hidden>
                                     @if (Agent::isMobile())
                                         <div class="form-group col-12">
-                                                <button id="btn_aling" type="button" class="btn btn-warning btn-block col-md-12">
+                                                <button id="btn_aling" type="submit" class="btn btn-warning btn-block col-md-12">
                                                         <i class="fas fa-magic"></i>
                                                         Autogenerar
                                                 </button>
@@ -73,7 +85,7 @@
                                     @else
                                         <div class="form-group col-md-4 col-12">
                                                 <label style="height: 1.015rem;"></label>
-                                                <button id="btn_aling" type="button" class="btn btn-warning btn-block col-md-12">
+                                                <button id="btn_aling" type="submit" class="btn btn-warning btn-block col-md-12">
                                                         <i class="fas fa-magic"></i>
                                                         Autogenerar 
                                                 </button>
@@ -82,11 +94,30 @@
                                 </div>
                             </form>
                             <hr>
+                            <div class="text-center">
+                                    <label class="h5 text-gray-900 mb-4">Sesiones</label>
+                            </div>
                             @foreach ($sesions as $sesion)
                                 @foreach ($sesion as $s)
                                     @if ($s->block_id==$block->block_id)
-                                        <br>
-                                        {{$s}}
+                                        <thead>
+                                                <tr>
+                                                    <div class="accordion-body bg-gray-300  rounded" style="margin-top: 8px;">
+                                                        <strong style="color: gray;"> Sesión: </strong> {{ $s->number_sesion }}
+                                                    </div>
+                                                </tr>
+                                        </thead>
+                                        <div class="panel" style="max-height: 100%;">
+                                            <div class="my-2 mx-2" style="font-size: 15px;">
+                                                <div style="margin-top: 12px; margin-bottom: -15px;"> 
+                                                    <p> <strong> Inicio: </strong> {{$s->date_start}} </p> 
+                                                </div>
+                                                <div style="margin-top: 12px; margin-bottom: -15px;"> 
+                                                    <p> <strong> Fin: </strong>  {{$s->date_end}}</p> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                     @endif
                                 @endforeach
                             @endforeach
@@ -97,8 +128,6 @@
             @endif
         </div>
     </div>
-
-
     <script>
         $('.blocks-sesions').hide();
         $( '#selector' ).change(function() {
@@ -109,5 +138,11 @@
         });
         var firts_id = $( "#selector option:selected" ).attr('value');
         $('#block-'+firts_id).show();
+    </script>
+    <script src="/js/accordion.js"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+          })
     </script>
 @endsection
