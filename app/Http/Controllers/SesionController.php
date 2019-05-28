@@ -23,41 +23,65 @@ class SesionController extends Controller
      */
     public function index()
     {
-        $blockGroup = Professor::getBlockProfessor();
-        dd(Professor::getBlocksProfessor());
-        if($blockGroup!=null){
-            $blockGroupId = $blockGroup->block_id;
-            $sesions = Sesion::where('block_id','=',$blockGroupId)->get();
-            $tasks = Task::all();
-            $validTasks=[];
-            foreach ($tasks as $task) {
-                foreach($sesions as $sesion){
-                    if($task->sesion_id==$sesion->id && $sesion->block_id==$blockGroupId){
-                        array_push($validTasks,$task);
-                    }
-                }
+        $blockGroups = Professor::getBlocksProfessor();
+        $sesionsBlocks=[];
+        if($blockGroups!=null){
+            foreach ($blockGroups as $blockGroup) {
+                $blockId = $blockGroup->block_id;
+                array_push($sesionsBlocks, Sesion::where('block_id','=',$blockId)->get());
             }
-            $sesion_max = $sesions->count();
             $data = [
-                'sesion_max'=>$sesion_max,
-                'sesions'=>$sesions,
-                'blockGroup'=>$blockGroup,
-                'tasks'=>$validTasks,
-                'blockId' => $blockGroupId,
+                'blocks' => $blockGroups,
+                'sesions' => $sesionsBlocks,
             ];
             return view('components.contents.professor.sesions', $data);
         }else{
             $data = [
-                'sesion_max' => 0,
+                'blocks'=>[],
                 'sesions' => [],
-                'blockGroup' => [],
-                'tasks' =>[],
-                'blockId' => 0,
             ];
             return view('components.contents.professor.sesions', $data);
         }
-        
     }
+    // public function index()
+    // {
+    //     $blockGroup = Professor::getBlockProfessor();
+    //     $blocks = Professor::getBlocksProfessor();
+    //     if($blockGroup!=null){
+    //         $blockGroupId = $blockGroup->block_id;
+    //         $sesions = Sesion::where('block_id','=',$blockGroupId)->get();
+    //         $tasks = Task::all();
+    //         $validTasks=[];
+    //         foreach ($tasks as $task) {
+    //             foreach($sesions as $sesion){
+    //                 if($task->sesion_id==$sesion->id && $sesion->block_id==$blockGroupId){
+    //                     array_push($validTasks,$task);
+    //                 }
+    //             }
+    //         }
+    //         $sesion_max = $sesions->count();
+    //         $data = [
+    //             'sesion_max'=>$sesion_max,
+    //             'sesions'=>$sesions,
+    //             'blockGroup'=>$blockGroup,
+    //             'tasks'=>$validTasks,
+    //             'blockId' => $blockGroupId,
+    //             'blocks'=>$blocks,
+    //         ];
+    //         return view('components.contents.professor.sesions', $data);
+    //     }else{
+    //         $data = [
+    //             'sesion_max' => 0,
+    //             'sesions' => [],
+    //             'blockGroup' => [],
+    //             'tasks' =>[],
+    //             'blockId' => 0,
+    //             'blocks' => [],
+    //         ];
+    //         return view('components.contents.professor.sesions', $data);
+    //     }
+        
+    // }
 
     /**
      * Show the form for creating a new resource.
