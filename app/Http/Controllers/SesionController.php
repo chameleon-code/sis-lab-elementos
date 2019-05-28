@@ -13,6 +13,7 @@ use App\Group;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\SubjectMatter;
+use App\Management;
 
 class SesionController extends Controller
 {
@@ -23,41 +24,72 @@ class SesionController extends Controller
      */
     public function index()
     {
-        $blockGroup = Professor::getBlockProfessor();
-        dd(Professor::getBlocksProfessor());
-        if($blockGroup!=null){
-            $blockGroupId = $blockGroup->block_id;
-            $sesions = Sesion::where('block_id','=',$blockGroupId)->get();
-            $tasks = Task::all();
-            $validTasks=[];
-            foreach ($tasks as $task) {
-                foreach($sesions as $sesion){
-                    if($task->sesion_id==$sesion->id && $sesion->block_id==$blockGroupId){
-                        array_push($validTasks,$task);
-                    }
-                }
+        $blockGroups = Professor::getBlocksProfessor();
+        $sesionsBlocks=[];
+        $dateStart = '';
+        $dateEnd = '';
+        if($blockGroups!=null){
+            foreach ($blockGroups as $blockGroup) {
+                $blockId = $blockGroup->block_id;
+                array_push($sesionsBlocks, Sesion::where('block_id','=',$blockId)->get());
+                $management_id = Block::where('id','=',$blockId)->get()->first()->management_id;
+                $dateStart = Management::where('id','=',$management_id)->get()->first()->start_management;
+                $dateEnd = Management::where('id','=',$management_id)->get()->first()->end_management;
             }
-            $sesion_max = $sesions->count();
             $data = [
-                'sesion_max'=>$sesion_max,
-                'sesions'=>$sesions,
-                'blockGroup'=>$blockGroup,
-                'tasks'=>$validTasks,
-                'blockId' => $blockGroupId,
+                'blocks' => $blockGroups,
+                'sesions' => $sesionsBlocks,
+                'start' => $dateStart,
+                'end' => $dateEnd
             ];
             return view('components.contents.professor.sesions', $data);
         }else{
             $data = [
-                'sesion_max' => 0,
+                'blocks'=>[],
                 'sesions' => [],
-                'blockGroup' => [],
-                'tasks' =>[],
-                'blockId' => 0,
             ];
             return view('components.contents.professor.sesions', $data);
         }
-        
     }
+    // public function index()
+    // {
+    //     $blockGroup = Professor::getBlockProfessor();
+    //     $blocks = Professor::getBlocksProfessor();
+    //     if($blockGroup!=null){
+    //         $blockGroupId = $blockGroup->block_id;
+    //         $sesions = Sesion::where('block_id','=',$blockGroupId)->get();
+    //         $tasks = Task::all();
+    //         $validTasks=[];
+    //         foreach ($tasks as $task) {
+    //             foreach($sesions as $sesion){
+    //                 if($task->sesion_id==$sesion->id && $sesion->block_id==$blockGroupId){
+    //                     array_push($validTasks,$task);
+    //                 }
+    //             }
+    //         }
+    //         $sesion_max = $sesions->count();
+    //         $data = [
+    //             'sesion_max'=>$sesion_max,
+    //             'sesions'=>$sesions,
+    //             'blockGroup'=>$blockGroup,
+    //             'tasks'=>$validTasks,
+    //             'blockId' => $blockGroupId,
+    //             'blocks'=>$blocks,
+    //         ];
+    //         return view('components.contents.professor.sesions', $data);
+    //     }else{
+    //         $data = [
+    //             'sesion_max' => 0,
+    //             'sesions' => [],
+    //             'blockGroup' => [],
+    //             'tasks' =>[],
+    //             'blockId' => 0,
+    //             'blocks' => [],
+    //         ];
+    //         return view('components.contents.professor.sesions', $data);
+    //     }
+        
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -77,19 +109,38 @@ class SesionController extends Controller
      */
     public function store(Request $request)
     {
-        Sesion::create([
-            'block_id' => $request->block_id,
-            'number_sesion' => $request->number_sesion,
-        ]);
-
-        $students = Student::where('block_id', '=', $request->block_id)->get();
-
-        foreach($students as $student)
-        {
-            Storage::makeDirectory($student->student_path.'/sesion-'.$request->number_sesion);
+        $input = $request->all();
+        $sesion = new Sesion();
+        if($sesion->validate($input)){
+            $start = $request->date_start;
+            $end = $request->date_end;
+            $sesions = Sesion::autodate($start,$end);
+            $index=1;
+            foreach ($sesions as $value) {
+                Sesion::create([
+                    'number_sesion' => $index,
+                    'block_id' => $request->block_id,
+                    'date_start'=> $value['start'],
+                    'date_end'=> $value['end'],
+                ]);
+                $index++;
+            }
+            return back();
+        }else{
+            return back()->withInput()->withErrors($sesion->errors);
         }
+        
+        // Sesion::create([
+        //     'block_id' => $request->block_id,
+        //     'number_sesion' => $request->number_sesion,
+        // ]);
 
-        return redirect('/sesions');
+        // $students = Student::where('block_id', '=', $request->block_id)->get();
+
+        // foreach($students as $student)
+        // {
+        //     Storage::makeDirectory($student->student_path.'/sesion-'.$request->number_sesion);
+        // }
     }
 
     /**
