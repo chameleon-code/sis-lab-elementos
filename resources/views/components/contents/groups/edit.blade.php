@@ -28,6 +28,10 @@
                                         <label for="subject_matter_id" class="control-label">Materia</label>
                                         <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
                                             @forelse ($subjectMatters as $subjectMatter)
+                                                @if ($subjectMatter->id == $group->subject->id)
+                                                    <option class="form-control" value="{{$subjectMatter->id}}" selected>{{$subjectMatter->name}}</option>
+                                                    @continue
+                                                @endif
                                                 <option class="form-control" value="{{$subjectMatter->id}}">{{$subjectMatter->name}}</option>
                                             @empty
                                             <option class="form-control" value="">No existen materias registradas</option>
@@ -51,13 +55,17 @@
                                             <label for="professor_id" class="control-label">Docentes: </label>
                                             <select class="form-control col-md-12" name="professor_id" id="professor_id">
                                                 @foreach ($professors as $professor)
+                                                @if ($professor->id == $group->professor->id)
+                                                    <option class="form-control" value="{{$professor->id}}" selected>{{$professor->first_name . " ". $professor->second_name . " " . $professor->names}}</option>
+                                                    @continue
+                                                @endif
                                                 <option class="form-control" value="{{$professor->id}}">{{$professor->first_name . " ". $professor->second_name . " " . $professor->names}}</option>
-                                            @endforeach
+                                                @endforeach
                                             </select>
                                         </div>
                                     <br>
                                     <div class="form-group">
-                                            <button type="submit" class="col-md-12 btn btn-primary btn-block">Crear</button>                                   
+                                            <button type="submit" class="col-md-12 btn btn-primary btn-block">Guardar</button>                                   
                                     </div>
                                 </form>
                         </div>
