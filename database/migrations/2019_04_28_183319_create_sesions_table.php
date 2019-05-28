@@ -18,6 +18,8 @@ class CreateSesionsTable extends Migration
             $table->unsignedInteger('block_id');
             $table->foreign('block_id')->references('id')->on('blocks')->onDelete('cascade');
             $table->integer('number_sesion');
+            $table->date('date_start');
+            $table->date('date_end');
             $table->timestamps();
         });
     }

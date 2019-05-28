@@ -9,6 +9,7 @@ use App\Block;
 use App\BlockGroup;
 use App\Management;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 class BlockController extends Controller
 {
@@ -19,6 +20,8 @@ class BlockController extends Controller
      */
     public function index()
     {
+        self::rememberNav();
+
         $blocks = Block::getAllBlocks();
         $data = [
             'blocks' => $blocks
@@ -33,6 +36,8 @@ class BlockController extends Controller
      */
     public function create()
     {
+        self::rememberNav();
+
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
         $managements = Management::getAllManagements()->reverse();
         $groupsID = BlockGroup::getAllBlockGroupsId();
@@ -58,7 +63,7 @@ class BlockController extends Controller
         $input =$request->all();
         $block = new Block();
         $man = Management::find($request->management_id);
-        $name = 'Bloque';
+        $name = 'Bloque-';
         if($block->validate($input)){   
             $man = Management::find($request->management_id);
             $dir = $man->management_path.'/'.$request->name;
@@ -66,16 +71,13 @@ class BlockController extends Controller
             $block->name = $name;
             $groupsID = $request->groups_id;
             $block->save();
-
             foreach($groupsID as $key=>$value){
                 $group = Group::where('id', $value)->first();
                 $block->groups()->attach($group->id);
                 //$name .= '-'.$group->professor->first_name[0];
-                $name .= '-'.$block->id;
             }
-
+            $name .= $block->id;
             $dir = $man->management_path.'/'.$name;
-
             $block->block_path = $dir;
             $block->name = $name;
             $block->save();
@@ -106,7 +108,21 @@ class BlockController extends Controller
      */
     public function edit($id)
     {
-        //
+        self::rememberNav();
+        $block = Block::findOrFail($id);
+        //dd($block->groups->first()->subject->id);
+        $subjectMatters = SubjectMatter::getAllSubjectMatters();
+        $managements = Management::getAllManagements()->reverse();
+        $groupsID = BlockGroup::getAllBlockGroupsId();
+        $groups = Group::where('subject_matter_id', $block->groups->first()->subject->id)
+                        ->whereNotIn('id', $groupsID)                        
+                        ->orderBy('name')->get();
+        $data=['subjectMatters'=>$subjectMatters,
+                'groups'=>$groups->merge($block->groups),
+                'managements' =>$managements,
+                'block' => $block
+            ];
+        return view('components.contents.blocks.edit', $data);
     }
 
     /**
@@ -118,7 +134,35 @@ class BlockController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input =$request->all();
+        $block = Block::findOrFail($id);
+        $name = 'Bloque';
+        if($block->validate($input)){   
+            // Pedir ayuda a Abel
+            //$man = Management::find($request->management_id);
+            //$dir = $man->management_path.'/'.$request->name;
+            $block->management_id = $request->management_id;
+            $block->name = $name;
+            $groupsID = $request->groups_id;
+            $block->groups()->detach($block->groups->pluck('id')->toArray());
+            foreach($groupsID as $key=>$value){
+                $group = Group::where('id', $value)->first();
+                $block->groups()->attach($group->id);
+                $name .= '-'.$group->professor->first_name[0];
+                //$name .= '-'.$block->id;
+            }
+
+            //$dir = $man->management_path.'/'.$name;
+
+            //$block->block_path = $dir;
+            $block->name = $name;
+            $block->save();
+            //Storage::makeDirectory($dir);
+            return redirect('/admin/blocks');
+        }
+        else{
+            return back()->withInput()->withErrors($block->errors);
+        }
     }
 
     /**
@@ -161,5 +205,16 @@ class BlockController extends Controller
             return response()->json($block->groups);
         }
         return $block->groups;
+    }
+
+    public function rememberNav(){
+        $tmp = 0.05;
+        Cache::put('professor_nav', '', $tmp);
+        Cache::put('auxiliar_nav', '', $tmp);
+        Cache::put('student_nav', '', $tmp);
+        Cache::put('management_nav', '', $tmp);
+        Cache::put('subject_matter_nav', '', $tmp);
+        Cache::put('group_nav', '', $tmp);
+        Cache::put('block_nav', ' show', $tmp);
     }
 }

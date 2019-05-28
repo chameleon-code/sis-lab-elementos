@@ -7,19 +7,21 @@ use App\SubjectMatter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Cache;
 
 class SubjectMatterController extends Controller
 {
     public function index(){
+        self::rememberNav();
+
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
-        
-        
         $data=['subjectMatters' => $subjectMatters,
                 'title' => 'Materias'];
         return view('components.contents.subjectMatter.index', $data);
     }
 
     public function create(){
+        self::rememberNav();
         return view('components.contents.subjectMatter.create');
     }
 
@@ -69,5 +71,16 @@ class SubjectMatterController extends Controller
 
         Session::flash('status_message',$status_message);
         return redirect('/admin/subjectmatters');
+    }
+
+    public function rememberNav(){
+        $tmp = 0.05;
+        Cache::put('professor_nav', '', $tmp);
+        Cache::put('auxiliar_nav', '', $tmp);
+        Cache::put('student_nav', '', $tmp);
+        Cache::put('management_nav', '', $tmp);
+        Cache::put('subject_matter_nav', ' show', $tmp);
+        Cache::put('group_nav', '', $tmp);
+        Cache::put('block_nav', '', $tmp);
     }
 }

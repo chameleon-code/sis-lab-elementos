@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
+use App\Group;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -16,9 +18,6 @@ class DatabaseSeeder extends Seeder
 
         Storage::deleteDirectory('folders');
         Storage::makeDirectory('folders');
-
-        //llamada al seeder de events
-        //$this->call(EventsTableSeeder::class);
 
         // ROLES
 
@@ -48,7 +47,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => \App\Role::PROFESSOR
         ]);
         factory(\App\Professor::class, 1)->create(['user_id' => 2]);
-
+        
         factory(\App\User::class, 1)->create([
             'names' => 'auxiliar',
             'first_name' => 'auxiliar',
@@ -59,6 +58,40 @@ class DatabaseSeeder extends Seeder
         ]);
         factory(\App\Auxiliar::class, 1)->create(['user_id' => 3]);
 
+        factory(\App\User::class, 15)->create([ 'role_id' => \App\Role::PROFESSOR ])
+        ->each(function (\App\User $u){
+            factory(\App\Professor::class, 1)->create(['user_id' => $u->id]);
+        });
+
+        factory(\App\User::class, 15)->create([ 'role_id' => \App\Role::AUXILIAR ])
+        ->each(function (\App\User $u){
+            factory(\App\Auxiliar::class, 1)->create(['user_id' => $u->id]);
+        });
+
+        // GESTIONES
+
+        factory(\App\Management::class, 2)->create()
+        ->each(function (\App\Management $m){
+            Storage::makeDirectory($m->management_path);
+        });
+
+        // MATERIAS
+
+        factory(\App\SubjectMatter::class, 6)->create();
+
+        // GRUPOS
+
+        factory(\App\Group::class, 20)->create();
+
+        // BLOQUES
+
+        factory(\App\Block::class, 5)->create()
+        ->each(function (\App\Block $b){
+            Storage::makeDirectory($b->block_path);
+        });
+
+        factory(\App\BlockGroup::class, 20)->create();
+
         factory(\App\User::class, 1)->create([
             'names' => 'student',
             'first_name' => 'student',
@@ -67,55 +100,22 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('student'),
             'role_id' => \App\Role::STUDENT
         ]);
-        factory(\App\Student::class, 1)->create(['user_id' => 4]);
+        factory(\App\Student::class, 1)->create(['user_id' => 34]);
 
-        factory(\App\User::class, 40)->create([ 'role_id' => \App\Role::PROFESSOR ])
+        factory(\App\User::class, 100)->create([ 'role_id' => \App\Role::STUDENT ])
         ->each(function (\App\User $u){
-            factory(\App\Professor::class, 1)->create(['user_id' => $u->id]);
+            factory(\App\Student::class, 1)->create([
+                'user_id' => $u->id,
+                ])
+                ->each(function (\App\Student $s){
+                    $user = App\User::where("id", "=", $s->user_id)->get()->first();
+                    $group = App\Group::find($s->group_id);
+                    $dir = App\Block::find($s->block_id)->block_path.'/'.$group->name.'/'.base64_encode($user->code_sis);
+                    $s->student_path = $dir;
+                    $s->save();
+                    Storage::makeDirectory($dir);
+                });
         });
-
-        factory(\App\User::class, 40)->create([ 'role_id' => \App\Role::AUXILIAR ])
-        ->each(function (\App\User $u){
-            factory(\App\Auxiliar::class, 1)->create(['user_id' => $u->id]);
-        });
-
-        factory(\App\User::class, 40)->create([ 'role_id' => \App\Role::STUDENT ])
-        ->each(function (\App\User $u){
-            factory(\App\Student::class, 1)->create(['user_id' => $u->id]);
-        });
-
-        // GESTIONES
-
-        // factory(\App\Management::class, 1)->create([
-        //     'semester' => '1',
-        //     'managements' => '2019',
-        //     'start_management' => '2019-02-01',
-        //     'end_management' => '2019-06-01',
-        // ]);
-
-        // factory(\App\Management::class, 1)->create([
-        //     'semester' => '2',
-        //     'managements' => '2019',
-        //     'start_management' => '2019-07-01',
-        //     'end_management' => '2019-012-01',
-        // ]);
-
-        // MATERIAS
-
-        factory(\App\SubjectMatter::class, 1)->create([
-            'name' => 'Introducción a la Programación',
-        ]);
-
-        factory(\App\SubjectMatter::class, 1)->create([
-            'name' => 'Elementos de Programación y Estructura de Datos',
-        ]);
-
-        factory(\App\SubjectMatter::class, 1)->create([
-            'name' => 'Base de Datos I',
-        ]);
-
-        factory(\App\SubjectMatter::class, 1)->create([
-            'name' => 'Taller de Sistemas Operativos',
-        ]);
+        
     }
 }

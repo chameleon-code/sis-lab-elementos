@@ -7,10 +7,13 @@ use App\Management;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 class ManagementController extends Controller
 {
     public function index(){
+        self::rememberNav();
+
         $managements=Management::getAllManagements();
         $data=[
             'managements'=>$managements
@@ -19,6 +22,8 @@ class ManagementController extends Controller
     }
 
     public function create(){
+        self::rememberNav();
+
         $semesters=['1','2','3','4'];
         $managements=Carbon::now()->format('Y');
         $data=[
@@ -90,5 +95,16 @@ class ManagementController extends Controller
 
         Session::flash('status_message',$status_message);
         return redirect('/admin/managements');
+    }
+
+    public function rememberNav(){
+        $tmp = 0.05;
+        Cache::put('professor_nav', '', $tmp);
+        Cache::put('auxiliar_nav', '', $tmp);
+        Cache::put('student_nav', '', $tmp);
+        Cache::put('management_nav', ' show', $tmp);
+        Cache::put('subject_matter_nav', '', $tmp);
+        Cache::put('group_nav', '', $tmp);
+        Cache::put('block_nav', '', $tmp);
     }
 }
