@@ -13,6 +13,7 @@ use App\Group;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\SubjectMatter;
+use App\Management;
 
 class SesionController extends Controller
 {
@@ -25,14 +26,21 @@ class SesionController extends Controller
     {
         $blockGroups = Professor::getBlocksProfessor();
         $sesionsBlocks=[];
+        $dateInit = '';
+        $dateEnd = '';
         if($blockGroups!=null){
             foreach ($blockGroups as $blockGroup) {
                 $blockId = $blockGroup->block_id;
                 array_push($sesionsBlocks, Sesion::where('block_id','=',$blockId)->get());
+                $management_id = Block::where('id','=',$blockId)->get()->first()->management_id;
+                $dateInit = Management::where('id','=',$management_id)->get()->first()->start_management;
+                $dateEnd = Management::where('id','=',$management_id)->get()->first()->end_management;
             }
             $data = [
                 'blocks' => $blockGroups,
                 'sesions' => $sesionsBlocks,
+                'init' => $dateInit,
+                'end' => $dateEnd
             ];
             return view('components.contents.professor.sesions', $data);
         }else{
