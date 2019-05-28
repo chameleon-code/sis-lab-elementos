@@ -9,6 +9,7 @@ use App\Laboratory;
 use App\ScheduleRecord;
 use App\BlockSchedule;
 use App\Block;
+use App\BlockGroup;
 
 class ScheduleRecordController extends Controller
 {
@@ -20,29 +21,39 @@ class ScheduleRecordController extends Controller
         return view('components.contents.management.index',$data);
     }
 
-    public function create(Request $request,$laboratory_id=1){
-        // dd($request->block_id);
-        // $scheduleRecords = ScheduleRecord::getSchedulesByLaboratory($laboratory_id);
+    public function create($block_id){
+        //$block_id=$request->block_id;
+        //dd($block_id);
+        //$scheduleRecords = ScheduleRecord::getSchedulesByLaboratory($laboratory_id);
+        //$blockGroups = BlockGroup::getAllBlockIdGroups($block_id);
+        $block = Block::findOrFail($block_id);
+        $groups = $block->groups;
+
+        //dd($groups->first()->professor->names);
+        //dd($blockGroups);
+        
         $laboratorys=Laboratory::getAllLaboratory();
         $days=Day::getAllDays();
         $hours=Hour::getAllHours();
         $data=[
-            // 'scheduleRecords' => $scheduleRecords,
+            //'scheduleRecords' => $scheduleRecords,
+            'groups'     => $groups,
             'laboratories'    => $laboratorys,
             'days'            => $days,
-            'hours'           => $hours
+            'hours'           => $hours,
+            'block_id'        => $block_id
         ];
         return view('components.contents.scheduler.index',$data);
     }
 
     public function store(Request $request){
-        //return view('components.contents.scheduler.index');
+        
         if($request->ajax()){
             $id=ScheduleRecord::create([
                 'laboratory_id' => $request->laboratory_id,
                 'day_id' => $request->day_id,
                 'hour_id' => $request->hour_id,
-                'availability' => true
+                'color' => $request->color
             ])->id;
             BlockSchedule::create([
                 'schedule_id' => $id,
@@ -57,24 +68,15 @@ class ScheduleRecordController extends Controller
         // $scheduleRecords = new ScheduleRecord();
         // $blockSchedule = new BlockSchedule();
         // if($scheduleRecords->validate($input)){
-
-        //     $id = Management::create([
-        //         'laboratory_id' => $request->laboratory_id,
-        //         'day_id' => $request->day_id,
-        //         'hour_id' => $request->hour_id,
-        //         'availability' => true
-        //     ])->id;
-        //     BlockSchedule::create([
-        //         'schedule_id' => $id,
-        //         'block_id' => $request->block_id
-        //     ]);
-
-
             Session::flash('status_message','Gestión añadida!');
             
         //     return redirect('/admin/managements');
         // }
         //     return redirect('/admin/management/create')->withInput()->withErrors($managements->errors);
+    }
+
+    public function getRecords($laboratory_id){
+        return ScheduleRecord::getSchedulesByLaboratory($laboratory_id);
     }
 
     public function edit($id){
@@ -106,14 +108,14 @@ class ScheduleRecordController extends Controller
 
     public function destroy($id){
         try{
-            $management = Management::findOrFail($id);
-            $management->delete();
-            $status_message = 'Gestión eliminada correctamente';
+            $scheduleRecords = ScheduleRecord::findOrFail($id);
+            $scheduleRecords->delete();
+            $status_message = 'Horario eliminada correctamente';
         }catch(ModelNotFoundException $e){
             $status_message = 'no Subject-matter with tha id';
         }
 
         Session::flash('status_message',$status_message);
-        return redirect('/admin/managements');
+        //return redirect('/admin/managements');
     }
 }

@@ -170,5 +170,8 @@ Route::post('/sesions/store', 'SesionController@store');
 
 
 //Route::post('/admin/blocks/createSchedule','BlockScheduleController@store')->name('blockSchedule.store');
-Route::get('/schedule/create/{laboratory_id?}','ScheduleRecordController@create')->name('schedule.create');
-Route::post('/schedule/create/{laboratory_id?}','ScheduleRecordController@store');
+Route::get('/schedule/create/{block_id?}','ScheduleRecordController@create')->name('schedule.create');
+Route::post('/schedule/create/{block_id?}','ScheduleRecordController@store');
+
+Route::get('/schedule/records/{laboratory_id}','ScheduleRecordController@getRecords');
+Route::delete('/schedule/records/delete/{id}','ScheduleRecordController@destroy');

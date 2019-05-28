@@ -21,7 +21,7 @@ class CreateScheduleRecordsTable extends Migration
             $table->foreign('day_id')->references('id')->on('days');
             $table->unsignedInteger('hour_id');
             $table->foreign('hour_id')->references('id')->on('hours');
-            $table->boolean('availability');
+            $table->string('color');
             $table->timestamps();
         });
     }
