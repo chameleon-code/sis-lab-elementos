@@ -32,9 +32,19 @@ $factory->define(App\Block::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\BlockGroup::class, function (Faker\Generator $faker) {
+    $block = App\Block::all()->random();
+    $groups = App\Group::all();
+    $groups_size = 0;
+    foreach($groups as $group){
+        $groups_size++;
+    }
+    $groups_id = [];
+    for($i=1 ; $i<=$groups_size ; $i++){
+        $groups_id[$i] = $i;
+    }
 
     return [
-        'block_id' => App\Block::all()->random()->id,
-        'group_id' => App\Group::all()->random()->id,
+        'block_id' => $block->id,
+        'group_id' => $faker->unique()->randomElement($groups_id)
     ];
 });

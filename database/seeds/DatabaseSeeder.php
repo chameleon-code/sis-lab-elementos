@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
+use App\Group;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -98,11 +100,21 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('student'),
             'role_id' => \App\Role::STUDENT
         ]);
-        factory(\App\Student::class, 1)->create(['user_id' => 4]);
+        factory(\App\Student::class, 1)->create(['user_id' => 34]);
 
-        factory(\App\User::class, 150)->create([ 'role_id' => \App\Role::STUDENT ])
+        factory(\App\User::class, 100)->create([ 'role_id' => \App\Role::STUDENT ])
         ->each(function (\App\User $u){
-            factory(\App\Student::class, 1)->create(['user_id' => $u->id]);
+            factory(\App\Student::class, 1)->create([
+                'user_id' => $u->id,
+                ])
+                ->each(function (\App\Student $s){
+                    $user = App\User::where("id", "=", $s->user_id)->get()->first();
+                    $group = App\Group::find($s->group_id);
+                    $dir = App\Block::find($s->block_id)->block_path.'/'.$group->name.'/'.base64_encode($user->code_sis);
+                    $s->student_path = $dir;
+                    $s->save();
+                    Storage::makeDirectory($dir);
+                });
         });
         
     }

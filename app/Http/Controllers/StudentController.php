@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\SubjectMatter;
 use Illuminate\Support\Facades\Cache;
+use App\BlockGroup;
 
 class StudentController extends Controller
 {
@@ -136,7 +137,7 @@ class StudentController extends Controller
         $managements = Management::getAllManagements()->reverse();
         $blocks = Block::getAllBlocks();
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
-        $groups = Group::getAllGroups();
+        $groups = Group::getGroupBlocks();
         $data=[ 'blocks' => $blocks,
                 'groups' => $groups,
                 'managements' =>$managements,
@@ -155,10 +156,13 @@ class StudentController extends Controller
         ], $messages);
         $user = Auth::user();
         $student = Student::where('user_id', '=', $user->id)->get()->first();
-        $student->block_id = $request->block_id;
+
+        $block_group = BlockGroup::where("group_id", "=", $request->group_id)->get()->first();
+        
+        $student->block_id = $block_group->block_id;
         $student->group_id = $request->group_id;
         $group = Group::find($request->group_id);
-        $dir = Block::find($request->block_id)->block_path.'/'.$group->name.'/'.base64_encode($user->code_sis);
+        $dir = Block::find($block_group->block_id)->block_path.'/'.$group->name.'/'.base64_encode($user->code_sis);
         $student->student_path = $dir;
         $student->save();
         Storage::makeDirectory($dir);
