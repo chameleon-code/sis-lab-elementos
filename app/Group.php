@@ -40,4 +40,8 @@ class Group extends Model
     public static function getGroupsNameBySubjects($id){
        return self::where('subject_matter_id', $id)->select('name')->get();
     }
+
+    public static function getGroupBlocks(){
+        return Group::join('block_group', 'groups.id', '=', 'block_group.group_id')->select('groups.id', 'groups.name', 'groups.subject_matter_id', 'groups.professor_id','block_group.block_id')->get();
+    }
 }

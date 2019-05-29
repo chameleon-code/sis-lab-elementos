@@ -1,4 +1,5 @@
 <?php
+use App\Block;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,10 +69,16 @@ $factory->define(App\Auxiliar::class, function (Faker\Generator $faker) {
 $factory->define(App\Student::class, function (Faker\Generator $faker) {
     static $password;
     $ci = $faker->randomNumber();
+    $block = App\Block::all()->random();
+    $blockGroups = App\BlockGroup::where("block_id", "=", $block->id)->get();
+    $group = $blockGroups->random()->group_id;
+    //$dir = Block::find($block->id)->block_path.'/'.$group->name.'/'.base64_encode($user->code_sis);
+
     return [
         'user_id' => null,
         'ci' => $ci,
-        'block_id' => null,
+        'block_id' => $block->id,
+        'group_id' => $group,
         'student_path' => null,
     ];
 });

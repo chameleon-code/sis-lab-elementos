@@ -97,16 +97,22 @@
                     </div>
                 </form>  --}}
 
+                @php
+                    $id_select = 1;
+                @endphp
                 @foreach($subjectMatters as $item)
+                @php
+                    $groups_sm = App\Group::where("subject_matter_id", "=", $item->id)->get();
+                @endphp
                     <div class="flex-row my-2 rounded card shadow">
-                        <img class="" style="width:100px; height: 75px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;" src="/img/subjectMatter.jpg" alt="">
+                        <img class="" style="width:100px; height: 80px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;" src="/img/subjectMatter.jpg" alt="">
                         <div class="py-2 px-3" style="width: 65%;">
                             <strong> {{$item->name}} </strong>
                         </div>
                         <div class="py-3 px-2" style="width: 25%;">
-                            <select name="group_id" class="form-control col-md-12" id="groups">
+                            <select name="group_id" class="form-control col-md-12" id="group_{{ $id_select }}" onchange="clearSelects({{ $id_select }})">
                                     <option class="form-control text-center" value="">grupo</option>
-                                    @forelse ($groups as $group)
+                                    @forelse ($groups_sm as $group)
                                         <option class="form-control" value="{{$group->id}}">{{$group->name}}</option>
                                     @empty
                                     <option class="form-control" value="">No existen grupos para la materia seleccionada</option>
@@ -116,9 +122,12 @@
                         </div>
                         <div class="py-3 px-3" style="width: 20%;">
                             <a class="float-right" href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Horarios</a><br>
-                            <a class="float-right" href="#" data-toggle="modal" data-target="#registration">Inscribirse</a>
+                            <a class="float-right" href="#" data-toggle="modal" data-target="#registration" onclick="confirmReg({{ $item }}, {{ $id_select }})">Inscribirse</a>
                         </div>
                     </div>
+                @php
+                    $id_select++;
+                @endphp
                 @endforeach
 
             </div>
@@ -155,16 +164,57 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        Se inscribirá en la matería: <strong>?</strong>, con el grupo: <strong>?</strong>.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Confirmar</button>
+        <div class="modal-body" id="text_confirm_reg">
+        Se inscribirá en la matería: <strong id="subjectMatter_selected">?</strong>, con el grupo: <strong id="group_selected">?</strong>.
+        </div>
+        <div class="modal-body" id="text_select_group" style="display: none;">
+            Seleccione un grupo.
+        </div>
+
+        
+        <div class="modal-footer">
+            <form method="POST" action="{{ url('/students/registration/confirm') }}">
+                {{ csrf_field() }}
+                <input id="group_id_input" type="number" name="group_id" style="display: none;">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_cancel">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="btn_confirm">Confirmar</button>
+            </form>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+    function clearSelects(id){
+        var selects;
+        var id_select = 1;
+        while(document.getElementById('group_'+id_select)){
+            if(id != id_select){
+                var select = document.getElementById('group_'+id_select);
+                select[0].selected = true;
+            }
+            id_select++;
+        }
+    }
+
+    function confirmReg(item, id){
+        var select = document.getElementById('group_' + id);
+        if(select.options[select.selectedIndex].text !== "grupo"){
+            document.getElementById('text_select_group').setAttribute("style", "display: none;");
+            document.getElementById('text_confirm_reg').setAttribute("style", "");
+            document.getElementById('btn_cancel').setAttribute("style", "");
+            document.getElementById('btn_confirm').setAttribute("style", "");
+            document.getElementById('subjectMatter_selected').innerHTML = item.name;
+            document.getElementById('group_selected').innerHTML = select.options[select.selectedIndex].text;
+            document.getElementById('group_id_input').value = select.value;
+        } else {
+            document.getElementById('text_confirm_reg').setAttribute("style", "display: none;");
+            document.getElementById('btn_cancel').setAttribute("style", "display: none;");
+            document.getElementById('btn_confirm').setAttribute("style", "display: none;");
+            document.getElementById('text_select_group').setAttribute("style", "");
+        }
+    }
+</script>
 
 @endsection
 

@@ -16,9 +16,11 @@
 $factory->define(App\Block::class, function (Faker\Generator $faker) {
     $management = App\Management::all()->random();
     $name = 'Bloque-'.$faker->randomElement([
-        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+        '1','2','3','4','5','6','7','8','9'
+        //'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
     ]).'-'.$faker->randomElement([
-        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+        '1','2','3','4','5','6','7','8','9'
+        //'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
     ]);
     $block_path = $management->management_path.'/'.$name;
 
@@ -30,9 +32,19 @@ $factory->define(App\Block::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\BlockGroup::class, function (Faker\Generator $faker) {
+    $block = App\Block::all()->random();
+    $groups = App\Group::all();
+    $groups_size = 0;
+    foreach($groups as $group){
+        $groups_size++;
+    }
+    $groups_id = [];
+    for($i=1 ; $i<=$groups_size ; $i++){
+        $groups_id[$i] = $i;
+    }
 
     return [
-        'block_id' => App\Block::all()->random()->id,
-        'group_id' => App\Group::all()->random()->id,
+        'block_id' => $block->id,
+        'group_id' => $faker->unique()->randomElement($groups_id)
     ];
 });
