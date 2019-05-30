@@ -44,31 +44,6 @@
                                             <option class="form-control" value="{{$item}}">{{$item}}</option>
                                 @endforeach
                             </select>
-<<<<<<< HEAD
-                            <div class="row">
-                                    <div class="form-group col-md-6 col-6">
-                                        <label for='name' class="">Inicio de la Gestión</label>
-                                        <div>
-                                            <input  type="text"
-                                                    name="start_management"
-                                                    id="inicio_fecha"
-                                                    class="form-control col-md-12"
-                                                    placeholder=""
-                                                    value="{{ old('start_management',$management->start_management) }}" required readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-6 col-6">
-                                        <label for='name' class="">Fin de la Gestión</label>
-                                        <div>
-                                            <input  type="text"
-                                                    name="end_management"
-                                                    id="fin_fecha"
-                                                    class="form-control col-md-12"
-                                                    placeholder=""
-                                                    value="{{ old('end_management',$management->end_management) }}" required readonly>
-                                        </div>
-                                    </div>
-=======
                         </div>
                         <div class="row">
                           <div class="form-group col-md-6 col-6">
@@ -93,7 +68,6 @@
                                           value="{{ old('end_management',$management->end_management) }}" required readonly>
                               </div>
                           </div>
->>>>>>> develop
                         </div>
 
                         <hr>

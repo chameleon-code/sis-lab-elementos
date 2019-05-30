@@ -101,12 +101,8 @@
                     </select>
                 </div>
                  <label>Color:</label>
-                 <select class="form-control" id="idcolortask">
-                    <option value="purple-label">Purpura</option>
-                    <option value="red-label">Rojo</option>
-                    <option value="blue-label">Azul</option>
-                    <option value="pink-label">Rosa</option>
-                    <option value="green-label">Verde</option>
+                 <select class="form-control" id="idcolortask" readonly>
+                        <option value="color-{{$block_id}}">Purpura</option>
                  </select> 
                 <input id="tede" type="hidden" name="tede" >
                 <input id="hours" type="hidden" name="hours">
