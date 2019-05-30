@@ -120,8 +120,8 @@
                                     @endforelse
                             </select>
                         </div>
-                        <div class="py-3 px-3" style="width: 20%;">
-                            <a class="float-right" href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Horarios</a><br>
+                        <div class="py-4 px-3" style="width: 20%;">
+                            <a class="float-right" href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="confirmReg({{ $item }}, {{ $id_select }})">Inscribirse</a><br>
                             <a class="float-right" href="#" data-toggle="modal" data-target="#registration" onclick="confirmReg({{ $item }}, {{ $id_select }})">Inscribirse</a>
                         </div>
                     </div>
@@ -144,13 +144,22 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body">
-            ...
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+        <div class="modal-body" id="text_confirm_reg">
+            Se inscribirá en la matería: <strong id="subjectMatter_selected">?</strong>, con el grupo: <strong id="group_selected">?</strong>.
+            </div>
+            <div class="modal-body" id="text_select_group" style="display: none;">
+                Seleccione un grupo.
+            </div>
+    
+            
+            <div class="modal-footer">
+                <form method="POST" action="{{ url('/students/registration/confirm') }}">
+                    {{ csrf_field() }}
+                    <input id="group_id_input" type="number" name="group_id" style="display: none;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="btn_confirm">Confirmar</button>
+                </form>
+          </div>
     </div>
   </div>
 </div>
