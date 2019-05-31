@@ -122,7 +122,7 @@
                         </div>
                         <div class="py-4 px-3" style="width: 20%;">
                             <a class="float-right" href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="confirmReg({{ $item }}, {{ $id_select }})">Inscribirse</a><br>
-                            <a class="float-right" href="#" data-toggle="modal" data-target="#registration" onclick="confirmReg({{ $item }}, {{ $id_select }})">Inscribirse</a>
+                            {{--  <a class="float-right" href="#" data-toggle="modal" data-target="#registration" onclick="confirmReg({{ $item }}, {{ $id_select }})">Inscribirse</a>  --}}
                         </div>
                     </div>
                 @php
@@ -163,7 +163,7 @@
     </div>
   </div>
 </div>
-
+{{--  
 <div class="modal fade" id="registration" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -191,7 +191,7 @@
       </div>
     </div>
   </div>
-</div>
+</div>  --}}
 
 <script>
     function clearSelects(id){
