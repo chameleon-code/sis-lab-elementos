@@ -5,19 +5,19 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ValidationTrait;
 
-class Laboratory extends Model
+class Hour extends Model
 {
     use ValidationTrait;
-    // protected $table='laboratory';
-    protected $fillable = ['name'];
+    protected $fillable = ['start','end'];
 
     protected $hidden = ['created_at','update_at'];
 
     protected $rules = [
-        'name' => 'unique:name|required|max:20|min:1'
+        'star' => 'required|time',
+        'end' => 'required|time',
     ];
 
-    public static function getAllLaboratory(){
+    public static function getAllHours(){
         return self::all();
     }
 }

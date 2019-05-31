@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSesionsTable extends Migration
+class CreateHoursTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateSesionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sesions', function (Blueprint $table) {
+        Schema::create('hours', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('block_id');
-            $table->foreign('block_id')->references('id')->on('blocks')->onDelete('cascade');
-            $table->integer('number_sesion');
-            $table->date('date_start');
-            $table->date('date_end');
+            $table->time('start');
+            $table->time('end');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateSesionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sesions');
+        Schema::dropIfExists('hours');
     }
 }

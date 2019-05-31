@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSesionsTable extends Migration
+class CreateBlockSchedulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateSesionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sesions', function (Blueprint $table) {
+        Schema::create('block_schedules', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('schedule_id');
+            $table->foreign('schedule_id')->references('id')->on('schedule_records')->onDelete('cascade');
             $table->unsignedInteger('block_id');
             $table->foreign('block_id')->references('id')->on('blocks')->onDelete('cascade');
-            $table->integer('number_sesion');
-            $table->date('date_start');
-            $table->date('date_end');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateSesionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sesions');
+        Schema::dropIfExists('block_schedules');
     }
 }
