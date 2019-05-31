@@ -1,7 +1,6 @@
 @extends('components.sections.studentSection')
 
 @section('userContent')
-
                 
 <div class="container-fluid">
     <div class="card shadow mb-4">
@@ -139,12 +138,61 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Horarios</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">Seleccione un horario</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body" id="text_confirm_reg">
+
+                <table class="table table-striped table-secondary">
+                        <thead class="bg-dark">
+                          <tr class="text-center">
+                            <th scope="col">Laboratorio</th>
+                            <th scope="col">Día</th>
+                            <th scope="col">Periodo</th>
+                            <th scope="col">Seleccionar</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="text-center">
+                            <td>1</td>
+                            <td>Martes</td>
+                            <td>8:15 - 9-45</td>
+                            <td>
+                                <div class="custom-control custom-checkbox small">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck1"></label>
+                                </div>
+                            </td>
+                          </tr>
+                          <tr class="text-center">
+                            <td>1</td>
+                            <td>Viernes</td>
+                            <td>11:15 - 12-45</td>
+                            <td>
+                                <div class="custom-control custom-checkbox small">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                    <label class="custom-control-label" for="customCheck2"></label>
+                                </div>
+                            </td>
+                          </tr>
+                          <tr class="text-center">
+                            <td>4</td>
+                            <td>Jueves</td>
+                            <td>14:15 - 9-45</td>
+                            <td>
+                                <div class="custom-control custom-checkbox small">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                    <label class="custom-control-label" for="customCheck3"></label>
+                                </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <hr>
+
             Se inscribirá en la matería: <strong id="subjectMatter_selected">?</strong>, con el grupo: <strong id="group_selected">?</strong>.
             </div>
             <div class="modal-body" id="text_select_group" style="display: none;">
