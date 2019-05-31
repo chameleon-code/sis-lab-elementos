@@ -77,3 +77,6 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+  <script src="{{ asset('js/datepicker/datepinker.js') }}"></script>
+@endpush

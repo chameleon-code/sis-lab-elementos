@@ -165,5 +165,7 @@
 @push('scripts')
     <script src="{{ asset('/js/calendar.js') }}"></script>
     <script src="{{ asset('/js/events.js') }}"></script>
+    <script src="{{ asset('/js/datepicker/timepicker.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('/css/calendar.css') }}">
+    <link rel="stylesheet" href="{{ asset('//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css') }}">
 @endpush
