@@ -12,12 +12,7 @@ $(document).ready(function(){
         ],
         dayNamesMin: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
         dateFormat: 'yy-mm-dd'
-    }); 
-    /*$('#hour').timepicker({
-        'minTime': '2:00pm',
-        'maxTime': '11:30pm',
-        'showDuration': true
-    }); */  
+    });  
     $('#calendar').calendar({
         events: eventos,
         months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
@@ -33,7 +28,6 @@ $(document).ready(function(){
         modal.modal();
     });
     $('#modalAction').click(function(event){
-        console.log($("#registerEvent").serialize());
         $.ajax({
             url : 'http://127.0.0.1:8000/registerEvent',
             type: 'POST',
@@ -44,12 +38,20 @@ $(document).ready(function(){
                 info: $("#registerEvent").serialize()
             },
             success: (res) => {
-                console.log(res);
                 if(res.res) {
-                    modal.find('#modalAction').hide();
-                    modal.find('.modal-body').html('<div class="alert alert-success">Evento creado correctamente</div>');
+                   Swal.fire(
+                        'Evento guardado con exito!',
+                        'Revisa tu calendario para verlo',
+                        'success'
+                    )
+                    modal.modal('hide');
+                    modal.find("input[type=text], input[type=time], textarea").val("");
                 } else {
-                    modal.find('.modal-body').html('<div class="alert alert-danger">Ha ocurrido un error creando el evento</div>');
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Algo salio mal...',
+                        text: 'No se pudo guardar la informacion, vuelve a intentarlo',
+                      })
                 }
             }
         });
