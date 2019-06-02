@@ -61,8 +61,10 @@ Route::get('scheduler', function () {
 });
 Route::get('scheduler/{id}', 'EventController@loadScheduler');
 Route::get('scheduler2/{id}', 'EventController@loadScheduler2');
-Route::post('registerEvent', 'CalendarController@store');
 
+//calendario de eventos
+Route::post('registerEvent', 'CalendarController@store');
+Route::get('calendars', 'CalendarController@getAllEvents');
 /*Run
 php composer update
 php artisan config:clear

@@ -9,7 +9,7 @@ class Calendar extends Model
     protected $fillable = [
         'start', 'end', 'description'
     ];
-    public function users(){
-        return $this->belongsToMany('App\User');
+    public function user(){
+        return $this->belongsTo('App\User');
     }
 }

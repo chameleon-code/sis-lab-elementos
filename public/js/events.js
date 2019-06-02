@@ -1,8 +1,15 @@
 $(document).ready(function(){
-    console.log('hi');
-    var eventos = [
-        {start: '2019-05-21', end: '2019-05-28', summary: "Event #2", mask: true},
-        ];
+    var eventos = Array();
+    updateEvents();
+    function updateEvents(){
+        $.ajax({
+            url: 'http://127.0.0.1:8000/calendars',
+            success: (response) => {
+                eventos = response;
+            },
+            async: false
+        }); 
+    }      
     $('#start').datepicker({
         firstDay: 1,
         monthNames: ['Enero', 'Febreo', 'Marzo',
@@ -15,6 +22,7 @@ $(document).ready(function(){
     });  
     $('#calendar').calendar({
         events: eventos,
+        color: 'grey',
         months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
          'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
          daysMin: ['LUN', 'MAR', 'MIER', 'JUE', 'VIE', 'SAB', 'DOM'],
@@ -43,9 +51,12 @@ $(document).ready(function(){
                         'Evento guardado con exito!',
                         'Revisa tu calendario para verlo',
                         'success'
-                    )
+                    ).then((result) => {
+                        //location.reload();
+                        updateEvents();
+                    })
                     modal.modal('hide');
-                    modal.find("input[type=text], input[type=time], textarea").val("");
+                    modal.find("input[type=text], input[type=time], textarea").val("");                    
                 } else {
                     Swal.fire({
                         type: 'error',

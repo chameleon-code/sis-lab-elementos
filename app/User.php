@@ -39,6 +39,6 @@ class User extends Authenticatable
         'ci' => 'unique:students|max:9|min:6',
     ];
     public function calendars(){
-        return $this->belongsToMany('App\user');
+        return $this->hasMany('App\Calendar');
     }
 }

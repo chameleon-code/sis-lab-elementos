@@ -9,11 +9,22 @@ use App\Calendar;
 class CalendarController extends Controller
 {
     public function getAllEvents(Request $request){
-        $user = auth()->user();
-        if($request->ajax()){
-            return response()->json($user->calendars);
+        $calendars = auth()->user()->calendars;
+        $send = array();
+        foreach ($calendars as $calendar){
+            $resp = new \stdClass();
+            $resp->start = $calendar->start;
+            $resp->end = $calendar->start;
+            $resp->summary = $calendar->description . " " . $calendar->hour;
+            $resp->mask = true;
+            array_push($send, $resp);
         }
-        return $user->calendars;
+        //dd(json_encode($send));
+        //{"start": '2019-06-21', "end": '2019-06-22', "summary": "Event #2", "mask": true}
+        if($request->ajax()){
+            return response()->json($send);
+        }
+        return json_encode($send);
     }
     public function store(){
         $info = \request('info');
