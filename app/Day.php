@@ -14,6 +14,8 @@ class Day extends Model
         'name' => 'unique:name|required|max:10|min:1'
     ];
 
+    const DAYS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
     public static function getAllDays(){
         return self::all();
     }

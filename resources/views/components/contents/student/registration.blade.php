@@ -145,9 +145,9 @@
         </div>
         <div class="modal-body" id="text_confirm_reg">
 
-                <table class="table table-striped table-secondary">
-                        <thead class="bg-dark">
-                          <tr class="text-center">
+                <table class="table table-striped table-secondary rounded">
+                        <thead class="bg-dark rounded">
+                          <tr class="text-center rounded">
                             <th scope="col">Laboratorio</th>
                             <th scope="col">Día</th>
                             <th scope="col">Periodo</th>
