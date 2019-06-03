@@ -1,6 +1,9 @@
-<div class="col-md-8" id="calendar"></div>
-<div class="col-md-4">
-<a href="#" data-target="#appModal" title="Añadir Evento" data-id="" id="addEvent" class="btn btn-primary">Añadir</a>
+<div>
+    <div class="col-md-8" id="calendar"></div>
+    <br>
+        <div class="col-md-4">
+        <a href="#" data-target="#appModal" title="Añadir Evento" data-id="" id="addEvent" class="btn btn-primary">Añadir</a>
+    </div>
 </div>
 {{-- Modal --}}
 <div class="modal fade" id="appModal" tabindex="-1" role="dialog" aria-labelledby="appModalLabel" aria-hidden="true">

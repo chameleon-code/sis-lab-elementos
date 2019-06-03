@@ -6,8 +6,20 @@ $(document).ready(function(){
             url: 'http://127.0.0.1:8000/calendars',
             success: (response) => {
                 eventos = response;
+                console.log(response);
             },
-            async: false
+            //async: false
+        })
+        .then( () => {
+            console.log(eventos);
+            $('#calendar').calendar({
+                events: eventos,
+                color: 'grey',
+                months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                 daysMin: ['LUN', 'MAR', 'MIER', 'JUE', 'VIE', 'SAB', 'DOM'],
+                 dayLetter: ['L', 'M', 'M', 'J', 'V', 'S', 'D'],
+            });
         }); 
     }      
     $('#start').datepicker({
@@ -20,14 +32,6 @@ $(document).ready(function(){
         dayNamesMin: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
         dateFormat: 'yy-mm-dd'
     });  
-    $('#calendar').calendar({
-        events: eventos,
-        color: 'grey',
-        months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
-         'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-         daysMin: ['LUN', 'MAR', 'MIER', 'JUE', 'VIE', 'SAB', 'DOM'],
-         dayLetter: ['L', 'M', 'M', 'J', 'V', 'S', 'D'],
-    });
     var modal = $('#appModal');
     $('#addEvent').on('click', function(e) {
         e.preventDefault();
@@ -36,6 +40,7 @@ $(document).ready(function(){
         modal.modal();
     });
     $('#modalAction').click(function(event){
+        console.log($("#registerEvent").serialize());
         $.ajax({
             url : 'http://127.0.0.1:8000/registerEvent',
             type: 'POST',
@@ -52,7 +57,6 @@ $(document).ready(function(){
                         'Revisa tu calendario para verlo',
                         'success'
                     ).then((result) => {
-                        //location.reload();
                         updateEvents();
                     })
                     modal.modal('hide');
