@@ -2,16 +2,16 @@
 @section('userContent')
 
 <style>
-        .accordion-body:after {
-            content: '\02228';
-            color: #777;
-            font-weight: bold;
-            float: right;
-            margin-left: 5px;
-          }
-        .active:after {
-            content: '\02227';
-        }
+    .accordion-body:after {
+        content: '\02228';
+        color: #777;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+    }
+    .active:after {
+        content: '\02227';
+    }
 </style>
 
     <div class="container-fluid">
