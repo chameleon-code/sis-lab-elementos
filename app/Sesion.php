@@ -30,7 +30,9 @@ class Sesion extends Model
         $index=count($dates);
         $count=0;
         $segmented=array();
-        while($count<$index-1){
+        $dates=array_unique($dates);
+
+        while($count<$index-2){ //cambiar 2 a 1 en caso de incendio 
             $date=[
                 'start'=>$dates[$count],
                 'end'=>$dates[$count+1]
