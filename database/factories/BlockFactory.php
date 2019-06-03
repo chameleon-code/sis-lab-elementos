@@ -48,3 +48,11 @@ $factory->define(App\BlockGroup::class, function (Faker\Generator $faker) {
         'group_id' => $faker->unique()->randomElement($groups_id)
     ];
 });
+
+$factory->define(App\BlockSchedule::class, function (Faker\Generator $faker) {
+    return [
+        'schedule_id' => $faker->unique()->randomElement(App\ScheduleRecord::all())->id,
+        'block_id' => $faker->randomElement(App\Block::all())->id,
+        'registereds' => 0,
+    ];
+});

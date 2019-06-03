@@ -13,15 +13,28 @@ class CreateScheduleRecordsTable extends Migration
      */
     public function up()
     {
+        Schema::create('days', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->timestamps();
+        });
+
+        Schema::create('hours', function (Blueprint $table) {
+            $table->increments('id');
+            $table->time('start');
+            $table->time('end');
+            $table->timestamps();
+        });
+
         Schema::create('schedule_records', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('laboratory_id');
-            $table->foreign('laboratory_id')->references('id')->on('laboratories');
+            $table->foreign('laboratory_id')->references('id')->on('laboratories')->onDelete('cascade');
             $table->unsignedInteger('day_id');
-            $table->foreign('day_id')->references('id')->on('days');
+            $table->foreign('day_id')->references('id')->on('days')->onDelete('cascade');
             $table->unsignedInteger('hour_id');
-            $table->foreign('hour_id')->references('id')->on('hours');
-            $table->string('color');
+            $table->foreign('hour_id')->references('id')->on('hours')->onDelete('cascade');
+            $table->string('color')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +46,6 @@ class CreateScheduleRecordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedules_record');
+        
     }
 }
