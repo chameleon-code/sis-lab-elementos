@@ -109,13 +109,38 @@ class DatabaseSeeder extends Seeder
                 ])
                 ->each(function (\App\Student $s){
                     $user = App\User::where("id", "=", $s->user_id)->get()->first();
-                    $group = App\Group::find($s->group_id);
-                    $dir = App\Block::find($s->block_id)->block_path.'/'.$group->name.'/'.base64_encode($user->code_sis);
-                    $s->student_path = $dir;
-                    $s->save();
-                    Storage::makeDirectory($dir);
+                    // $group = App\Group::find($s->group_id);
+                    // $dir = App\Block::find($s->block_id)->block_path.'/'.$group->name.'/'.base64_encode($user->code_sis);
+                    // $s->student_path = $dir;
+                    // $s->save();
+                    // Storage::makeDirectory($dir);
                 });
         });
-        
+
+        // HORARIOS
+
+        factory(\App\Hour::class, 10)->create()
+        ->each(function (\App\Hour $h){
+            $h->start = App\Hour::START_HOURS[$h->id-1];
+            $h->end = App\Hour::END_HOURS[$h->id-1];
+            $h->save();
+        });
+
+        factory(\App\Day::class, 6)->create()
+        ->each(function (\App\Day $d){
+            $d->name = App\Day::DAYS[$d->id-1];
+            $d->save();
+        });
+
+        factory(\App\Laboratory::class, 4)->create()
+        ->each(function (\App\Laboratory $l){
+            $l->name = App\Laboratory::LABS[$l->id-1];
+            $l->capacity = App\Laboratory::CAPS[$l->id-1];
+            $l->save();
+        });
+
+        factory(\App\ScheduleRecord::class, 30)->create();
+
+        factory(\App\BlockSchedule::class, 30)->create();
     }
 }

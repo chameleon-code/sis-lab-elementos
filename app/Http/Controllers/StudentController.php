@@ -136,7 +136,7 @@ class StudentController extends Controller
     {
         $managements = Management::getAllManagements()->reverse();
         $blocks = Block::getAllBlocks();
-        $subjectMatters = SubjectMatter::getAllSubjectMatters();
+        $subjectMatters = SubjectMatter::all();
         $groups = Group::getGroupBlocks();
         $data=[ 'blocks' => $blocks,
                 'groups' => $groups,
@@ -145,30 +145,6 @@ class StudentController extends Controller
             ];
         return view('components.contents.student.registration', $data);
     }
-
-    public function confirm(Request $request)
-    {
-        $messages = [
-            'group_id.required' => 'No puede inscribirse al grupo de la materia seleccionada. ',
-        ];
-        $this->validate($request, [
-            'group_id' => 'required'
-        ], $messages);
-        $user = Auth::user();
-        $student = Student::where('user_id', '=', $user->id)->get()->first();
-
-        $block_group = BlockGroup::where("group_id", "=", $request->group_id)->get()->first();
-        
-        $student->block_id = $block_group->block_id;
-        $student->group_id = $request->group_id;
-        $group = Group::find($request->group_id);
-        $dir = Block::find($block_group->block_id)->block_path.'/'.$group->name.'/'.base64_encode($user->code_sis);
-        $student->student_path = $dir;
-        $student->save();
-        Storage::makeDirectory($dir);
-        return redirect('/home');
-    }
-    
 
     public function create()
     {
