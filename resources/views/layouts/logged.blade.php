@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="author" content="">
 
   <title>En Sesión</title>
@@ -224,7 +225,6 @@
   <!-- Page level custom scripts -->
   <script src="/js/datatables-demo.js"></script>
   {{-- para las fechas--}}
-  <script src="/js/datepicker/datepinker.js"></script>
 </body>
 
 </html>

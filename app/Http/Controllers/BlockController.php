@@ -182,7 +182,7 @@ class BlockController extends Controller
         $groupsBlocks = BlockGroup::getAllBlockGroupsId();
         //dd($groupsBlocks);
         $groups2 = $groups->reject(function($item, $key) use ($groupsBlocks){
-            if (in_array($item->id, $groupsBlocks))
+            if (in_array($item->id, $groupsBlocks) && !$item->available)
                 return true;
         });
         if($request->ajax()){

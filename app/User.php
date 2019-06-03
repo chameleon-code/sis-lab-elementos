@@ -38,4 +38,7 @@ class User extends Authenticatable
         'code_sis' => 'unique:users|required|max:10|min:8',
         'ci' => 'unique:students|max:9|min:6',
     ];
+    public function calendars(){
+        return $this->hasMany('App\Calendar');
+    }
 }

@@ -30,9 +30,13 @@ $(document).ready(function(){
             success: function (response){
                 console.log(response);
                 if (!added){
-                    count = iCnt + response.length;
+                    if($('#groups_container').attr('data-frm') == 2)
+                        count = iCnt + response.length;
+                    else
+                        count = response.length;
                     added = true;
                 }
+                console.log('count: '+count+ ' length: '+response.length + ' icnt: '+iCnt);
                 if (iCnt < count ) {                            
                     iCnt = iCnt + 1;  
                     $(container).append(
