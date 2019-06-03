@@ -42,6 +42,7 @@
 </div>
 
 <script type="text/javascript">
+scheduler.templates.calendar_date = scheduler.date.date_to_str("%d");
     scheduler.config.xml_date = "%Y-%m-%d %H:%i:%s";
     //cambiar nombre de columna y especificar solo día
     scheduler.config.day_date = "%D";

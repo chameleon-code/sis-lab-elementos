@@ -38,7 +38,7 @@
                                 @foreach ($semesters as $item)
                                     <option class="form-control" value="{{$item}}">{{$item}}</option>
                                 @endforeach
-                        </select>
+                            </select>
                         </div>
                         <div class="row">
                           <div class="form-group col-md-6 col-6">
