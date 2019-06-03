@@ -120,7 +120,7 @@
                             </select>
                         </div>
                         <div class="py-4 px-3" style="width: 20%;">
-                            <a class="float-right" href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="confirmReg({{ $item }}, {{ $id_select }})">Inscribirse</a><br>
+                            <a class="float-right" href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="infReg({{ $item }}, {{ $id_select }})">Inscribirse</a><br>
                             {{--  <a class="float-right" href="#" data-toggle="modal" data-target="#registration" onclick="confirmReg({{ $item }}, {{ $id_select }})">Inscribirse</a>  --}}
                         </div>
                     </div>
@@ -136,7 +136,7 @@
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+    <div class="modal-content container">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle">Seleccione un horario</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -145,55 +145,23 @@
         </div>
         <div class="modal-body" id="text_confirm_reg">
 
-                <table class="table table-striped table-secondary rounded">
-                        <thead class="bg-dark rounded">
-                          <tr class="text-center rounded">
+                <table class="table table-striped table-secondary" style="border-radius: 0.35rem !important;">
+                        <thead class="bg-dark">
+                          <tr class="text-center">
                             <th scope="col">Laboratorio</th>
                             <th scope="col">Día</th>
                             <th scope="col">Periodo</th>
-                            <th scope="col">Seleccionar</th>
+                            <th style="border-radius-topright: 0.35rem !important;" scope="col">Seleccionar</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr class="text-center">
-                            <td>1</td>
-                            <td>Martes</td>
-                            <td>8:15 - 9-45</td>
-                            <td>
-                                <div class="custom-control custom-checkbox small">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                    <label class="custom-control-label" for="customCheck1"></label>
-                                </div>
-                            </td>
-                          </tr>
-                          <tr class="text-center">
-                            <td>1</td>
-                            <td>Viernes</td>
-                            <td>11:15 - 12-45</td>
-                            <td>
-                                <div class="custom-control custom-checkbox small">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                    <label class="custom-control-label" for="customCheck2"></label>
-                                </div>
-                            </td>
-                          </tr>
-                          <tr class="text-center">
-                            <td>4</td>
-                            <td>Jueves</td>
-                            <td>14:15 - 9-45</td>
-                            <td>
-                                <div class="custom-control custom-checkbox small">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                    <label class="custom-control-label" for="customCheck3"></label>
-                                </div>
-                            </td>
-                          </tr>
+                        <tbody id="body-table">
+                            
                         </tbody>
                       </table>
 
                       <hr>
+                      Se inscribirá en la matería: <strong id="subjectMatter_selected">?</strong>, con el grupo: <strong id="group_selected">?</strong>.
 
-            Se inscribirá en la matería: <strong id="subjectMatter_selected">?</strong>, con el grupo: <strong id="group_selected">?</strong>.
             </div>
             <div class="modal-body" id="text_select_group" style="display: none;">
                 Seleccione un grupo.
@@ -201,8 +169,9 @@
     
             
             <div class="modal-footer">
-                <form method="POST" action="{{ url('/students/registration/confirm') }}">
+                <form method="POST" action="{{ url('/students/registration/store') }}">
                     {{ csrf_field() }}
+                    <input id="block_schedule_id" type="number" name="block_schedule_id" style="display: none;">
                     <input id="group_id_input" type="number" name="group_id" style="display: none;">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_cancel">Cancelar</button>
                     <button type="submit" class="btn btn-primary" id="btn_confirm">Confirmar</button>
@@ -240,38 +209,6 @@
     </div>
   </div>
 </div>  --}}
-
-<script>
-    function clearSelects(id){
-        var selects;
-        var id_select = 1;
-        while(document.getElementById('group_'+id_select)){
-            if(id != id_select){
-                var select = document.getElementById('group_'+id_select);
-                select[0].selected = true;
-            }
-            id_select++;
-        }
-    }
-
-    function confirmReg(item, id){
-        var select = document.getElementById('group_' + id);
-        if(select.options[select.selectedIndex].text !== "grupo"){
-            document.getElementById('text_select_group').setAttribute("style", "display: none;");
-            document.getElementById('text_confirm_reg').setAttribute("style", "");
-            document.getElementById('btn_cancel').setAttribute("style", "");
-            document.getElementById('btn_confirm').setAttribute("style", "");
-            document.getElementById('subjectMatter_selected').innerHTML = item.name;
-            document.getElementById('group_selected').innerHTML = select.options[select.selectedIndex].text;
-            document.getElementById('group_id_input').value = select.value;
-        } else {
-            document.getElementById('text_confirm_reg').setAttribute("style", "display: none;");
-            document.getElementById('btn_cancel').setAttribute("style", "display: none;");
-            document.getElementById('btn_confirm').setAttribute("style", "display: none;");
-            document.getElementById('text_select_group').setAttribute("style", "");
-        }
-    }
-</script>
 
 @endsection
 

@@ -140,5 +140,7 @@ class DatabaseSeeder extends Seeder
         });
 
         factory(\App\ScheduleRecord::class, 30)->create();
+
+        factory(\App\BlockSchedule::class, 30)->create();
     }
 }
