@@ -112,7 +112,7 @@
                             <select name="group_id" class="form-control col-md-12" id="group_{{ $id_select }}" onchange="clearSelects({{ $id_select }})">
                                     <option class="form-control text-center" value="">grupo</option>
                                     @forelse ($groups_sm as $group)
-                                        <option class="form-control" value="{{$group->id}}">{{$group->name}}</option>
+                                        <option class="form-control" value="{{$group->id}}">{{$group->name ." - " . $group->professor->names ." " . $group->professor->fist_name." " . $group->professor->second_name }}</option>
                                     @empty
                                     <option class="form-control" value="">No existen grupos para la materia seleccionada</option>
                                     @endempty

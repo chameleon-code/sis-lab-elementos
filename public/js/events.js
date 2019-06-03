@@ -5,7 +5,7 @@ $(document).ready(function(){
         $.ajax({
             url: 'http://127.0.0.1:8000/calendars',
             success: (response) => {
-                eventos = response;
+                eventos.push(response);
                 console.log(response);
             },
             //async: false
@@ -13,7 +13,7 @@ $(document).ready(function(){
         .then( () => {
             console.log(eventos);
             $('#calendar').calendar({
-                events: eventos,
+                events: eventos[0],
                 color: 'grey',
                 months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
                  'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
