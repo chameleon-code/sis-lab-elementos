@@ -1,7 +1,6 @@
 @extends('components.sections.professorSection')
 @section('userContent')
 
-<<<<<<< HEAD
 {{-- <style>
         .accordion-body:after {
             content: '\02228';
@@ -15,20 +14,6 @@
             content: '\02227';
         }
 </style> --}}
-=======
-<style>
-    .accordion-body:after {
-        content: '\02228';
-        color: #777;
-        font-weight: bold;
-        float: right;
-        margin-left: 5px;
-    }
-    .active:after {
-        content: '\02227';
-    }
-</style>
->>>>>>> develop
 
     <div class="container-fluid">
         <div class="card shadow mb-4">
@@ -296,3 +281,6 @@
     <script src="/js/accordion.js"></script>
     <script src="/js/sesions.js"></script>
 @endsection
+@push('scripts')
+  <script src="{{ asset('js/datepicker/datepinker.js') }}"></script>
+@endpush
