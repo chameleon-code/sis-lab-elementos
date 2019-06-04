@@ -30,8 +30,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <form id="form-delete" action="{{route('schedule.destroy',[':ID_schedule'])}}" method="POST">
+                                    <input type="hidden" name="_token" value="{{csrf_token()}}" id="token_h">
+                                    <input type="hidden" name="_method" value="DELETE" id="method_h">
                                     @foreach ($hours as $item)
-                                            <tr class="" data-id="{{$item->id}}" >
+                                            <tr class="" data-id="{{$item->id}}">
                                                 <td class="" data-hours_id="{{$item->id}}">{{$item->start}}-{{$item->end}}</td>
                                                 <td class="td-line" >
                                                     <div id="r{{$item->id}}c1" class="col-sm-12 nopadding"></div>
@@ -71,6 +74,7 @@
                                                 </td>
                                             </tr>
                                     @endforeach
+                                    </form>
                                 </tbody>
                             </table>
                         </div>
@@ -94,16 +98,17 @@
               <input type="hidden" name="_token" value="{{csrf_token()}}" id="token">
                  <label>Docente</label>
                 <div class="col-md-13">
-                    <select class="form-control" name="" id="nametask">
+                    <select class="form-control" name="" id="nameDocente">
                         @foreach ($groups as $item)
                             <option class="form-control" value="{{$item->id}}" selected>{{$item->first()->professor->names}}</option>
-                        @endforeach    
+                        @endforeach  
                     </select>
                 </div>
-                 <label>Color:</label>
-                 <select class="form-control" id="idcolortask" readonly>
+                <label>Color:</label>
+                <select class="form-control" id="idcolortask" readonly>
                         <option value="color-{{$block_id}}">Purpura</option>
-                 </select> 
+                </select>
+                <input id="materia" type="hidden" name="materia" value="{{$groups->first()->subject->name}}">
                 <input id="tede" type="hidden" name="tede" >
                 <input id="hours" type="hidden" name="hours">
                 <input id="days" type="hidden" name="days">

@@ -86,5 +86,5 @@ Route::get('/schedule/create/{block_id?}','ScheduleRecordController@create')->na
 Route::post('/schedule/create/{block_id?}','ScheduleRecordController@store');
 
 Route::get('/schedule/records/{laboratory_id}','ScheduleRecordController@getRecords');
-Route::delete('/schedule/records/delete/{id}','ScheduleRecordController@destroy');
+Route::delete('/schedule/records/delete/{id}','ScheduleRecordController@destroy')->name('schedule.destroy');
 Route::get('/admin/blocks/createSchedule','BlockScheduleController@create');
