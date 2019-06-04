@@ -29,7 +29,7 @@ class ScheduleRecordController extends Controller
         $block = Block::findOrFail($block_id);
         $groups = $block->groups;
 
-        //dd($groups->first()->professor->names);
+        //dd($groups->first()->subject->name);
         //dd($blockGroups);
         
         $laboratorys=Laboratory::getAllLaboratory();
@@ -61,7 +61,8 @@ class ScheduleRecordController extends Controller
             ]);
             //ScheduleRecord::create($request->all());
             return response()->json([
-                "success" => $request->all()
+                'id'        => $id,
+                "success"   => $request->all()
             ]);
         }
         // $input = $request->all();
@@ -106,13 +107,20 @@ class ScheduleRecordController extends Controller
         return back()->withInput($input)->withErrors($management->errors);
     }
 
-    public function destroy($id){
+    public function destroy($id,Request $request){
+        
         try{
             $scheduleRecords = ScheduleRecord::findOrFail($id);
             $scheduleRecords->delete();
             $status_message = 'Horario eliminada correctamente';
+            if($request->ajax()){
+                return response()->json([
+                    'status_message'=>$status_message
+                ]);
+            }
+
         }catch(ModelNotFoundException $e){
-            $status_message = 'no Subject-matter with tha id';
+            $status_message = 'no schedule with tha id';
         }
 
         Session::flash('status_message',$status_message);

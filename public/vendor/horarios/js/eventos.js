@@ -9,27 +9,35 @@ $(document).ready(function() {
             }
         }
         for (i = 0; i < response.length; i++) {
-            $("#r" + response[i].hour_id + "c" + response[i].day_id).append('<label class="label-desc ' + response[i].color + '">' + " tasker" + ' <a data-id="' + response[i].id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
-            $('.deltasker').on('click', function() {
-                var element = $(this).parent();
-                var id = $(this).data('id');
-                console.log(id);
-                element.addClass('animated bounceOut');
-                url = '/schedule/records/delete/' + id;
-                var token = $("#token").val();
-                $.ajax({
-                    type: 'POST',
-                    headers: { "X-CSRF-TOKEN": token },
-                    url: url,
-                    // data: { 'id': id, '_token': token },
-                    dataType: 'json',
-                });
-                setTimeout(function() {
-                    element.remove();
-                }, 1000);
-            });
+            $("#r" + response[i].hour_id + "c" + response[i].day_id).append('<label class="label-desc ' + response[i].color + '">' + " tasker" +
+                '<a data-id="' + response[i].id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
         }
+        $('.deltasker').on('click', function(e) {
+            e.preventDefault();
+            var element = $(this).parent();
+            var id = $(this).data('id');
+            console.log(id);
+            element.addClass('animated bounceOut');
+            url = '/schedule/records/delete/' + id;
+
+            var form = $('#form-delete')
+                // alert(form.attr('action'));
+            var url = form.attr('action').replace(':ID_schedule', id);
+            var data = form.serialize();
+            //alert(data);
+            element.fadeOut();
+            $.post(url, data, function(result) {
+                alert(result.status_message);
+            }).fail(function() {
+                alert('el horario no fue eliminado');
+                element.show();
+            });
+        });
     });
+
+    //eliminar un horario
+
+
     //// Mostrar Boton Add
     $(".td-line").hover(
         function() {
@@ -40,7 +48,8 @@ $(document).ready(function() {
         }
     );
     // Agregar Informacion
-    $('.addinfo').on('click', function() {
+    $('.addinfo').on('click', function(e) {
+        e.preventDefault();
         var dum = $(this).attr('data-row');
         $('#DataEdit').modal('show');
         $('#tede').val(dum);
@@ -53,10 +62,10 @@ $(document).ready(function() {
     });
 
     // Borrar la Informacion
-    $('.delinfo').on('click', function() {
-        var dum = $(this).attr('data-row');
-        $('#' + dum).text('').removeClass('purple-label red-label blue-label pink-label').hide();
-    });
+    // $('.delinfo').on('click', function() {
+    //     var dum = $(this).attr('data-row');
+    //     $('#' + dum).text('').removeClass('purple-label red-label blue-label pink-label').hide();
+    // });
     //carga los horarios dinamica con el select de laboratorios
     $("#laboratory").change(function(event) {
         url = "/schedule/records/" + event.target.value;
@@ -69,11 +78,28 @@ $(document).ready(function() {
                 }
             }
             for (i = 0; i < response.length; i++) {
-                $("#r" + response[i].hour_id + "c" + response[i].day_id).append('<label class="label-desc ' + response[i].color + '">' + " tasker" + ' <a class="deltasker"><i class="fa fa-times"></i></a></label>');
-                $('.deltasker').on('click', function() {
+                $("#r" + response[i].hour_id + "c" + response[i].day_id).append('<label class="label-desc ' + response[i].color + '">' + " tasker" +
+                    '<a data-id="' + response[i].id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
+                $('.deltasker').on('click', function(e) {
+                    e.preventDefault();
                     var element = $(this).parent();
+                    var id = $(this).data('id');
+                    console.log(id);
                     element.addClass('animated bounceOut');
-                    setTimeout(function() { element.remove(); }, 1000);
+                    url = '/schedule/records/delete/' + id;
+
+                    var form = $('#form-delete')
+                        // alert(form.attr('action'));
+                    var url = form.attr('action').replace(':ID_schedule', id);
+                    var data = form.serialize();
+                    //alert(data);
+                    element.fadeOut();
+                    $.post(url, data, function(result) {
+                        alert(result.status_message);
+                    }).fail(function() {
+                        alert('el horario no fue eliminado');
+                        element.show();
+                    });
                 });
             }
         });
@@ -86,17 +112,20 @@ $(document).ready(function() {
         var tasker = $('#nametask').val();
         var color = $('#idcolortask option:selected').val();
         $('#DataEdit').modal('toggle');
-        $('#' + tede).append('<label class="label-desc ' + color + '">' + tasker + ' <a class="deltasker"><i class="fa fa-times"></i></a></label>');
+        var docente = $('#nameDocente option:selected').text();
+        //alert(docente);
+        // $('#' + tede).append('<label class="label-desc ' + color + '">' + tasker +
+        //     ' <a data-id="' + response[i].id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
         //$('#'+tede).text(tasker).addClass(color).show();
-        $('#taskfrm')[0].reset();
 
+        //$('#taskfrm')[0].reset();
 
-        $('.deltasker').on('click', function() {
-            var element = $(this).parent();
-            element.addClass('animated bounceOut');
-            setTimeout(function() { element.remove(); }, 1000);
-        });
-
+        // $('.deltasker').on('click', function() {
+        //     var element = $(this).parent();
+        //     element.addClass('animated bounceOut');
+        //     setTimeout(function() { element.remove(); }, 1000);
+        // });
+        var materia = $("#materia").val();
         var laboratory = $('#laboratory option:selected').val();
         var hours = $('#hours').val();
         var days = $('#days').val();
@@ -117,21 +146,33 @@ $(document).ready(function() {
             type: 'POST',
             dataType: 'json',
             data: datos,
-            // success:function(data){
-            //     alert(data.success);
-            // }  
+            success: function(data) {
+                //alert(data.success);
+                $('#' + tede).append('<label class="label-desc ' + color + '">' + 'Bloque :' + block_id + '<br> Docente: ' + docente + '<br> Materia: ' + materia +
+                    ' <a data-id="' + data.id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
+                $('.deltasker').on('click', function(e) {
+                    e.preventDefault();
+                    var element = $(this).parent();
+                    var id = $(this).data('id');
+                    console.log(id);
+                    element.addClass('animated bounceOut');
+                    //url = '/schedule/records/delete/' + id;
+
+                    var form = $('#form-delete')
+                        // alert(form.attr('action'));
+                    var url = form.attr('action').replace(':ID_schedule', id);
+                    var data = form.serialize();
+                    //alert(data);
+                    element.fadeOut();
+                    $.post(url, data, function(result) {
+                        alert(result.status_message);
+                    }).fail(function() {
+                        alert('el horario no fue eliminado');
+                        element.show();
+                    });
+                });
+            }
         });
     });
     //fin de guardar horario
-
-    //guardar a la base de datos
-    $('.guardarhorario').on('click', function() {
-
-        var btnsave = $(this);
-        var descripcion = $('#descripcioninput').val();
-        var nombre = $('#nombreinput').val();
-        var horario = $('#mynew').html();
-        var horariodata = 'process=2&nombre=' + nombre + '&descripcion=' + descripcion + '&horario=' + horario;
-
-    });
 });
