@@ -8,6 +8,8 @@ use App\Group;
 use App\Block;
 use App\BlockGroup;
 use App\Management;
+use App\ScheduleRecord;
+use App\BlockSchedule;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 
@@ -180,7 +182,7 @@ class BlockController extends Controller
         $groupsBlocks = BlockGroup::getAllBlockGroupsId();
         //dd($groupsBlocks);
         $groups2 = $groups->reject(function($item, $key) use ($groupsBlocks){
-            if (in_array($item->id, $groupsBlocks))
+            if (in_array($item->id, $groupsBlocks) && !$item->available)
                 return true;
         });
         if($request->ajax()){
@@ -216,5 +218,18 @@ class BlockController extends Controller
         Cache::put('subject_matter_nav', '', $tmp);
         Cache::put('group_nav', '', $tmp);
         Cache::put('block_nav', ' show', $tmp);
+    }
+
+    public function getGroupSchedules($id, Request $request){
+        $block_group = BlockGroup::where('group_id', '=', $id)->get()->first();
+        $block = Block::where('id', '=', $block_group->block_id)->get()->first();
+        
+        $block_schedules = BlockSchedule::join('schedule_records','schedule_records.id','=','block_schedules.schedule_id')->where('block_schedules.block_id', '=', $block->id)->select('block_schedules.id AS block_schedule_id', 'block_schedules.block_id', 'schedule_records.id AS schedule_record_id', 'schedule_records.laboratory_id', 'schedule_records.day_id', 'schedule_records.hour_id')->orderBy('schedule_records.day_id')->get();
+
+        if($request->ajax()){
+            return response()->json($block_schedules);
+        }
+
+        return $block_schedules;
     }
 }

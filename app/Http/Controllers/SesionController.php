@@ -115,7 +115,21 @@ class SesionController extends Controller
             $start = $request->date_start;
             $end = $request->date_end;
             $sesions = Sesion::autodate($start,$end);
+            $numberOfSesions = count($sesions);
+
+            $existentSesions = Sesion::where('block_id','=',$request->block_id)->get();
+            $indexSession=count($existentSesions);
             $index=1;
+            if(($indexSession < $numberOfSesions) && $indexSession!=0){
+               $endDate = $existentSesions[$indexSession-1]->date_end;
+               $index = $existentSesions[$indexSession-1]->number_sesion;
+               $index ++;
+               $sesions = Sesion::autodate($endDate,$end);
+            }else if($indexSession == $numberOfSesions){
+                return back()->withInput()->withErrors(['errors'=>['Ya tiene sesiones generadas automáticamente']]);
+            }else if($numberOfSesions < $indexSession){
+                return back()->withInput()->withErrors(['errors'=>['Ya tiene sesiones generadas automáticamente']]);
+            }
             foreach ($sesions as $value) {
                 Sesion::create([
                     'number_sesion' => $index,

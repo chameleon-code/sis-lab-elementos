@@ -58,7 +58,7 @@
                                         <label for="group_id" class="control-label">Grupo: </label>
                                         <a class="btn btn-md" id="addGroups" value="add"><i class="fa fa-plus" aria-hidden="true" aria-hidden="true"></i></a>
                                         <a class="btn btn-md" id="removeGroup"><i class="fas fa-minus-circle"></i></a>  </br>
-                                        <div id="groups_container">
+                                        <div id="groups_container" data-frm="2">
                                             @foreach ($block->groups as $item)
                                                 <div id="divgroup{{ $loop->iteration }}"> 
                                                     <br>

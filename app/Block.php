@@ -15,6 +15,9 @@ class Block extends Model
         'management_id' => 'required',
         'groups_id.*' => 'required|distinct'
     ];
+    protected $casts = [
+        'available' => 'boolean'
+    ];
     public static function getAllBlocks(){
         return self::all();
     }
