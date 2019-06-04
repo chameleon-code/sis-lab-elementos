@@ -15,6 +15,8 @@ class CreateLaboratoriesTable extends Migration
     {
         Schema::create('laboratories', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
+            $table->unsignedInteger('capacity');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateLaboratoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('laboratories');
+        
     }
 }

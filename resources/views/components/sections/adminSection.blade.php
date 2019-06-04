@@ -62,7 +62,7 @@
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="{{url('/admin/students')}}"><i class="fas fa-list"></i>  Listar</a>
-        <a class="collapse-item" href="{{url('/admin/student/create ')}}"><i class="fas fa-plus"></i>  Crear</a>
+        <a class="collapse-item" href="{{url('/admin/student/create')}}"><i class="fas fa-plus"></i>  Crear</a>
       </div>
     </div>
   </li>
@@ -132,6 +132,13 @@
   </li>
 
   <li class="nav-item">
+    <a class="nav-link" href="#">
+      <i class="fas fa-fw fa-address-card"></i>
+      <span>Inscripciones</span>
+    </a>
+  </li>
+
+  <li class="nav-item">
     <a class="nav-link" href="{{url('/scheduler')}}">
       <i class="fas fa-fw fa-calendar-alt"></i>
       <span>Horario</span>
@@ -152,3 +159,12 @@
 
    <hr class="sidebar-divider d-none d-md-block">
 @endsection
+@section('userContent')
+    @include('components.contents.partials.eventsCalendar')
+@endsection
+@push('scripts')
+    <script src="{{ asset('/js/calendar.js') }}"></script>
+    <script src="{{ asset('/js/events.js') }}"></script>
+    <script src="{{ asset("https://cdn.jsdelivr.net/npm/sweetalert2@8") }}"></script>
+    <link rel="stylesheet" href="{{ asset('/css/calendar.css') }}">
+@endpush

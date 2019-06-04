@@ -47,7 +47,10 @@ class Professor extends Model
         $groups = Group::where('professor_id', '=', $professor->id)->get();
         $blocks=[];
         foreach ($groups as $group) {
-            array_push($blocks, BlockGroup::where('group_id', '=', $group->id)->get()->first());
+            $blockGroup= BlockGroup::where('group_id', '=', $group->id)->get()->first();
+            if($blockGroup!=null){
+                array_push($blocks,$blockGroup);
+            }
         }
         return  $blocks;
     }

@@ -38,7 +38,6 @@ class GroupController extends Controller
         self::rememberNav();
 
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
-        $managements = Management::getAllManagements()->reverse();
         $professors = Professor::getAllProfessors();
         $count = $this->getCountSubjects(new Request(), 1) + 1;
         $groupNames = array();
@@ -48,7 +47,6 @@ class GroupController extends Controller
             }
         }
         $data=['subjectMatters'=>$subjectMatters,
-                'managements' =>$managements,
                 'professors' => $professors,
                 'countGroups' => $count,
                 'groupNames' => $groupNames
@@ -95,18 +93,18 @@ class GroupController extends Controller
     public function edit($id)
     {
         $group = Group::findOrFail($id);
+        //dd($group->subject);
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
-        $managements = Management::getAllManagements();
         $professors = Professor::getAllProfessors();
-        $groupNames = array();
+        $groupNames = array($group->name);
         for($i = 1; $i<=15; $i++){
-            if(!in_array($i ,$this->getGroupsNameBySubjects(1))){
+            if(!in_array($i ,$this->getGroupsNameBySubjects($group->subject->id))){
                 array_push($groupNames, $i);
             }
         }
-        $data=['group' => $group,
+        $data=[
+            'group' => $group,
             'subjectMatters' => $subjectMatters,
-            'managements' => $managements,
             'professors' => $professors,
             'groupNames' => $groupNames
         ];
@@ -128,7 +126,6 @@ class GroupController extends Controller
         if($group->validate($input)){
             $group->name = $request->name;
             $group->subject_matter_id = $request->subject_matter_id;
-            $group->management_id = $request->management_id;
             $group->professor_id = $request->professor_id;
             $group->save();
 
@@ -184,7 +181,14 @@ class GroupController extends Controller
         Cache::put('block_nav', '', $tmp);
     }
 
-        //deprecated
+    
+    public static function getBlockBygroupId(Request $request, $id){
+        $group = Group::findOrFail($id);
+        if($request->ajax()){
+            return response()->json($group->blocks()->first());
+        }
+    }        
+//deprecated
         /*public function getProfessors(Request $request, $id){
             if($request->ajax()){
                 $professors = ProfessorSubjectMatter::getAllProfessors($id);

@@ -1,141 +1,298 @@
 @extends('components.sections.professorSection')
 @section('userContent')
 
-<style>
+<<<<<<< HEAD
+{{-- <style>
         .accordion-body:after {
             content: '\02228';
             color: #777;
             font-weight: bold;
             float: right;
             margin-left: 5px;
+            margin-top: -1px;
           }
-          .active:after {
-              content: '\02227';
-          }
+        .active:after {
+            content: '\02227';
+        }
+</style> --}}
+=======
+<style>
+    .accordion-body:after {
+        content: '\02228';
+        color: #777;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+    }
+    .active:after {
+        content: '\02227';
+    }
 </style>
+>>>>>>> develop
 
     <div class="container-fluid">
         <div class="card shadow mb-4">
-            <div class="card-header py-2">
-                @if ($blockGroup==null)
-                    <div class="alert alert-danger">
-                        <b>Alerta</b>   
-                        <ul>Aun no esta asignado a un bloque</ul>
-                    </div>
-                @else
-                <div class="panel-heading my-2 font-weight-bold text-primary container">
-                    Sesiones
-                    <div class="float-right">
-                        <a href="#" class="btn btn-danger btn-icon-split btn-sm" data-toggle="modal" data-target="#deleteSesion">
-                                <span class="icon text-white-50" data-toggle="tooltip" title="Quitar Sesión">
-                                    <i class="fas fa-minus"></i>
-                                </span>
-                            </a>
-                            
-                            <a href="#" class="btn btn-primary btn-icon-split btn-sm" data-toggle="modal" data-target="#addSesion">
-                                <span class="icon text-white-50" data-toggle="tooltip" title="Añadir Sesión">
-                                    <i class="fas fa-plus"></i>
-                                </span>
-                            </a>
-                    </div>
-                </div>
-
-                <div class="container">
-                        <strong>Bloque: </strong> {{ $blockGroup->block_id }}
-                </div>
-
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Sesiones</h6>
+            </div>
                 <div class="card-body">
-                    @if (Session::has('status_message'))
-                        <p class="alert alert-success"><strong> {{Session::get('status_message')}} </strong></p>
-                    @endif
-
-                    @foreach ($sesions as $sesion)
-                    <thead>
-                        <tr>
-                            <div class="accordion-body bg-gray-300 border-bottom-primary rounded" style="margin-top: 8px;">
-                                <strong style="color: gray;"> Sesión: </strong> {{ $sesion->number_sesion }}
+                    @if ($blocks==null)
+                        <div class="alert alert-danger">
+                            <br>
+                            <ul>Aun no esta asignado a un bloque</ul>
+                        </div>
+                    @else
+                    <label for="">Bloque: </label>
+                    <select class="form-control col-md-6 col-12"  name="" id="selector">
+                        @foreach ($blocks as $block)
+                            <option class="optional" value="{{$block->block_id}}">{{$block->block_id}} - MateriaX</option>
+                        @endforeach
+                    </select>
+                    @if ($sesions!=null)
+                        @foreach ($blocks as $block)
+                        <div id="block-{{$block->block_id}}" class="blocks-sesions">
+                            <hr>
+                            <div class="text-center">
+                                <label class="h5 text-gray-900 mb-4">Creación Automática de Sesiones</label>
                             </div>
-                        </tr>
-                    </thead>
-                    
-                    <div class="panel" style="max-height: 100%;">
-                        @foreach ($tasks as $task)
-                            @if($task->sesion_id == $sesion->id)
-                                <div class="my-2 mx-2" style="border-bottom: 1px solid #b5b5b5; font-size: 15px;">
-                                    <div style="margin-top: 12px; margin-bottom: -15px;"> <p> <strong> Tarea: </strong> <a href="#">{{ $task->title }}</a> </p> </div>
-                                        <div class="row" style="margin-top: -15px; margin-bottom: -15px;">
-                                            <div class="row" style="margin-left: 12px;">
-                                                <strong> Entregados: </strong>
-                                                <div class="progress progress-sm bg-gray-400" style="margin-top: 8px; margin-left: 15px; margin-right: 10px;">
-                                                    <div class="progress-bar" role="progressbar" style="width: 80px; margin-right: 30px;" aria-valuenow="8" aria-valuemin="0" aria-valuemax="14"></div>
-                                                </div>
-                                            </div>
-                                            <p style="margin-left: 12px;"> 8/14 </p>
+                            @if (count($errors)>0)
+                            <div class="alert alert-danger">
+                                <b>Ha ocurrido un Error!</b>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{$error}}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
+                            <form class="user" action="/sesions/store" method="POST">
+                                {{csrf_field()}}
+                                <div class="row">
+                                    <div class="form-group col-md-4 col-6">
+                                        <label for='name' class="">Inicio de las Sesiones</label>
+                                        <div>
+                                            <input  type="text"
+                                                    name="date_start"
+                                                    id="inicio_fecha"
+                                                    class="form-control col-md-12"
+                                                    placeholder=""
+                                                    value="{{$start}}" required readonly>
                                         </div>
-                                    <div> <p> <strong> Límite de entrega: </strong> {{$task->end}} </p> </div>
+                                    </div>
+                                    <div class="form-group col-md-4 col-6">
+                                        <label for='name' class="">Fin de las Sesiones</label>
+                                        <div>
+                                            <input  type="text"
+                                                    name="date_end"
+                                                    id="fin_fecha"
+                                                    class="form-control col-md-12"
+                                                    placeholder=""
+                                                    value="{{$end}}" required readonly>
+                                        </div>
+                                    </div>
+                                    <input name="block_id" value="{{$block->block_id}}"hidden>
+                                    @if (Agent::isMobile())
+                                        <div class="form-group col-12">
+                                                <button id="btn_aling" type="submit" class="btn btn-warning btn-block col-md-12">
+                                                        <i class="fas fa-magic"></i>
+                                                        Autogenerar
+                                                </button>
+                                        </div> 
+                                    @else
+                                        <div class="form-group col-md-4 col-12">
+                                                <label style="height: 1.015rem;"></label>
+                                                <button id="btn_aling" type="submit" class="btn btn-warning btn-block col-md-12">
+                                                        <i class="fas fa-magic"></i>
+                                                        Autogenerar 
+                                                </button>
+                                        </div>  
+                                    @endif
+                                </div>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                    <label class="h5 text-gray-900 mb-4">Sesiones</label>
+                            </div>
+                            @if (empty($sesions[0][0]))
+                                <div class="alert alert-warning">
+                                    Aun no tiene sesiones en este bloque
                                 </div>
                             @endif
+                            @foreach ($sesions as $sesion)
+                                @foreach ($sesion as $s)
+                                    @if ($s->block_id==$block->block_id)
+                                        <thead>
+                                                <tr>
+                                                    <div class="accordion-body bg-gray-300 rounded row" style="cursor: default;">
+                                                        <div class="container d-flex justify-content-between p-1" style="">
+                                                            <div class="d-flex justify-content-start">
+                                                                <strong style="color: gray;"> Sesión:&nbsp; </strong> {{ $s->number_sesion }}
+                                                            </div>
+                                                            <div class="d-flex justify-content-end">
+                                                                <div class="mx-4">
+                                                                    <a href="#" class="mx-2" onclick="showSesion({{$s->number_sesion}})" data-toggle-2="tooltip" title="Guía práctica" data-toggle="modal" data-target=".bd-example-modal-lg" onclick=""><i class="fas fa-book-open"></i></a>
+                                                                </div>
+                                                                <div class="text-center" onclick="showAccordion({{$s->id}})" style="cursor: pointer; width: 18px;"><strong id="arrowAccordion{{$s->id}}" style="color: #8b8b8b; font-weight: bold;">&#709;</strong></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </tr>
+                                        </thead>
+                                        <div class="py-2" id="panel{{$s->id}}" style="max-height: 100%;">
+                                            <div class="my-2 mx-2" style="font-size: 15px;">
+                                                <div style="margin-top: 12px; margin-bottom: -15px;"> 
+                                                    <p> <strong> Inicio: </strong> {{$s->date_start}} </p> 
+                                                </div>
+                                                <div style="margin-top: 12px; margin-bottom: -15px;"> 
+                                                    <p> <strong> Fin: </strong>  {{$s->date_end}}</p> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    @endif
+                                @endforeach
+                            @endforeach
+                        </div>
                         @endforeach
-                    </div>
-                    @endforeach
-
-                    <div class="modal fade" id="deleteSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Sesión</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                        Las tareas pertenecientes a una sesión no serán elimindas. <br><br>
-                                    @foreach ($sesions as $sesion)
-                                        <p> Sesion {{ $sesion->number_sesion }} <input name={{ $sesion->id }} type="checkbox" class="float-right"> </p>
-                                    @endforeach
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                    <button type="button" class="btn btn-danger">Eliminar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="modal fade" id="addSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Añadir Sesión</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Se agregará la Sesión: {{ $sesion_max + 1 }}
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                    <form action="/sesions/store" method="POST">
-                                        {{csrf_field()}}
-                                        <input type="text" class="form-control" style="display: none;" name="block_id" value="{{ $blockId }}" required autofocus>
-                                        <input type="text" class="form-control" style="display: none;" name="number_sesion" value="{{ $sesion_max + 1 }}" required autofocus>
-                                        <button type="submit" class="btn btn-primary">Aceptar</button>  
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>  
+                    @endif
                 </div>
-                @endif
+            @endif
+        </div>
+    </div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sesionTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body py-1 px-3" id="text_confirm_reg">
+
+                <div class="px-1" id="sesionTasks">
+                    <div class="accordion-body bg-gray-300 rounded row my-2" style="cursor: default;">
+                        <div class="container d-flex justify-content-between p-1" style="">
+                            <div class="d-flex justify-content-start">
+                                <strong> Título:&nbsp;</strong> tarea 1
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <a href="#" class="mx-2" onclick="" data-toggle-2="tooltip" title="Editar actividad" data-toggle="modal" data-target=".bd-example-modal-lg" onclick=""><i class="fas fa-edit"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="my-2 mx-1" style="font-size: 15px;">
+                            <div style=""> 
+                                <strong> Descripción:&nbsp; </strong>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae facilis, sed tempore laborum, dignissimos consequatur exercitationem aliquid ducimus iusto repellat impedit veniam nostrum vero aperiam odio qui asperiores ea labore!
+                            </div>
+                            <div class="" style="margin-top: 15px;">
+                                Archivo adjunto: <a href="https://www.google.com">Ejercicio 1.pdf</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="accordion-body bg-gray-300 rounded row" style="cursor: default;">
+                            <div class="container d-flex justify-content-between p-1" style="">
+                                <div class="d-flex justify-content-start">
+                                    <strong> Título:&nbsp;</strong> tarea 2
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <a href="#" class="mx-2" onclick="" data-toggle-2="tooltip" title="Editar actividad" data-toggle="modal" data-target=".bd-example-modal-lg" onclick=""><i class="fas fa-edit"></i></a>
+                                </div>
+                            </div>
+    
+                            <div class="my-2 mx-1" style="font-size: 15px;">
+                                <div style=""> 
+                                    <strong> Descripción:&nbsp; </strong>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae facilis, sed tempore laborum, dignissimos consequatur exercitationem aliquid ducimus iusto repellat impedit veniam nostrum vero aperiam odio qui asperiores ea labore!
+                                </div>
+                                <div class="" style="margin-top: 15px;">
+                                    Archivo adjunto: <a href="https://www.google.com">Ejercicio 2.pdf</a>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                    
+                    <div class="my-1 mx-2" id="formActivity" style="font-size: 15px;">
+                        <strong class="px-2"> Nueva Actividad </strong> <br><br>
+                            <form class="user" action="{{Route('tasks.create')}}" method="POST" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                <div class="group col-sm-12">
+                                        {{-- <label for="">Título</label> --}}
+                                        <input id="title" name="title" type="text" class="form-control col-md-12" placeholder="Título" required autofocus>
+                                </div>
+                                <br>
+                                <div class="group col-sm-12">
+                                        {{-- <label for="">Descripción</label> --}}
+                                        <textarea name="description" id="description" class="form-control col-md-12" cols="30" rows="5" placeholder="Descripción" autofocus></textarea>
+                                </div>
+                                <br>
+                                <div class="group col-sm-12">
+                                    <input type="file" name="practice" style="margin-bottom: 4px;" required>
+                                    <br>
+                                    <strong>Solo los siguientes formatos son admitidos: <strong>.zip .rar .pdf</strong><br>
+                                </div>
+                                <input type="text" name="sesion_id" value="" hidden>
+                                <input type="text" name="number_sesion" value="" hidden>
+                            </form>
+
+                        </div>
+            </div>
+    
+            <hr>
+            
+            <div class="text-center" id="footerModal">
+
+                <div class="" style="margin-bottom: 20px;">
+                    <a href="#" id="btnAddActivity" class="btn btn-primary btn-icon-split btn-sm" onclick="showFormActivity()">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-plus"></i>
+                        </span>
+                        <span class="text">Agregar actividad</span>
+                    </a>
+                </div>
+
+                <div id="btnsTasks" style="margin-bottom: 25px;">
+                    @if (Agent::isMobile())
+                        <div class="d-flex justify-content-center bd-highlight mb-3">
+                            <button type="button" class="btn btn-primary btn-block btn-sm p-2 bd-highlight" style="">Guardar</button>
+                            <button type="button" class="btn btn-secondary btn-block btn-sm p-2 bd-highlight" style="">Cancelar</button>
+                        </div>
+                    @else
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-primary btn-block btn-sm col-md-3 mx-2" style="">Guardar</button>
+                            <button type="button" class="btn btn-secondary btn-block btn-sm col-md-3 mx-2" style="margin-top: 0px;" onclick="hideFormActivity()">Cancelar</button>
+                        </div>
+                    @endif
+                </div>
+                
+                {{-- <form method="POST" action="{{ url('/students/registration/store') }}">
+                    {{ csrf_field() }}
+                    <input id="block_schedule_id" type="number" name="block_schedule_id" style="display: none;">
+                    <input id="group_id_input" type="number" name="group_id" style="display: none;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="btn_confirm">Confirmar</button>
+                </form> --}}
+
             </div>
         </div>
-
-<script src="/js/accordion.js"></script>
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-      })
-</script>
+    </div>
+    </div>
+    
+    <script>
+        $('.blocks-sesions').hide();
+        $( '#selector' ).change(function() {
+            $('select option:selected').each(function() {
+                $('.blocks-sesions').hide();
+                $('#block-'+$(this).attr('value')).show();
+            });
+        });
+        var firts_id = $( "#selector option:selected" ).attr('value');
+        $('#block-'+firts_id).show();
+    </script>
+    <script src="/js/accordion.js"></script>
+    <script src="/js/sesions.js"></script>
 @endsection

@@ -38,11 +38,11 @@
                                 @foreach ($semesters as $item)
                                     <option class="form-control" value="{{$item}}">{{$item}}</option>
                                 @endforeach
-                        </select>
+                            </select>
                         </div>
                         <div class="row">
                           <div class="form-group col-md-6 col-6">
-                              <label for='name' class="">Inicio de la Gestión</label>
+                              <label for='name' class="">Inicio de Gestión</label>
                               <div>
                                   <input  type="text"
                                           name="start_management"
@@ -53,7 +53,7 @@
                               </div>
                           </div>
                           <div class="form-group col-md-6 col-6">
-                              <label for='name' class="">Fin de la Gestión</label>
+                              <label for='name' class="">Fin de Gestión</label>
                               <div>
                                   <input  type="text"
                                           name="end_management"
@@ -77,3 +77,6 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+  <script src="{{ asset('js/datepicker/datepinker.js') }}"></script>
+@endpush

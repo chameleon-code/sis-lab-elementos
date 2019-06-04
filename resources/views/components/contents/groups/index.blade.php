@@ -30,7 +30,7 @@
                                             @foreach ($groups as $item)
                                                 <tr role="row" class="odd">
                                                     <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->name}}</font></font></td>
-                                                    <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->subject}}</font></font></td>
+                                                    <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->subject->name}}</font></font></td>
                                                     <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->professor->first_name ." ". $item->professor->second_name ." ". $item->professor->names}}</font></font></td>
                                                     
                                                     <td class="text-center" style="text-align: center; display: flex;">

@@ -6,9 +6,10 @@ use Illuminate\Support\Facades\Route;
 // Inscripción
 
 Route::get('/students/registration', 'StudentController@registration');
-Route::post('/students/registration/confirm', 'StudentController@confirm')->name('student.reg.confirm');
+Route::post('/students/registration/store', 'StudentScheduleController@store')->name('student.reg.store');
 Route::get('/students/registration/getBlocksBySubjects/{id}', 'BlockController@getBlocksBySubjects');
 Route::get('/students/registration/getGroups/{id}', 'BlockController@getGroupsByBlocks');
+Route::get('/students/registration/getGroupSchedules/{id}', 'BlockController@getGroupSchedules');
 
 // Tareas
 

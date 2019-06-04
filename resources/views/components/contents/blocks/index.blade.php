@@ -35,7 +35,7 @@
                                                     <td class="mx-1">
                                                         @forelse ($item->groups as $group)
                                                             @if($loop->first)
-                                                                {{$group->subject}}
+                                                                {{$group->subject->name}}
                                                             @endif
                                                         @empty
                                                             No existen grupos en el bloque
@@ -51,7 +51,7 @@
                                                     </td>
                                                     
                                                     <td class="text-center" style="text-align: center; display: flex;">
-                                                        <a href="/admin/groups/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Editar"><i class="fas fa-edit"></i></a>
+                                                        <a href="/admin/blocks/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Editar"><i class="fas fa-edit"></i></a>
                                                     </td>                                                    
                                                 </tr>
                                           @endforeach

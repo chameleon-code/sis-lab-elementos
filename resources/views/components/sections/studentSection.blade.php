@@ -18,19 +18,11 @@
     Interface
   </div>
 
-  <!-- Nav Item - Pages Collapse Menu -->
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInscription" aria-expanded="true" aria-controls="collapseTwo">
-      <i class="fas fa-fw fa-scroll"></i>
+    <a class="nav-link" href="{{url("/students/registration")}}">
+      <i class="fas fa-fw fa-calendar-alt"></i>
       <span>Inscripción</span>
     </a>
-    <div id="collapseInscription" class="collapse" aria-labelledby="headingInscription" data-parent="#accordionSidebar">
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">Opciones:</h6>
-        <a class="collapse-item" href="{{url("/students/registration")}}">Bloque</a>
-        <a class="collapse-item" href="">Horario</a>
-      </div>
-    </div>
   </li>
 
 @endsection

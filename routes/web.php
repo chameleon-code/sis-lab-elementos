@@ -36,7 +36,6 @@ Route::get('professor', function () {
     return view('components.sections.professorSection');
 });
 
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
@@ -63,7 +62,9 @@ Route::get('scheduler', function () {
 Route::get('scheduler/{id}', 'EventController@loadScheduler');
 Route::get('scheduler2/{id}', 'EventController@loadScheduler2');
 
-
+//calendario de eventos
+Route::post('registerEvent', 'CalendarController@store');
+Route::get('calendars', 'CalendarController@getAllEvents');
 /*Run
 php composer update
 php artisan config:clear
@@ -71,3 +72,19 @@ php artisan config:clear
 
 Route::resource('/admin/groups', 'GroupController');
 Route::resource('/admin/blocks', 'BlockController');
+
+//Sesiones
+Route::get('/sesions', 'SesionController@index');
+Route::post('/sesions/store', 'SesionController@store');
+
+//Schedule
+//Route::get('/horarios','ScheduleRecordController@create');
+
+
+//Route::post('/admin/blocks/createSchedule','BlockScheduleController@store')->name('blockSchedule.store');
+Route::get('/schedule/create/{block_id?}','ScheduleRecordController@create')->name('schedule.create');
+Route::post('/schedule/create/{block_id?}','ScheduleRecordController@store');
+
+Route::get('/schedule/records/{laboratory_id}','ScheduleRecordController@getRecords');
+Route::delete('/schedule/records/delete/{id}','ScheduleRecordController@destroy')->name('schedule.destroy');
+Route::get('/admin/blocks/createSchedule','BlockScheduleController@create');
