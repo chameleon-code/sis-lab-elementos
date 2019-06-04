@@ -50,7 +50,7 @@
                                         <label for="group_id" class="control-label">Grupo: </label>
                                         <a class="btn btn-md" id="addGroups" value="add"><i class="fa fa-plus" aria-hidden="true" aria-hidden="true"></i></a>
                                         <a class="btn btn-md" id="removeGroup"><i class="fas fa-minus-circle"></i></a>  </br>
-                                        <div id="groups_container">
+                                        <div id="groups_container" data-frm="1">
                                             <select class="form-control col-md-12" name="groups_id[]" id="group_id1">
                                                 @forelse ($groups as $group)
                                                     <option value="{{ $group->id }}" class="form-control">{{ $group->name . " - " . $group->professor->names . " " . $group->professor->first_name . " " . $group->professor->second_name}}</option>

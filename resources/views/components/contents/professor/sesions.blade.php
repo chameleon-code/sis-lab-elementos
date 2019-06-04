@@ -1,6 +1,7 @@
 @extends('components.sections.professorSection')
 @section('userContent')
 
+<<<<<<< HEAD
 {{-- <style>
         .accordion-body:after {
             content: '\02228';
@@ -14,6 +15,20 @@
             content: '\02227';
         }
 </style> --}}
+=======
+<style>
+    .accordion-body:after {
+        content: '\02228';
+        color: #777;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+    }
+    .active:after {
+        content: '\02227';
+    }
+</style>
+>>>>>>> develop
 
     <div class="container-fluid">
         <div class="card shadow mb-4">
@@ -98,6 +113,11 @@
                             <div class="text-center">
                                     <label class="h5 text-gray-900 mb-4">Sesiones</label>
                             </div>
+                            @if (empty($sesions[0][0]))
+                                <div class="alert alert-warning">
+                                    Aun no tiene sesiones en este bloque
+                                </div>
+                            @endif
                             @foreach ($sesions as $sesion)
                                 @foreach ($sesion as $s)
                                     @if ($s->block_id==$block->block_id)

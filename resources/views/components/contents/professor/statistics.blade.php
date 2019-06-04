@@ -63,4 +63,11 @@
     </div>
 
 </div>
+@include('components.contents.partials.eventsCalendar')
 @endsection
+@push('scripts')
+    <script src="{{ asset('/js/calendar.js') }}"></script>
+    <script src="{{ asset('/js/events.js') }}"></script>
+    <script src="{{ asset("https://cdn.jsdelivr.net/npm/sweetalert2@8") }}"></script>
+    <link rel="stylesheet" href="{{ asset('/css/calendar.css') }}">
+@endpush
