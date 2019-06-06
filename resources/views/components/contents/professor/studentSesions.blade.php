@@ -31,15 +31,24 @@
                     @if (Session::has('status_message'))
                         <p class="alert alert-success"><strong> {{Session::get('status_message')}} </strong></p>
                     @endif
-
+                    
                     @foreach ($sesions as $sesion)
                     <thead>
-                        <tr>
-                            <div class="accordion-body bg-gray-300 border-bottom-primary rounded" style="margin-top: 8px;">
-                                <strong style="color: gray;"> Sesión: </strong> {{ $sesion->number_sesion }}
-                            </div>
-                        </tr>
-                        
+                            <tr>
+                                <div class="accordion-body bg-gray-300 rounded row" style="cursor: default;">
+                                    <div class="container d-flex justify-content-between p-1" style="">
+                                        <div class="d-flex justify-content-start">
+                                            <strong style="color: gray;"> Sesión:&nbsp; </strong> {{ $sesion->number_sesion }}
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <div class="mx-4">
+                                                <a href="#" class="mx-2" onclick="showSesion({{$sesion->number_sesion}})" data-toggle-2="tooltip" title="Guía práctica" data-toggle="modal" data-target=".bd-example-modal-lg" onclick=""><i class="fas fa-book-open"></i></a>
+                                            </div>
+                                            <div class="text-center" onclick="showAccordion({{$sesion->id}})" style="cursor: pointer; width: 18px;"><strong id="arrowAccordion{{$sesion->id}}" style="color: #8b8b8b; font-weight: bold;">&#709;</strong></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
                     </thead>
                     
                     <div class="panel">
@@ -123,3 +132,7 @@
 </script>
 
 @endsection
+@push('scripts')
+<script src={{ asset("/js/accordion.js") }}></script>
+<script src={{ asset("/js/sesions.js") }}></script>
+@endpush

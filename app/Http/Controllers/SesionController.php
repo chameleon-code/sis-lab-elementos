@@ -171,17 +171,18 @@ class SesionController extends Controller
     public function showStudentSesions($id)
     {
         $student = Student::find($id);
-        $user = User::where('id', '=', $student->user_id)->get()->first();
-        $sesions = Sesion::all();
-        $tasks = Task::all();
-        $sesion_max = Sesion::max('number_sesion');
         $schedule = StudentSchedule::all();
         $schedule->reject(function($item, $key) use ($student){
             if($item->student_id =! $student->id){
                 return true;
             }
         });
+        $user = User::where('id', '=', $student->user_id)->get()->first();
         $group = Group::find($schedule->first()->group_id);
+        $sesions = Sesion::where('block_id', $group->blocks->first()->id)->get();
+        //dd($group);
+        $tasks = Task::all();
+        $sesion_max = Sesion::max('number_sesion');
         $subjectMatter = SubjectMatter::where('id', '=', $group->subject_matter_id)->get()->first();
         $blockGroup = Professor::getBlockProfessor();
 
