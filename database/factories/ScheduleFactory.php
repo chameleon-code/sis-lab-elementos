@@ -30,10 +30,22 @@ $factory->define(App\ScheduleRecord::class, function (Faker\Generator $faker) {
     $lab_id = $faker->randomElement(App\Laboratory::all())->id;
     $day_id = $faker->randomElement(App\Day::all())->id;
     $hour_id = $faker->randomElement(App\Hour::all())->id;
+    $professor = $faker->randomElement([
+        'Juan','Leticia','Vlandi','Gustavo','Mauricio'
+    ]);
+    $subject = $faker->randomElement([
+        'Elementos','Introduccion a la programacion','Base de datos','Redes Avanzadas'
+    ]);
+    $color = $faker->randomElement([
+        'color-1','color-2'
+    ]);
 
     return [
         'laboratory_id' => $lab_id,
-        'day_id' => $day_id,
-        'hour_id' => $hour_id,
+        'day_id'    => $day_id,
+        'hour_id'   => $hour_id,
+        'professor' => $professor,
+        'subject'   => $subject,
+        'color'     => $color
     ];
 });
