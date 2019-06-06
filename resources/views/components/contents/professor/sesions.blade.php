@@ -1,7 +1,6 @@
 @extends('components.sections.professorSection')
 @section('userContent')
 
-<<<<<<< HEAD
 {{-- <style>
         .accordion-body:after {
             content: '\02228';
@@ -15,20 +14,6 @@
             content: '\02227';
         }
 </style> --}}
-=======
-<style>
-    .accordion-body:after {
-        content: '\02228';
-        color: #777;
-        font-weight: bold;
-        float: right;
-        margin-left: 5px;
-    }
-    .active:after {
-        content: '\02227';
-    }
-</style>
->>>>>>> develop
 
     <div class="container-fluid">
         <div class="card shadow mb-4">
@@ -44,8 +29,8 @@
                     @else
                     <label for="">Bloque: </label>
                     <select class="form-control col-md-6 col-12"  name="" id="selector">
-                        @foreach ($blocks as $block)
-                            <option class="optional" value="{{$block->block_id}}">{{$block->block_id}} - MateriaX</option>
+                        @foreach ($blocks as $key => $block)
+                            <option class="optional" value="{{$block->block_id}}">{{$block->block_id}} - {{$subjects[$key]}}</option>
                         @endforeach
                     </select>
                     @if ($sesions!=null)
@@ -53,7 +38,7 @@
                         <div id="block-{{$block->block_id}}" class="blocks-sesions">
                             <hr>
                             <div class="text-center">
-                                <label class="h5 text-gray-900 mb-4">Creación Automática de Sesiones</label>
+                                <label class="h5 text-gray-900 mb-4">Generación Automática de Sesiones</label>
                             </div>
                             @if (count($errors)>0)
                             <div class="alert alert-danger">
@@ -233,7 +218,7 @@
                                 <div class="group col-sm-12">
                                     <input type="file" name="practice" style="margin-bottom: 4px;" required>
                                     <br>
-                                    <strong>Solo los siguientes formatos son admitidos: <strong>.zip .rar .pdf</strong><br>
+                                    Solo los siguientes formatos son admitidos: <strong>.zip .rar .pdf</strong><br>
                                 </div>
                                 <input type="text" name="sesion_id" value="" hidden>
                                 <input type="text" name="number_sesion" value="" hidden>
@@ -296,3 +281,6 @@
     <script src="/js/accordion.js"></script>
     <script src="/js/sesions.js"></script>
 @endsection
+@push('scripts')
+  <script src="{{ asset('js/datepicker/datepinker.js') }}"></script>
+@endpush
