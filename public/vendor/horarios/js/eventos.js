@@ -3,7 +3,7 @@ $(document).ready(function() {
     $.get(url, function(response, state) {
         //console.log(response);
         $('#bloque').empty();
-        for (f = 1; f < 8; f++) {
+        for (f = 1; f < 11; f++) {
             for (c = 1; c < 7; c++) {
                 $("#r" + f + "c" + c).empty();
             }
