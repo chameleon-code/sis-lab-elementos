@@ -54,5 +54,14 @@ class Professor extends Model
         }
         return  $blocks;
     }
+    public static function getSubjectByBlockGroup($id)
+    {
+        $group = BlockGroup::where('id','=',$id)->get()->first();
+        $groupId = $group->group_id;
+        $subject = Group::where('id','=',$groupId)->get()->first();
+        $subjectId = $subject->subject_matter_id;
+        $subjectName = SubjectMatter::where('id','=',$subjectId)->get()->first()->name;
+        return $subjectName;
+    }
     
 }
