@@ -29,8 +29,8 @@
                     @else
                     <label for="">Bloque: </label>
                     <select class="form-control col-md-6 col-12"  name="" id="selector">
-                        @foreach ($blocks as $block)
-                            <option class="optional" value="{{$block->block_id}}">{{$block->block_id}}-MateriaX</option>
+                        @foreach ($blocks as $key => $block)
+                            <option class="optional" value="{{$block->block_id}}">{{$block->block_id}} - {{$subjects[$key]}}</option>
                         @endforeach
                     </select>
                     @if ($sesions!=null)
