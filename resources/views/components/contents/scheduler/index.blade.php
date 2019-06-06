@@ -30,7 +30,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <form id="form-delete" action="{{route('schedule.destroy',[':ID_schedule'])}}" method="POST">
+                                    {{-- <form id="form-delete" action="{{route('schedule.destroy',[':ID_schedule'])}}" method="POST"> --}}
                                     <input type="hidden" name="_token" value="{{csrf_token()}}" id="token_h">
                                     <input type="hidden" name="_method" value="DELETE" id="method_h">
                                     @foreach ($hours as $item)
@@ -74,7 +74,7 @@
                                                 </td>
                                             </tr>
                                     @endforeach
-                                    </form>
+                                    {{-- </form> --}}
                                 </tbody>
                             </table>
                         </div>
@@ -83,7 +83,7 @@
             </div>
         </div>
     </div>
-
+    
 <!-- append modal set data -->
 <div class="modal fade" id="DataEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -99,8 +99,8 @@
                  <label>Docente</label>
                 <div class="col-md-13">
                     <select class="form-control" name="" id="nameDocente">
-                        @foreach ($groups as $item)
-                            <option class="form-control" value="{{$item->id}}" selected>{{$item->first()->professor->names}}</option>
+                        @foreach ($groups as $group)
+                            <option class="form-control" value="{{$group->id}}" selected>{{$group->professor->names}}</option>
                         @endforeach  
                     </select>
                 </div>
@@ -124,6 +124,34 @@
     </div>
 </div>
 <!-- append modal set data -->
+
+
+<!-- Modal de eliminar -->
+<div class="modal fade" id="eliminarHorario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"> Eliminar Horario </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <form id="form-delete" action="{{route('schedule.destroy',[':ID_schedule'])}}" method="POST">
+                <input type="hidden" name="_token" value="{{csrf_token()}}" id="token_h">
+                <input type="hidden" name="_method" value="DELETE" id="method_h">
+                <div class="modal-body text-left">
+                    ¿Esta seguro que desea eliminar el horario {{ $item->name }}?
+                </div>
+            </form>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <input type="hidden" id="id_auxiliar">
+            <button type="submit" class="btn btn-danger deleteSchedule">Eliminar</button>    
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 @push('scripts')
     <script src="{{ asset('/vendor/horarios/js/eventos.js') }}"></script>

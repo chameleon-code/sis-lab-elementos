@@ -11,32 +11,36 @@ $(document).ready(function() {
         for (i = 0; i < response.length; i++) {
             $("#r" + response[i].hour_id + "c" + response[i].day_id).append('<label class="label-desc ' + response[i].color + '">' + " tasker" +
                 '<a data-id="' + response[i].id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
+            // $("#r" + response[i].hour_id + "c" + response[i].day_id).append('<label class="label-desc ' + response[i].color + '">' + '<dfn title="Docente: ' +
+            //     docente + ', Materia: ' + materia + '">Bloque :' + block_id + '</dfn>' +
+            //     ' <a data-id="' + response[i].id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
         }
         $('.deltasker').on('click', function(e) {
             e.preventDefault();
+            $('#eliminarHorario').modal('show');
             var element = $(this).parent();
             var id = $(this).data('id');
-            console.log(id);
-            element.addClass('animated bounceOut');
-            url = '/schedule/records/delete/' + id;
-
-            var form = $('#form-delete')
-                // alert(form.attr('action'));
-            var url = form.attr('action').replace(':ID_schedule', id);
-            var data = form.serialize();
-            //alert(data);
-            element.fadeOut();
-            $.post(url, data, function(result) {
-                alert(result.status_message);
-            }).fail(function() {
-                alert('el horario no fue eliminado');
-                element.show();
+            // console.log(id);
+            $('.deleteSchedule').on('click', function(e) {
+                element.addClass('animated bounceOut');
+                url = '/schedule/records/delete/' + id;
+                $('#eliminarHorario').modal('toggle');
+                var form = $('#form-delete');
+                //alert(form.attr('action'));
+                var url = form.attr('action').replace(':ID_schedule', id);
+                var data = form.serialize();
+                //alert(data);
+                element.fadeOut();
+                $.post(url, data, function(result) {
+                    //alert(result.status_message);
+                    element.remove();
+                }).fail(function() {
+                    //alert('el horario no fue eliminado');
+                    element.show();
+                });
             });
         });
     });
-
-    //eliminar un horario
-
 
     //// Mostrar Boton Add
     $(".td-line").hover(
@@ -51,16 +55,23 @@ $(document).ready(function() {
     $('.addinfo').on('click', function(e) {
         e.preventDefault();
         var dum = $(this).attr('data-row');
-        $('#DataEdit').modal('show');
-        $('#tede').val(dum);
 
-        var row = $(this).parents('tr');
-        var hours_id = row.data('id');
-        $('#hours').val(hours_id);
-        var days_id = $(this).attr('data-col');
-        $('#days').val(days_id);
+        var label = $('#' + dum).find('label');
+        var cantidad = label.length;
+
+        if (cantidad < 1) {
+            $('#DataEdit').modal('show');
+            $('#tede').val(dum);
+
+            var row = $(this).parents('tr');
+            var hours_id = row.data('id');
+            $('#hours').val(hours_id);
+            var days_id = $(this).attr('data-col');
+            $('#days').val(days_id);
+        } else {
+            console.log("ya no se puede añadir");
+        }
     });
-
     // Borrar la Informacion
     // $('.delinfo').on('click', function() {
     //     var dum = $(this).attr('data-row');
@@ -82,23 +93,27 @@ $(document).ready(function() {
                     '<a data-id="' + response[i].id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
                 $('.deltasker').on('click', function(e) {
                     e.preventDefault();
+                    $('#eliminarHorario').modal('show');
                     var element = $(this).parent();
                     var id = $(this).data('id');
-                    console.log(id);
-                    element.addClass('animated bounceOut');
-                    url = '/schedule/records/delete/' + id;
-
-                    var form = $('#form-delete')
-                        // alert(form.attr('action'));
-                    var url = form.attr('action').replace(':ID_schedule', id);
-                    var data = form.serialize();
-                    //alert(data);
-                    element.fadeOut();
-                    $.post(url, data, function(result) {
-                        alert(result.status_message);
-                    }).fail(function() {
-                        alert('el horario no fue eliminado');
-                        element.show();
+                    // console.log(id);
+                    $('.deleteSchedule').on('click', function(e) {
+                        element.addClass('animated bounceOut');
+                        url = '/schedule/records/delete/' + id;
+                        $('#eliminarHorario').modal('toggle');
+                        var form = $('#form-delete');
+                        //alert(form.attr('action'));
+                        var url = form.attr('action').replace(':ID_schedule', id);
+                        var data = form.serialize();
+                        //alert(data);
+                        element.fadeOut();
+                        $.post(url, data, function(result) {
+                            //alert(result.status_message);
+                            element.remove();
+                        }).fail(function() {
+                            //alert('el horario no fue eliminado');
+                            element.show();
+                        });
                     });
                 });
             }
@@ -113,12 +128,6 @@ $(document).ready(function() {
         var color = $('#idcolortask option:selected').val();
         $('#DataEdit').modal('toggle');
         var docente = $('#nameDocente option:selected').text();
-        //alert(docente);
-        // $('#' + tede).append('<label class="label-desc ' + color + '">' + tasker +
-        //     ' <a data-id="' + response[i].id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
-        //$('#'+tede).text(tasker).addClass(color).show();
-
-        //$('#taskfrm')[0].reset();
 
         // $('.deltasker').on('click', function() {
         //     var element = $(this).parent();
@@ -148,27 +157,31 @@ $(document).ready(function() {
             data: datos,
             success: function(data) {
                 //alert(data.success);
-                $('#' + tede).append('<label class="label-desc ' + color + '">' + 'Bloque :' + block_id + '<br> Docente: ' + docente + '<br> Materia: ' + materia +
+                $('#' + tede).append('<label class="label-desc ' + color + '">' + '<dfn title="Docente: ' + docente + ', Materia: ' + materia + '">Bloque :' + block_id + '</dfn>' +
                     ' <a data-id="' + data.id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
                 $('.deltasker').on('click', function(e) {
                     e.preventDefault();
+                    $('#eliminarHorario').modal('show');
                     var element = $(this).parent();
                     var id = $(this).data('id');
-                    console.log(id);
-                    element.addClass('animated bounceOut');
-                    //url = '/schedule/records/delete/' + id;
-
-                    var form = $('#form-delete')
-                        // alert(form.attr('action'));
-                    var url = form.attr('action').replace(':ID_schedule', id);
-                    var data = form.serialize();
-                    //alert(data);
-                    element.fadeOut();
-                    $.post(url, data, function(result) {
-                        alert(result.status_message);
-                    }).fail(function() {
-                        alert('el horario no fue eliminado');
-                        element.show();
+                    // console.log(id);
+                    $('.deleteSchedule').on('click', function(e) {
+                        element.addClass('animated bounceOut');
+                        url = '/schedule/records/delete/' + id;
+                        $('#eliminarHorario').modal('toggle');
+                        var form = $('#form-delete');
+                        //alert(form.attr('action'));
+                        var url = form.attr('action').replace(':ID_schedule', id);
+                        var data = form.serialize();
+                        //alert(data);
+                        element.fadeOut();
+                        $.post(url, data, function(result) {
+                            //alert(result.status_message);
+                            element.remove();
+                        }).fail(function() {
+                            //alert('el horario no fue eliminado');
+                            element.show();
+                        });
                     });
                 });
             }
