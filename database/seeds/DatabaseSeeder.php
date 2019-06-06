@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 use App\Group;
+use App\Sesion;
 
 class DatabaseSeeder extends Seeder
 {
@@ -88,6 +89,17 @@ class DatabaseSeeder extends Seeder
         factory(\App\Block::class, 5)->create()
         ->each(function (\App\Block $b){
             Storage::makeDirectory($b->block_path);
+            $dates = \App\Sesion::autodate('2019-02-10', '2019-06-25');
+            $i = 1;
+            foreach($dates as $date){
+                Sesion::create([
+                    'block_id' => $b->id,
+                    'number_sesion' => $i,
+                    'date_start' => $date['start'],
+                    'date_end' => $date['end'],
+                ]);
+                $i++;
+            }
         });
 
         factory(\App\BlockGroup::class, 20)->create();
@@ -142,5 +154,7 @@ class DatabaseSeeder extends Seeder
         factory(\App\ScheduleRecord::class, 30)->create();
 
         factory(\App\BlockSchedule::class, 30)->create();
+        
+        factory(\App\Task::class, 100)->create();
     }
 }
