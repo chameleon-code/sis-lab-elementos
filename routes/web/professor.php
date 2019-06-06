@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/sesions','SesionController@index');
 Route::post('/sesions/store','SesionController@store');
+Route::get('/professor/sesion/{id}/tasks','TaskController@getTasksBySesion');
 
 // Monitoreo de Estudiantes
 

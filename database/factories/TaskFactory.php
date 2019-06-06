@@ -18,7 +18,7 @@ $factory->define(App\Task::class, function (Faker\Generator $faker) {
     $sesion_id = $faker->randomElement(App\Sesion::all())->id;
     
     $title = $faker->sentence(5, true);
-    $description = $faker->text(200);
+    $description = $faker->text(400);
 
     return [
         'sesion_id' => $sesion_id,

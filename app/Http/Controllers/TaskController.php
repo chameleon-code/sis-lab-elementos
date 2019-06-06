@@ -157,4 +157,11 @@ class TaskController extends Controller
         ];
         return view('components.contents.professor.studentTask', $data);
     }
+
+    public function getTasksBySesion($id){
+        $sesion_id = Sesion::findOrFail($id)->id;
+        $tasks = Task::where('sesion_id', '=', $sesion_id)->get();
+
+        return $tasks;
+    }
 }

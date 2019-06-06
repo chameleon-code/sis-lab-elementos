@@ -115,7 +115,7 @@
                                                             </div>
                                                             <div class="d-flex justify-content-end">
                                                                 <div class="mx-4">
-                                                                    <a href="#" class="mx-2" onclick="showSesion({{$s->number_sesion}})" data-toggle-2="tooltip" title="Guía práctica" data-toggle="modal" data-target=".bd-example-modal-lg" onclick=""><i class="fas fa-book-open"></i></a>
+                                                                    <a href="#" class="mx-2" onclick="showSesion({{$s->number_sesion}}), loadPractice({{$s->id}})" data-toggle-2="tooltip" title="Guía práctica" data-toggle="modal" data-target=".bd-example-modal-lg" onclick=""><i class="fas fa-book-open"></i></a>
                                                                 </div>
                                                                 <div class="text-center" onclick="showAccordion({{$s->id}})" style="cursor: pointer; width: 18px;"><strong id="arrowAccordion{{$s->id}}" style="color: #8b8b8b; font-weight: bold;">&#709;</strong></div>
                                                             </div>
@@ -157,47 +157,7 @@
             <div class="modal-body py-1 px-3" id="text_confirm_reg">
 
                 <div class="px-1" id="sesionTasks">
-                    <div class="accordion-body bg-gray-300 rounded row my-2" style="cursor: default;">
-                        <div class="container d-flex justify-content-between p-1" style="">
-                            <div class="d-flex justify-content-start">
-                                <strong> Título:&nbsp;</strong> tarea 1
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                <a href="#" class="mx-2" onclick="" data-toggle-2="tooltip" title="Editar actividad" data-toggle="modal" data-target=".bd-example-modal-lg" onclick=""><i class="fas fa-edit"></i></a>
-                            </div>
-                        </div>
-
-                        <div class="my-2 mx-1" style="font-size: 15px;">
-                            <div style=""> 
-                                <strong> Descripción:&nbsp; </strong>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae facilis, sed tempore laborum, dignissimos consequatur exercitationem aliquid ducimus iusto repellat impedit veniam nostrum vero aperiam odio qui asperiores ea labore!
-                            </div>
-                            <div class="" style="margin-top: 15px;">
-                                Archivo adjunto: <a href="https://www.google.com">Ejercicio 1.pdf</a>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="accordion-body bg-gray-300 rounded row" style="cursor: default;">
-                            <div class="container d-flex justify-content-between p-1" style="">
-                                <div class="d-flex justify-content-start">
-                                    <strong> Título:&nbsp;</strong> tarea 2
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <a href="#" class="mx-2" onclick="" data-toggle-2="tooltip" title="Editar actividad" data-toggle="modal" data-target=".bd-example-modal-lg" onclick=""><i class="fas fa-edit"></i></a>
-                                </div>
-                            </div>
-    
-                            <div class="my-2 mx-1" style="font-size: 15px;">
-                                <div style=""> 
-                                    <strong> Descripción:&nbsp; </strong>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae facilis, sed tempore laborum, dignissimos consequatur exercitationem aliquid ducimus iusto repellat impedit veniam nostrum vero aperiam odio qui asperiores ea labore!
-                                </div>
-                                <div class="" style="margin-top: 15px;">
-                                    Archivo adjunto: <a href="https://www.google.com">Ejercicio 2.pdf</a>
-                                </div>
-                            </div>
-                        </div>
+                    
                 </div>
 
                     
