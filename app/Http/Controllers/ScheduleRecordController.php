@@ -43,10 +43,13 @@ class ScheduleRecordController extends Controller
         if($request->ajax()){
             $id=ScheduleRecord::create([
                 'laboratory_id' => $request->laboratory_id,
-                'day_id' => $request->day_id,
-                'hour_id' => $request->hour_id,
-                'color' => $request->color
+                'day_id'        => $request->day_id,
+                'hour_id'       => $request->hour_id,
+                'professor'     => $request->professor,
+                'subject'       => $request->subject,
+                'color'         => $request->color
             ])->id;
+            //dd($request->subject);
             BlockSchedule::create([
                 'schedule_id' => $id,
                 'block_id' => $request->block_id
@@ -69,6 +72,13 @@ class ScheduleRecordController extends Controller
     }
 
     public function getRecords(Request $request, $laboratory_id){
+        // $schedule = ScheduleRecord::getSchedulesByLaboratory($laboratory_id);
+        //dd($schedule);
+        // if($request->ajax()){
+        //     return response()->json([
+        //         'schedule'=>$schedule
+        //     ]);
+        // }
         return ScheduleRecord::getSchedulesByLaboratory($laboratory_id);
 
     }

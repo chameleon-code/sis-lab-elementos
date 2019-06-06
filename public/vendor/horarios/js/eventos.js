@@ -9,11 +9,10 @@ $(document).ready(function() {
             }
         }
         for (i = 0; i < response.length; i++) {
-            $("#r" + response[i].hour_id + "c" + response[i].day_id).append('<label class="label-desc ' + response[i].color + '">' + " tasker" +
-                '<a data-id="' + response[i].id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
-            // $("#r" + response[i].hour_id + "c" + response[i].day_id).append('<label class="label-desc ' + response[i].color + '">' + '<dfn title="Docente: ' +
-            //     docente + ', Materia: ' + materia + '">Bloque :' + block_id + '</dfn>' +
-            //     ' <a data-id="' + response[i].id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
+            var valorColor = 360 / (parseInt(response[i].blockid, 10));
+            $("#r" + response[i].hour_id + "c" + response[i].day_id).append('<label class="label-desc" ' + 'style="color: #FFF;background:hsl(' + valorColor + ',100%,40%);">' + '<dfn title="Docente: ' +
+                response[i].professor + ', Materia: ' + response[i].subject + '">Bloque :' + response[i].blockid + '</dfn>' +
+                ' <a data-id="' + response[i].id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
         }
         $('.deltasker').on('click', function(e) {
             e.preventDefault();
@@ -29,7 +28,7 @@ $(document).ready(function() {
                 //alert(form.attr('action'));
                 var url = form.attr('action').replace(':ID_schedule', id);
                 var data = form.serialize();
-                //alert(data);
+                // alert(data);
                 element.fadeOut();
                 $.post(url, data, function(result) {
                     //alert(result.status_message);
@@ -45,7 +44,13 @@ $(document).ready(function() {
     //// Mostrar Boton Add
     $(".td-line").hover(
         function() {
-            $(this).find('button').show();
+            var button = $(this).find('button');
+            var dum = button.attr('data-row')
+            var label = $('#' + dum).find('label');
+            var cantidad = label.length;
+            if (cantidad < 1) {
+                $(this).find('button').show();
+            }
         },
         function() {
             $(this).find('button').hide();
@@ -83,14 +88,16 @@ $(document).ready(function() {
         $.get(url, function(response, state) {
             //console.log(response);
             $('#bloque').empty();
-            for (f = 1; f < 8; f++) {
+            for (f = 1; f < 11; f++) {
                 for (c = 1; c < 7; c++) {
                     $("#r" + f + "c" + c).empty();
                 }
             }
             for (i = 0; i < response.length; i++) {
-                $("#r" + response[i].hour_id + "c" + response[i].day_id).append('<label class="label-desc ' + response[i].color + '">' + " tasker" +
-                    '<a data-id="' + response[i].id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
+                var valorColor = 360 / (parseInt(response[i].blockid, 10));
+                $("#r" + response[i].hour_id + "c" + response[i].day_id).append('<label class="label-desc" ' + 'style="color: #FFF;background:hsl(' + valorColor + ',100%,40%);">' + '<dfn title="Docente: ' +
+                    response[i].professor + ', Materia: ' + response[i].subject + '">Bloque :' + response[i].blockid + '</dfn>' +
+                    ' <a data-id="' + response[i].id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
                 $('.deltasker').on('click', function(e) {
                     e.preventDefault();
                     $('#eliminarHorario').modal('show');
@@ -125,7 +132,7 @@ $(document).ready(function() {
     $('.savetask').on('click', function() {
         var tede = $('#tede').val();
         var tasker = $('#nametask').val();
-        var color = $('#idcolortask option:selected').val();
+        var color = $('#idcolortask').val();
         $('#DataEdit').modal('toggle');
         var docente = $('#nameDocente option:selected').text();
 
@@ -146,8 +153,11 @@ $(document).ready(function() {
             "day_id": days,
             "hour_id": hours,
             "color": color,
+            "professor": docente,
+            "subject": materia,
             "block_id": block_id
         };
+        //console.log(datos);
         var token = $("#token").val();
         $.ajax({
             url: route,
@@ -157,7 +167,8 @@ $(document).ready(function() {
             data: datos,
             success: function(data) {
                 //alert(data.success);
-                $('#' + tede).append('<label class="label-desc ' + color + '">' + '<dfn title="Docente: ' + docente + ', Materia: ' + materia + '">Bloque :' + block_id + '</dfn>' +
+                var valorColor = 360 / parseInt(block_id);
+                $('#' + tede).append('<label class="label-desc" ' + 'style="color: #FFF;background:hsl(' + valorColor + ',100%,40%);">' + '<dfn title="Docente: ' + docente + ', Materia: ' + materia + '">Bloque :' + block_id + '</dfn>' +
                     ' <a data-id="' + data.id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
                 $('.deltasker').on('click', function(e) {
                     e.preventDefault();
@@ -188,4 +199,4 @@ $(document).ready(function() {
         });
     });
     //fin de guardar horario
-});
+})

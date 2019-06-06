@@ -104,10 +104,11 @@
                         @endforeach  
                     </select>
                 </div>
-                <label>Color:</label>
-                <select class="form-control" id="idcolortask" readonly>
+                {{-- <label>Color:</label> --}}
+                <input id="idcolortask" type="hidden" name="idcolortask" value="color-{{$block_id}}">
+                {{-- <select class="form-control" id="idcolortask" readonly>
                         <option value="color-{{$block_id}}">Purpura</option>
-                </select>
+                </select> --}}
                 <input id="materia" type="hidden" name="materia" value="{{$groups->first()->subject->name}}">
                 <input id="tede" type="hidden" name="tede" >
                 <input id="hours" type="hidden" name="hours">
