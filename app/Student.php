@@ -19,7 +19,7 @@ class Student extends Model
 
     public static function getAllStudents()
     {
-        return Student::join('users', 'user_id', '=', 'users.id')->select('users.role_id', 'users.names', 'users.first_name', 'users.second_name', 'users.email', 'users.password', 'users.img_path', 'users.remember_token', 'users.created_at', 'users.updated_at', 'students.id', 'users.code_sis', 'ci', 'students.group_id', 'students.block_id')->get();
+        return Student::join('users', 'user_id', '=', 'users.id')->select('users.role_id', 'users.names', 'users.first_name', 'users.second_name', 'users.email', 'users.password', 'users.img_path', 'users.remember_token', 'users.created_at', 'users.updated_at', 'students.id', 'users.code_sis', 'ci')->get();//, 'students.group_id', 'students.block_id')->get();
     }
 
     protected $rules = [
@@ -31,5 +31,7 @@ class Student extends Model
         'ci' => 'required|max:9|min:6',
         'password' => 'required|min:8'
     ];
-
+    public function user(){
+        return $this->hasOne('App\user');
+    }
 }

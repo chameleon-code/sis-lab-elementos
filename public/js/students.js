@@ -55,7 +55,7 @@ function infReg(item, id){
     var select = $('#group_' + id)[0];
     if(select.options[select.selectedIndex].text !== "grupo"){
         $.ajax({
-            url : '/students/registration/getGroupSchedules/'+select.value,
+            url : 'http://localhost:8000/students/registration/getGroupSchedules/'+select.value,
             success: function (response){
                 console.log(response);
                 var cont = 1;

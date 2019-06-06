@@ -12,9 +12,12 @@ use Illuminate\Support\Facades\Mail;
 use App\SubjectMatter;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use App\Block;
 use App\BlockGroup;
 use App\Group;
 use Illuminate\Support\Facades\Cache;
+use App\Mail\StudentMailController;
+use App\StudentSchedule;
 
 class ProfessorController extends Controller
 {
@@ -170,25 +173,38 @@ class ProfessorController extends Controller
         return redirect('/admin/professors');   
     }
 
+    //Obtiene la lista de estudiantes en base a grupo
     public function studentList(){
-        $user = Auth::user();
-        $professor = Professor::where('user_id', '=', $user->id)->get()->first();
-        $group_professor = Group::where('professor_id', '=', $professor->id)->get()->first();
-        if($group_professor!=null){
-            $block_professor = BlockGroup::where('group_id', '=', $group_professor->id)->get();
-            //$students = Student::where('block_id', '=', $block_professor->block_id)->get();
-            $students = Student::getAllStudents();
-            $data = ['students' => $students,
-                    'block_professor' => $block_professor,
-                    'title' => 'Estudiantes'];
+        $professor = Professor::where('user_id', auth()->user()->id)->first();
+        $groups = Group::where('professor_id', $professor->id)->get();
+        $groupID = StudentSchedule::all();
+        $groupID->search(function ($item, $key) use ($groups){
+            foreach($groups as $group){
+                if($group->id == $item->group->id)
+                return true;
+            }
+        });
+        //dd($groupID->first());
+        $schedules = $this->studentListBySubject(new Request, $groupID->first()->group_id);
+        $data = [
+                    'schedules' => $schedules,
+                    'groups' => $groups,
+                    'groupID' => $groupID->first(),
+                    'title' => 'Estudiantes'
+                ];
             return view('components.contents.professor.studentList', $data);
-        }else{
-            $data = ['students' => [],
-                    'block_professor' => [],
-                    'title' => 'Estudiantes'];
-            return view('components.contents.professor.studentList',$data);
+    }
+    public function studentListBySubject(Request $request, $id){
+        $schedules = StudentSchedule::all();
+        $schedules2 = $schedules->reject(function($item, $key) use ($id){
+            if($item->group_id != $id)
+                return true;
+        });
+        if($request->ajax()){
+            return response()->json($schedules2);
         }
-        
+        //dd($schedules);
+        return $schedules2;
     }
 
     public function profileStudent($id)

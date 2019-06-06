@@ -4,24 +4,33 @@
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <div class="panel-heading m-0 font-weight-bold text-primary">Estudiante</div>
+                <div class="panel-heading m-0 font-weight-bold text-primary">Estudiantes </div>
                 <div class="card-body">
                     @if (Session::has('status_message'))
                         <p class="alert alert-success"><strong> {{Session::get('status_message')}} </strong></p>
                     @endif
                     <div class="">
                         <div class="row">
+                            <div class="form-group">
+                                    <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
+                                        @forelse ($groups as $group)
+                                        @if ($groupID->group_id == $group->id)
+                                            <option class="form-control" value="{{$group->id}}" selected> Grupo {{$group->name . " - " . $group->subject->name}}</option>
+                                            @continue
+                                        @endif
+                                            <option class="form-control" value="{{$group->id}}"> Grupo {{$group->name . " - " . $group->subject->name}}</option>
+                                        @empty
+                                        <option class="form-control" value="">No existen materias registradas</option>
+                                        @endempty
+                                        @endforelse
+                                    </select>
+                            </div>
                             <div class="col-sm-12 table-responsive">
                                 <table class="table dataTable text-center table-striped table-secondary" id="dataTable" width="100%"
                                        cellspacing="0" role="grid" aria-describedby="dataTable_info"
                                        style="width: 100%;">
                                     <thead>
                                     <tr role="row" class="bg-dark">
-                                        <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1"
-                                        colspan="1" aria-label="Name: activate to sort column ascending"
-                                        style="width: 100px;"><font style="vertical-align: inherit;"><font
-                                                    style="vertical-align: inherit; color: white;">Grupo</font></font></th>
-
                                         <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1"
                                             colspan="1" aria-label="Name: activate to sort column ascending"
                                             style="width: 230px;"><font style="vertical-align: inherit;"><font
@@ -48,24 +57,19 @@
                                     </thead>
                                     <tbody>
 
-                                    @foreach ($students as $item)
-                                    @foreach ($block_professor as $item2)
-                                        @if($item->block_id == $item2->block_id)
+                                    @foreach ($schedules as $item)
                                         <tr role="row" class="odd">
-                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->group_id }}</font></font></td>
-                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->code_sis }}</font></font></td>
-                                            <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->first_name }} {{ $item->second_name }}</font></font></td>
-                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->names }}</font></font></td>
+                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->student->code_sis }}</font></font></td>
+                                            <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->student->first_name }} {{ $item->student->second_name }}</font></font></td>
+                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->student->names }}</font></font></td>
                                             {{-- <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->email }}</font></font></td> --}}
 
                                             <td class="text-center" style="text-align: center; display: flex;">
-                                                <a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick="loadProfile({{ $item }})"><i class="fas fa-eye"></i></a>
+                                                <a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick="loadProfile({{ $item->student }})"><i class="fas fa-eye"></i></a>
 
-                                                <a href="/professor/studentSesions/{{$item->id}}" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Portafolios"><i class="fas fa-briefcase"></i></a>
+                                                <a href="/professor/studentSesions/{{$item->student->id}}" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Portafolios"><i class="fas fa-briefcase"></i></a>
                                             </td>
                                         </tr>
-                                        @endif
-                                    @endforeach
                                     @endforeach
                                     </tbody>
                                 </table>

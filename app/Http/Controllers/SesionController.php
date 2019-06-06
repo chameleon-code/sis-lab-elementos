@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\SubjectMatter;
 use App\Management;
+use App\StudentSchedule;
 
 class SesionController extends Controller
 {
@@ -209,7 +210,13 @@ class SesionController extends Controller
         $sesions = Sesion::all();
         $tasks = Task::all();
         $sesion_max = Sesion::max('number_sesion');
-        $group = Group::find($student->group_id);
+        $schedule = StudentSchedule::all();
+        $schedule->reject(function($item, $key) use ($student){
+            if($item->student_id =! $student->id){
+                return true;
+            }
+        });
+        $group = Group::find($schedule->first()->group_id);
         $subjectMatter = SubjectMatter::where('id', '=', $group->subject_matter_id)->get()->first();
         $blockGroup = Professor::getBlockProfessor();
 
