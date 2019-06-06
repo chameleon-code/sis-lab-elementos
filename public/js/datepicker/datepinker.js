@@ -1,7 +1,7 @@
 $(function() {
     $("#inicio_fecha").datepicker({
         firstDay: 1,
-        monthNames: ['Enero', 'Febreo', 'Marzo',
+        monthNames: ['Enero', 'Febrero', 'Marzo',
             'Abril', 'Mayo', 'Junio',
             'Julio', 'Agosto', 'Septiembre',
             'Octubre', 'Noviembre', 'Diciembre'
@@ -13,7 +13,7 @@ $(function() {
 $(function() {
     $("#fin_fecha").datepicker({
         firstDay: 1,
-        monthNames: ['Enero', 'Febreo', 'Marzo',
+        monthNames: ['Enero', 'Febrero', 'Marzo',
             'Abril', 'Mayo', 'Junio',
             'Julio', 'Agosto', 'Septiembre',
             'Octubre', 'Noviembre', 'Diciembre'
