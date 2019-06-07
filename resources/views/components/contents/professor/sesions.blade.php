@@ -115,7 +115,7 @@
                                                             </div>
                                                             <div class="d-flex justify-content-end">
                                                                 <div class="mx-4">
-                                                                    <a href="#" class="mx-2" onclick="showSesion({{$s->number_sesion}})" data-toggle-2="tooltip" title="Guía práctica" data-toggle="modal" data-target=".bd-example-modal-lg" onclick=""><i class="fas fa-book-open"></i></a>
+                                                                    <a href="#" class="mx-2" onclick="showSesion({{$s}}), loadPractice({{$s->id}})" data-toggle-2="tooltip" title="Guía práctica" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-book-open"></i></a>
                                                                 </div>
                                                                 <div class="text-center" onclick="showAccordion({{$s->id}})" style="cursor: pointer; width: 18px;"><strong id="arrowAccordion{{$s->id}}" style="color: #8b8b8b; font-weight: bold;">&#709;</strong></div>
                                                             </div>
@@ -157,53 +157,13 @@
             <div class="modal-body py-1 px-3" id="text_confirm_reg">
 
                 <div class="px-1" id="sesionTasks">
-                    <div class="accordion-body bg-gray-300 rounded row my-2" style="cursor: default;">
-                        <div class="container d-flex justify-content-between p-1" style="">
-                            <div class="d-flex justify-content-start">
-                                <strong> Título:&nbsp;</strong> tarea 1
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                <a href="#" class="mx-2" onclick="" data-toggle-2="tooltip" title="Editar actividad" data-toggle="modal" data-target=".bd-example-modal-lg" onclick=""><i class="fas fa-edit"></i></a>
-                            </div>
-                        </div>
 
-                        <div class="my-2 mx-1" style="font-size: 15px;">
-                            <div style=""> 
-                                <strong> Descripción:&nbsp; </strong>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae facilis, sed tempore laborum, dignissimos consequatur exercitationem aliquid ducimus iusto repellat impedit veniam nostrum vero aperiam odio qui asperiores ea labore!
-                            </div>
-                            <div class="" style="margin-top: 15px;">
-                                Archivo adjunto: <a href="https://www.google.com">Ejercicio 1.pdf</a>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="accordion-body bg-gray-300 rounded row" style="cursor: default;">
-                            <div class="container d-flex justify-content-between p-1" style="">
-                                <div class="d-flex justify-content-start">
-                                    <strong> Título:&nbsp;</strong> tarea 2
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <a href="#" class="mx-2" onclick="" data-toggle-2="tooltip" title="Editar actividad" data-toggle="modal" data-target=".bd-example-modal-lg" onclick=""><i class="fas fa-edit"></i></a>
-                                </div>
-                            </div>
-    
-                            <div class="my-2 mx-1" style="font-size: 15px;">
-                                <div style=""> 
-                                    <strong> Descripción:&nbsp; </strong>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae facilis, sed tempore laborum, dignissimos consequatur exercitationem aliquid ducimus iusto repellat impedit veniam nostrum vero aperiam odio qui asperiores ea labore!
-                                </div>
-                                <div class="" style="margin-top: 15px;">
-                                    Archivo adjunto: <a href="https://www.google.com">Ejercicio 2.pdf</a>
-                                </div>
-                            </div>
-                        </div>
                 </div>
 
                     
                     <div class="my-1 mx-2" id="formActivity" style="font-size: 15px;">
-                        <strong class="px-2"> Nueva Actividad </strong> <br><br>
-                            <form class="user" action="{{Route('tasks.create')}}" method="POST" enctype="multipart/form-data">
+                        <strong class="px-2"> Nueva Tarea </strong> <br><br>
+                            <form class="user" id="taskForm" action="" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="group col-sm-12">
                                         {{-- <label for="">Título</label> --}}
@@ -216,12 +176,11 @@
                                 </div>
                                 <br>
                                 <div class="group col-sm-12">
-                                    <input type="file" name="practice" style="margin-bottom: 4px;" required>
+                                    <input id="practice" type="file" name="practice" style="margin-bottom: 4px;" required>
                                     <br>
                                     Solo los siguientes formatos son admitidos: <strong>.zip .rar .pdf</strong><br>
                                 </div>
-                                <input type="text" name="sesion_id" value="" hidden>
-                                <input type="text" name="number_sesion" value="" hidden>
+                                <input type="number" id="sesion_id" name="sesion_id" value="" hidden>
                             </form>
 
                         </div>
@@ -236,7 +195,7 @@
                         <span class="icon text-white-50">
                             <i class="fas fa-plus"></i>
                         </span>
-                        <span class="text">Agregar actividad</span>
+                        <span class="text">Agregar tarea</span>
                     </a>
                 </div>
 
@@ -248,7 +207,7 @@
                         </div>
                     @else
                         <div class="d-flex justify-content-center">
-                            <button type="button" class="btn btn-primary btn-block btn-sm col-md-3 mx-2" style="">Guardar</button>
+                            <button type="button" class="btn btn-primary btn-block btn-sm col-md-3 mx-2" style="" onclick="storeTask()">Guardar</button>
                             <button type="button" class="btn btn-secondary btn-block btn-sm col-md-3 mx-2" style="margin-top: 0px;" onclick="hideFormActivity()">Cancelar</button>
                         </div>
                     @endif
@@ -281,6 +240,10 @@
     <script src="/js/accordion.js"></script>
     <script src="/js/sesions.js"></script>
 @endsection
+
+
 @push('scripts')
-  <script src="{{ asset('js/datepicker/datepinker.js') }}"></script>
+    <script src="{{ asset('js/datepicker/datepinker.js') }}"></script>
+    <script src="{{ asset("https://cdn.jsdelivr.net/npm/sweetalert2@8") }}"></script>
+    <link rel="stylesheet" href="{{ asset('/css/calendar.css') }}">
 @endpush
