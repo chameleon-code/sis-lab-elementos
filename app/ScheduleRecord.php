@@ -21,4 +21,17 @@ class ScheduleRecord extends Model
     public static function getSchedulesByLaboratory($id){
         return self::where('laboratory_id', $id)->orderBy('day_id')->get();
     }
+    
+    public static function getDayAndHourFormatWithId($id){
+        $date = self::where('id', $id)->get()->first();
+        $day = Day::where('id',$date->day_id)->get()->first()->name;
+        $hourStart = Hour::where('id',$date->hour_id)->get()->first()->start;
+        $hourEnd = Hour::where('id',$date->hour_id)->get()->first()->end;
+        $data=[
+            "start"=>$hourStart,
+            "end"=>$hourEnd,
+            "day" => $day,
+        ];
+        return $data;
+    }
 }

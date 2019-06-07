@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Student;
+use App\StudentSchedule;
+use Carbon\Carbon;
 
 class StudentTaskController extends Controller
 {
@@ -17,7 +19,15 @@ class StudentTaskController extends Controller
     {
         $user = Auth::user();
         $student = Student::where('user_id','=',$user->id)->first();
-        $data = ['student' => $student,
+        //test for day and hours 
+        //$testDate = Carbon::create(2019,6,6,17,15,0); 
+        //Carbon::setTestNow($testDate);
+        // end test 
+        $day = Carbon::now()->format('Y-m-d');
+        $hour = Carbon::now()->format('H:i:s');
+        $schedules = StudentSchedule::getDateTimeStudentSchedulesByStudentId($student->id);
+        $data = [
+            'student' => $student,
             'user' => $user
         ];
         return view('components.contents.student.activities')->with($data);
