@@ -70,42 +70,40 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
-        $info = \request('info');
-        dd($info);
-    	$data = [];
-        parse_str($info, $data);
+        //if($request->ajax()){
+        // $info = \request('info');
+    	// $data = [];
+        // parse_str($info, $data);
 
-        $sesion_number = Sesion::findOrFail($data['sesion_id'])->sesion_number;
+        //$sesion_number = Sesion::findOrFail($data['sesion_id'])->sesion_number;
+
+        $sesion_number = Sesion::findOrFail($request->sesion_id)->number_sesion;
 
         $blockGroupId = Professor::getBlockProfessor()->block_id;
         $dir = Block::where('id', '=', $blockGroupId)->get()->first()->block_path;
-        try {
-            if($data['practice']){
-                $file = $data['practice'];
+            //if($request->file()){
+                $file = $request->file('practice');
                 $extension = $file->getClientOriginalExtension();
-                if($extension=='rar'||$extension=='zip'||$extension=='tar.gz'||$extension=='pdf'){
+                //if($extension=='rar'||$extension=='zip'||$extension=='tar.gz'||$extension=='pdf'){
                     //$file = $request->file('practice');
                     $name = $file->getClientOriginalName();
-                    $semiPath ='/storage/'.$dir.'/sesion-'.$sesion_number.'/';
+                    $semiPath ='/storage/'.$dir.'/practices/sesion-'.$sesion_number.'/';
                     $path = public_path().$semiPath;
                     $file -> move($path,$name);
                     $task = [
-                        'title' => $data['title'],
-                        'description' => $data['description'],
-                        'sesion_id' => $data['sesion_id'],
+                        'title' => $request->title,//$data['title'],
+                        'description' => $request->description,//$data['description'],
+                        'sesion_id' => $request->sesion_id,//$data['sesion_id'],
                         'task_path' => $semiPath,
+                        'task_file' => $name,
                     ];
                     Task::create($task);
-                    $success = true;
-                }
-            }
-        } catch (\Exception $exception) {
-    		$success = false;
-	    }
-        return response()->json(['res' => $success]);
-        //return dd($data['practice']);
+                    return response()->json($task);
+                //}
+            //}
+        //}
     }
 
     /**

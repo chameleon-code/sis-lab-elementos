@@ -11,9 +11,8 @@ class Task extends Model
         'sesion_id',
         'title',
         'description',
-        'star',
-        'end',
-        'task_path'
+        'task_path',
+        'task_file',
     ];
     protected $hidden = ['created_at', 'updated_at'];
 }

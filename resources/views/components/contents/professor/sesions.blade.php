@@ -180,7 +180,7 @@
                                     <br>
                                     Solo los siguientes formatos son admitidos: <strong>.zip .rar .pdf</strong><br>
                                 </div>
-                                <input type="number" id="sesion_id" name="sesion_id" value="">
+                                <input type="number" id="sesion_id" name="sesion_id" value="" hidden>
                             </form>
 
                         </div>
@@ -195,7 +195,7 @@
                         <span class="icon text-white-50">
                             <i class="fas fa-plus"></i>
                         </span>
-                        <span class="text">Agregar actividad</span>
+                        <span class="text">Agregar tarea</span>
                     </a>
                 </div>
 
