@@ -53,6 +53,6 @@ $factory->define(App\BlockSchedule::class, function (Faker\Generator $faker) {
     return [
         'schedule_id' => $faker->unique()->randomElement(App\ScheduleRecord::all())->id,
         'block_id' => $faker->randomElement(App\Block::all())->id,
-        'registereds' => 0,
+        // 'registereds' => 0,
     ];
 });
