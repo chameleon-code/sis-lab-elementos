@@ -10,6 +10,7 @@ class Task extends Model
         'id',
         'sesion_id',
         'title',
+        'published_by',
         'description',
         'task_path',
         'task_file',
