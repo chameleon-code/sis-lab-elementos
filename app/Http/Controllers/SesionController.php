@@ -170,32 +170,22 @@ class SesionController extends Controller
 
     public function showStudentSesions($id)
     {
-        $student = Student::where('user_id',$id)->first();
-        //dd($student);
-        $schedule = StudentSchedule::all();
-        $schedule->reject(function($item, $key) use ($student){
-            if($item->student_id =! $student->id){
+        $schedule = StudentSchedule::findOrFail($id);
+        $sesions = Sesion::where('block_id', $schedule->getGroupAttribute()->blocks->first()->id)->get();
+        //dd($group);
+        $tasks = Task::all()->reject(function($item, $key) use ($schedule){
+            if($item->getSesionAttribute()->block_id != $schedule->group->blocks()->first()->id){
                 return true;
             }
-        });
-        $user = User::where('id', '=', $student->user_id)->get()->first();
-        $group = Group::find($schedule->first()->group_id);
-        $sesions = Sesion::where('block_id', $group->blocks->first()->id)->get();
-        //dd($group);
-        $tasks = Task::all();
+        })->values()->all();
         $sesion_max = Sesion::max('number_sesion');
-        $subjectMatter = SubjectMatter::where('id', '=', $group->subject_matter_id)->get()->first();
         $blockGroup = Professor::getBlockProfessor();
-
         $data = [
-            'student' => $student,
-            'user' => $user,
+            'schedule'=>$schedule,
             'sesions' => $sesions,
             'tasks' => $tasks,
             'blockGroup' => $blockGroup,
             'sesion_max' => $sesion_max,
-            'group' => $group,
-            'subject_matter' => $subjectMatter,
         ];
 
         return view('components.contents.professor.studentSesions', $data);

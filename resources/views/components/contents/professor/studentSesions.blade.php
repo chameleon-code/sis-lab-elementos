@@ -22,9 +22,9 @@
                 </div>
 
                 <div class="container">
-                    <strong>Estudiante: </strong> {{ $user->first_name.' '.$user->second_name.' '.$user->names }} <br>
-                    <strong>Materia: </strong> {{ $subject_matter->name }} <br>
-                    <strong>Grupo: </strong> {{ $group->name }}
+                    <strong>Estudiante: </strong> {{ $schedule->student->first_name.' '.$schedule->student->second_name.' '.$schedule->student->names }} <br>
+                    <strong>Materia: </strong> {{ $schedule->group->subject->name }} <br>
+                    <strong>Grupo: </strong> {{ $schedule->group->name }}
                 </div>
 
                 <div class="card-body">
@@ -34,26 +34,37 @@
 
                     @foreach ($sesions as $sesion)
                     <thead>
-                        <tr>
-                            <div class="accordion-body bg-gray-300 border-bottom-primary rounded" style="margin-top: 8px;">
-                                <strong style="color: gray;"> Sesión: </strong> {{ $sesion->number_sesion }}
-                            </div>
-                        </tr>
-                        
+                            <tr>
+                                <div class="accordion-body bg-gray-300 rounded row" style="cursor: default;">
+                                    <div class="container d-flex justify-content-between p-1" style="">
+                                        <div class="d-flex justify-content-start">
+                                            <strong style="color: gray;"> Sesión:&nbsp; </strong> {{ $sesion->number_sesion }}
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <div class="mx-4">
+                                                <a href="#" class="mx-2" onclick="showSesion({{$sesion}}), loadPractice({{$sesion->id}})" data-toggle-2="tooltip" title="Guía práctica" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-book-open"></i></a>
+                                            </div>
+                                            <div class="text-center" onclick="showAccordion({{$sesion->id}})" style="cursor: pointer; width: 18px;"><strong id="arrowAccordion{{$sesion->id}}" style="color: #8b8b8b; font-weight: bold;">&#709;</strong></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
                     </thead>
                     
-                    <div class="panel">
+                    <div class="py-2" id="panel{{$sesion->id}}" style="max-height: 100%;">
                         @foreach ($tasks as $task)
-                            @if($task->sesion_id == $sesion->id)
-                                <div class="my-2 mx-2" style="border-bottom: 1px solid #b5b5b5; font-size: 15px;">
-                                        <div style="margin-top: 12px; margin-bottom: -15px;"> <p> <strong> Estado de tarea: </strong> <a href="/professor/student/{{$student->id}}/task/{{$task->id}}">{{ $task->title }}</a> </p> </div>
-                                        <div class="row" style="margin-top: -15px;">
-                                            <div class="row" style="margin-left: 12px;">
-                                                <strong> Entregado: &#10003 &#10005 </strong>
-                                            </div>
+                            @if ($task->sesion_id == $sesion->id)
+                            
+                                <div class="my-2 mx-2" style="font-size: 15px;">
+                                    <div style="margin-top: 12px; margin-bottom: -15px;">
+                                    <p> <strong> Estado de tarea: </strong> <a href="/professor/student/{{$schedule->student->id}}/task/{{$task->id}}">{{ $task->title }}</a> </p> </div>
+                                    <div class="row" style="margin-top: -15px;">
+                                        <div class="row" style="margin-left: 12px;">
+                                            <strong> Entregado: &#10003 &#10005 </strong>
                                         </div>
-                                        <div> <p> <strong> Límite de entrega: </strong> {{$task->end}} </p> </div>
-                                </div>
+                                    </div>
+                                    <div> <p> <strong> Límite de entrega: </strong> {{$task->end}} </p> </div>
+                                </div>   
                             @endif
                         @endforeach
                     </div>

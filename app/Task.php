@@ -15,4 +15,10 @@ class Task extends Model
         'task_file',
     ];
     protected $hidden = ['created_at', 'updated_at'];
+    protected $append = [
+        'sesion'
+    ];
+    public function getSesionAttribute(){
+        return Sesion::findOrFail($this->sesion_id);
+    }
 }

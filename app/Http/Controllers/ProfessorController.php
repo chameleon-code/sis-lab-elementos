@@ -207,7 +207,10 @@ class ProfessorController extends Controller
                 $student->Codigo_Sis = $schedule->getStudentAttribute()->code_sis;
                 $student->Apellidos = $schedule->getStudentAttribute()->first_name ." ". $schedule->getStudentAttribute()->second_name;
                 $student->Nombres = $schedule->getStudentAttribute()->names;
-                $student->Acciones = $schedule->getStudentAttribute();
+                $student->Acciones = (object)[
+                    'student' => $schedule->getStudentAttribute(),
+                    'schedule_id' => $schedule->id
+                ];
                 array_push($array, $student);
             }
             return response()->json($array);

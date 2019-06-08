@@ -63,9 +63,9 @@
                                             <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->student->first_name }} {{ $item->student->second_name }}</font></font></td>
                                             <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->student->names }}</font></font></td>
                                             <td class="text-center" style="text-align: center; display: flex;">
-                                                <a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick="loadProfile({{ $item->student }})"><i class="fas fa-eye"></i></a>
+                                                <a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick="loadProfile({{ $item->student }})" id="profile"><i class="fas fa-eye"></i></a>
 
-                                                <a href="/professor/studentSesions/{{$item->student->id}}" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Portafolios"><i class="fas fa-briefcase"></i></a>
+                                                <a href="/professor/studentSesions/{{$item->id}}" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Portafolios"><i class="fas fa-briefcase"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -96,7 +96,18 @@
               </div>
             </div>
           </div>
-
+<script>    
+function loadProfile(item){
+    document.getElementById('namesProfile').innerHTML=item.names+' '+item.first_name+' '+item.second_name;
+    document.getElementById('codeSisProfile').innerHTML=item.code_sis;
+    document.getElementById('emailProfile').innerHTML=item.email;
+}
+function emptyProfile(){
+    document.getElementById('namesProfile').innerHTML="";
+    document.getElementById('codeSisProfile').innerHTML="";
+    document.getElementById('emailProfile').innerHTML="";
+}
+</script>
 @endsection
 @push('scripts')
     <script src="{{ asset('js/studentList.js') }}"></script>
