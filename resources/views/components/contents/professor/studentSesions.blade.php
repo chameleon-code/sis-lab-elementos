@@ -115,7 +115,7 @@
     </div>
 </div>
 
-<script src="/js/accordion.js"></script>
+<script src={{  asset("/js/accordion.js")  }}></script>
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()

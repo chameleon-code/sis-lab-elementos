@@ -170,7 +170,8 @@ class SesionController extends Controller
 
     public function showStudentSesions($id)
     {
-        $student = Student::find($id);
+        $student = Student::where('user_id',$id)->first();
+        //dd($student);
         $schedule = StudentSchedule::all();
         $schedule->reject(function($item, $key) use ($student){
             if($item->student_id =! $student->id){

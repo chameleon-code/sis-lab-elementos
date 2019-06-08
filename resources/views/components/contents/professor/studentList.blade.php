@@ -96,14 +96,6 @@
               </div>
             </div>
           </div>
-    
-    <script>
-        function loadProfile(item){
-            document.getElementById('namesProfile').innerHTML=item.names+' '+item.first_name+' '+item.second_name;
-            document.getElementById('codeSisProfile').innerHTML=item.code_sis;
-            document.getElementById('emailProfile').innerHTML=item.email;
-        }
-    </script>
 
 @endsection
 @push('scripts')
