@@ -185,7 +185,7 @@ class ProfessorController extends Controller
             }
         });
         //dd($groupID->first());
-        $schedules = $this->studentListBySubject(new Request, $groupID->first()->group_id);
+        $schedules = $this->studentListByGroup(new Request, $groupID->first()->group_id);
         $data = [
                     'schedules' => $schedules,
                     'groups' => $groups,
@@ -194,17 +194,26 @@ class ProfessorController extends Controller
                 ];
             return view('components.contents.professor.studentList', $data);
     }
-    public function studentListBySubject(Request $request, $id){
-        $schedules = StudentSchedule::all();
+    public function studentListByGroup(Request $request, $id){
+        $schedules = StudentSchedule::all(); //$array = array();
         $schedules2 = $schedules->reject(function($item, $key) use ($id){
             if($item->group_id != $id)
                 return true;
         });
         if($request->ajax()){
-            return response()->json($schedules2);
+            $array = array();
+            foreach($schedules2->values()->all() as $schedule){
+                $student = new \stdClass();
+                $student->Codigo_Sis = $schedule->getStudentAttribute()->code_sis;
+                $student->Apellidos = $schedule->getStudentAttribute()->first_name ." ". $schedule->getStudentAttribute()->second_name;
+                $student->Nombres = $schedule->getStudentAttribute()->names;
+                $student->Acciones = $schedule->getStudentAttribute();
+                array_push($array, $student);
+            }
+            return response()->json($array);
         }
         //dd($schedules);
-        return $schedules2;
+        return $schedules2->values()->all();
     }
 
     public function profileStudent($id)

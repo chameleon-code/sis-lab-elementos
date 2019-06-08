@@ -12,7 +12,7 @@
                     <div class="">
                         <div class="row">
                             <div class="form-group">
-                                    <select name="subject_matter_id" class="form-control col-md-12" id="subjects">
+                                    <select name="group_id" class="form-control col-md-12" id="groups">
                                         @forelse ($groups as $group)
                                         @if ($groupID->group_id == $group->id)
                                             <option class="form-control" value="{{$group->id}}" selected> Grupo {{$group->name . " - " . $group->subject->name}}</option>
@@ -55,15 +55,13 @@
                                             style="vertical-align: inherit; color: white;">Acciones</font></font></th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="tablebody">
 
                                     @foreach ($schedules as $item)
                                         <tr role="row" class="odd">
                                             <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->student->code_sis }}</font></font></td>
                                             <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->student->first_name }} {{ $item->student->second_name }}</font></font></td>
                                             <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->student->names }}</font></font></td>
-                                            {{-- <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->email }}</font></font></td> --}}
-
                                             <td class="text-center" style="text-align: center; display: flex;">
                                                 <a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick="loadProfile({{ $item->student }})"><i class="fas fa-eye"></i></a>
 
@@ -108,3 +106,6 @@
     </script>
 
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/studentList.js') }}"></script>
+@endpush
