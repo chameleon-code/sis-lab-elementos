@@ -148,12 +148,11 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
-        // $task = Task::findOrFail($id);
-        // $task->delete();
-        // Session::flash('status_message', 'Auxiliar eliminad@ correctamente');
+        $task = Task::findOrFail($id);
+        $task->delete();
+        //Session::flash('status_message', 'Auxiliar eliminad@ correctamente');
 
-        // return response()->json(['message' => 'Eliminado correctamente!']);
+        return response()->json(['message' => 'Eliminado correctamente!']);
     }
 
     public function showStudentTask($idStudent, $idTask)

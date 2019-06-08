@@ -91,14 +91,15 @@ function deleteTask(id_dom_task, id_task){
     $('#btn-edit-task-'+id_dom_task).hide();
     $('#btn-delete-task-'+id_dom_task).hide();
     $('#task'+id_dom_task).after(
-        "<div class='d-flex justify-content-center' id='confirm-delete-task"+id_dom_task+"' style='margin-bottom: 15px;'> <button type='button' class='btn btn-danger btn-block btn-sm col-md-3 mx-2' style='' onclick='destroyTask("+id_dom_task+", "+id_task+")'>Eliminar</button> <button type='button' class='btn btn-secondary btn-block btn-sm col-md-3 mx-2' style='margin-top: 0px;' onclick='cancelDelete("+id_dom_task+")'>Cancelar</button> </div> "
+        "<div class='d-flex justify-content-center' id='confirm-delete-task"+id_dom_task+"' style='margin-bottom: 15px;'> <button type='button' class='btn btn-danger btn-block btn-sm col-md-3 mx-2' style='' onclick='destroyTask("+id_dom_task+", "+id_task+")'>Eliminar</button> <button type='button' class='btn btn-secondary btn-block btn-sm col-md-3 mx-2' style='margin-top: 0px;' onclick='cancelDelete("+id_dom_task+")'>Cancelar</button> <input type='hidden' name='_token' value='{{csrf_token()}}' id='token_h'> </div> "
     );
 }
 
 function destroyTask(id_dom_task, id_task){
+    //var token = $("#token").val();
     $.ajax({
         url : '/professor/task/delete/'+id_task,
-        type : 'DELETE',
+        //headers: { "X-CSRF-TOKEN": token },
         success: function (response){
             $('#task'+id_dom_task).remove();
             $('#confirm-delete-task'+id_dom_task).remove();

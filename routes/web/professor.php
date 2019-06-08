@@ -9,7 +9,7 @@ Route::get('/sesions','SesionController@index');
 Route::post('/sesions/store','SesionController@store');
 Route::get('/professor/sesion/{id}/tasks','TaskController@getTasksBySesion');
 Route::post('/professor/sesions/tasks/store','TaskController@store');
-Route::delete('/professor/task/delete/{id}','TaskController@destroy');
+Route::get('/professor/task/delete/{id}','TaskController@destroy')->name('task.delete');
 
 // Monitoreo de Estudiantes
 
