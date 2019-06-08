@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Professor;
 use App\Student;
@@ -72,15 +73,8 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //if($request->ajax()){
-        // $info = \request('info');
-    	// $data = [];
-        // parse_str($info, $data);
-
-        //$sesion_number = Sesion::findOrFail($data['sesion_id'])->sesion_number;
-
         $sesion_number = Sesion::findOrFail($request->sesion_id)->number_sesion;
-
+        $user = Auth::user();
         $blockGroupId = Professor::getBlockProfessor()->block_id;
         $dir = Block::where('id', '=', $blockGroupId)->get()->first()->block_path;
             //if($request->file()){
@@ -94,6 +88,7 @@ class TaskController extends Controller
                     $file -> move($path,$name);
                     $task = [
                         'title' => $request->title,//$data['title'],
+                        'published_by' => $user->names.' '.$user->first_name,
                         'description' => $request->description,//$data['description'],
                         'sesion_id' => $request->sesion_id,//$data['sesion_id'],
                         'task_path' => $semiPath,
@@ -123,9 +118,33 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $task = Task::findOrFail($request->task_id);
+        //$sesion_number = Sesion::findOrFail($request->sesion_id)->number_sesion;
+        $user = Auth::user();
+        //$blockGroupId = Professor::getBlockProfessor()->block_id;
+        //$dir = Block::where('id', '=', $blockGroupId)->get()->first()->block_path;
+
+            //if($request->file()){
+                //$file = $request->file('practice');
+                //$extension = $file->getClientOriginalExtension();
+                //if($extension=='rar'||$extension=='zip'||$extension=='tar.gz'||$extension=='pdf'){
+                    //$file = $request->file('practice');
+                    //$name = $file->getClientOriginalName();
+                    //$semiPath ='/storage/'.$dir.'/practices/sesion-'.$sesion_number.'/';
+                    //$path = public_path().$semiPath;
+                    //$file -> move($path,$name);
+                    
+                    $task->title = $request->title;//$data['title'],
+                    $task->published_by = $user->names.' '.$user->first_name;
+                    $task->description = $request->description;//$data['description'],
+                    $task->sesion_id = $request->sesion_id;//$data['sesion_id'],
+                    //$task->task_path = $semiPath;
+                    //$task->task_file = $name;
+                    $task->save();
+
+        return response()->json($task);
     }
 
     /**
@@ -148,7 +167,11 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $task = Task::findOrFail($id);
+        $task->delete();
+        //Session::flash('status_message', 'Auxiliar eliminad@ correctamente');
+
+        return response()->json(['message' => 'Eliminado correctamente!']);
     }
 
     public function showStudentTask($idStudent, $idTask)
@@ -174,5 +197,10 @@ class TaskController extends Controller
         $tasks = Task::where('sesion_id', '=', $sesion_id)->get();
 
         return $tasks;
+    }
+
+    public function getTaskById($id){
+        $task = Task::findOrFail($id);
+        return response()->json($task);
     }
 }
