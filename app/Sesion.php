@@ -43,7 +43,7 @@ class Sesion extends Model
         }
         return $segmented;
     }
-    public static function getSesionToDayByBlock($block_id){
+    public static function getSesionIdToDayByBlock($block_id){
         $date = date('Y-m-d');
         $sesions = self::where('block_id',$block_id)->get()->all();
         $n=-1;
