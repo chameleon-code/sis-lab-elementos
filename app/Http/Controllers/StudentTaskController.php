@@ -9,6 +9,9 @@ use App\StudentSchedule;
 use Carbon\Carbon;
 use App\Sesion;
 use App\Task;
+use App\Professor;
+use App\BlockGroup;
+use App\Group;
 
 class StudentTaskController extends Controller
 {
@@ -31,29 +34,41 @@ class StudentTaskController extends Controller
         $sesions = [];
         if($schedules != []){
             foreach ($schedules as $schedule) {
-                $sesion = Sesion::getSesionIdToDayByBlock($schedule['block_id']);
-                array_push($sesions,$sesion); 
-                if($sesion == -1){
-                    $message = 'No te encuentras inscrito a ninguna materia aún';        
-                    $data = [
-                        'student' => $student,
-                        'user' => $user,
-                        'sesion' => ''
+                $sesionId = Sesion::getSesionIdToDayByBlock($schedule['block_id']);
+                if($sesionId != -1){
+                    $blockGroup = [
+                        'sesionId' => $sesionId,
+                        'group_id' => $schedule['group_id']
                     ];
-                    return view('components.contents.student.activities')->with($data)->withErrors($message);
+                    array_push($sesions,(object)$blockGroup); 
                 }
             }
-        }
-        dd($sesions);
-        if($sesion != -1){
-            $sesionWeek = Sesion::find($sesion);
-            $tasks = Task::where('sesion_id',$sesion)->get()->all();
+        }else{
+            $message = 'No te encuentras inscrito a ninguna materia aún';        
             $data = [
                 'student' => $student,
                 'user' => $user,
-                'sesion' => $sesionWeek
+                'sesion' => ''
             ];
+            //return view('components.contents.student.activities')->with($data)->withErrors($message);
         }
+        $sesionOfWeek=[];
+        foreach ($sesions as $sesion) {
+            $sesionWeek = Sesion::find($sesion->sesionId);
+            $tasks = Task::where('sesion_id',$sesion->sesionId)->get()->all();
+            $sesionTask= [
+                'tasks' => $tasks,
+                'sesion' => $sesionWeek,
+                'subject' => Group::getSubjectById($sesion->group_id)->name
+            ];
+            array_push($sesionOfWeek,(object)$sesionTask);
+        }
+        //dd($sesionOfWeek);
+        $data = [
+            'user' => $user,
+            'sesions' => $sesionOfWeek
+        ];
+
         return view('components.contents.student.activities')->with($data);
     }
 

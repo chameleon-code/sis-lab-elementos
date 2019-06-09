@@ -46,7 +46,7 @@ class Sesion extends Model
     public static function getSesionIdToDayByBlock($block_id){
         $date = date('Y-m-d');
         $sesions = self::where('block_id',$block_id)->get()->all();
-        $n=-1;
+        $n = -1;
         foreach ($sesions as $sesion) {
             $dateStart = date_format(date_create($sesion->date_start),'Y-m-d');
             $dateEnd = date_format(date_create($sesion->date_end),'Y-m-d');

@@ -1,10 +1,8 @@
 @extends('components.sections.studentSection')
 @section('userContent')
 
-<!-- Begin Page Content -->
     <div class="container-fluid">
 
-        <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Actividades</h1>
         </div>
@@ -18,30 +16,7 @@
             </ul>
         </div>
         @endif
-        {{$sesion}}
-
-        
-          <div class="card shadow mb-4">
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
-                  <a class="nav-link" href="#profile" role="tab" data-toggle="tab">profile</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link active" href="#buzz" role="tab" data-toggle="tab">buzz</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#references" role="tab" data-toggle="tab">references</a>
-                </li>
-            </ul>
-            <div class="card-body">
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active" id="profile">...</div>
-                    <div role="tabpanel" class="tab-pane fade in active" id="buzz">bbb</div>
-                    <div role="tabpanel" class="tab-pane fade in active" id="references">ccc</div>
-                </div>
-            </div>
-        </div>
-        
+        {{$user}}
         <div class="row">
                 <div class="col-xl-4 col-md-12 mb-4 col-12">
                 <div class="card border-left-primary shadow h-100 py-2">
@@ -119,68 +94,89 @@
             </div>
 
         </div>
+        
+        <div class="card shadow mb-4">
+            <ul class="nav nav-tabs" role="tablist">
+                {{-- <li class="nav-item">
+                  <a class="nav-link" href="#profile" role="tab" data-toggle="tab">profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="#buzz" role="tab" data-toggle="tab">buzz</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#references" role="tab" data-toggle="tab">references</a>
+                </li> --}}
+                @foreach ($sesions as $sesion)
+                    {{-- active --}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#{{str_replace(" ","",$sesion->subject)}}" role="tab" data-toggle="tab">{{$sesion->subject}}</a>
+                    </li>
+                @endforeach
+            </ul>
+            <div class="card-body">
+                <div class="tab-content">
+                    @foreach ($sesions as $sesion)
+                        <div role="tabpanel" class="tab-pane fade in" id="{{str_replace(" ","",$sesion->subject)}}">
+                            Sesion Número: {{$sesion->sesion->number_sesion}} 
+                            
+                            @foreach ($sesion->tasks as $task)
+                                <form class="user" method="POST" action="{{ url('/student/activities') }}" enctype="multipart/form-data">
+                                    {{ csrf_field() }}
+                                    
 
-        <div class="row">
 
-            <div class="col-lg-12">
-                <div class="card shadow mb-4">
-                    <!-- Card Header - Accordion -->
-                    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                    <h6 class="m-0 font-weight-bold text-primary">Práctica de la Sesión</h6>
-                    </a>
-                    <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="collapseCardExample">
-                    <div class="card-body">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, dignissimos eveniet ullam, asperiores distinctio quibusdam itaque veritatis 
-                        deleniti nam iusto molestias provident minus sequi optio placeat eligendi 
-                        cupiditate praesentium similique!
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic deleniti blanditiis alias accusantium, 
-                        vel vitae eos inventore explicabo porro unde
-                        possimus ab ullam labore at aut beatae numquam officia aliquid.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt nesciunt est at error, temporibus molestiae corporis veniam
-                        laboriosam asperiores laudantium rerum. Ullam nihil repellat amet molestias, culpa esse dolorem. Corrupti?
-                        <hr>
-                        Practica disponible: <a href="https://www.google.com">Ejercicio 1.pdf</a>
-                    </div>
-                    </div>
-                </div>
-                
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Entregar Práctica</h6>
-                    </div>
-                    <div class="card-body">
-                        <form class="user" method="POST" action="{{ url('/student/activities') }}" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <div class="group col-sm-12">
-                                <label for="">Descripción</label>
-                                <textarea name="description" class="form-control col-md-12" id="" cols="30" rows="2"></textarea>
-                            </div>
-                            <div class="group col-sm-12">
-                                    <label for="">
-                                        Procura subir un comprimido o archivador con tu ejercicio adentro, solo los siguientes formatos son admitidos: <strong>.zip .rar .tar.gz</strong> 
-                                    </label>
-                            </div>
-                            <div class="group col-sm-12">
-                                    <input type="file" name="practice" style="margin-bottom:10px;" >
-                            </div>
-                            @if (Agent::isMobile())
-                                <div class="group col-md-12 col-12">
-                                    <button type="submit" class="btn btn-primary btn-block col-md-12" style="margin-bottom:10px;">Entregar</button>
-                                </div>
-                            @else
-                                <div class="group col-md-4 col-4 offset-md-4 offset-4">
-                                    <button type="submit" class="btn btn-primary btn-block col-md-12" style="margin-bottom:10px;">Entregar</button>
-                                </div>
-                            @endif
-                        </form>
-                    </div>
+                                    <div class="text-center">
+                                            <label class="h6 text-gray-900 mb-4"><b>{{$task->title}}</b></label>
+                                    </div>
+                                    <div class="group col-sm-12">
+                                            <label for="">
+                                                {{$task->description}}
+                                            </label>
+                                    </div>
+                                    Practica disponible: <a href="https://www.google.com">Ejercicio 1.pdf</a>
+                                    <div class="group col-sm-12">
+                                        <label for="">Descripción</label>
+                                        <textarea name="description" class="form-control col-md-12" id="" cols="30" rows="2"></textarea>
+                                    </div>
+                                    <div class="group col-sm-12">
+                                            <label for="">
+                                                <br>
+                                                Procura subir un comprimido o archivador con tu ejercicio adentro, solo los siguientes formatos son admitidos: <strong>.zip .rar .tar.gz</strong>
+                                                <br>
+                                            </label>
+                                    </div>
+                                    <div class="col-sm-12 custom-file container" style="padding: 0px 20px;">
+                                        <input class="custom-file-input" id="practice" type="file" name="practice" style="margin-bottom: 4px; cursor: pointer;" required="">
+                                        <label class="custom-file-label" for="practice" style="margin: 0px 10px; color:darkslateblue;">Subir un archivo</label>
+                                        <br>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    @if (Agent::isMobile())
+                                        <div class="group col-md-12 col-12">
+                                            <button type="submit" class="btn btn-primary btn-block col-md-12" style="margin-bottom:10px;">Entregar</button>
+                                        </div>
+                                    @else
+                                        <div class="group col-md-4 col-4 offset-md-4 offset-4">
+                                            <button type="submit" class="btn btn-primary btn-block col-md-12" style="margin-bottom:10px;">Entregar</button>
+                                        </div>
+                                    @endif
+                                </form>
+                                <hr>
+                            @endforeach
+
+                        </div>
+                    @endforeach                
+                    {{--<div role="tabpanel" class="tab-pane fade in" id="buzz">bbb</div>
+                    <div role="tabpanel" class="tab-pane fade in active" id="references">ccc</div> --}}
                 </div>
             </div>
         </div>
     </div>
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fas fa-angle-up"></i>
-    </a>
-    
+    <script>
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
 @endsection
