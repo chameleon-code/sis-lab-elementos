@@ -34,7 +34,9 @@ class CreateScheduleRecordsTable extends Migration
             $table->foreign('day_id')->references('id')->on('days')->onDelete('cascade');
             $table->unsignedInteger('hour_id');
             $table->foreign('hour_id')->references('id')->on('hours')->onDelete('cascade');
-            $table->string('color')->nullable();
+            $table->string('professor');
+            $table->string('subject');
+            $table->string('color');
             $table->timestamps();
         });
     }

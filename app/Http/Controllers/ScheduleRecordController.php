@@ -14,21 +14,13 @@ use App\BlockGroup;
 class ScheduleRecordController extends Controller
 {
     public function index(){
-        $managements=Management::getAllManagements();
-        $data=[
-            'managements'=>$managements
-        ];
-        return view('components.contents.management.index',$data);
     }
 
     public function create($block_id){
-        //$block_id=$request->block_id;
-        //dd($block_id);
         //$scheduleRecords = ScheduleRecord::getSchedulesByLaboratory($laboratory_id);
         //$blockGroups = BlockGroup::getAllBlockIdGroups($block_id);
         $block = Block::findOrFail($block_id);
         $groups = $block->groups;
-
         //dd($groups->first()->subject->name);
         //dd($blockGroups);
         
@@ -51,10 +43,13 @@ class ScheduleRecordController extends Controller
         if($request->ajax()){
             $id=ScheduleRecord::create([
                 'laboratory_id' => $request->laboratory_id,
-                'day_id' => $request->day_id,
-                'hour_id' => $request->hour_id,
-                'color' => $request->color
+                'day_id'        => $request->day_id,
+                'hour_id'       => $request->hour_id,
+                'professor'     => $request->professor,
+                'subject'       => $request->subject,
+                'color'         => $request->color
             ])->id;
+            //dd($request->subject);
             BlockSchedule::create([
                 'schedule_id' => $id,
                 'block_id' => $request->block_id
@@ -76,35 +71,22 @@ class ScheduleRecordController extends Controller
         //     return redirect('/admin/management/create')->withInput()->withErrors($managements->errors);
     }
 
-    public function getRecords($laboratory_id){
+    public function getRecords(Request $request, $laboratory_id){
+        // $schedule = ScheduleRecord::getSchedulesByLaboratory($laboratory_id);
+        //dd($schedule);
+        // if($request->ajax()){
+        //     return response()->json([
+        //         'schedule'=>$schedule
+        //     ]);
+        // }
         return ScheduleRecord::getSchedulesByLaboratory($laboratory_id);
+
     }
 
     public function edit($id){
-        $management = Management::findOrFail($id);
-        $semesters=['1','2','3','4'];
-        $data=[
-            'management' => $management,
-            'semesters' => $semesters
-        ];
-        
-        return view('components.contents.management.edit')->withTitle('Editar la Gestión')->with($data);
     }
 
     public function update(Request $request, $id){
-        $management = Management::find($id);
-        $input = $request->all();
-
-        if($management->validate($input)){
-            $management->semester = $request->semester;
-            $management->start_management = $request->start_management;
-            $management->end_management = $request->end_management;
-            $management->save();
-
-            Session::flash('status_message', 'Gestión Editada!');
-            return redirect('/admin/managements');
-        }
-        return back()->withInput($input)->withErrors($management->errors);
     }
 
     public function destroy($id,Request $request){

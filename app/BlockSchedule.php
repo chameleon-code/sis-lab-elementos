@@ -11,7 +11,14 @@ class BlockSchedule extends Model
     protected $fillable = ['schedule_id','block_id'];
     protected $hidden = ['created_at','update_at'];
     protected $rules = [
-        'schudule_id' => 'required',
+        'schedule_id' => 'required',
         'block_id'    => 'required'
     ];
+
+    protected $appends = ['block'];
+
+    public function getBlockAttribute()
+    {
+        return Block::findOrFail($this->schedule_id);
+    }
 }
