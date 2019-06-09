@@ -8,7 +8,40 @@
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Actividades</h1>
         </div>
+        @if (count($errors)>0)
+        <div class="alert alert-danger">
+            <b>Ha ocurrido un Error!</b>
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
         {{$sesion}}
+
+        
+          <div class="card shadow mb-4">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link" href="#profile" role="tab" data-toggle="tab">profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="#buzz" role="tab" data-toggle="tab">buzz</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#references" role="tab" data-toggle="tab">references</a>
+                </li>
+            </ul>
+            <div class="card-body">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="profile">...</div>
+                    <div role="tabpanel" class="tab-pane fade in active" id="buzz">bbb</div>
+                    <div role="tabpanel" class="tab-pane fade in active" id="references">ccc</div>
+                </div>
+            </div>
+        </div>
+        
         <div class="row">
                 <div class="col-xl-4 col-md-12 mb-4 col-12">
                 <div class="card border-left-primary shadow h-100 py-2">
@@ -22,7 +55,7 @@
                             </div>
                             <div class="col">
                             <div class="progress progress-sm mr-2">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                             </div>
                         </div>

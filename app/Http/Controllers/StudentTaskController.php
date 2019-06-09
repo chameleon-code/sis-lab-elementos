@@ -32,17 +32,25 @@ class StudentTaskController extends Controller
             foreach ($schedules as $schedule) {
                 $sesion = Sesion::getSesionIdToDayByBlock($schedule['block_id']);
                 if($sesion == -1){
-                    $message = 'No te encuentras inscrito a ninguna materia aún';
+                    $message = 'No te encuentras inscrito a ninguna materia aún';        
+                    $data = [
+                        'student' => $student,
+                        'user' => $user,
+                        'sesion' => ''
+                    ];
+                    return view('components.contents.student.activities')->with($data)->withErrors($message);
                 }
             }
         }
-        $sesionWeek = Sesion::where('id',$sesion)->get()->first();
-        $tasks = Task::where('sesion_id',$sesion)->get()->all();
-        $data = [
-            'student' => $student,
-            'user' => $user,
-            'sesion' => $sesion
-        ];
+        if($sesion != -1){
+            $sesionWeek = Sesion::where('id',$sesion)->get()->first();
+            $tasks = Task::where('sesion_id',$sesion)->get()->all();
+            $data = [
+                'student' => $student,
+                'user' => $user,
+                'sesion' => $sesionWeek
+            ];
+        }
         return view('components.contents.student.activities')->with($data);
     }
 
