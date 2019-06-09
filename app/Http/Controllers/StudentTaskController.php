@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Student;
 use App\StudentSchedule;
 use Carbon\Carbon;
+use App\Sesion;
 
 class StudentTaskController extends Controller
 {
@@ -26,7 +27,8 @@ class StudentTaskController extends Controller
         $day = Carbon::now()->format('Y-m-d');
         $hour = Carbon::now()->format('H:i:s');
         $schedules = StudentSchedule::getDateTimeStudentSchedulesByStudentId($student->id);
-        dd($schedules);
+        //$sesion = Sesion::getSesionToDayByBlock($schedules[0]['group_id']);
+        //dd($sesion);
         $data = [
             'student' => $student,
             'user' => $user,
