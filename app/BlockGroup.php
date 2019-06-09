@@ -13,6 +13,6 @@ class BlockGroup extends Model
     }
 
     public static function getAllBlockIdGroups($id){
-        return array_pluck(self::where('block_id', $id)->get(),'block_id');
+        return self::where('block_id', $id)->get();
     }
 }
