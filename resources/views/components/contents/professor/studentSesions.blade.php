@@ -60,9 +60,6 @@
                                     <p> <strong> Estado de tarea: </strong> <a href="/professor/student/{{$schedule->student->id}}/task/{{$task->id}}">{{ $task->title }}</a> </p> </div>
                                     <div class="row" style="margin-top: -15px;">
                                         <div class="row" style="margin-left: 12px;">
-                                            {{--@php
-                                                dd(in_array($task->id, $student_tasks))
-                                            @endphp--}}
                                             @if (in_array($task->id, $student_tasks))
                                                 <strong> Entregado: &#10003  </strong>
                                                 @else

@@ -199,11 +199,11 @@ class ProfessorController extends Controller
             $array = array();
             foreach($schedules2->values()->all() as $schedule){
                 $student = new \stdClass();
-                $student->Codigo_Sis = $schedule->getStudentAttribute()->code_sis;
-                $student->Apellidos = $schedule->getStudentAttribute()->first_name ." ". $schedule->getStudentAttribute()->second_name;
-                $student->Nombres = $schedule->getStudentAttribute()->names;
+                $student->Codigo_Sis = $schedule->getUserAttribute()->code_sis;
+                $student->Apellidos = $schedule->getUserAttribute()->first_name ." ". $schedule->getUserAttribute()->second_name;
+                $student->Nombres = $schedule->getUserAttribute()->names;
                 $student->Acciones = (object)[
-                    'student' => $schedule->getStudentAttribute(),
+                    'student' => $schedule->getUserAttribute(),
                     'schedule_id' => $schedule->id
                 ];
                 array_push($array, $student);

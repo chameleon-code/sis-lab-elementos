@@ -59,9 +59,9 @@
 
                                     @foreach ($schedules as $item)
                                         <tr role="row" class="odd">
-                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->student->code_sis }}</font></font></td>
-                                            <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->student->first_name }} {{ $item->student->second_name }}</font></font></td>
-                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->student->names }}</font></font></td>
+                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->code_sis }}</font></font></td>
+                                            <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->first_name }} {{ $item->user->second_name }}</font></font></td>
+                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->names }}</font></font></td>
                                             <td class="text-center" style="text-align: center; display: flex;">
                                                 <a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick="loadProfile({{ $item->student }})" id="profile"><i class="fas fa-eye"></i></a>
 
