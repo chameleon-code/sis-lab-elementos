@@ -2,21 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\StudentMailController;
+use App\Block;
+use App\BlockSchedule;
+use App\Group;
 use App\Student;
 use App\User;
-use App\Management;
-use App\Block;
-use \App\Role;
-use App\Group;
-use App\Sesion;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\SubjectMatter;
-use Illuminate\Support\Facades\Cache;
 
 class AssistanceController extends Controller
 {
@@ -25,8 +18,22 @@ class AssistanceController extends Controller
         //self::rememberNav();
 
         $students = Student::getAllStudents();
-        $data = ['students' => $students,
-            'title' => 'Estudiantes'];
+        //dd($students->first());
+        $data = ['students' => $students, 'title' => 'Estudiantes'];
+        return view('components.contents.auxiliar.assistance', $data);
+    }
+
+    //muestra contenido block_schedules
+    public function bloque_schedules()
+    {
+        $students = Student::getAllBlocks();
+        $block_schedules = BlockSchedule::all();
+        $data = [
+            'block_schedules' => $students,
+            'title' => 'block_schedules',
+            'block_schedules' => $block_schedules
+        ];
+
         return view('components.contents.auxiliar.assistance', $data);
     }
 

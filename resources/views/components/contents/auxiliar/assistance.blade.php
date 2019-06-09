@@ -9,6 +9,7 @@
                 <div class="panel-heading m-0 font-weight-bold text-primary container">Asistencia Estudiantes</div>
                 <div class="panel-heading m-0 font-weight-bold text-primary container">Bloque: </div>
                 <div class="panel-heading m-0 font-weight-bold text-primary container">Horario: </div>
+
                 <div class="card-body">
                     @if (Session::has('status_message'))
                         <p class="alert alert-success"><strong> {{Session::get('status_message')}} </strong></p>
