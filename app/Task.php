@@ -14,6 +14,13 @@ class Task extends Model
         'description',
         'task_path',
         'task_file',
+        'created_at',
+        'updated_at',
     ];
-    protected $hidden = ['created_at', 'updated_at'];
+
+    //protected $hidden = ['created_at', 'updated_at'];
+
+    protected $rules = [
+        'title' => 'required|max:100|min:1',
+    ];
 }

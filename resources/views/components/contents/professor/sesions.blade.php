@@ -162,7 +162,7 @@
 
                     
                     <div class="my-1 mx-2" id="formActivity" style="font-size: 15px;">
-                        <strong class="px-2"> Nueva Tarea </strong> <br><br>
+                        <strong id="title-form" class="px-2"> </strong> <br><br>
                             <form class="user" id="taskForm" action="" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="group col-sm-12">
@@ -170,6 +170,10 @@
                                         <input id="title" name="title" type="text" class="form-control col-md-12" placeholder="Título" required autofocus>
                                 </div>
                                 <br>
+                                <div class='custom-control custom-checkbox small' style="margin-left: 13px; margin-top:-12px; margin-bottom: 5px;">
+                                    <input type='checkbox' class='custom-control-input' id='checkbox-description' onclick='showHideTaskForm()'>
+                                    <label class='custom-control-label' for='checkbox-description'>Descripción</label>
+                                </div>
                                 <div class="group col-sm-12">
                                         {{-- <label for="">Descripción</label> --}}
                                         <textarea name="description" id="description" class="form-control col-md-12" cols="30" rows="5" placeholder="Descripción" autofocus></textarea>
@@ -177,18 +181,31 @@
                                 <br>
                                 <div class="group col-sm-12 custom-file container" style="padding: 0px 20px;">
                                     <input class="custom-file-input" id="practice" type="file" name="practice" style="margin-bottom: 4px; cursor: pointer;" required>
-                                    <label class="custom-file-label" for="practice" style="margin: 0px 10px;">Seleccione un archivo</label>
+                                    <label class="custom-file-label" for="practice" style="margin: 0px 10px;">Subir un archivo</label>
                                     <br>
                                     Solo los siguientes formatos son admitidos: <strong>.zip .rar .pdf</strong><br>
                                 </div>
+                                {{--  @if (count($errors)>0)  --}}
+                                    <div class="alert alert-danger" id="errors-div" style="padding-top: 10px; padding-bottom: 0px; margin: 10px 10px 0px 10px">
+                                        <div class="container d-flex justify-content-between p-1" style="">
+                                            <div class="d-flex justify-content-start" style="padding-left: 3px;">
+                                                <b style="">Ha ocurrido un error!</b>
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <a href="#" id="btn-delete-task-3" class="mx-2" data-toggle-2="tooltip" onclick="hideErrors()"> <i class="fas fa-times" style="color: darkred;"> </i> </a> 
+                                            </div>
+                                        </div>
+                                        <ul id="errors-form">
+                                            {{--  <li>{{$error}}</li>  --}}
+                                        </ul>
+                                    </div>
+                                {{--  @endif  --}}
                                 <input type="number" id="sesion_id" name="sesion_id" value="" hidden>
                                 <input type="number" id="task_id" name="task_id" value="" hidden>
                             </form>
 
                         </div>
             </div>
-    
-            <hr>
             
             <div class="text-center" id="footerModal">
 
