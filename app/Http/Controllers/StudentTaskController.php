@@ -27,11 +27,12 @@ class StudentTaskController extends Controller
         // end test 
         $hour = Carbon::now()->format('H:i:s');
         $schedules = StudentSchedule::getDateTimeStudentSchedulesByStudentId($student->id);
-        dd($schedules);
         $message = '';
+        $sesions = [];
         if($schedules != []){
             foreach ($schedules as $schedule) {
                 $sesion = Sesion::getSesionIdToDayByBlock($schedule['block_id']);
+                array_push($sesions,$sesion); 
                 if($sesion == -1){
                     $message = 'No te encuentras inscrito a ninguna materia aún';        
                     $data = [
@@ -43,8 +44,9 @@ class StudentTaskController extends Controller
                 }
             }
         }
+        dd($sesions);
         if($sesion != -1){
-            $sesionWeek = Sesion::where('id',$sesion)->get()->first();
+            $sesionWeek = Sesion::find($sesion);
             $tasks = Task::where('sesion_id',$sesion)->get()->all();
             $data = [
                 'student' => $student,

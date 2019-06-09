@@ -25,10 +25,10 @@ class ScheduleRecord extends Model
     }
     public static function getDayAndHourFormatWithId($id){
         $date = self::find($id);
-        $day = Day::where('id',$date->day_id)->get()->first()->name;
-        $hourStart = Hour::where('id',$date->hour_id)->get()->first()->start;
-        $hourEnd = Hour::where('id',$date->hour_id)->get()->first()->end;
-        $laboratory = Laboratory::where('id',$date->laboratory_id)->get()->first()->name;
+        $day = Day::find($date->day_id)->name;
+        $hourStart = Hour::find($date->hour_id)->start;
+        $hourEnd = Hour::find($date->hour_id)->end;
+        $laboratory = Laboratory::find($date->laboratory_id)->name;
         $data=[
             "start"=>$hourStart,
             "end"=>$hourEnd,
