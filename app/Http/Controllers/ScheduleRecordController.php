@@ -108,4 +108,27 @@ class ScheduleRecordController extends Controller
         Session::flash('status_message',$status_message);
         //return redirect('/admin/managements');
     }
+    public function createSchedule(){
+        $block = Block::findOrFail(1);
+        $groups = $block->groups;
+        $blocks=Block::getAllBlocks();
+        // dd($blocks);
+        $laboratorys=Laboratory::getAllLaboratory();
+        $days=Day::getAllDays();
+        $hours=Hour::getAllHours();
+        $data=[
+            //'scheduleRecords' => $scheduleRecords,
+            'groups'          => $groups,
+            'blocks'          => $blocks,
+            'laboratories'    => $laboratorys,
+            'days'            => $days,
+            'hours'           => $hours
+        ];
+        return view('components.contents.scheduler.createSchedule',$data);
+    }
+    public function getGroups($block_id){
+        $block = Block::findOrFail($block_id);
+        $groups = $block->groups;
+        return $groups;
+    }
 }

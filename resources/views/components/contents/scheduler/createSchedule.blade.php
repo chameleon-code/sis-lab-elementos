@@ -20,6 +20,14 @@
                                         @endforeach    
                                     </select>
                                 </div>
+                                <label>Bloque</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" name="bloques" id="bloques">
+                                        @foreach ($blocks as $item)
+                                            <option class="form-control" value="{{$item->id}}">{{$item->name}}</option>
+                                        @endforeach    
+                                    </select>
+                                </div>
                             </div>
                             <br>
                             <table class="table table-striped">
@@ -108,7 +116,7 @@
                     </select>
                 </div>
                 {{-- <label>Color:</label> --}}
-                <input id="idcolortask" type="hidden" name="idcolortask" value="color-{{$block_id}}">
+                <input id="idcolortask" type="hidden" name="idcolortask" value="color-{{$blocks->first()->id}}">
                 {{-- <select class="form-control" id="idcolortask" readonly>
                         <option value="color-{{$block_id}}">Purpura</option>
                 </select> --}}
@@ -116,7 +124,7 @@
                 <input id="tede" type="hidden" name="tede" >
                 <input id="hours" type="hidden" name="hours">
                 <input id="days" type="hidden" name="days">
-                <input id="block_id" type="hidden" name="block_id" value="{{$block_id}}">
+                <input id="block_id" type="hidden" name="block_id" value="{{$blocks->first()->id}}">
               </form>
         
             </div>

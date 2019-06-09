@@ -52,6 +52,7 @@
                                                     
                                                     <td class="text-center" style="text-align: center; display: flex;">
                                                         <a href="/admin/blocks/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Editar"><i class="fas fa-edit"></i></a>
+                                                        <a href="/schedule/create/{{$item->id}}" class="btn btn-success btn-circle btn-sm mx-1" data-toggle="tooltip" title="Asiganción De Horarios"><i class="far fa-calendar-alt"></i></a>
                                                     </td>                                                    
                                                 </tr>
                                           @endforeach
