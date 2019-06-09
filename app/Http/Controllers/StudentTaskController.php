@@ -8,6 +8,7 @@ use App\Student;
 use App\StudentSchedule;
 use Carbon\Carbon;
 use App\Sesion;
+use App\Task;
 
 class StudentTaskController extends Controller
 {
@@ -35,11 +36,13 @@ class StudentTaskController extends Controller
                 }
             }
         }
-        $sesionWeek = Sesion::where('id',$sesion)->get()->first();
+        //$sesionWeek = Sesion::where('id',$sesion)->get()->first();
+        //$tasks = Task::where('sesion_id',$sesion)->get()->all();
+        //dd($tasks);
         $data = [
             'student' => $student,
             'user' => $user,
-            'sesion' => $sesionWeek
+            'sesion' => 'golad'
         ];
         return view('components.contents.student.activities')->with($data);
     }
