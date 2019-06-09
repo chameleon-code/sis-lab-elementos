@@ -27,6 +27,7 @@ class StudentTaskController extends Controller
         // end test 
         $hour = Carbon::now()->format('H:i:s');
         $schedules = StudentSchedule::getDateTimeStudentSchedulesByStudentId($student->id);
+        dd($schedules);
         $message = '';
         if($schedules != []){
             foreach ($schedules as $schedule) {

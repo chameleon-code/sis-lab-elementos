@@ -24,14 +24,16 @@ class ScheduleRecord extends Model
         return self::where('laboratory_id', $id)->orderBy('day_id')->get();
     }
     public static function getDayAndHourFormatWithId($id){
-        $date = self::where('id', $id)->get()->first();
+        $date = self::find($id);
         $day = Day::where('id',$date->day_id)->get()->first()->name;
         $hourStart = Hour::where('id',$date->hour_id)->get()->first()->start;
         $hourEnd = Hour::where('id',$date->hour_id)->get()->first()->end;
+        $laboratory = Laboratory::where('id',$date->laboratory_id)->get()->first()->name;
         $data=[
             "start"=>$hourStart,
             "end"=>$hourEnd,
             "day" => $day,
+            "laboratory" => $laboratory
         ];
         return $data;
     }
