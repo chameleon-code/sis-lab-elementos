@@ -1,9 +1,8 @@
 <?php
 
+use App\Sesion;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
-use App\Group;
-use App\Sesion;
 
 class DatabaseSeeder extends Seeder
 {
@@ -49,25 +48,13 @@ class DatabaseSeeder extends Seeder
         ]);
         factory(\App\Professor::class, 1)->create(['user_id' => 2]);
         
-        factory(\App\User::class, 1)->create([
-            'names' => 'auxiliar',
-            'first_name' => 'auxiliar',
-            'second_name' => 'auxiliar',
-            'email'=>'auxiliar@gmail.com',
-            'password' => bcrypt('auxiliar'),
-            'role_id' => \App\Role::AUXILIAR
-        ]);
-        factory(\App\Auxiliar::class, 1)->create(['user_id' => 3]);
+
 
         factory(\App\User::class, 15)->create([ 'role_id' => \App\Role::PROFESSOR ])
         ->each(function (\App\User $u){
             factory(\App\Professor::class, 1)->create(['user_id' => $u->id]);
         });
 
-        factory(\App\User::class, 15)->create([ 'role_id' => \App\Role::AUXILIAR ])
-        ->each(function (\App\User $u){
-            factory(\App\Auxiliar::class, 1)->create(['user_id' => $u->id]);
-        });
 
         // GESTIONES
 
@@ -103,6 +90,21 @@ class DatabaseSeeder extends Seeder
         });
 
         factory(\App\BlockGroup::class, 20)->create();
+
+        factory(\App\User::class, 1)->create([
+            'names' => 'auxiliar',
+            'first_name' => 'auxiliar',
+            'second_name' => 'auxiliar',
+            'email' => 'auxiliar@gmail.com',
+            'password' => bcrypt('auxiliar'),
+            'role_id' => \App\Role::AUXILIAR
+        ]);
+        factory(\App\Auxiliar::class, 1)->create(['user_id' => 3, 'block_id' => 1]);
+
+        factory(\App\User::class, 15)->create(['role_id' => \App\Role::AUXILIAR])
+            ->each(function (\App\User $u) {
+                factory(\App\Auxiliar::class, 1)->create(['user_id' => $u->id]);
+            });
 
         factory(\App\User::class, 1)->create([
             'names' => 'student',
