@@ -36,13 +36,12 @@ class StudentTaskController extends Controller
                 }
             }
         }
-        //$sesionWeek = Sesion::where('id',$sesion)->get()->first();
-        //$tasks = Task::where('sesion_id',$sesion)->get()->all();
-        //dd($tasks);
+        $sesionWeek = Sesion::where('id',$sesion)->get()->first();
+        $tasks = Task::where('sesion_id',$sesion)->get()->all();
         $data = [
             'student' => $student,
             'user' => $user,
-            'sesion' => 'golad'
+            'sesion' => $sesion
         ];
         return view('components.contents.student.activities')->with($data);
     }

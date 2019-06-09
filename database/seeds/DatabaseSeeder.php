@@ -89,7 +89,7 @@ class DatabaseSeeder extends Seeder
         factory(\App\Block::class, 5)->create()
         ->each(function (\App\Block $b){
             Storage::makeDirectory($b->block_path);
-            $dates = \App\Sesion::autodate('2019-02-4', '2019-06-3');
+            $dates = \App\Sesion::autodate('2019-02-4', '2019-06-24');
             $i = 1;
             foreach($dates as $date){
                 Sesion::create([
