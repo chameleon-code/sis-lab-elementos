@@ -34,4 +34,7 @@ class Student extends Model
     public function user(){
         return $this->hasOne('App\user');
     }
+    public function tasks(){
+        return $this->belongsToMany('App\Task', 'student_tasks');
+    }
 }

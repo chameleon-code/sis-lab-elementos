@@ -5,16 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Sesion;
 use App\Task;
-use App\Student;
 use App\Block;
 use App\Professor;
-use App\User;
-use App\Group;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use App\SubjectMatter;
 use App\Management;
 use App\StudentSchedule;
+use App\StudentTask;
 
 class SesionController extends Controller
 {
@@ -172,22 +167,23 @@ class SesionController extends Controller
     {
         $schedule = StudentSchedule::findOrFail($id);
         $sesions = Sesion::where('block_id', $schedule->getGroupAttribute()->blocks->first()->id)->get();
-        //dd($group);
         $tasks = Task::all()->reject(function($item, $key) use ($schedule){
-            if($item->getSesionAttribute()->block_id != $schedule->group->blocks()->first()->id){
+            if($item->getSesionAttribute()->block_id != $schedule->group->blocks->first()->id){
                 return true;
             }
         })->values()->all();
         $sesion_max = Sesion::max('number_sesion');
+        $student_tasks = StudentTask::where('student_id', $schedule->getStudentAttribute()->id)->select('task_id')->get();
+        //dd(array_pluck($student_tasks->toArray(), 'task_id'));
         $blockGroup = Professor::getBlockProfessor();
         $data = [
+            'student_tasks' => array_pluck($student_tasks->toArray(), 'task_id'),
             'schedule'=>$schedule,
             'sesions' => $sesions,
             'tasks' => $tasks,
             'blockGroup' => $blockGroup,
             'sesion_max' => $sesion_max,
         ];
-
         return view('components.contents.professor.studentSesions', $data);
     }
 }

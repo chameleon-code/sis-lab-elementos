@@ -176,26 +176,21 @@ class ProfessorController extends Controller
     //Obtiene la lista de estudiantes en base a grupo
     public function studentList(){
         $professor = Professor::where('user_id', auth()->user()->id)->first();
-        $groups = Group::where('professor_id', $professor->id)->get();
-        $groupID = StudentSchedule::all();
-        $groupID->search(function ($item, $key) use ($groups){
-            foreach($groups as $group){
-                if($group->id == $item->group->id)
+        $groups = Group::where('professor_id', $professor->id)->get()->reject(function ($item, $key){
+            if(is_null($item->blocks->first())){
                 return true;
             }
-        });
-        //dd($groupID->first());
-        $schedules = $this->studentListByGroup(new Request, $groupID->first()->group_id);
+        }); 
+        $schedules = $this->studentListByGroup(new Request, $groups->first()->id);
         $data = [
                     'schedules' => $schedules,
                     'groups' => $groups,
-                    'groupID' => $groupID->first(),
                     'title' => 'Estudiantes'
                 ];
             return view('components.contents.professor.studentList', $data);
     }
     public function studentListByGroup(Request $request, $id){
-        $schedules = StudentSchedule::all(); //$array = array();
+        $schedules = StudentSchedule::all();
         $schedules2 = $schedules->reject(function($item, $key) use ($id){
             if($item->group_id != $id)
                 return true;
@@ -215,7 +210,6 @@ class ProfessorController extends Controller
             }
             return response()->json($array);
         }
-        //dd($schedules);
         return $schedules2->values()->all();
     }
 

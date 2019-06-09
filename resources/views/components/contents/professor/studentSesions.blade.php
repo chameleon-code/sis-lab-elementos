@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="container">
-                    <strong>Estudiante: </strong> {{ $schedule->student->first_name.' '.$schedule->student->second_name.' '.$schedule->student->names }} <br>
+                    <strong>Estudiante: </strong> {{ $schedule->user->first_name.' '.$schedule->user->second_name.' '.$schedule->user->names }} <br>
                     <strong>Materia: </strong> {{ $schedule->group->subject->name }} <br>
                     <strong>Grupo: </strong> {{ $schedule->group->name }}
                 </div>
@@ -60,7 +60,14 @@
                                     <p> <strong> Estado de tarea: </strong> <a href="/professor/student/{{$schedule->student->id}}/task/{{$task->id}}">{{ $task->title }}</a> </p> </div>
                                     <div class="row" style="margin-top: -15px;">
                                         <div class="row" style="margin-left: 12px;">
-                                            <strong> Entregado: &#10003 &#10005 </strong>
+                                            {{--@php
+                                                dd(in_array($task->id, $student_tasks))
+                                            @endphp--}}
+                                            @if (in_array($task->id, $student_tasks))
+                                                <strong> Entregado: &#10003  </strong>
+                                                @else
+                                                <strong>Sin entregar &#10005</strong>
+                                            @endif
                                         </div>
                                     </div>
                                     <div> <p> <strong> Límite de entrega: </strong> {{$task->end}} </p> </div>

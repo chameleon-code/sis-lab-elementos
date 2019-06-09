@@ -14,9 +14,9 @@
                             <div class="form-group">
                                     <select name="group_id" class="form-control col-md-12" id="groups">
                                         @forelse ($groups as $group)
-                                        @if ($groupID->group_id == $group->id)
+                                        @if ($loop->first)
                                             <option class="form-control" value="{{$group->id}}" selected> Grupo {{$group->name . " - " . $group->subject->name}}</option>
-                                            @continue
+                                        @continue
                                         @endif
                                             <option class="form-control" value="{{$group->id}}"> Grupo {{$group->name . " - " . $group->subject->name}}</option>
                                         @empty

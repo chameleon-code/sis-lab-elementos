@@ -18,7 +18,7 @@ class Sesion extends Model
         'date_start' => 'required|date_format:Y-m-d',
         'date_end' => 'required|date_format:Y-m-d|after:date_start',
     ];
-    protected $append = [
+    protected $appends = [
         'block'
     ];
     public static function autodate($start,$end){

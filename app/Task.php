@@ -22,4 +22,7 @@ class Task extends Model
     public function getSesionAttribute(){
         return Sesion::findOrFail($this->sesion_id);
     }
+    public function students(){
+        return $this->belongsToMany('App\Student', 'student_tasks');
+    }
 }
