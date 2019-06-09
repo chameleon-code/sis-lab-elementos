@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateBlocksTable extends Migration
 {
@@ -35,6 +35,16 @@ class CreateBlocksTable extends Migration
         //     $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
         //     $table->string('student_path')->nullable();
         // });
+
+        Schema::create('auxiliars', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedInteger('block_id');
+            $table->foreign('block_id')->references('id')->on('blocks');
+            $table->string('type')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**

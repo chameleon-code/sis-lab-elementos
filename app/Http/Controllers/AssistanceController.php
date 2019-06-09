@@ -15,12 +15,16 @@ class AssistanceController extends Controller
 {
     public function index()
     {
-        //self::rememberNav();
-
         $students = Student::getAllStudents();
-        //dd($students->first());
-        $data = ['students' => $students, 'title' => 'Estudiantes'];
-        return view('components.contents.auxiliar.assistance', $data);
+        //$user_id = $student->user_id;
+        //$user = User::findOrFail($user_id);
+        $blocks = Block::all();
+        $data = ['students' => $students,
+            //'user' => $user,
+            'blocks' => $blocks,
+        ];
+        //dd($blocks);
+        return view('components.contents.auxiliar.assistance', $data)->withTitle('Perfil de Estudiante');
     }
 
     //muestra contenido block_schedules
@@ -28,10 +32,12 @@ class AssistanceController extends Controller
     {
         $students = Student::getAllBlocks();
         $block_schedules = BlockSchedule::all();
+        $blocks = Block::all();
         $data = [
             'block_schedules' => $students,
             'title' => 'block_schedules',
-            'block_schedules' => $block_schedules
+            'block_schedules' => $block_schedules,
+            'blocks' => $blocks,
         ];
 
         return view('components.contents.auxiliar.assistance', $data);

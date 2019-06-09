@@ -7,8 +7,16 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <div class="panel-heading m-0 font-weight-bold text-primary container">Asistencia Estudiantes</div>
-                <div class="panel-heading m-0 font-weight-bold text-primary container">Bloque: </div>
+
                 <div class="panel-heading m-0 font-weight-bold text-primary container">Horario: </div>
+
+                <div class="col-sm-3">
+                    <select class="form-control" name="bloques" id="bloques">
+                        @foreach ($blocks as $item)
+                            <option class="form-control" value="{{$item->id}}">{{$item->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
 
                 <div class="card-body">
                     @if (Session::has('status_message'))
