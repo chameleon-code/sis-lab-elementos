@@ -139,7 +139,7 @@
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="{{url('/scheduler')}}">
+    <a class="nav-link" href="{{url('/schedule/create/')}}">
       <i class="fas fa-fw fa-calendar-alt"></i>
       <span>Horario</span>
     </a>

@@ -199,4 +199,25 @@ $(document).ready(function() {
         });
     });
     //fin de guardar horario
+    $("#bloques").change(function(event) {
+        var id = $('#bloques option:selected').val();
+        console.log(id);
+        $('#idcolortask').val(id);
+        $('#block_id').val(id);
+        url = "/schedule/groups/" + id;
+        $.get(url, function(response, state) {
+            console.log(response);
+            //materia
+            $('#nameDocente').empty();
+            var materia = response[1].subject.name;
+            $('#materia').val(materia);
+            for (f = 0; f < response.length; f++) {
+                var docente = response[f].professor;
+                var docentName = docente.names + " " + docente.first_name + " " + docente.second_name;
+                var option = $('<option></option>').attr("value", response[f].id).text(docentName);
+                option.attr("class", "form-control");
+                $('#nameDocente').append(option);
+            }
+        });
+    });
 })

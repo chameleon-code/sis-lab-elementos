@@ -20,6 +20,7 @@ class BlockScheduleController extends Controller
 
     public function create(){
         $blocks=Block::getAllBlocks();
+        dd($blocks);
         $data=[
             'blocks'   => $blocks
         ];

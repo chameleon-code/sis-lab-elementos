@@ -2,14 +2,14 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Traits\ValidationTrait;
+use Illuminate\Database\Eloquent\Model;
 
 class Block extends Model
 {
     use ValidationTrait;
 
-    protected $fillable = ['management_id', 'name', 'block_path'];
+    protected $fillable = ['id', 'management_id', 'name', 'block_path'];
 
     protected $rules = [
         'management_id' => 'required',
