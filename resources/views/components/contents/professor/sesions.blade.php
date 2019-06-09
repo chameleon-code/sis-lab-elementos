@@ -175,12 +175,14 @@
                                         <textarea name="description" id="description" class="form-control col-md-12" cols="30" rows="5" placeholder="Descripción" autofocus></textarea>
                                 </div>
                                 <br>
-                                <div class="group col-sm-12">
-                                    <input id="practice" type="file" name="practice" style="margin-bottom: 4px;" required>
+                                <div class="group col-sm-12 custom-file container" style="padding: 0px 20px;">
+                                    <input class="custom-file-input" id="practice" type="file" name="practice" style="margin-bottom: 4px; cursor: pointer;" required>
+                                    <label class="custom-file-label" for="practice" style="margin: 0px 10px;">Seleccione un archivo</label>
                                     <br>
                                     Solo los siguientes formatos son admitidos: <strong>.zip .rar .pdf</strong><br>
                                 </div>
                                 <input type="number" id="sesion_id" name="sesion_id" value="" hidden>
+                                <input type="number" id="task_id" name="task_id" value="" hidden>
                             </form>
 
                         </div>
@@ -213,6 +215,20 @@
                     @endif
                 </div>
                 
+                <div id="btnsEditTasks" style="margin-bottom: 25px;">
+                    @if (Agent::isMobile())
+                        <div class="d-flex justify-content-center bd-highlight mb-3">
+                            <button type="button" class="btn btn-primary btn-block btn-sm p-2 bd-highlight" style="">Guardar</button>
+                            <button type="button" class="btn btn-secondary btn-block btn-sm p-2 bd-highlight" style="">Cancelar</button>
+                        </div>
+                    @else
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-primary btn-block btn-sm col-md-3 mx-2" style="" onclick="storeEditedTask()">Guardar</button>
+                            <button type="button" class="btn btn-secondary btn-block btn-sm col-md-3 mx-2" style="margin-top: 0px;" onclick="hideFormActivity()">Cancelar</button>
+                        </div>
+                    @endif
+                </div>
+
                 {{-- <form method="POST" action="{{ url('/students/registration/store') }}">
                     {{ csrf_field() }}
                     <input id="block_schedule_id" type="number" name="block_schedule_id" style="display: none;">
@@ -236,6 +252,12 @@
         });
         var firts_id = $( "#selector option:selected" ).attr('value');
         $('#block-'+firts_id).show();
+
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
     </script>
     <script src="/js/accordion.js"></script>
     <script src="/js/sesions.js"></script>

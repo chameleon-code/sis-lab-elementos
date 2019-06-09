@@ -4097,7 +4097,7 @@ input[type="button"].btn-block {
 }
 
 .custom-file-input:lang(en) ~ .custom-file-label::after {
-  content: "Browse";
+  content: "Explorar";
 }
 
 .custom-file-input ~ .custom-file-label[data-browse]::after {
