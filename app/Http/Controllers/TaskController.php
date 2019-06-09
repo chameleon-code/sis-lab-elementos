@@ -73,32 +73,47 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $sesion_number = Sesion::findOrFail($request->sesion_id)->number_sesion;
-        $user = Auth::user();
-        $blockGroupId = Professor::getBlockProfessor()->block_id;
-        $dir = Block::where('id', '=', $blockGroupId)->get()->first()->block_path;
-            //if($request->file()){
+        if($request->title != "") {
+            $sesion_number = Sesion::findOrFail($request->sesion_id)->number_sesion;
+            $user = Auth::user();
+            $blockGroupId = Professor::getBlockProfessor()->block_id;
+            $dir = Block::where('id', '=', $blockGroupId)->get()->first()->block_path;
+
+            if($request->file()){
                 $file = $request->file('practice');
                 $extension = $file->getClientOriginalExtension();
-                //if($extension=='rar'||$extension=='zip'||$extension=='tar.gz'||$extension=='pdf'){
+                if($extension=='rar'||$extension=='zip'||$extension=='tar.gz'||$extension=='pdf'){
                     //$file = $request->file('practice');
                     $name = $file->getClientOriginalName();
                     $semiPath ='/storage/'.$dir.'/practices/sesion-'.$sesion_number.'/';
                     $path = public_path().$semiPath;
                     $file -> move($path,$name);
                     $task = [
-                        'title' => $request->title,//$data['title'],
+                        'title' => $request->title,
                         'published_by' => $user->names.' '.$user->first_name,
-                        'description' => $request->description,//$data['description'],
-                        'sesion_id' => $request->sesion_id,//$data['sesion_id'],
+                        'description' => $request->description,
+                        'sesion_id' => $request->sesion_id,
                         'task_path' => $semiPath,
                         'task_file' => $name,
                     ];
-                    Task::create($task);
-                    return response()->json($task);
-                //}
-            //}
-        //}
+                    $created_task = Task::create($task);
+                    return response()->json($created_task);
+                } else {
+                    return response()->json(['response' => 'error_file']);
+                }
+            } else {
+                $task = [
+                    'title' => $request->title,
+                    'published_by' => $user->names.' '.$user->first_name,
+                    'description' => $request->description,
+                    'sesion_id' => $request->sesion_id,
+                ];
+                $created_task = Task::create($task);
+                return response()->json($created_task);
+            }
+        } else {
+            return response()->json(['response' => 'no_title']);
+        }
     }
 
     /**
@@ -120,31 +135,45 @@ class TaskController extends Controller
      */
     public function edit(Request $request)
     {
-        $task = Task::findOrFail($request->task_id);
-        //$sesion_number = Sesion::findOrFail($request->sesion_id)->number_sesion;
-        $user = Auth::user();
-        //$blockGroupId = Professor::getBlockProfessor()->block_id;
-        //$dir = Block::where('id', '=', $blockGroupId)->get()->first()->block_path;
+        if($request->title != "") {
+            $task = Task::findOrFail($request->task_id);
+            $sesion_number = Sesion::findOrFail($request->sesion_id)->number_sesion;
+            $user = Auth::user();
+            $blockGroupId = Professor::getBlockProfessor()->block_id;
+            $dir = Block::where('id', '=', $blockGroupId)->get()->first()->block_path;
 
-            //if($request->file()){
-                //$file = $request->file('practice');
-                //$extension = $file->getClientOriginalExtension();
-                //if($extension=='rar'||$extension=='zip'||$extension=='tar.gz'||$extension=='pdf'){
-                    //$file = $request->file('practice');
-                    //$name = $file->getClientOriginalName();
-                    //$semiPath ='/storage/'.$dir.'/practices/sesion-'.$sesion_number.'/';
-                    //$path = public_path().$semiPath;
-                    //$file -> move($path,$name);
+            if($request->file()){
+                $file = $request->file('practice');
+                $extension = $file->getClientOriginalExtension();
+                if($extension=='rar'||$extension=='zip'||$extension=='tar.gz'||$extension=='pdf'){
+                    $file = $request->file('practice');
+                    $name = $file->getClientOriginalName();
+                    $semiPath ='/storage/'.$dir.'/practices/sesion-'.$sesion_number.'/';
+                    $path = public_path().$semiPath;
+                    $file -> move($path,$name);
                     
-                    $task->title = $request->title;//$data['title'],
+                    $task->title = $request->title;
                     $task->published_by = $user->names.' '.$user->first_name;
-                    $task->description = $request->description;//$data['description'],
-                    $task->sesion_id = $request->sesion_id;//$data['sesion_id'],
-                    //$task->task_path = $semiPath;
-                    //$task->task_file = $name;
+                    $task->description = $request->description;
+                    $task->sesion_id = $request->sesion_id;
+                    $task->task_path = $semiPath;
+                    $task->task_file = $name;
                     $task->save();
-
-        return response()->json($task);
+                    return response()->json($task);
+                } else {
+                    return response()->json(['response' => 'error_file']);
+                }
+            } else {
+                $task->title = $request->title;
+                $task->published_by = $user->names.' '.$user->first_name;
+                $task->description = $request->description;
+                $task->sesion_id = $request->sesion_id;
+                $task->save();
+                return response()->json($task);
+            }
+        } else {
+            return response()->json(['response' => 'no_title']);
+        }
     }
 
     /**
