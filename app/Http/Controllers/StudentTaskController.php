@@ -26,9 +26,11 @@ class StudentTaskController extends Controller
         $day = Carbon::now()->format('Y-m-d');
         $hour = Carbon::now()->format('H:i:s');
         $schedules = StudentSchedule::getDateTimeStudentSchedulesByStudentId($student->id);
+        dd($schedules);
         $data = [
             'student' => $student,
-            'user' => $user
+            'user' => $user,
+            'time' => $day
         ];
         return view('components.contents.student.activities')->with($data);
     }

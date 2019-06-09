@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class StudentSchedule extends Model
 {
@@ -17,7 +18,8 @@ class StudentSchedule extends Model
         foreach ($studentSchedules as $student) {
             $blockSchedule = BlockSchedule::where('id',$student->block_schedule_id)->get()->first();
             $date = ScheduleRecord::getDayAndHourFormatWithId($blockSchedule->schedule_id);
-            $date['group_id'] = $student->group_id; 
+            $date['group_id'] = $student->group_id;
+            $date['block_id'] = $blockSchedule->block_id;
             array_push($schedules,$date);
         }
         return $schedules;
