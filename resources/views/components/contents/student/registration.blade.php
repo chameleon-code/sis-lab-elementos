@@ -100,12 +100,13 @@
                     $id_select = 1;
                 @endphp
                 @foreach($subjectMatters as $item)
+                <script> addSubjectMatterId({{json_encode($item->id)}}); </script>
                 @php
                     $groups_sm = App\Group::where("subject_matter_id", "=", $item->id)->get();
                 @endphp
                     <div class="flex-row my-2 rounded card shadow">
                         <img class="" style="width:100px; height: 80px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;" src="/img/subjectMatter.jpg" alt="">
-                        <div class="py-2 px-3" style="width: 65%;">
+                        <div class="py-2 px-3" id="subject-matter-{{$item->id}}" style="width: 65%;">
                             <strong> {{$item->name}} </strong>
                         </div>
                         <div class="py-3 px-2" style="width: 25%;">
