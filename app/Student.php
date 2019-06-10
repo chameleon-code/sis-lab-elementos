@@ -33,5 +33,10 @@ class Student extends Model
         'ci' => 'required|max:9|min:6',
         'password' => 'required|min:8'
     ];
-
+    public function user(){
+        return $this->hasOne('App\user');
+    }
+    public function tasks(){
+        return $this->belongsToMany('App\Task', 'student_tasks');
+    }
 }
