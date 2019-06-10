@@ -9,9 +9,6 @@
             float: right;
             margin-left: 5px;
           }
-          .active:after {
-              content: '\02227';
-          }
 </style>
 
     <div class="container-fluid">
@@ -22,9 +19,9 @@
                 </div>
 
                 <div class="container">
-                    <strong>Estudiante: </strong> {{ $user->first_name.' '.$user->second_name.' '.$user->names }} <br>
-                    <strong>Materia: </strong> {{ $subject_matter->name }} <br>
-                    <strong>Grupo: </strong> {{ $group->name }}
+                    <strong>Estudiante: </strong> {{ $schedule->user->first_name.' '.$schedule->user->second_name.' '.$schedule->user->names }} <br>
+                    <strong>Materia: </strong> {{ $schedule->group->subject->name }} <br>
+                    <strong>Grupo: </strong> {{ $schedule->group->name }}
                 </div>
 
                 <div class="card-body">
@@ -34,28 +31,76 @@
 
                     @foreach ($sesions as $sesion)
                     <thead>
-                        <tr>
-                            <div class="accordion-body bg-gray-300 border-bottom-primary rounded" style="margin-top: 8px;">
-                                <strong style="color: gray;"> Sesión: </strong> {{ $sesion->number_sesion }}
-                            </div>
-                        </tr>
-                        
-                    </thead>
-                    
-                    <div class="panel">
-                        @foreach ($tasks as $task)
-                            @if($task->sesion_id == $sesion->id)
-                                <div class="my-2 mx-2" style="border-bottom: 1px solid #b5b5b5; font-size: 15px;">
-                                        <div style="margin-top: 12px; margin-bottom: -15px;"> <p> <strong> Estado de tarea: </strong> <a href="/professor/student/{{$student->id}}/task/{{$task->id}}">{{ $task->title }}</a> </p> </div>
-                                        <div class="row" style="margin-top: -15px;">
-                                            <div class="row" style="margin-left: 12px;">
-                                                <strong> Entregado: &#10003 &#10005 </strong>
+                            <tr>
+                                @if(!empty($tasks_finisheds) &&$tasks_finisheds[$loop->index]->tasks > 0)       
+                                <div class="accordion-body rounded row" style="cursor: default;"  data-id='sesion'>
+                                    <div class="col-xl-12 col-md-12 mb-4">
+                                        <div class="card border-left-success shadow h-100 py-2">
+                                            <div class="card-body">
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col mr-2">
+                                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                            <strong style="color: gray;"> Sesión:&nbsp; </strong> {{ $sesion->number_sesion }}
+                                                        </div>
+                                                        <div class="row no-gutters align-items-center">
+                                                            <div class="col-auto">
+                                                                <div id="sesion{{ $sesion->id }}" class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $tasks_finisheds[$loop->index]->tasks }}/{{ $sesion->tasks->count() }}</div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="progress progress-sm mr-2">
+                                                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ ($tasks_finisheds[$loop->index]->tasks * 100) / $sesion->tasks->count() }}%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                    <i class="fas fa-tasks fa-2x text-gray-300"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-end">
+                                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1" onclick="showAccordion({{$sesion->id}})" style="cursor: pointer; width: 18px;"><strong id="arrowAccordion{{$sesion->id}}" style="color: gray; font-weight: bold;">&#709;</strong></div>
+                                                </div>                                            
                                             </div>
-                                        </div>
-                                        <div> <p> <strong> Límite de entrega: </strong> {{$task->end}} </p> </div>
+                                        </div>                                            
+                                    </div>                                            
                                 </div>
+                                
+                            </tr>
+                    </thead>
+                    <div class="py-2" id="panel{{$sesion->id}}" style="max-height: 100%;">
+                        @if (in_array($sesion->id ,array_pluck($tasks_finisheds, 'sesion_id'))) 
+                            <input type="hidden" value="{{ $tasks_finisheds[$loop->index]->tasks }}" data-total="{{ $sesion->tasks->count() }}" data-sesion="{{ $tasks_finisheds[$loop->index]->sesion_id }}">
+                        @endif
+                    
+                        @foreach ($tasks as $task)
+                            @if ($task->sesion_id == $sesion->id)
+                            
+                                <div class="my-2 mx-2" style="font-size: 15px;">
+                                    <div style="margin-top: 12px; margin-bottom: -15px;">
+                                    <p> <strong> Estado de tarea: </strong> <a href="/professor/student/{{$schedule->student->id}}/task/{{$task->id}}">{{ $task->title }}</a> </p> </div>
+                                    <div class="row" style="margin-top: -15px;">
+                                        <div class="row" style="margin-left: 12px;" >
+                                            @if (in_array($task->id, $student_tasks_ids))
+                                                <div data-parent-id="panel{{$sesion->id}}"><strong> Entregado: &#10003  </strong></div>
+                                                <div><strong data-id="score"> Puntuacion: {{ $student_tasks->where('task_id', $task->id)->first()->score }}</strong></div>
+                                                @else
+                                                <strong>Sin entregar &#10005</strong>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div> <p> <strong> Límite de entrega: </strong> {{$sesion->date_end}} </p> </div>
+                                </div>   
                             @endif
                         @endforeach
+                    @else
+                        @if(empty($tasks_finisheds))
+                        <div class="alert alert-danger">
+                                <b>El estudiante no realiz&oacute; ningua sesi&oacute;n!</b>
+                        </div>
+                        @break
+                        @endif
+                    @continue
+                    @endif
                     </div>
                     @endforeach
 
@@ -115,11 +160,10 @@
     </div>
 </div>
 
-<script src="/js/accordion.js"></script>
+<script src={{  asset("/js/accordion.js")  }}></script>
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
       })
 </script>
-
 @endsection

@@ -5,15 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Sesion;
 use App\Task;
-use App\Student;
 use App\Block;
 use App\Professor;
-use App\User;
-use App\Group;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use App\SubjectMatter;
 use App\Management;
+use App\StudentSchedule;
+use App\StudentTask;
 
 class SesionController extends Controller
 {
@@ -169,26 +165,42 @@ class SesionController extends Controller
 
     public function showStudentSesions($id)
     {
-        $student = Student::find($id);
-        $user = User::where('id', '=', $student->user_id)->get()->first();
-        $sesions = Sesion::all();
-        $tasks = Task::all();
+        $schedule = StudentSchedule::findOrFail($id);
+        $sesions = Sesion::where('block_id', $schedule->getGroupAttribute()->blocks->first()->id)->get();
+        $tasks = Task::all()->reject(function($item, $key) use ($schedule){
+            if($item->getSesionAttribute()->block_id != $schedule->group->blocks->first()->id){
+                return true;
+            }
+        })->values()->all();
         $sesion_max = Sesion::max('number_sesion');
-        $group = Group::find($student->group_id);
-        $subjectMatter = SubjectMatter::where('id', '=', $group->subject_matter_id)->get()->first();
+        $student_tasks = StudentTask::where('student_id', $schedule->getStudentAttribute()->id)->get();
+        $sesions_with_tasks = $schedule->getStudentAttribute()->tasks->count();
+        $tasks_finisheds = array();
+        if($student_tasks->isNotEmpty()){
+            foreach($sesions as $sesion){
+                $class = new \stdClass;
+                $class->sesion_id = $sesion->id;
+                $class->tasks = 0;
+                foreach($schedule->getStudentAttribute()->tasks as $task){
+                    if($task->sesion_id == $sesion->id){
+                        $class->tasks += 1;
+                    }
+                } 
+                array_push($tasks_finisheds, $class);
+            }
+        }
+        $student_tasks_ids = array_pluck($student_tasks->toArray(), 'task_id');
         $blockGroup = Professor::getBlockProfessor();
-
         $data = [
-            'student' => $student,
-            'user' => $user,
+            'tasks_finisheds' => $tasks_finisheds,
+            'student_tasks' => $student_tasks,
+            'student_tasks_ids' => $student_tasks_ids,
+            'schedule'=>$schedule,
             'sesions' => $sesions,
             'tasks' => $tasks,
             'blockGroup' => $blockGroup,
             'sesion_max' => $sesion_max,
-            'group' => $group,
-            'subject_matter' => $subjectMatter,
         ];
-
         return view('components.contents.professor.studentSesions', $data);
     }
 }

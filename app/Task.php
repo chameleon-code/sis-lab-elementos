@@ -23,4 +23,17 @@ class Task extends Model
     protected $rules = [
         'title' => 'required|max:100|min:1',
     ];
+    protected $hidden = ['created_at', 'updated_at'];
+    protected $append = [
+        'sesion'
+    ];
+    public function getSesionAttribute(){
+        return Sesion::findOrFail($this->sesion_id);
+    }
+    public function students(){
+        return $this->belongsToMany('App\Student', 'student_tasks');
+    }
+    public function sesion(){
+        return $this->belongsTo('App\Sesion');
+    }
 }

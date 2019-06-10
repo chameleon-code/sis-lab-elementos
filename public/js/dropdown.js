@@ -6,7 +6,7 @@ $(document).ready(function(){
         iCnt = 1;
         added = false;
         $.ajax({
-            url: 'http://127.0.0.1:8000/admin/blocks/getGroups/'+event.target.value+'',
+            url: 'http://localhost:8000/admin/blocks/getGroups/'+event.target.value+'',
             success: function (response){
                 $("#groups_container").empty();
                 $('#groups_container').append(
@@ -26,7 +26,7 @@ $(document).ready(function(){
     $('#addGroups').click(function() {
         var subjectID = $("#subjects :selected").attr("value");
         $.ajax({
-            url: "http://127.0.0.1:8000/admin/blocks/getGroups/"+subjectID+"",
+            url: "http://localhost:8000/admin/blocks/getGroups/"+subjectID+"",
             success: function (response){
                 console.log(response);
                 if (!added){

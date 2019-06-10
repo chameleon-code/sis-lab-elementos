@@ -19,6 +19,9 @@ class Sesion extends Model
         'date_start' => 'required|date_format:Y-m-d',
         'date_end' => 'required|date_format:Y-m-d|after:date_start',
     ];
+    protected $appends = [
+        'block'
+    ];
     public static function autodate($start,$end){
         $dates = array();
         $current = strtotime( $start );
@@ -42,6 +45,12 @@ class Sesion extends Model
             $count++;
         }
         return $segmented;
+    }
+    public function getBlockAttribute(){
+        return Block::findOrFail($this->block_id);
+    }
+    public function tasks(){
+        return $this->hasMany('App\Task');
     }
     public static function getSesionIdToDayByBlock($block_id){
         $date = date('Y-m-d');
