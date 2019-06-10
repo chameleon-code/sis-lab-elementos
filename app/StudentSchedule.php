@@ -35,6 +35,7 @@ class StudentSchedule extends Model
             $date = ScheduleRecord::getDayAndHourFormatWithId($blockSchedule->schedule_id);
             $date['group_id'] = $student->group_id;
             $date['block_id'] = $blockSchedule->block_id;
+            $date['schedule_id'] = $blockSchedule->schedule_id;
             array_push($schedules,$date);
         }
         return $schedules;

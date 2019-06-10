@@ -7,7 +7,7 @@
             <h1 class="h3 mb-0 text-gray-800">Actividades</h1>
         </div>
         @if (count($errors)>0)
-        <div class="alert alert-danger">
+        <div class="alert alert-warning">
             <b>Ha ocurrido un Error!</b>
             <ul>
                 @foreach ($errors->all() as $error)
@@ -71,22 +71,22 @@
                 <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Prácticas sin entregar</div>
-                        <div class="row no-gutters align-items-center">
-                        <div class="col-auto">
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">1/13</div>
-                        </div>
-                        <div class="col">
-                            <div class="progress progress-sm mr-2">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 9.8%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Prácticas sin entregar</div>
+                            <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">1/13</div>
+                            </div>
+                            <div class="col">
+                                <div class="progress progress-sm mr-2">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 9.8%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
                             </div>
                         </div>
+                        <div class="col-auto">
+                            <i class="fas fa-tasks fa-2x text-gray-300"></i>
                         </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-tasks fa-2x text-gray-300"></i>
-                    </div>
                     </div>
                 </div>
                 </div>
@@ -105,21 +105,47 @@
                 <li class="nav-item">
                   <a class="nav-link" href="#references" role="tab" data-toggle="tab">references</a>
                 </li> --}}
-                @foreach ($sesions as $sesion)
+                @foreach ($sesions as $key=>$sesion)
                     {{-- active --}}
                     <li class="nav-item">
+                    @if ($key==0)
+                        <a class="nav-link active" href="#{{str_replace(" ","",$sesion->subject)}}" role="tab" data-toggle="tab" aria-selected="true">{{$sesion->subject}}</a>
+                    @else
                         <a class="nav-link" href="#{{str_replace(" ","",$sesion->subject)}}" role="tab" data-toggle="tab">{{$sesion->subject}}</a>
+                    @endif
                     </li>
                 @endforeach
             </ul>
             <div class="card-body">
                 <div class="tab-content">
-                    @foreach ($sesions as $sesion)
-                        <div role="tabpanel" class="tab-pane fade in" id="{{str_replace(" ","",$sesion->subject)}}">
-                            Sesion Número: {{$sesion->sesion->number_sesion}} 
+                    @foreach ($sesions as $key=>$sesion)
+                        @if ($key==0)
+                            <div role="tabpanel" class="tab-pane fade in active show" id="{{str_replace(" ","",$sesion->subject)}}">
+                        @else
+                            <div role="tabpanel" class="tab-pane fade in" id="{{str_replace(" ","",$sesion->subject)}}">
+                        @endif
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Sesion</div>
+                                    <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$sesion->sesion->number_sesion}}/{{$sesion->totalSesion}}</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="progress progress-sm mr-2">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: {{($sesion->sesion->number_sesion)/($sesion->totalSesion)*100}}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-cubes fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                            <br>
                             <div class="row">
                                 @foreach ($sesion->tasks as $task)
-                                <div class="col-md-6 col-12 col-sm-12">
+                                <div class="col-12 col-sm-12" style="margin-bottom: 1rem;">
                                     <form class="user" method="POST" action="{{ url('/student/activities') }}" enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                         <div class="accordion-body bg-gray-300 rounded row my-2" id="task1" style="cursor: default;">
@@ -135,40 +161,43 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        
+                                        <input type="" name="task_id" value="{{$task->id}}" hidden>
+                                        <input type="" name="block_id" value="{{$sesion->block_id}}" hidden>
+                                        <input type="" name="sesion_number" value="{{$sesion->sesion->number_sesion}}" hidden>
+                                        <input type="" name="schedule_id" value="{{$sesion->schedule_id}}" hidden>
                                         <div class="group col-sm-12">
-                                            <label for="">Descripción</label>
+                                            <label for="" style="word-wrap: break-word;">Descripción</label>
                                             <textarea name="description" class="form-control col-md-12" id="" cols="30" rows="2"></textarea>
                                         </div>
                                         <div class="group col-sm-12">
-                                                <label for="">
-                                                    <br>
-                                                    Procura subir un comprimido o archivador con tu ejercicio adentro, solo los siguientes formatos son admitidos: <strong>.zip .rar .tar.gz</strong>
-                                                    <br>
-                                                </label>
-                                        </div>
-                                        <div class="col-sm-12 custom-file container" style="padding: 0px 20px;">
-                                            <input class="custom-file-input" id="practice" type="file" name="practice" style="margin-bottom: 4px; cursor: pointer;" required="">
-                                            <label class="custom-file-label" for="practice" style="margin: 0px 10px; color:darkslateblue;">Subir un archivo</label>
-                                            <br>
-                                        </div>
-                                        <input type="" name="task_id" value="{{$task->id}}" hidden>
-                                        <input type="" name="student_id" value="{{$student->id}}" hidden>
-                                        <input type="" name="block_id" value="{{$sesion->block_id}}" hidden>
-                                        <input type="" name="sesion_number" value="{{$sesion->sesion->number_sesion}}" hidden>
-                                        <br>
-                                        <br>
-                                        @if (Agent::isMobile())
-                                            <div class="group col-md-12 col-12">
-                                                <button type="submit" class="btn btn-primary btn-block col-md-12" style="margin-bottom:10px;">Entregar</button>
+                                            <label for="">
+                                                <br>
+                                                Procura subir un comprimido o archivador con tu ejercicio adentro, solo los siguientes formatos son admitidos: <strong>.zip .rar .tar.gz</strong>
+                                                <br>
+                                            </label>
+                                            <div class="row">
+                                                
+                                                @if (Agent::isMobile())
+                                                    <div class="col-md-12 col-12 custom-file">
+                                                        <input class="custom-file-input" id="practice" type="file" name="practice" style="cursor: pointer;" required="">
+                                                        <label class="custom-file-label" for="practice" style="margin: 0px 10px; color:darkslateblue;">Subir un archivo</label>
+                                                    </div>
+                                                    <div class="col-md-12 col-12" style="margin-top: 1rem">
+                                                        <button type="submit" class="btn btn-primary btn-block" >Entregar</button>
+                                                    </div>
+                                                @else
+                                                    <div class="col-md-7 col-7 custom-file">
+                                                        <input class="custom-file-input" id="practice" type="file" name="practice" style="cursor: pointer;" required="">
+                                                        <label class="custom-file-label" for="practice" style="margin: 0px 10px; color:darkslateblue;">Subir un archivo</label>
+                                                    </div>
+                                                    <div class="col-md-5 col-5">
+                                                        <button type="submit" class="btn btn-primary btn-block" >Entregar</button>
+                                                    </div>
+                                                @endif
                                             </div>
-                                        @else
-                                            <div class="group col-md-4 col-4 offset-md-4 offset-4">
-                                                <button type="submit" class="btn btn-primary btn-block col-md-12" style="margin-bottom:10px;">Entregar</button>
-                                            </div>
-                                        @endif
+                                        </div>
                                     </form>
-                                </div>                            
+                                </div>             
                                 @endforeach
                             </div>
                         </div>

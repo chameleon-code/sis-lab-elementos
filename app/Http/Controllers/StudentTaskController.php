@@ -12,6 +12,8 @@ use App\Task;
 use App\Professor;
 use App\BlockGroup;
 use App\Group;
+use App\BlockSchedule;
+use App\StudentTask;
 
 class StudentTaskController extends Controller
 {
@@ -39,7 +41,8 @@ class StudentTaskController extends Controller
                     $blockGroup = [
                         'sesionId' => $sesionId,
                         'group_id' => $schedule['group_id'],
-                        'block_id' => $schedule['block_id']
+                        'block_id' => $schedule['block_id'],
+                        'schedule_id' => $schedule['schedule_id']
                     ];
                     array_push($sesions,(object)$blockGroup); 
                 }
@@ -48,20 +51,22 @@ class StudentTaskController extends Controller
             $message = 'No te encuentras inscrito a ninguna materia aún';        
             $data = [
                 'student' => $student,
-                'user' => $user,
-                'sesion' => ''
+                'sesions' => []
             ];
-            //return view('components.contents.student.activities')->with($data)->withErrors($message);
+            return view('components.contents.student.activities')->with($data)->withErrors($message);
         }
         $sesionOfWeek=[];
         foreach ($sesions as $sesion) {
             $sesionWeek = Sesion::find($sesion->sesionId);
             $tasks = Task::where('sesion_id',$sesion->sesionId)->get()->all();
-            $sesionTask= [
+            $totalSesions = count(Sesion::where('block_id',$sesion->block_id)->get()->all());
+            $sesionTask = [
                 'tasks' => $tasks,
                 'sesion' => $sesionWeek,
                 'subject' => Group::getSubjectById($sesion->group_id)->name,
-                'block_id' => $sesion->block_id
+                'block_id' => $sesion->block_id,
+                'totalSesion' => $totalSesions,
+                'schedule_id' => $sesion->schedule_id,
             ];
             array_push($sesionOfWeek,(object)$sesionTask);
         }
@@ -91,23 +96,37 @@ class StudentTaskController extends Controller
      */
     public function store(Request $request)
     {
-        $data = [
-            "description" => $request->description,
-            "task_id" => $request->task_id,
-            "student_id" => $request->student_id
-        ];
         if($request->hasFile('practice')){
             $file = $request->file('practice');
             $extension = $file->getClientOriginalExtension();
             if($extension=='rar'||$extension=='zip'||$extension=='tar.gz'){
                 $user = Auth::user();
                 $student = Student::where('user_id','=',$user->id)->first();
-                if($student->student_path!=null){
-                    $name = $file->getClientOriginalName();
-                    $file -> move(public_path().'/storage/'.$student->student_path,$name);
+
+                $fileName = $file->getClientOriginalName();
+                $fileSesion = $request->sesion_number;
+
+                $blockScheduleId = BlockSchedule::where('schedule_id',$request->schedule_id)->where('block_id',$request->block_id)->get()->first()->id;
+                $studentSchedule = StudentSchedule::where('student_id',$student->id)->where('block_schedule_id',$blockScheduleId)->get()->first();
+                
+    
+                if($studentSchedule!=[]){
+                    $file -> move(public_path().'/storage/'.$studentSchedule->student_path.'/'.$fileSesion,$fileName);
+                    $data = [
+                        "description" => $request->description,
+                        "task_id" => $request->task_id,
+                        "student_id" => $student->id,
+                        "task_name" => $fileName,
+                        "task_path" => $studentSchedule->student_path.'/'.$fileSesion
+                    ];
+                    StudentTask::create($data);
                 }
+                return back();
+            }else{
+                return back()->withErrors('Procure enviar archivos formato: .zip .rar .tar.gz');
             }
-            return back();
+        }else{
+            return back()->withErrors('Adjunte archivos');
         }
     }
 

@@ -33,7 +33,7 @@ class ScheduleRecord extends Model
             "start"=>$hourStart,
             "end"=>$hourEnd,
             "day" => $day,
-            "laboratory" => $laboratory
+            "laboratory" => $laboratory,
         ];
         return $data;
     }
