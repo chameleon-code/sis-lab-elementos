@@ -221,8 +221,20 @@ class BlockController extends Controller
     }
 
     public function getGroupSchedules($id, Request $request){
-        $block_id = BlockGroup::getBlockByIdGroup($id)->block_id;
-        $block = Block::find($block_id);
-        return $block->scheduleRecords()->get();
+        // $block_id = BlockGroup::getBlockByIdGroup($id)->block_id;
+        // $block = Block::find($block_id);
+        // return $block->scheduleRecords()->get();
+        $block_group = BlockGroup::where('group_id', '=', $id)->get()->first();
+        $block = Block::where('id', '=', $block_group->block_id)->get()->first();
+        
+        $block_schedules = BlockSchedule::join('schedule_records','schedule_records.id','=','block_schedules.schedule_id')->where('block_schedules.block_id', '=', $block->id)->select('block_schedules.id AS block_schedule_id', 'block_schedules.block_id', 'schedule_records.id AS schedule_record_id', 'schedule_records.laboratory_id', 'schedule_records.day_id', 'schedule_records.hour_id')->orderBy('schedule_records.day_id')->get();
+        $block_schedules->each(function ($item){
+            $item->setAppends([]);
+        });
+        if($request->ajax()){
+            return response()->json($block_schedules);
+        }
+
+        return $block_schedules;
     }
 }

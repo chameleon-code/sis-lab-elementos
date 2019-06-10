@@ -1,5 +1,4 @@
 <?php
-use App\Block;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,10 +58,12 @@ $factory->define(App\Professor::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Auxiliar::class, function (Faker\Generator $faker) {
     static $password;
+    $block = $faker->randomElement(App\Block::all());
 
     return [
         'user_id' => null,
-        'type' => null
+        'type' => null,
+        'block_id' => $block->id,
     ];
 });
 

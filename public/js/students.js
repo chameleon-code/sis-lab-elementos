@@ -36,6 +36,41 @@
 // });
 
 var schedule_id;
+var subject_matters_ids = new Array();
+
+function addSubjectMatterId(id) {
+    subject_matters_ids.push(id);
+}
+
+$(document).ready(function() {
+    $.ajax({
+        url: 'http://localhost:8000/students/registration/getScheduleStudent',
+        success: function(response) {
+            if (Object.keys(response).length != 0) {
+                for (var i = 1; i <= subject_matters_ids.length; i++) {
+                    for (var j = 0; j < Object.keys(response).length; j++) {
+                        if (subject_matters_ids[i - 1] == response[j].subject_matter_id) {
+                            $('#subject-matter-' + i).append(
+                                "<br><strong class='text-primary' style='margin-top: 10px;'>Se encuentra inscrito en esta materia.</strong>"
+                            );
+                        }
+                    }
+                }
+            } else {
+                //
+            }
+            // response.forEach(function(element){
+
+            //     $('#body-table').append(
+            //         " <tr class='text-center'><td>"+element.laboratory_id+"</td><td>"+day+"</td><td>"+hour+"</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check"+cont+"' onclick='clearChecks("+response.length+", "+cont+", "+element.schedule_record_id+", "+element.block_schedule_id+")'><label class='custom-control-label' for='Check"+cont+"'></label></div></td></tr> "
+            //     );
+            // });
+        },
+        error: function() {
+            console.log("No se ha podido obtener la información");
+        }
+    });
+});
 
 function clearSelects(id) {
     var selects;
@@ -156,4 +191,11 @@ function clearChecks(longChecks, idCheck, schedule_record_id, block_schedule_id)
         $('#block_schedule_id')[0].value = null;
     }
     console.log(schedule_id);
+    if (schedule_id != undefined) {
+        $('#info-inscription').show();
+        $('#modal-footer').show();
+    } else {
+        $('#info-inscription').hide();
+        $('#modal-footer').hide();
+    }
 }

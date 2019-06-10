@@ -49,13 +49,15 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('auxiliars', function (Blueprint $table){
+        /*Schema::create('auxiliars', function (Blueprint $table){
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->string('type')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedInteger('block_id');
+            $table->foreign('block_id')->references('id')->on('blocks');
+            $table->string('type')->nullable();
             $table->timestamps();
-        });
+        });*/
 
         Schema::create('students', function (Blueprint $table){
             $table->increments('id');

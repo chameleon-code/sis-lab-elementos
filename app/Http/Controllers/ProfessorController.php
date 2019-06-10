@@ -12,9 +12,12 @@ use Illuminate\Support\Facades\Mail;
 use App\SubjectMatter;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use App\Block;
 use App\BlockGroup;
 use App\Group;
 use Illuminate\Support\Facades\Cache;
+use App\Mail\StudentMailController;
+use App\StudentSchedule;
 
 class ProfessorController extends Controller
 {
@@ -170,25 +173,44 @@ class ProfessorController extends Controller
         return redirect('/admin/professors');   
     }
 
+    //Obtiene la lista de estudiantes en base a grupo
     public function studentList(){
-        $user = Auth::user();
-        $professor = Professor::where('user_id', '=', $user->id)->get()->first();
-        $group_professor = Group::where('professor_id', '=', $professor->id)->get()->first();
-        if($group_professor!=null){
-            $block_professor = BlockGroup::where('group_id', '=', $group_professor->id)->get();
-            //$students = Student::where('block_id', '=', $block_professor->block_id)->get();
-            $students = Student::getAllStudents();
-            $data = ['students' => $students,
-                    'block_professor' => $block_professor,
-                    'title' => 'Estudiantes'];
+        $professor = Professor::where('user_id', auth()->user()->id)->first();
+        $groups = Group::where('professor_id', $professor->id)->get()->reject(function ($item, $key){
+            if(is_null($item->blocks->first())){
+                return true;
+            }
+        }); 
+        $schedules = $this->studentListByGroup(new Request, $groups->first()->id);
+        $data = [
+                    'schedules' => $schedules,
+                    'groups' => $groups,
+                    'title' => 'Estudiantes'
+                ];
             return view('components.contents.professor.studentList', $data);
-        }else{
-            $data = ['students' => [],
-                    'block_professor' => [],
-                    'title' => 'Estudiantes'];
-            return view('components.contents.professor.studentList',$data);
+    }
+    public function studentListByGroup(Request $request, $id){
+        $schedules = StudentSchedule::all();
+        $schedules2 = $schedules->reject(function($item, $key) use ($id){
+            if($item->group_id != $id)
+                return true;
+        });
+        if($request->ajax()){
+            $array = array();
+            foreach($schedules2->values()->all() as $schedule){
+                $student = new \stdClass();
+                $student->Codigo_Sis = $schedule->getUserAttribute()->code_sis;
+                $student->Apellidos = $schedule->getUserAttribute()->first_name ." ". $schedule->getUserAttribute()->second_name;
+                $student->Nombres = $schedule->getUserAttribute()->names;
+                $student->Acciones = (object)[
+                    'student' => $schedule->getUserAttribute(),
+                    'schedule_id' => $schedule->id
+                ];
+                array_push($array, $student);
+            }
+            return response()->json($array);
         }
-        
+        return $schedules2->values()->all();
     }
 
     public function profileStudent($id)

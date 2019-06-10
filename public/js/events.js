@@ -3,7 +3,7 @@ $(document).ready(function(){
     updateEvents();
     function updateEvents(){
         $.ajax({
-            url: 'http://127.0.0.1:8000/calendars',
+            url: 'http://localhost:8000/calendars',
             success: (response) => {
                 eventos.push(response);
                 console.log(response);

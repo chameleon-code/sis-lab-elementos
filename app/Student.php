@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Traits\ValidationTrait;
+use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
@@ -19,6 +19,11 @@ class Student extends Model
         return Student::join('users', 'user_id', '=', 'users.id')->select('users.role_id', 'users.names', 'users.first_name', 'users.second_name', 'users.email', 'users.password', 'users.img_path', 'users.remember_token', 'users.created_at', 'users.updated_at', 'students.id', 'users.code_sis', 'ci')->get();
     }
 
+    public static function getAllBlocks()
+    {
+        return Block::all();
+    }
+
     protected $rules = [
         'names' => 'required|max:100',
         'first_name' => 'required|max:100',
@@ -28,5 +33,10 @@ class Student extends Model
         'ci' => 'required|max:9|min:6',
         'password' => 'required|min:8'
     ];
-
+    public function user(){
+        return $this->hasOne('App\user');
+    }
+    public function tasks(){
+        return $this->belongsToMany('App\Task', 'student_tasks');
+    }
 }
