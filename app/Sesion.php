@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ValidationTrait;
+use Faker\Provider\cs_CZ\DateTime;
 
 class Sesion extends Model
 {
@@ -50,5 +51,19 @@ class Sesion extends Model
     }
     public function tasks(){
         return $this->hasMany('App\Task');
+    }
+    public static function getSesionIdToDayByBlock($block_id){
+        $date = date('Y-m-d');
+        $sesions = self::where('block_id',$block_id)->get()->all();
+        $n = -1;
+        foreach ($sesions as $sesion) {
+            $dateStart = date_format(date_create($sesion->date_start),'Y-m-d');
+            $dateEnd = date_format(date_create($sesion->date_end),'Y-m-d');
+            if($date>=$dateStart && $date<$dateEnd){
+                $n = $sesion->id;
+                return $n;
+            } 
+        }
+        return $n;
     }
 }

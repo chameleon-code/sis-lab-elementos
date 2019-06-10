@@ -9,6 +9,15 @@ use App\User;
 
 class StudentTask extends Model
 {
+    protected $fillable = [
+        'student_id',
+        'task_id',
+        'description',
+        'score',
+        'observation',
+        'task_path',
+        'task_name'
+    ];
     protected $appends = [
         'student', 'task'
     ];
@@ -20,3 +29,4 @@ class StudentTask extends Model
         return Task::findOrFail($this->task_id);
     }
 }
+

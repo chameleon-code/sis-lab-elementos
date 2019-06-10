@@ -5,6 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Student;
+use App\StudentSchedule;
+use Carbon\Carbon;
+use App\Sesion;
+use App\Task;
+use App\Professor;
+use App\BlockGroup;
+use App\Group;
+use App\BlockSchedule;
+use App\StudentTask;
 
 class StudentTaskController extends Controller
 {
@@ -17,9 +26,55 @@ class StudentTaskController extends Controller
     {
         $user = Auth::user();
         $student = Student::where('user_id','=',$user->id)->first();
-        $data = ['student' => $student,
-            'user' => $user
+        //test for day and hours 
+        //$testDate = Carbon::create(2019,6,6,17,15,0); 
+        //Carbon::setTestNow($testDate);
+        // end test 
+        $hour = Carbon::now()->format('H:i:s');
+        $schedules = StudentSchedule::getDateTimeStudentSchedulesByStudentId($student->id);
+        $message = '';
+        $sesions = [];
+        if($schedules != []){
+            foreach ($schedules as $schedule) {
+                $sesionId = Sesion::getSesionIdToDayByBlock($schedule['block_id']);
+                if($sesionId != -1){
+                    $blockGroup = [
+                        'sesionId' => $sesionId,
+                        'group_id' => $schedule['group_id'],
+                        'block_id' => $schedule['block_id'],
+                        'schedule_id' => $schedule['schedule_id']
+                    ];
+                    array_push($sesions,(object)$blockGroup); 
+                }
+            }
+        }else{
+            $message = 'No te encuentras inscrito a ninguna materia aún';        
+            $data = [
+                'student' => $student,
+                'sesions' => []
+            ];
+            return view('components.contents.student.activities')->with($data)->withErrors($message);
+        }
+        $sesionOfWeek=[];
+        foreach ($sesions as $sesion) {
+            $sesionWeek = Sesion::find($sesion->sesionId);
+            $tasks = Task::where('sesion_id',$sesion->sesionId)->get()->all();
+            $totalSesions = count(Sesion::where('block_id',$sesion->block_id)->get()->all());
+            $sesionTask = [
+                'tasks' => $tasks,
+                'sesion' => $sesionWeek,
+                'subject' => Group::getSubjectById($sesion->group_id)->name,
+                'block_id' => $sesion->block_id,
+                'totalSesion' => $totalSesions,
+                'schedule_id' => $sesion->schedule_id,
+            ];
+            array_push($sesionOfWeek,(object)$sesionTask);
+        }
+        $data = [
+            'student' => $student,
+            'sesions' => $sesionOfWeek
         ];
+
         return view('components.contents.student.activities')->with($data);
     }
 
@@ -44,15 +99,34 @@ class StudentTaskController extends Controller
         if($request->hasFile('practice')){
             $file = $request->file('practice');
             $extension = $file->getClientOriginalExtension();
-            if($extension=='rar'||$extension=='zip'||$extension=='tar.gz'){
+            if($extension=='rar'||$extension=='zip'){
                 $user = Auth::user();
                 $student = Student::where('user_id','=',$user->id)->first();
-                if($student->student_path!=null){
-                    $name = $file->getClientOriginalName();
-                    $file -> move(public_path().'/storage/'.$student->student_path,$name);
+
+                $fileName = $file->getClientOriginalName();
+                $fileSesion = $request->sesion_number;
+
+                $blockScheduleId = BlockSchedule::where('schedule_id',$request->schedule_id)->where('block_id',$request->block_id)->get()->first()->id;
+                $studentSchedule = StudentSchedule::where('student_id',$student->id)->where('block_schedule_id',$blockScheduleId)->get()->first();
+                
+    
+                if($studentSchedule!=[]){
+                    $file -> move(public_path().'/storage/'.$studentSchedule->student_path.'/'.$fileSesion,$fileName);
+                    $data = [
+                        "description" => $request->description,
+                        "task_id" => $request->task_id,
+                        "student_id" => $student->id,
+                        "task_name" => $fileName,
+                        "task_path" => $studentSchedule->student_path.'/'.$fileSesion
+                    ];
+                    StudentTask::create($data);
                 }
+                return back();
+            }else{
+                return back()->withErrors('Procure enviar archivos formato: .zip .rar');
             }
-            return back();
+        }else{
+            return back()->withErrors('Adjunte archivos');
         }
     }
 
