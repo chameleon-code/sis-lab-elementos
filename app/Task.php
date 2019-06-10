@@ -25,4 +25,7 @@ class Task extends Model
     public function students(){
         return $this->belongsToMany('App\Student', 'student_tasks');
     }
+    public function sesion(){
+        return $this->belongsTo('App\Sesion');
+    }
 }

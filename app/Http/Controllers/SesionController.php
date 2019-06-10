@@ -173,11 +173,28 @@ class SesionController extends Controller
             }
         })->values()->all();
         $sesion_max = Sesion::max('number_sesion');
-        $student_tasks = StudentTask::where('student_id', $schedule->getStudentAttribute()->id)->select('task_id')->get();
-        //dd(array_pluck($student_tasks->toArray(), 'task_id'));
+        $student_tasks = StudentTask::where('student_id', $schedule->getStudentAttribute()->id)->get();
+        $sesions_with_tasks = $schedule->getStudentAttribute()->tasks->count();
+        $tasks_finisheds = array();
+        if($student_tasks->isNotEmpty()){
+            foreach($sesions as $sesion){
+                $class = new \stdClass;
+                $class->sesion_id = $sesion->id;
+                $class->tasks = 0;
+                foreach($schedule->getStudentAttribute()->tasks as $task){
+                    if($task->sesion_id == $sesion->id){
+                        $class->tasks += 1;
+                    }
+                } 
+                array_push($tasks_finisheds, $class);
+            }
+        }
+        $student_tasks_ids = array_pluck($student_tasks->toArray(), 'task_id');
         $blockGroup = Professor::getBlockProfessor();
         $data = [
-            'student_tasks' => array_pluck($student_tasks->toArray(), 'task_id'),
+            'tasks_finisheds' => $tasks_finisheds,
+            'student_tasks' => $student_tasks,
+            'student_tasks_ids' => $student_tasks_ids,
             'schedule'=>$schedule,
             'sesions' => $sesions,
             'tasks' => $tasks,

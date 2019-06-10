@@ -48,4 +48,7 @@ class Sesion extends Model
     public function getBlockAttribute(){
         return Block::findOrFail($this->block_id);
     }
+    public function tasks(){
+        return $this->hasMany('App\Task');
+    }
 }
