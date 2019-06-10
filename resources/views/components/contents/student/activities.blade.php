@@ -6,16 +6,7 @@
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Actividades</h1>
         </div>
-        @if (count($errors)>0)
-        <div class="alert alert-warning">
-            <b>Ha ocurrido un Error!</b>
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{$error}}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
+       
         <div class="row">
                 <div class="col-xl-4 col-md-12 mb-4 col-12">
                 <div class="card border-left-primary shadow h-100 py-2">
@@ -133,7 +124,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="progress progress-sm mr-2">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: {{($sesion->sesion->number_sesion)/($sesion->totalSesion)*100}}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: {{($sesion->sesion->number_sesion)/($sesion->totalSesion)*100}}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     </div>
@@ -143,63 +134,83 @@
                                 </div>
                             </div>
                             <br>
-                            <div class="row">
-                                @foreach ($sesion->tasks as $task)
-                                <div class="col-12 col-sm-12" style="margin-bottom: 1rem;">
-                                    <form class="user" method="POST" action="{{ url('/student/activities') }}" enctype="multipart/form-data">
-                                        {{ csrf_field() }}
-                                        <div class="accordion-body bg-gray-300 rounded row my-2" id="task1" style="cursor: default;">
-                                            <div class="group col-sm-12">
-                                                <label ><b>{{$task->title}}</b></label>
-                                                <br>
-                                                <label for="">
-                                                    {{$task->description}}
-                                                </label>
-                                                <br>
-                                                <label for="">
-                                                    Archivo adjunto: <a href="{{$task->task_path.$task->task_file}}">{{$task->task_file}}</a>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <input type="" name="task_id" value="{{$task->id}}" hidden>
-                                        <input type="" name="block_id" value="{{$sesion->block_id}}" hidden>
-                                        <input type="" name="sesion_number" value="{{$sesion->sesion->number_sesion}}" hidden>
-                                        <input type="" name="schedule_id" value="{{$sesion->schedule_id}}" hidden>
-                                        <div class="group col-sm-12">
-                                            <label for="" style="word-wrap: break-word;">Descripción</label>
-                                            <textarea name="description" class="form-control col-md-12" id="" cols="30" rows="2"></textarea>
-                                        </div>
-                                        <div class="group col-sm-12">
-                                            <label for="">
-                                                <br>
-                                                Procura subir un comprimido o archivador con tu ejercicio adentro, solo los siguientes formatos son admitidos: <strong>.zip .rar</strong>
-                                                <br>
-                                            </label>
-                                            <div class="row">
-                                                
-                                                @if (Agent::isMobile())
-                                                    <div class="col-md-12 col-12 custom-file">
-                                                        <input class="custom-file-input" id="practice" type="file" name="practice" style="cursor: pointer;" required="">
-                                                        <label class="custom-file-label" for="practice" style="margin: 0px 10px; color:darkslateblue;">Subir un archivo</label>
-                                                    </div>
-                                                    <div class="col-md-12 col-12" style="margin-top: 1rem">
-                                                        <button type="submit" class="btn btn-primary btn-block" >Entregar</button>
-                                                    </div>
-                                                @else
-                                                    <div class="col-md-7 col-7 custom-file">
-                                                        <input class="custom-file-input" id="practice" type="file" name="practice" style="cursor: pointer;" required="">
-                                                        <label class="custom-file-label" for="practice" style="margin: 0px 10px; color:darkslateblue;">Subir un archivo</label>
-                                                    </div>
-                                                    <div class="col-md-5 col-5">
-                                                        <button type="submit" class="btn btn-primary btn-block" >Entregar</button>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>             
-                                @endforeach
+                            <div class="text-center">
+                                    <label class="h5 text-gray-900 mb-4">Prácticas de la Sesión</label>
                             </div>
+                            @if (count($errors)>0)
+                                <div class="alert alert-danger">
+                                    <b>Ha ocurrido un Error!</b>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                        <li>{{$error}}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            @foreach ($sesion->tasks as $task)
+                                <div class="row rounded">
+                                    <div class="col-md-6 col-12 col-sm-12">
+                                        <div class="accordion-body bg-gray-300 rounded row my-2" id="task1" style="cursor: default;">
+                                                <div class="group col-sm-12">
+                                                    <label class="h6"><b>{{$task->title}}</b></label>
+                                                    <br>
+                                                    <label for="">
+                                                        {{$task->description}}
+                                                    </label>
+                                                    <br>
+                                                    @if ( $task->task_file != null )
+                                                        <label for="">
+                                                            <b>Archivo adjunto:</b>  <a href="{{$task->task_path.$task->task_file}}">{{$task->task_file}}</a>
+                                                        </label>
+                                                    @endif
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 col-sm-12">
+                                        <form class="user" method="POST" action="{{ url('/student/activities') }}" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            <input type="" name="task_id" value="{{$task->id}}" hidden>
+                                            <input type="" name="block_id" value="{{$sesion->block_id}}" hidden>
+                                            <input type="" name="sesion_number" value="{{$sesion->sesion->number_sesion}}" hidden>
+                                            <input type="" name="schedule_id" value="{{$sesion->schedule_id}}" hidden>
+                                            <div class="group col-sm-12">
+                                                <textarea name="description" placeholder="Descripción" class="form-control col-md-12" id="" cols="30" rows="2" style="margin-top: 0.5rem;"></textarea>
+                                            </div>
+                                            <div class="group col-sm-12">
+                                                <label for="">
+                                                    <br>
+                                                    Procura subir un comprimido o archivador con tu ejercicio adentro, solo los siguientes formatos son admitidos: <strong>.zip .rar</strong>
+                                                    <br>
+                                                </label>
+                                                <div class="row">
+                                                    
+                                                    @if (Agent::isMobile())
+                                                        <div class="col-md-12 col-12 custom-file">
+                                                            <input class="custom-file-input" id="practice" type="file" name="practice" style="cursor: pointer;" required="">
+                                                            <label class="custom-file-label" for="practice" style="margin: 0px 10px; color:darkslateblue;">Subir un archivo*</label>
+                                                        </div>
+                                                        <div class="col-md-12 col-12" style="margin-top: 1rem">
+                                                            <button type="submit" class="btn btn-primary btn-block" >Entregar</button>
+                                                        </div>
+                                                    @else
+                                                        <div class="col-md-7 col-7 ">
+                                                            <input class="custom-file-input" id="practice" type="file" accept=".zip,.rar" name="practice" style="cursor: pointer;" required="">
+                                                            <label class="custom-file-label" for="practice" style="margin: 0px 10px; color:darkslateblue;">Subir un archivo*</label>
+                                                        </div>
+                                                        <div class="col-md-5 col-5">
+                                                            <button type="submit" class="btn btn-primary btn-block"style="z-index:1;" >Entregar</button>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <br>
+                                @if (next($sesion->tasks))
+                                    <hr>                                    
+                                @endif
+                            @endforeach
                         </div>
                     @endforeach                
                     {{--<div role="tabpanel" class="tab-pane fade in" id="buzz">bbb</div>
@@ -211,11 +222,18 @@
     <script>
         $(".custom-file-input").on("change", function() {
             var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            $(this).siblings(".custom-file-label").addClass("selected").html(reductString(fileName));
             if(!verifyMimeType(fileName)){
                 console.log('gikls');
             }
         });
+        function reductString(string){
+            if(string.length<=25){
+                return string;
+            }else{
+                return string='..'+string.substring(string.length-23,string.length-1)
+            }
+        }
         function verifyMimeType(filename){
             res= false;
             filename = filename.split('.');
