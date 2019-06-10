@@ -52,7 +52,6 @@ $(document).ready(function() {
     }
 
     $.ajax({
-<<<<<<< HEAD
         url : 'http://localhost:8000/students/registration/getScheduleStudent',
         success: function (response){
             if(Object.keys(response).length != 0){
@@ -62,15 +61,6 @@ $(document).ready(function() {
                             $('#link-take-matter-'+response[j].subject_matter_id)[0].innerHTML = "Cambiar Horario";
                             $('#link-remove-matter-'+response[j].subject_matter_id).show();;
                             $('#subject-matter-'+i).append(
-=======
-        url: 'http://localhost:8000/students/registration/getScheduleStudent',
-        success: function(response) {
-            if (Object.keys(response).length != 0) {
-                for (var i = 1; i <= subject_matters_ids.length; i++) {
-                    for (var j = 0; j < Object.keys(response).length; j++) {
-                        if (subject_matters_ids[i - 1] == response[j].subject_matter_id) {
-                            $('#subject-matter-' + i).append(
->>>>>>> develop
                                 "<br><strong class='text-primary' style='margin-top: 10px;'>Se encuentra inscrito en esta materia.</strong>"
                             );
                         }
