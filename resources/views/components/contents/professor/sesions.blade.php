@@ -170,13 +170,13 @@
                                         <input id="title" name="title" type="text" class="form-control col-md-12" placeholder="Título" required autofocus>
                                 </div>
                                 <br>
-                                <div class='custom-control custom-checkbox small' style="margin-left: 13px; margin-top:-12px; margin-bottom: 5px;">
+                                {{--  <div class='custom-control custom-checkbox small' style="margin-left: 13px; margin-top:-12px; margin-bottom: 5px;">
                                     <input type='checkbox' class='custom-control-input' id='checkbox-description' onclick='showHideTaskForm()'>
                                     <label class='custom-control-label' for='checkbox-description'>Descripción</label>
-                                </div>
+                                </div>  --}}
                                 <div class="group col-sm-12">
                                         {{-- <label for="">Descripción</label> --}}
-                                        <textarea name="description" id="description" class="form-control col-md-12" cols="30" rows="5" placeholder="Descripción" autofocus></textarea>
+                                        <textarea name="description" id="description" class="form-control col-md-12" cols="30" rows="6" placeholder="Descripción" style="resize: none;" autofocus></textarea>
                                 </div>
                                 <br>
                                 <div class="group col-sm-12 custom-file container" style="padding: 0px 20px;">
