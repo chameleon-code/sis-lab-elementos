@@ -10,6 +10,7 @@ Route::post('/students/registration/store', 'StudentScheduleController@store')->
 Route::get('/students/registration/getBlocksBySubjects/{id}', 'BlockController@getBlocksBySubjects');
 Route::get('/students/registration/getGroups/{id}', 'BlockController@getGroupsByBlocks');
 Route::get('/students/registration/getGroupSchedules/{id}', 'BlockController@getGroupSchedules');
+Route::get('/students/registration/getScheduleStudent', 'StudentController@getScheduleStudent');
 
 // Tareas
 

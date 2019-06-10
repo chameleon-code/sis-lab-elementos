@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Storage;
 use App\SubjectMatter;
 use Illuminate\Support\Facades\Cache;
 use App\BlockGroup;
+use App\BlockSchedule;
+use App\ScheduleRecord;
+use App\StudentSchedule;
 
 class StudentController extends Controller
 {
@@ -141,7 +144,7 @@ class StudentController extends Controller
         $data=[ 'blocks' => $blocks,
                 'groups' => $groups,
                 'managements' =>$managements,
-                'subjectMatters' => $subjectMatters
+                'subjectMatters' => $subjectMatters,
             ];
         return view('components.contents.student.registration', $data);
     }
@@ -150,6 +153,17 @@ class StudentController extends Controller
     {
         self::rememberNav();
         return view('components.contents.student.create');
+    }
+
+    public function getScheduleStudent(){
+        $student = Student::where('user_id', '=', Auth::user()->id)->get()->first();
+        $shcedule_student = StudentSchedule::join('groups','group_id','=','groups.id')->select('groups.id AS group_id', 'groups.name', 'groups.subject_matter_id', 'groups.professor_id', 'student_schedules.id', 'student_schedules.student_id', 'student_schedules.block_schedule_id', 'student_schedules.student_path')->get();//->paginate(4);                 where('student_id', '=', $student->id)->get();
+        
+        $shcedule_student->each(function ($item){
+            $item->setAppends([]);
+        });
+
+        return $shcedule_student;
     }
 
     public function rememberNav(){
