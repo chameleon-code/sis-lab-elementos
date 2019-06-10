@@ -38,7 +38,8 @@ class StudentTaskController extends Controller
                 if($sesionId != -1){
                     $blockGroup = [
                         'sesionId' => $sesionId,
-                        'group_id' => $schedule['group_id']
+                        'group_id' => $schedule['group_id'],
+                        'block_id' => $schedule['block_id']
                     ];
                     array_push($sesions,(object)$blockGroup); 
                 }
@@ -59,13 +60,13 @@ class StudentTaskController extends Controller
             $sesionTask= [
                 'tasks' => $tasks,
                 'sesion' => $sesionWeek,
-                'subject' => Group::getSubjectById($sesion->group_id)->name
+                'subject' => Group::getSubjectById($sesion->group_id)->name,
+                'block_id' => $sesion->block_id
             ];
             array_push($sesionOfWeek,(object)$sesionTask);
         }
-        //dd($sesionOfWeek);
         $data = [
-            'user' => $user,
+            'student' => $student,
             'sesions' => $sesionOfWeek
         ];
 
@@ -90,6 +91,11 @@ class StudentTaskController extends Controller
      */
     public function store(Request $request)
     {
+        $data = [
+            "description" => $request->description,
+            "task_id" => $request->task_id,
+            "student_id" => $request->student_id
+        ];
         if($request->hasFile('practice')){
             $file = $request->file('practice');
             $extension = $file->getClientOriginalExtension();

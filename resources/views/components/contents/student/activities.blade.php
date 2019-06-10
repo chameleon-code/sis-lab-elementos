@@ -16,7 +16,6 @@
             </ul>
         </div>
         @endif
-        {{$user}}
         <div class="row">
                 <div class="col-xl-4 col-md-12 mb-4 col-12">
                 <div class="card border-left-primary shadow h-100 py-2">
@@ -118,53 +117,60 @@
                     @foreach ($sesions as $sesion)
                         <div role="tabpanel" class="tab-pane fade in" id="{{str_replace(" ","",$sesion->subject)}}">
                             Sesion Número: {{$sesion->sesion->number_sesion}} 
-                            
-                            @foreach ($sesion->tasks as $task)
-                                <form class="user" method="POST" action="{{ url('/student/activities') }}" enctype="multipart/form-data">
-                                    {{ csrf_field() }}
-                                    
-
-
-                                    <div class="text-center">
-                                            <label class="h6 text-gray-900 mb-4"><b>{{$task->title}}</b></label>
-                                    </div>
-                                    <div class="group col-sm-12">
-                                            <label for="">
-                                                {{$task->description}}
-                                            </label>
-                                    </div>
-                                    Practica disponible: <a href="https://www.google.com">Ejercicio 1.pdf</a>
-                                    <div class="group col-sm-12">
-                                        <label for="">Descripción</label>
-                                        <textarea name="description" class="form-control col-md-12" id="" cols="30" rows="2"></textarea>
-                                    </div>
-                                    <div class="group col-sm-12">
-                                            <label for="">
+                            <div class="row">
+                                @foreach ($sesion->tasks as $task)
+                                <div class="col-md-6 col-12 col-sm-12">
+                                    <form class="user" method="POST" action="{{ url('/student/activities') }}" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                        <div class="accordion-body bg-gray-300 rounded row my-2" id="task1" style="cursor: default;">
+                                            <div class="group col-sm-12">
+                                                <label ><b>{{$task->title}}</b></label>
                                                 <br>
-                                                Procura subir un comprimido o archivador con tu ejercicio adentro, solo los siguientes formatos son admitidos: <strong>.zip .rar .tar.gz</strong>
+                                                <label for="">
+                                                    {{$task->description}}
+                                                </label>
                                                 <br>
-                                            </label>
-                                    </div>
-                                    <div class="col-sm-12 custom-file container" style="padding: 0px 20px;">
-                                        <input class="custom-file-input" id="practice" type="file" name="practice" style="margin-bottom: 4px; cursor: pointer;" required="">
-                                        <label class="custom-file-label" for="practice" style="margin: 0px 10px; color:darkslateblue;">Subir un archivo</label>
+                                                <label for="">
+                                                    Archivo adjunto: <a href="{{$task->task_path.$task->task_file}}">{{$task->task_file}}</a>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="group col-sm-12">
+                                            <label for="">Descripción</label>
+                                            <textarea name="description" class="form-control col-md-12" id="" cols="30" rows="2"></textarea>
+                                        </div>
+                                        <div class="group col-sm-12">
+                                                <label for="">
+                                                    <br>
+                                                    Procura subir un comprimido o archivador con tu ejercicio adentro, solo los siguientes formatos son admitidos: <strong>.zip .rar .tar.gz</strong>
+                                                    <br>
+                                                </label>
+                                        </div>
+                                        <div class="col-sm-12 custom-file container" style="padding: 0px 20px;">
+                                            <input class="custom-file-input" id="practice" type="file" name="practice" style="margin-bottom: 4px; cursor: pointer;" required="">
+                                            <label class="custom-file-label" for="practice" style="margin: 0px 10px; color:darkslateblue;">Subir un archivo</label>
+                                            <br>
+                                        </div>
+                                        <input type="" name="task_id" value="{{$task->id}}" hidden>
+                                        <input type="" name="student_id" value="{{$student->id}}" hidden>
+                                        <input type="" name="block_id" value="{{$sesion->block_id}}" hidden>
+                                        <input type="" name="sesion_number" value="{{$sesion->sesion->number_sesion}}" hidden>
                                         <br>
-                                    </div>
-                                    <br>
-                                    <br>
-                                    @if (Agent::isMobile())
-                                        <div class="group col-md-12 col-12">
-                                            <button type="submit" class="btn btn-primary btn-block col-md-12" style="margin-bottom:10px;">Entregar</button>
-                                        </div>
-                                    @else
-                                        <div class="group col-md-4 col-4 offset-md-4 offset-4">
-                                            <button type="submit" class="btn btn-primary btn-block col-md-12" style="margin-bottom:10px;">Entregar</button>
-                                        </div>
-                                    @endif
-                                </form>
-                                <hr>
-                            @endforeach
-
+                                        <br>
+                                        @if (Agent::isMobile())
+                                            <div class="group col-md-12 col-12">
+                                                <button type="submit" class="btn btn-primary btn-block col-md-12" style="margin-bottom:10px;">Entregar</button>
+                                            </div>
+                                        @else
+                                            <div class="group col-md-4 col-4 offset-md-4 offset-4">
+                                                <button type="submit" class="btn btn-primary btn-block col-md-12" style="margin-bottom:10px;">Entregar</button>
+                                            </div>
+                                        @endif
+                                    </form>
+                                </div>                            
+                                @endforeach
+                            </div>
                         </div>
                     @endforeach                
                     {{--<div role="tabpanel" class="tab-pane fade in" id="buzz">bbb</div>
