@@ -15,10 +15,17 @@ class BlockSchedule extends Model
         'block_id'    => 'required'
     ];
 
-    protected $appends = ['block'];
+    protected $appends = ['block' , 'schedule'];
 
     public function getBlockAttribute()
     {
-        return Block::findOrFail($this->schedule_id);
+        return Block::findOrFail($this->block_id);
+    }
+    public function students(){
+        return $this->belongsToMany('App\Student', 'student_schedules', 'block_schedule_id', 'student_id')
+        ->withPivot('group_id', 'student_path');
+    }
+    public function getScheduleAttribute(){
+        return ScheduleRecord::find($this->schedule_id);
     }
 }

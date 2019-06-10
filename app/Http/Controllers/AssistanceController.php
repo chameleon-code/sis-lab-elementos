@@ -7,6 +7,7 @@ use App\BlockSchedule;
 use App\Group;
 use App\Student;
 use App\User;
+use App\StudentSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -28,10 +29,34 @@ class AssistanceController extends Controller
             'labs' => $labs,
             'block_schedules' => $block_schedules,
         ];
-        //dd($blocks);
         return view('components.contents.auxiliar.assistance', $data)->withTitle('Perfil de Estudiante');
     }
-
+    public static function getStudentsByBlock(Request $request, $id){
+        $block_schedules = BlockSchedule::where('block_id', $id)->get();
+        $students = collect();
+        $block_schedules->each(function($item) use ($students){
+            if($item->students->isNotEmpty()){
+                foreach($item->students as $student){}                
+                $students->push($student);
+            }
+        });
+        if($request->ajax()){
+            $array = array();
+            foreach($students as $s){
+                $student = new \stdClass();
+                $student->Codigo_Sis = $s->user->code_sis;
+                $student->Apellidos = $s->user->first_name ." ". $s->user->second_name;
+                $student->Nombres = $s->user->names;
+                $student->Asistencia = (object)[
+                    'student' => $s->user,
+                    'schedule_id' => $s->id
+                ];
+                array_push($array, $student);
+            }
+            return response()->json($array);
+        }
+        return $students;
+    } 
     //muestra contenido block_schedules
     public function bloque_schedules()
     {
