@@ -43,6 +43,9 @@ function addSubjectMatterId(id){
 }
 
 $(document).ready(function(){
+    $('#info-inscription').hide();
+    $('#modal-footer').hide();
+
     $.ajax({
         url : 'http://localhost:8000/students/registration/getScheduleStudent',
         success: function (response){
@@ -56,15 +59,7 @@ $(document).ready(function(){
                         }
                     }
                 }
-            } else {
-                //
             }
-            // response.forEach(function(element){
-
-            //     $('#body-table').append(
-            //         " <tr class='text-center'><td>"+element.laboratory_id+"</td><td>"+day+"</td><td>"+hour+"</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check"+cont+"' onclick='clearChecks("+response.length+", "+cont+", "+element.schedule_record_id+", "+element.block_schedule_id+")'><label class='custom-control-label' for='Check"+cont+"'></label></div></td></tr> "
-            //     );
-            // });
         },
         error: function() {
             console.log("No se ha podido obtener la información");
