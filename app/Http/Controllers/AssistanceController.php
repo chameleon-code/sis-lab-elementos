@@ -10,6 +10,9 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\ScheduleRecord;
+use Illuminate\Console\Scheduling\Schedule;
+use App\Laboratory;
 
 class AssistanceController extends Controller
 {
@@ -18,10 +21,12 @@ class AssistanceController extends Controller
         $students = Student::getAllStudents();
         //$user_id = $student->user_id;
         //$user = User::findOrFail($user_id);
-        $blocks = Block::all();
+        $labs = Laboratory::all();
+        $block_schedules = BlockSchedule::all();
+        //return $block_schedules;
         $data = ['students' => $students,
-            //'user' => $user,
-            'blocks' => $blocks,
+            'labs' => $labs,
+            'block_schedules' => $block_schedules,
         ];
         //dd($blocks);
         return view('components.contents.auxiliar.assistance', $data)->withTitle('Perfil de Estudiante');

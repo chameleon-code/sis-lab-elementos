@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Console\Scheduling\Schedule;
+use Carbon\Carbon;
+use App\ScheduleRecord;
 
 class AuxiliarController extends Controller
 {
@@ -117,6 +120,63 @@ class AuxiliarController extends Controller
         ];
         
         return view('components.contents.auxiliar.profile')->withTitle('Perfil de Auxiliar')->with($data);
+    }
+
+    public function getStudentList($id){
+        $posible_schedules = ScheduleRecord::where('laboratory_id', $id)->get();
+        $schedules = array();
+        foreach ($posible_schedules as $schedule){
+            if(self::compareDay($schedule->day_id)) {
+                array_push($schedules, $schedule);
+            }
+        }
+        dd($schedules);
+        
+        $schedules->each(function ($item){
+            $item->setAppends([]);
+        });
+
+        // $today = $schedules->first()->updated_at->format('D');
+        
+        // if($today == "Fri"){
+        //     return response()->json($today);
+        // }
+
+        return response()->json($schedules);
+    }
+
+    public function compareDay($day_id){
+        $resp = false;
+        $day = '';
+        switch($day_id){
+            case 1:
+                $day = 'Mon';
+                break;
+            case 2:
+                $day = 'Tue';
+                break;
+            case 3:
+                $day = 'Wed';
+                break;
+            case 4:
+                $day = 'Thu';
+                break;
+            case 5:
+                $day = 'Fri';
+                break;
+            case 6;
+                $day = 'Sat';
+                break;
+        }
+
+        $today = Carbon::now()->format('D');
+
+        if($day == $today)
+        {
+            $resp = true;
+        }
+
+        return $resp;
     }
 
     public function rememberNav(){

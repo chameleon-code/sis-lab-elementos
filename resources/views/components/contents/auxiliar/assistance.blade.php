@@ -6,14 +6,13 @@
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <div class="panel-heading m-0 font-weight-bold text-primary container">Asistencia Estudiantes</div>
-
-                <div class="panel-heading m-0 font-weight-bold text-primary container">Horario: </div>
+                <div class="panel-heading m-0 py-4 font-weight-bold text-primary container">Asistencia de Estudiantes</div>
 
                 <div class="col-sm-3">
-                    <select class="form-control" name="bloques" id="bloques">
-                        @foreach ($blocks as $item)
-                            <option class="form-control" value="{{$item->id}}">{{$item->name}}</option>
+                    <select class="form-control" name="bloques" id="select-labs" onchange="loadStudentList()">
+                        <option class="form-control" value="">Seleccione laboratorio</option>
+                        @foreach ($labs as $item)
+                            <option class="form-control" value="{{$item->id}}">Laboratorio {{$item->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -24,7 +23,8 @@
                     @endif
                     <div class="">
                         <div class="row">
-                            <div class="col-sm-12 table-responsive">
+
+                            <div class="col-sm-12 table-responsive" id="div-table" style="display: none;">
                                 <table class="table dataTable text-center table-striped table-secondary" id="dataTable" width="100%"
                                        cellspacing="0" role="grid" aria-describedby="dataTable_info"
                                        style="width: 100%;">
@@ -32,18 +32,18 @@
                                     <tr role="row" class="bg-dark">
                                         <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1"
                                             colspan="1" aria-label="Name: activate to sort column ascending"
-                                            style="width: 230px;"><font style="vertical-align: inherit;"><font
+                                            style="width: 200px;"><font style="vertical-align: inherit;"><font
                                                         style="vertical-align: inherit; color: white;">Código SIS</font></font></th>
 
                                         <th class="sorting_desc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1"
                                             colspan="1" aria-label="Position: activate to sort column ascending"
-                                            style="width: 380px;" aria-sort="descending"><font
+                                            style="width: 300px;" aria-sort="descending"><font
                                                     style="vertical-align: inherit;"><font
                                                         style="vertical-align: inherit; color: white;">Apellidos</font></font></th>
 
                                         <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1"
                                             colspan="1" aria-label="Office: activate to sort column ascending"
-                                            style="width: 380px;"><font style="vertical-align: inherit;"><font
+                                            style="width: 300px;"><font style="vertical-align: inherit;"><font
                                                         style="vertical-align: inherit; color: white;">Nombres</font></font></th>
 
                                         {{-- <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Email</font></font></th> --}}
@@ -56,29 +56,26 @@
                                     </thead>
                                     <tbody>
 
-                                    @foreach ($students as $item)
+                                    {{--  @foreach ($students as $item)
 
-                                        <tr role="row" class="odd">
+                                        <tr id="table-asistance" role="row" class="odd">
                                             <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->code_sis }}</font></font></td>
                                             <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->first_name }} {{ $item->second_name }}</font></font></td>
                                             <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->names }}</font></font></td>
-                                            {{-- <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->email }}</font></font></td> --}}
 
-                                            <td class="text-center" style="text-align: center; display: flex;">
-                                                <label><input type="checkbox" id="cbox1" value="first_checkbox"> </label><br>
-                                                {{--<a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick="loadProfile({{ $item }})"><i class="fas fa-eye"></i></a>
---}}
+                                            <td class="" style="">
+                                                <div class='custom-control custom-checkbox small' style="margin-left: 13px; margin-top: 0px; margin-bottom: 5px;">
+                                                    <input type='checkbox' class='custom-control-input' id='checkbox-student-{{$item->id}}' onclick='showHideTaskForm()'>
+                                                    <label class='custom-control-label' for='checkbox-student-{{$item->id}}'></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach  --}}
 
-
-                                                {{--<button type="button" class="btn btn-danger btn-circle btn-sm mx-1" data-toggle="modal" data-toggle-2="tooltip" title="Eliminar" data-target="#eliminar{{ $item->id }}"><i class="fas fa-trash"></i></button>--}}
-
-                                                <!-- Modal -->
-
-                                            </tr>
-                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -114,3 +111,7 @@
 
 
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('/js/assistance.js') }}"></script>
+@endpush
