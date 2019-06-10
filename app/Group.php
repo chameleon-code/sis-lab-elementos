@@ -44,4 +44,7 @@ class Group extends Model
     public static function getGroupBlocks(){
         return Group::join('block_group', 'groups.id', '=', 'block_group.group_id')->select('groups.id', 'groups.name', 'groups.subject_matter_id', 'groups.professor_id','block_group.block_id')->get();
     }
+    public static function getSubjectById($id){
+        return SubjectMatter::find(self::find($id)->subject_matter_id);
+    }
 }
