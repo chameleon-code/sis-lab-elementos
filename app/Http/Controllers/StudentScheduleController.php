@@ -66,7 +66,7 @@ class StudentScheduleController extends Controller
         
         Storage::makeDirectory($dir);
 
-        return redirect('/home');
+        return redirect('/students/registration');
     }
 
     /**
