@@ -46,14 +46,21 @@ $(document).ready(function() {
     $('#info-inscription').hide();
     $('#modal-footer').hide();
 
+    for(var i=0 ; i<subject_matters_ids.length ; i++)
+    {
+        $('#link-take-matter-'+subject_matters_ids[i]).show();
+    }
+
     $.ajax({
-        url: 'http://localhost:8000/students/registration/getScheduleStudent',
-        success: function(response) {
-            if (Object.keys(response).length != 0) {
-                for (var i = 1; i <= subject_matters_ids.length; i++) {
-                    for (var j = 0; j < Object.keys(response).length; j++) {
-                        if (subject_matters_ids[i - 1] == response[j].subject_matter_id) {
-                            $('#subject-matter-' + i).append(
+        url : 'http://localhost:8000/students/registration/getScheduleStudent',
+        success: function (response){
+            if(Object.keys(response).length != 0){
+                for(var i=1 ; i<=subject_matters_ids.length ; i++){
+                    for(var j=0 ; j<Object.keys(response).length ; j++){
+                        if(subject_matters_ids[i-1] == response[j].subject_matter_id){
+                            $('#link-take-matter-'+response[j].subject_matter_id)[0].innerHTML = "Cambiar Horario";
+                            $('#link-remove-matter-'+response[j].subject_matter_id).show();;
+                            $('#subject-matter-'+i).append(
                                 "<br><strong class='text-primary' style='margin-top: 10px;'>Se encuentra inscrito en esta materia.</strong>"
                             );
                         }
@@ -85,9 +92,8 @@ function infReg(item, id) {
     var select = $('#group_' + id)[0];
     if (select.options[select.selectedIndex].text !== "grupo") {
         $.ajax({
-            url: '/students/registration/getGroupSchedules/' + select.value,
-            success: function(response) {
-                console.log(response);
+            url : 'http://localhost:8000/students/registration/getGroupSchedules/'+select.value,
+            success: function (response){
                 var cont = 1;
                 response.forEach(function(element) {
                     var day;
