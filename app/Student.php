@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Traits\ValidationTrait;
+use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
@@ -11,15 +11,17 @@ class Student extends Model
     protected $fillable = [
         'id',
         'user_id',
-        'ci',
-        'block_id',
-        'group_id',
-        'student_path',
+        'ci'
     ];
 
     public static function getAllStudents()
     {
-        return Student::join('users', 'user_id', '=', 'users.id')->select('users.role_id', 'users.names', 'users.first_name', 'users.second_name', 'users.email', 'users.password', 'users.img_path', 'users.remember_token', 'users.created_at', 'users.updated_at', 'students.id', 'users.code_sis', 'ci')->get();//, 'students.group_id', 'students.block_id')->get();
+        return Student::join('users', 'user_id', '=', 'users.id')->select('users.role_id', 'users.names', 'users.first_name', 'users.second_name', 'users.email', 'users.password', 'users.img_path', 'users.remember_token', 'users.created_at', 'users.updated_at', 'students.id', 'users.code_sis', 'ci')->get();
+    }
+
+    public static function getAllBlocks()
+    {
+        return Block::all();
     }
 
     protected $rules = [
