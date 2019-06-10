@@ -221,6 +221,9 @@ class BlockController extends Controller
     }
 
     public function getGroupSchedules($id, Request $request){
+        // $block_id = BlockGroup::getBlockByIdGroup($id)->block_id;
+        // $block = Block::find($block_id);
+        // return $block->scheduleRecords()->get();
         $block_group = BlockGroup::where('group_id', '=', $id)->get()->first();
         $block = Block::where('id', '=', $block_group->block_id)->get()->first();
         

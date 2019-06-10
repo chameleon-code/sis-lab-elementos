@@ -15,10 +15,10 @@ class BlockSchedule extends Model
         'block_id'    => 'required'
     ];
 
-    protected $appends = ['block'];
+    // protected $appends = ['block'];
 
-    public function getBlockAttribute()
-    {
-        return Block::findOrFail($this->schedule_id);
-    }
+    // public function getBlockAttribute()
+    // {
+    //     return Block::findOrFail($this->schedule_id);
+    // }
 }

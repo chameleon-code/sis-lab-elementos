@@ -38,22 +38,22 @@
 var schedule_id;
 var subject_matters_ids = new Array();
 
-function addSubjectMatterId(id){
+function addSubjectMatterId(id) {
     subject_matters_ids.push(id);
 }
 
-$(document).ready(function(){
+$(document).ready(function() {
     $('#info-inscription').hide();
     $('#modal-footer').hide();
 
     $.ajax({
-        url : 'http://localhost:8000/students/registration/getScheduleStudent',
-        success: function (response){
-            if(Object.keys(response).length != 0){
-                for(var i=1 ; i<=subject_matters_ids.length ; i++){
-                    for(var j=0 ; j<Object.keys(response).length ; j++){
-                        if(subject_matters_ids[i-1] == response[j].subject_matter_id){
-                            $('#subject-matter-'+i).append(
+        url: 'http://localhost:8000/students/registration/getScheduleStudent',
+        success: function(response) {
+            if (Object.keys(response).length != 0) {
+                for (var i = 1; i <= subject_matters_ids.length; i++) {
+                    for (var j = 0; j < Object.keys(response).length; j++) {
+                        if (subject_matters_ids[i - 1] == response[j].subject_matter_id) {
+                            $('#subject-matter-' + i).append(
                                 "<br><strong class='text-primary' style='margin-top: 10px;'>Se encuentra inscrito en esta materia.</strong>"
                             );
                         }
@@ -67,31 +67,31 @@ $(document).ready(function(){
     });
 });
 
-function clearSelects(id){
+function clearSelects(id) {
     var selects;
     var id_select = 1;
-    while($('#group_'+id_select)[0]){
-        if(id != id_select){
-            var select = $('#group_'+id_select)[0];
+    while ($('#group_' + id_select)[0]) {
+        if (id != id_select) {
+            var select = $('#group_' + id_select)[0];
             select[0].selected = true;
         }
         id_select++;
     }
 }
 
-function infReg(item, id){
+function infReg(item, id) {
     $('#body-table').empty();
     $('#group_id_input')[0].value = id;
     var select = $('#group_' + id)[0];
-    if(select.options[select.selectedIndex].text !== "grupo"){
+    if (select.options[select.selectedIndex].text !== "grupo") {
         $.ajax({
-            url : 'http://localhost:8000/students/registration/getGroupSchedules/'+select.value,
-            success: function (response){
+            url: '/students/registration/getGroupSchedules/' + select.value,
+            success: function(response) {
                 console.log(response);
                 var cont = 1;
-                response.forEach(function(element){
+                response.forEach(function(element) {
                     var day;
-                    switch (element.day_id){
+                    switch (element.day_id) {
                         case 1:
                             day = 'Lunes';
                             break;
@@ -113,7 +113,7 @@ function infReg(item, id){
                     }
 
                     var hour;
-                    switch (element.hour_id){
+                    switch (element.hour_id) {
                         case 1:
                             hour = '06:45 - 08:15';
                             break;
@@ -147,7 +147,7 @@ function infReg(item, id){
                     }
 
                     $('#body-table').append(
-                        " <tr class='text-center'><td>"+element.laboratory_id+"</td><td>"+day+"</td><td>"+hour+"</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check"+cont+"' onclick='clearChecks("+response.length+", "+cont+", "+element.schedule_record_id+", "+element.block_schedule_id+")'><label class='custom-control-label' for='Check"+cont+"'></label></div></td></tr> "
+                        " <tr class='text-center'><td>" + element.laboratory_id + "</td><td>" + day + "</td><td>" + hour + "</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check" + cont + "' onclick='clearChecks(" + response.length + ", " + cont + ", " + element.schedule_record_id + ", " + element.block_schedule_id + ")'><label class='custom-control-label' for='Check" + cont + "'></label></div></td></tr> "
                     );
                     cont++;
                 });
@@ -172,13 +172,13 @@ function infReg(item, id){
     }
 }
 
-function clearChecks(longChecks, idCheck, schedule_record_id, block_schedule_id){
-    if($('#Check'+idCheck)[0].checked == 1){
+function clearChecks(longChecks, idCheck, schedule_record_id, block_schedule_id) {
+    if ($('#Check' + idCheck)[0].checked == 1) {
         $('#block_schedule_id')[0].value = block_schedule_id;
         schedule_id = schedule_record_id;
-        for(var i=1 ; i<= longChecks; i++){
-            if(i != idCheck){
-                $('#Check'+i)[0].checked = 0;
+        for (var i = 1; i <= longChecks; i++) {
+            if (i != idCheck) {
+                $('#Check' + i)[0].checked = 0;
             }
         }
     } else {
@@ -186,10 +186,10 @@ function clearChecks(longChecks, idCheck, schedule_record_id, block_schedule_id)
         $('#block_schedule_id')[0].value = null;
     }
     console.log(schedule_id);
-    if(schedule_id != undefined){
+    if (schedule_id != undefined) {
         $('#info-inscription').show();
         $('#modal-footer').show();
-    }else{
+    } else {
         $('#info-inscription').hide();
         $('#modal-footer').hide();
     }
