@@ -1,4 +1,4 @@
-@extends('components.sections.adminSection')
+@extends('components.sections.auxiliarSection')
 @section('userContent')
 <div class="container-fluid">
         <div class="card shadow mb-4">
