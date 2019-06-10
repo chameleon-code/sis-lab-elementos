@@ -12,8 +12,8 @@
 
                 <div class="col-sm-3">
                     <select class="form-control" name="bloques" id="bloques">
-                        @foreach ($blocks as $item)
-                            <option class="form-control" value="{{$item->id}}">{{$item->name}}</option>
+                        @foreach ($schedules as $item)
+                            <option class="form-control" value="{{$schedule->block->id}}">{{$schedule->block->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -55,25 +55,15 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
-                                    @foreach ($students as $item)
-
+                                    @foreach ($schedules as $item)
                                         <tr role="row" class="odd">
-                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->code_sis }}</font></font></td>
-                                            <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->first_name }} {{ $item->second_name }}</font></font></td>
-                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->names }}</font></font></td>
+                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $schedule->user->code_sis }}</font></font></td>
+                                            <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $schedule->user->first_name }} {{ $schedule->user->second_name }}</font></font></td>
+                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $schedules->user->names }}</font></font></td>
                                             {{-- <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->email }}</font></font></td> --}}
 
                                             <td class="text-center" style="text-align: center; display: flex;">
                                                 <label><input type="checkbox" id="cbox1" value="first_checkbox"> </label><br>
-                                                {{--<a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick="loadProfile({{ $item }})"><i class="fas fa-eye"></i></a>
---}}
-
-
-                                                {{--<button type="button" class="btn btn-danger btn-circle btn-sm mx-1" data-toggle="modal" data-toggle-2="tooltip" title="Eliminar" data-target="#eliminar{{ $item->id }}"><i class="fas fa-trash"></i></button>--}}
-
-                                                <!-- Modal -->
-
                                             </tr>
                                     @endforeach
                                     </tbody>
@@ -85,32 +75,4 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="studentProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-        <div class="modal-dialog" role="document" style="pointer-events: inherit;">
-            <div class="card card-profile o-hidden border-0 my-3 rounded">
-                <div style="background-image: url(/img/lab.jpg);" class="card-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: black; margin-top: -5px;">
-                        <span aria-hidden="true"><strong>&times;</strong></span>
-                    </button>
-                </div>
-                <div class="card-body text-center"><img src="/users/demo.png" class="card-profile-img">
-                    <h3 class="mb-3" id="namesProfile"></h3>
-                    <div><strong> Tipo de Usuario: </strong> <p> Estudiante </p></div>
-                    <div><strong> Código Sis: </strong> <p id="codeSisProfile"></p></div>
-                    <div><strong> Correo Electrónico: </strong> <p id="emailProfile"></p></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function loadProfile(item){
-            document.getElementById('namesProfile').innerHTML=item.names+' '+item.first_name+' '+item.second_name;
-            document.getElementById('codeSisProfile').innerHTML=item.code_sis;
-            document.getElementById('emailProfile').innerHTML=item.email;
-        }
-    </script>
-
-
 @endsection

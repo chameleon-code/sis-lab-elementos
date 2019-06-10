@@ -39,4 +39,8 @@ class Student extends Model
     public function tasks(){
         return $this->belongsToMany('App\Task', 'student_tasks');
     }
+    public function blockschedules(){
+        return $this->belongsToMany('App\BlockSchedules', 'student_schedules', 'block_schedule_id', 'student_id')
+        ->withPivot('group_id', 'student_path');
+    }
 }

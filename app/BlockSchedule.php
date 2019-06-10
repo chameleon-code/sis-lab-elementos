@@ -21,4 +21,8 @@ class BlockSchedule extends Model
     {
         return Block::findOrFail($this->schedule_id);
     }
+    public function students(){
+        return $this->belongsToMany('App\Student', 'student_schedules', 'student_id', 'block_schedule_id')
+        ->withPivot('group_id', 'student_path');
+    }
 }
