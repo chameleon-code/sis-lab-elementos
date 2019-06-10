@@ -37,6 +37,11 @@
 
 var schedule_id;
 
+$(document).ready(function(){
+    $('#info-inscription').hide();
+    $('#modal-footer').hide();
+});
+
 function clearSelects(id){
     var selects;
     var id_select = 1;
@@ -156,4 +161,11 @@ function clearChecks(longChecks, idCheck, schedule_record_id, block_schedule_id)
         $('#block_schedule_id')[0].value = null;
     }
     console.log(schedule_id);
+    if(schedule_id != undefined){
+        $('#info-inscription').show();
+        $('#modal-footer').show();
+    }else{
+        $('#info-inscription').hide();
+        $('#modal-footer').hide();
+    }
 }
