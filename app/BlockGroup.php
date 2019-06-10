@@ -15,4 +15,7 @@ class BlockGroup extends Model
     public static function getAllBlockIdGroups($id){
         return self::where('block_id', $id)->get();
     }
+    public static function getBlockByIdGroup($id){
+        return self::where('group_id', '=', $id)->get()->first();
+    }
 }
