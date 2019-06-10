@@ -131,4 +131,16 @@ class ScheduleRecordController extends Controller
         $groups = $block->groups;
         return $groups;
     }
+
+    public function getHorarios(){
+        $laboratorys=Laboratory::getAllLaboratory();
+        $days=Day::getAllDays();
+        $hours=Hour::getAllHours();
+        $data=[
+            'laboratories'    => $laboratorys,
+            'days'            => $days,
+            'hours'           => $hours
+        ];
+        return view('components.contents.auxiliar.schedule',$data);
+    }
 }
