@@ -23,8 +23,8 @@ class CreateStudentTasksTable extends Migration
             $table->integer('score')->nullable();
             $table->string('observation')->nullable();
             $table->timestamps();
-            $table->string('path_file')->nullable();
-            $table->string('file_name')->nullable();
+            $table->string('task_path')->nullable();
+            $table->string('task_name')->nullable();
         });
     }
 

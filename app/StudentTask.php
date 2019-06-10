@@ -15,8 +15,8 @@ class StudentTask extends Model
         'description',
         'score',
         'observation',
-        'path_file',
-        'file_name'
+        'task_path',
+        'task_name'
     ];
     protected $appends = [
         'student', 'task'
