@@ -18,7 +18,7 @@
     Interface
   </div>
 
-  <!-- Nav Item - Pages Collapse Menu -->
+  {{--  <!-- Nav Item - Pages Collapse Menu -->
   <li class="nav-item">
     <a class="nav-link collapsed" id="professors" href="#" data-toggle="collapse" data-target="#collapseProfessors" aria-expanded="true" aria-controls="collapseProfessors">
       <i class="fas fa-fw fa-chalkboard-teacher"></i>
@@ -28,11 +28,18 @@
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="{{ url("/auxiliar/assistance")}}"><i class="fas fa-list"></i>  Listar</a>
-        <a class="collapse-item" href="{{ url("/auxiliar/assistance")}}" id="createProfessor"><i class="fas fa-plus"></i>  Opcion2</a>
+        <a class="collapse-item" href="{{ url("/auxiliar/schedule")}}" id="createProfessor"><i class="fas fa-calendar"></i> Horario </a>
       </div>
     </div>
+  </li>  --}}
+
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url("/auxiliar/assistance")}}">
+      <i class="fas fa-fw fa-chalkboard-teacher"></i>
+      <span>Asistencia</span></a>
   </li>
 
+{{--  
   <!-- Nav Item - Utilities Collapse Menu -->
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
@@ -83,13 +90,13 @@
     <a class="nav-link" href="charts.html">
       <i class="fas fa-fw fa-chart-area"></i>
       <span>Charts</span></a>
-  </li>
+  </li>  --}}
 
   <!-- Nav Item - Tables -->
   <li class="nav-item">
-    <a class="nav-link" href="tables.html">
+    <a class="nav-link" href="{{ url("/auxiliar/schedule")}}">
       <i class="fas fa-fw fa-table"></i>
-      <span>Tables</span></a>
+      <span>Horario</span></a>
   </li>
 
   <!-- Divider -->
