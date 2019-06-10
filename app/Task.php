@@ -23,7 +23,7 @@ class Task extends Model
     protected $rules = [
         'title' => 'required|max:100|min:1',
     ];
-    protected $hidden = ['created_at', 'updated_at'];
+    //protected $hidden = ['created_at', 'updated_at'];
     protected $append = [
         'sesion'
     ];
