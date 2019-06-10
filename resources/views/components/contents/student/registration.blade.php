@@ -121,7 +121,7 @@
                             </select>
                         </div>
                         <div class="py-4 px-3" style="width: 20%;">
-                            <a class="float-right" href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="infReg({{ $item }}, {{ $id_select }})">Inscribirse</a><br>
+                            <a class="float-right" href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="infReg({{ $item }}, {{ $id_select }}), $('#modal-footer').hide(), $('#info-inscription').hide()">Inscribirse</a><br>
                             {{--  <a class="float-right" href="#" data-toggle="modal" data-target="#registration" onclick="confirmReg({{ $item }}, {{ $id_select }})">Inscribirse</a>  --}}
                         </div>
                     </div>
