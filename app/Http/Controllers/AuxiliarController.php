@@ -122,7 +122,7 @@ class AuxiliarController extends Controller
         return view('components.contents.auxiliar.profile')->withTitle('Perfil de Auxiliar')->with($data);
     }
 
-    public function getStudentList($id){
+    public function getStudentList(Request $request, $id){
         $posible_schedules = ScheduleRecord::where('laboratory_id', $id)->get();
         $schedules = array();
         foreach ($posible_schedules as $schedule){
@@ -130,11 +130,11 @@ class AuxiliarController extends Controller
                 array_push($schedules, $schedule);
             }
         }
-        dd($schedules);
+        //dd($schedules);
         
-        $schedules->each(function ($item){
+        /*$schedules->each(function ($item){
             $item->setAppends([]);
-        });
+        });*/
 
         // $today = $schedules->first()->updated_at->format('D');
         
