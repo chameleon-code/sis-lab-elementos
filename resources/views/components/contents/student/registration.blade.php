@@ -1,7 +1,7 @@
 @extends('components.sections.studentSection')
 
 @section('userContent')
-                
+
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -121,7 +121,8 @@
                             </select>
                         </div>
                         <div class="py-4 px-3" style="width: 20%;">
-                            <a class="float-right" href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="infReg({{ $item }}, {{ $id_select }}), $('#modal-footer').hide(), $('#info-inscription').hide()">Inscribirse</a><br>
+                            <a id="link-take-matter-{{$item->id}}" class="float-right" href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="infReg({{ $item }}, {{ $id_select }}), $('#modal-footer').hide(), $('#info-inscription').hide()" style="display: none;">Inscribirse</a><br>
+                            <a id="link-remove-matter-{{$item->id}}" class="float-right" href="#" class="btn btn-primary" style="display: none;">Retirar Materia</a><br>
                             {{--  <a class="float-right" href="#" data-toggle="modal" data-target="#registration" onclick="confirmReg({{ $item }}, {{ $id_select }})">Inscribirse</a>  --}}
                         </div>
                     </div>
