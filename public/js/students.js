@@ -92,14 +92,8 @@ function infReg(item, id) {
     var select = $('#group_' + id)[0];
     if (select.options[select.selectedIndex].text !== "grupo") {
         $.ajax({
-<<<<<<< HEAD
             url : 'http://localhost:8000/students/registration/getGroupSchedules/'+select.value,
             success: function (response){
-=======
-            url: '/students/registration/getGroupSchedules/' + select.value,
-            success: function(response) {
-                console.log(response);
->>>>>>> develop
                 var cont = 1;
                 response.forEach(function(element) {
                     var day;
