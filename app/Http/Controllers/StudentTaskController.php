@@ -99,7 +99,7 @@ class StudentTaskController extends Controller
         if($request->hasFile('practice')){
             $file = $request->file('practice');
             $extension = $file->getClientOriginalExtension();
-            if($extension=='rar'||$extension=='zip'||$extension=='tar.gz'){
+            if($extension=='rar'||$extension=='zip'){
                 $user = Auth::user();
                 $student = Student::where('user_id','=',$user->id)->first();
 
@@ -123,7 +123,7 @@ class StudentTaskController extends Controller
                 }
                 return back();
             }else{
-                return back()->withErrors('Procure enviar archivos formato: .zip .rar .tar.gz');
+                return back()->withErrors('Procure enviar archivos formato: .zip .rar');
             }
         }else{
             return back()->withErrors('Adjunte archivos');

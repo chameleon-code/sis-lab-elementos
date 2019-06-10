@@ -172,7 +172,7 @@
                                         <div class="group col-sm-12">
                                             <label for="">
                                                 <br>
-                                                Procura subir un comprimido o archivador con tu ejercicio adentro, solo los siguientes formatos son admitidos: <strong>.zip .rar .tar.gz</strong>
+                                                Procura subir un comprimido o archivador con tu ejercicio adentro, solo los siguientes formatos son admitidos: <strong>.zip .rar</strong>
                                                 <br>
                                             </label>
                                             <div class="row">
@@ -212,6 +212,17 @@
         $(".custom-file-input").on("change", function() {
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            if(!verifyMimeType(fileName)){
+                console.log('gikls');
+            }
         });
+        function verifyMimeType(filename){
+            res= false;
+            filename = filename.split('.');
+            if(filename[filename.length-1]=='zip' || filename[filename.length-1]=='rar'){
+                res=true;
+            }
+            return res;
+        }
     </script>
 @endsection
