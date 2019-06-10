@@ -37,31 +37,31 @@
 
 var schedule_id;
 
-function clearSelects(id){
+function clearSelects(id) {
     var selects;
     var id_select = 1;
-    while($('#group_'+id_select)[0]){
-        if(id != id_select){
-            var select = $('#group_'+id_select)[0];
+    while ($('#group_' + id_select)[0]) {
+        if (id != id_select) {
+            var select = $('#group_' + id_select)[0];
             select[0].selected = true;
         }
         id_select++;
     }
 }
 
-function infReg(item, id){
+function infReg(item, id) {
     $('#body-table').empty();
     $('#group_id_input')[0].value = id;
     var select = $('#group_' + id)[0];
-    if(select.options[select.selectedIndex].text !== "grupo"){
+    if (select.options[select.selectedIndex].text !== "grupo") {
         $.ajax({
-            url : '/students/registration/getGroupSchedules/'+select.value,
-            success: function (response){
+            url: '/students/registration/getGroupSchedules/' + select.value,
+            success: function(response) {
                 console.log(response);
                 var cont = 1;
-                response.forEach(function(element){
+                response.forEach(function(element) {
                     var day;
-                    switch (element.day_id){
+                    switch (element.day_id) {
                         case 1:
                             day = 'Lunes';
                             break;
@@ -83,7 +83,7 @@ function infReg(item, id){
                     }
 
                     var hour;
-                    switch (element.hour_id){
+                    switch (element.hour_id) {
                         case 1:
                             hour = '06:45 - 08:15';
                             break;
@@ -117,7 +117,7 @@ function infReg(item, id){
                     }
 
                     $('#body-table').append(
-                        " <tr class='text-center'><td>"+element.laboratory_id+"</td><td>"+day+"</td><td>"+hour+"</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check"+cont+"' onclick='clearChecks("+response.length+", "+cont+", "+element.schedule_record_id+", "+element.block_schedule_id+")'><label class='custom-control-label' for='Check"+cont+"'></label></div></td></tr> "
+                        " <tr class='text-center'><td>" + element.laboratory_id + "</td><td>" + day + "</td><td>" + hour + "</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check" + cont + "' onclick='clearChecks(" + response.length + ", " + cont + ", " + element.schedule_record_id + ", " + element.block_schedule_id + ")'><label class='custom-control-label' for='Check" + cont + "'></label></div></td></tr> "
                     );
                     cont++;
                 });
@@ -142,13 +142,13 @@ function infReg(item, id){
     }
 }
 
-function clearChecks(longChecks, idCheck, schedule_record_id, block_schedule_id){
-    if($('#Check'+idCheck)[0].checked == 1){
+function clearChecks(longChecks, idCheck, schedule_record_id, block_schedule_id) {
+    if ($('#Check' + idCheck)[0].checked == 1) {
         $('#block_schedule_id')[0].value = block_schedule_id;
         schedule_id = schedule_record_id;
-        for(var i=1 ; i<= longChecks; i++){
-            if(i != idCheck){
-                $('#Check'+i)[0].checked = 0;
+        for (var i = 1; i <= longChecks; i++) {
+            if (i != idCheck) {
+                $('#Check' + i)[0].checked = 0;
             }
         }
     } else {
