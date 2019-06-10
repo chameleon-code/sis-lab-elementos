@@ -13,7 +13,7 @@
                 <div class="col-sm-3">
                     <select class="form-control" name="bloques" id="bloques">
                         @foreach ($schedules as $item)
-                            <option class="form-control" value="{{$schedule->block->id}}">{{$schedule->block->name}}</option>
+                            <option class="form-control" value="{{$item->blockschedule->block->id}}">{{$item->blockschedule->block->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -55,11 +55,11 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($schedules as $item)
+                                    @foreach ($students as $student)
                                         <tr role="row" class="odd">
-                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $schedule->user->code_sis }}</font></font></td>
-                                            <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $schedule->user->first_name }} {{ $schedule->user->second_name }}</font></font></td>
-                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $schedules->user->names }}</font></font></td>
+                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $student->user->code_sis }}</font></font></td>
+                                            <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $student->user->first_name }} {{ $student->user->second_name }}</font></font></td>
+                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $student->user->names }}</font></font></td>
                                             {{-- <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->email }}</font></font></td> --}}
 
                                             <td class="text-center" style="text-align: center; display: flex;">
@@ -76,3 +76,6 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script src="{{ asset('/js/assistance.js') }}"></script>
+@endpush
