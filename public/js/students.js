@@ -54,12 +54,15 @@ $(document).ready(function() {
     $.ajax({
         url : 'http://localhost:8000/students/registration/getScheduleStudent',
         success: function (response){
+            console.log(response);
             if(Object.keys(response).length != 0){
                 for(var i=1 ; i<=subject_matters_ids.length ; i++){
                     for(var j=0 ; j<Object.keys(response).length ; j++){
                         if(subject_matters_ids[i-1] == response[j].subject_matter_id){
                             $('#link-take-matter-'+response[j].subject_matter_id)[0].innerHTML = "Cambiar Horario";
-                            $('#link-remove-matter-'+response[j].subject_matter_id).show();;
+                            //$('#link-remove-matter-'+response[j].subject_matter_id)[0].setAttribute("href", "/student/unregistration/"+response[j].id);
+                            $('#link-remove-matter-'+response[j].subject_matter_id)[0].setAttribute("onclick", "sendStudentScheduleId("+response[j].id+")");
+                            $('#link-remove-matter-'+response[j].subject_matter_id).show();
                             $('#subject-matter-'+i).append(
                                 "<br><strong class='text-primary' style='margin-top: 10px;'>Se encuentra inscrito en esta materia.</strong>"
                             );
@@ -199,4 +202,8 @@ function clearChecks(longChecks, idCheck, schedule_record_id, block_schedule_id)
         $('#info-inscription').hide();
         $('#modal-footer').hide();
     }
+}
+
+function sendStudentScheduleId(id){
+    $('#btn-unregister')[0].setAttribute("href", "/student/unregistration/"+id);
 }

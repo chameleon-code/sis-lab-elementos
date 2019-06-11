@@ -111,6 +111,9 @@ class StudentScheduleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student_schedule = StudentSchedule::findOrFail($id);
+        $student_schedule->delete();
+
+        return redirect('/students/registration');
     }
 }
