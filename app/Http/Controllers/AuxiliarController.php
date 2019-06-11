@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Console\Scheduling\Schedule;
 use Carbon\Carbon;
 use App\ScheduleRecord;
+use App\BlockSchedule;
+use App\Student;
 
 class AuxiliarController extends Controller
 {
@@ -127,22 +129,30 @@ class AuxiliarController extends Controller
         $schedules = array();
         foreach ($posible_schedules as $schedule){
             if(self::compareDay($schedule->day_id)) {
-                array_push($schedules, $schedule);
+                array_push($schedules, $schedule->id);
             }
         }
-        //dd($schedules);
-        
-        /*$schedules->each(function ($item){
-            $item->setAppends([]);
-        });*/
-
-        // $today = $schedules->first()->updated_at->format('D');
-        
-        // if($today == "Fri"){
-        //     return response()->json($today);
-        // }
-
-        return response()->json($schedules);
+        $blocksch = BlockSchedule::with('students')->whereIn('schedule_id', $schedules)->get();
+        if($request->ajax()){
+            $array = array();
+            foreach($blocksch as $bs){
+                if($bs->students->isNotEmpty()){
+                    foreach($bs->students as $s){
+                        $student = new \stdClass();
+                        $student->Codigo_Sis = $s->user->code_sis;
+                        $student->Apellidos = $s->user->first_name ." ". $s->user->second_name;
+                        $student->Nombres = $s->user->names;
+                        $student->Asistencia = (object)[
+                            'student_id' => $s->id,
+                            'bsch_id' => $bs->id
+                        ];
+                        array_push($array, $student);
+                    }
+                }
+            }
+            return response()->json($array);
+        }
+        return $blocksch;
     }
 
     public function compareDay($day_id){
