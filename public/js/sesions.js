@@ -132,11 +132,14 @@ function storeTask(){
             } else if (response.response == "error_file") {
                 $('#errors-form').empty();
                 $('#errors-div').show();
-                $('#errors-form').append("<li> Formato de archivo no aceptado </li> <li>Archivo con tamaño mayor a 2MB. </li>");
+                $('#errors-form').append("<li> Formato de archivo no aceptado </li>");
             }
         },
         error: function() {
             console.log("Algo salió mal");
+            $('#errors-form').empty();
+                $('#errors-div').show();
+                $('#errors-form').append("<li>Archivo con tamaño mayor a 2MB. </li>");
         }
     });
 }

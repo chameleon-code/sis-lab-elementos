@@ -12,6 +12,7 @@ use App\Task;
 use App\Block;
 use App\Group;
 use App\SubjectMatter;
+use App\StudentTask;
 
 class TaskController extends Controller
 {
@@ -151,7 +152,7 @@ class TaskController extends Controller
                     $semiPath ='/storage/'.$dir.'/practices/sesion-'.$sesion_number.'/';
                     $path = public_path().$semiPath;
                     $file -> move($path,$name);
-                    
+
                     $task->title = $request->title;
                     $task->published_by = $user->names.' '.$user->first_name;
                     $task->description = $request->description;
@@ -231,5 +232,14 @@ class TaskController extends Controller
     public function getTaskById($id){
         $task = Task::findOrFail($id);
         return response()->json($task);
+    }
+
+    public function storeScore(Request $request){
+        $student_task = StudentTask::findorFail($request->student_task_id);
+
+        $student_task->score = $request->task_score;
+        $student_task->save();
+
+        return response()->json($student_task);
     }
 }

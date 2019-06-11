@@ -25,3 +25,4 @@ Route::get('/professor/student/{idStudent}/task/{idTask}', 'TaskController@showS
 
 Route::get('/tasks','TaskController@index');
 Route::post('/tasks/create','TaskController@store')->name('tasks.create');
+Route::post('/professor/sesions/tasks/store/score','TaskController@storeScore');
