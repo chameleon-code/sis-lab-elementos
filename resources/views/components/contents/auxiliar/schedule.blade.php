@@ -20,18 +20,9 @@
                                         @endforeach    
                                     </select>
                                 </div>
-                                <label>Bloque</label>
-                                <div class="col-sm-3">
-                                    <select class="form-control" name="bloques" id="bloques">
-                                        @foreach ($blocks as $item)
-                                            <option class="form-control" value="{{$item->id}}">{{$item->name}}</option>
-                                        @endforeach    
-                                    </select>
-                                </div>
                             </div>
                             <br>
                             <table class="table table-striped">
-                                
                                 <thead>
                                     <tr>
                                         <th class="text-dark" scope="row">Dias</th>
@@ -41,9 +32,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- <form id="form-delete" action="{{route('schedule.destroy',[':ID_schedule'])}}" method="POST"> --}}
-                                    <input type="hidden" name="_token" value="{{csrf_token()}}" id="token_h">
-                                    <input type="hidden" name="_method" value="DELETE" id="method_h">
                                     @foreach ($hours as $item)
                                             <tr class="" data-id="{{$item->id}}">
                                                 <td class="" data-hours_id="{{$item->id}}">{{$item->start}}-{{$item->end}}</td>
@@ -85,7 +73,6 @@
                                                 </td>
                                             </tr>
                                     @endforeach
-                                    {{-- </form> --}}
                                 </tbody>
                             </table>
                         </div>
@@ -94,78 +81,8 @@
             </div>
         </div>
     </div>
-    
-<!-- append modal set data -->
-<div class="modal fade" id="DataEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-thumb-tack"></i>Agregar Horario</h4>
-                <button type="button" class="close canceltask" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times"></i></span></button>
-            </div>
-            <div class="modal-body">
-              
-              <form id="taskfrm">
-              <input type="hidden" name="_token" value="{{csrf_token()}}" id="token">
-                 <label>Docente</label>
-                <div class="col-md-13">
-                    <select class="form-control" name="" id="nameDocente">
-                        @foreach ($groups as $group)
-                            <option class="form-control" value="{{$group->id}}" selected>{{$group->professor->names}} {{$group->professor->first_name}} {{$group->professor->second_name}}</option>
-                        @endforeach  
-                    </select>
-                </div>
-                {{-- <label>Color:</label> --}}
-                <input id="idcolortask" type="hidden" name="idcolortask" value="color-{{$blocks->first()->id}}">
-                {{-- <select class="form-control" id="idcolortask" readonly>
-                        <option value="color-{{$block_id}}">Purpura</option>
-                </select> --}}
-                <input id="materia" type="hidden" name="materia" value="{{$groups->first()->subject->name}}">
-                <input id="tede" type="hidden" name="tede" >
-                <input id="hours" type="hidden" name="hours">
-                <input id="days" type="hidden" name="days">
-                <input id="block_id" type="hidden" name="block_id" value="{{$blocks->first()->id}}">
-              </form>
-        
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="savetask btn btn-success"><i class="fa fa-floppy-o"></i> Guardar</button>
-              <button type="button" class="canceltask btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- append modal set data -->
-
-
-<!-- Modal de eliminar -->
-<div class="modal fade" id="eliminarHorario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"> Eliminar Horario </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <form id="form-delete" action="{{route('schedule.destroy',[':ID_schedule'])}}" method="POST">
-                <input type="hidden" name="_token" value="{{csrf_token()}}" id="token_h">
-                <input type="hidden" name="_method" value="DELETE" id="method_h">
-                <div class="modal-body text-left">
-                    ¿Esta seguro que desea eliminar el horario {{ $item->name }}?
-                </div>
-            </form>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <input type="hidden" id="id_auxiliar">
-            <button type="submit" class="btn btn-danger deleteSchedule">Eliminar</button>    
-            </div>
-        </div>
-    </div>
-</div>
-
 @endsection
 @push('scripts')
-    <script src="{{ asset('/vendor/horarios/js/eventos.js') }}"></script>
+    <script src="{{ asset('/vendor/horarios/js/auxiliarSchedule.js') }}"></script>
     <link href="{{ asset('/vendor/horarios/css/style.css') }}" rel="stylesheet">
 @endpush
