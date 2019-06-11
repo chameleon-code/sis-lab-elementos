@@ -34,9 +34,13 @@ class Student extends Model
         'password' => 'required|min:8'
     ];
     public function user(){
-        return $this->hasOne('App\user');
+        return $this->belongsTo('App\User');
     }
     public function tasks(){
         return $this->belongsToMany('App\Task', 'student_tasks');
+    }
+    public function blockschedules(){
+        return $this->belongsToMany('App\BlockSchedules', 'student_schedules', 'student_id', 'block_schedule_id')
+        ->withPivot('group_id', 'student_path');
     }
 }

@@ -121,8 +121,9 @@
                             </select>
                         </div>
                         <div class="py-4 px-3" style="width: 20%;">
-                            <a id="link-take-matter-{{$item->id}}" class="float-right" href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="infReg({{ $item }}, {{ $id_select }}), $('#modal-footer').hide(), $('#info-inscription').hide()" style="display: none;">Inscribirse</a><br>
-                            <a id="link-remove-matter-{{$item->id}}" class="float-right" href="#" class="btn btn-primary" style="display: none;">Retirar Materia</a><br>
+                            <a id="link-take-matter-{{$item->id}}" class="float-right" href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="infReg({{ $item }}, {{ $id_select }}), $('#modal-footer').hide(), $('#info-inscription').hide(), verifyRegistration({{$item->id}})" style="display: none;">Inscribirse</a><br>
+                            <input id="student-schedule-id-{{$item->id}}" type="number" name="student_schedule_id" style="display: none;">
+                            <a id="link-remove-matter-{{$item->id}}" class="float-right" href="#" class="btn btn-primary" data-toggle="modal" data-target="#unregistration" style="display: none;">Retirar Materia</a><br>
                             {{--  <a class="float-right" href="#" data-toggle="modal" data-target="#registration" onclick="confirmReg({{ $item }}, {{ $id_select }})">Inscribirse</a>  --}}
                         </div>
                     </div>
@@ -168,12 +169,12 @@
 
             </div>
             <div class="modal-body" id="text_select_group" style="display: none;">
-                Seleccione un grupo.
+                Debe seleccionar un grupo.
             </div>
     
             
             <div class="modal-footer" id="modal-footer">
-                <form method="POST" action="{{ url('/students/registration/store') }}">
+                <form id="form-registration" method="POST" action="{{ url('/students/registration/store') }}">
                     {{ csrf_field() }}
                     <input id="block_schedule_id" type="number" name="block_schedule_id" style="display: none;">
                     <input id="group_id_input" type="number" name="group_id" style="display: none;">
@@ -213,6 +214,26 @@
     </div>
   </div>
 </div>  --}}
+
+<div class="modal fade" id="unregistration" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Retirar Materia</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ¿Está seguro que desea retirar la materia?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <a href="#" class="btn btn-danger" id="btn-unregister"> Confirmar </a>
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection
 
