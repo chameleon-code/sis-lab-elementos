@@ -59,14 +59,25 @@ class StudentTaskController extends Controller
         foreach ($sesions as $sesion) {
             $sesionWeek = Sesion::find($sesion->sesionId);
             $tasks = Task::where('sesion_id',$sesion->sesionId)->get()->all();
+            $taskAll = [];
+            foreach ($tasks as $task) {
+                $taskDone = StudentTask::where('task_id',$task->id)->get()->first();
+                $taskData = [
+                    'task' => $task,
+                    'done' => $taskDone
+                ]; 
+                array_push($taskAll,(object)$taskData);
+            }
             $totalSesions = count(Sesion::where('block_id',$sesion->block_id)->get()->all());
             $sesionTask = [
-                'tasks' => $tasks,
+               // 'tasks' => $tasks,
+                'tasks' => $taskAll,
                 'sesion' => $sesionWeek,
                 'subject' => Group::getSubjectById($sesion->group_id)->name,
                 'block_id' => $sesion->block_id,
                 'totalSesion' => $totalSesions,
                 'schedule_id' => $sesion->schedule_id,
+                'taskDone' => $taskDone
             ];
             array_push($sesionOfWeek,(object)$sesionTask);
         }
@@ -161,7 +172,7 @@ class StudentTaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       dd($request);
     }
 
     /**
