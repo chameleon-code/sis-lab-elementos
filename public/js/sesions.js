@@ -96,7 +96,8 @@ function storeTask(){
         contentType: false,
         processData: false,
         success: (response) => {
-            if(response.title){
+            console.log(response.response == "error_file");
+            if(response.title && !(response.response == "error_file")){
                 hideFormActivity();
                 var mes = getMonth(response.updated_at);
                 var dia = response.updated_at.charAt(8) + response.updated_at.charAt(9);
@@ -120,10 +121,10 @@ function storeTask(){
                 if(response.updated_at.charAt(8) == 0){
                     dia = response.updated_at.charAt(9);
                 }
+                task_dom_max_id++;
                 $('#sesionTasks').append(
                     "<div class='accordion-body bg-gray-300 rounded row my-2' id=task"+task_dom_max_id+" style='cursor: default;'> <div class='container d-flex justify-content-between p-1' style=''> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong> Título:&nbsp;</strong>"+response.title+" </div> <div class='d-flex justify-content-end'> <a href='#' id='btn-edit-task-"+task_dom_max_id+"' class='mx-2' data-toggle-2='tooltip' title='Editar' onclick='editTask("+JSON.stringify(response)+", "+task_dom_max_id+")'><i class='fas fa-edit'></i></a> <a href='#' id='btn-delete-task-"+task_dom_max_id+"' class='mx-2' data-toggle-2='tooltip' title='Eliminar' onclick='deleteTask("+task_dom_max_id+","+response.id+")'><i class='fas fa-trash'></i></a> </div> </div> <div class='my-2 mx-1' style='font-size: 15px;'> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong style='margin-right: 15px;'> "+response.published_by+" </strong> "+dia+" "+mes+" "+hora+" </div> <div class='my-2 mx-1' style='font-size: 15px;'> "+dom_description+" "+dom_file+" </div> </div>"
                 );
-                task_dom_max_id++;//AQUI EL ERROR
             } else if (response.response == "no_title"){
                 $('#errors-form').empty();
                 $('#errors-div').show();
