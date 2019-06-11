@@ -12,6 +12,8 @@ Route::get('/students/registration/getGroups/{id}', 'BlockController@getGroupsBy
 Route::get('/students/registration/getGroupSchedules/{id}', 'BlockController@getGroupSchedules');
 Route::get('/students/registration/getScheduleStudent', 'StudentController@getScheduleStudent');
 Route::get('/student/unregistration/{id}', 'StudentScheduleController@destroy');
+Route::post('/students/registration/edit/{id}', 'StudentScheduleController@edit');
+
 
 // Tareas
 

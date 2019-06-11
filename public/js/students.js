@@ -37,6 +37,7 @@
 
 var schedule_id;
 var subject_matters_ids = new Array();
+var student_schedule_id = undefined;
 
 function addSubjectMatterId(id) {
     subject_matters_ids.push(id);
@@ -60,7 +61,7 @@ $(document).ready(function() {
                     for(var j=0 ; j<Object.keys(response).length ; j++){
                         if(subject_matters_ids[i-1] == response[j].subject_matter_id){
                             $('#link-take-matter-'+response[j].subject_matter_id)[0].innerHTML = "Cambiar Horario";
-                            //$('#link-remove-matter-'+response[j].subject_matter_id)[0].setAttribute("href", "/student/unregistration/"+response[j].id);
+                            $('#student-schedule-id-'+response[j].subject_matter_id)[0].value = response[j].id;
                             $('#link-remove-matter-'+response[j].subject_matter_id)[0].setAttribute("onclick", "sendStudentScheduleId("+response[j].id+")");
                             $('#link-remove-matter-'+response[j].subject_matter_id).show();
                             $('#subject-matter-'+i).append(
@@ -90,6 +91,7 @@ function clearSelects(id) {
 }
 
 function infReg(item, id) {
+    console.log(item);
     $('#body-table').empty();
     $('#group_id_input')[0].value = id;
     var select = $('#group_' + id)[0];
@@ -206,4 +208,35 @@ function clearChecks(longChecks, idCheck, schedule_record_id, block_schedule_id)
 
 function sendStudentScheduleId(id){
     $('#btn-unregister')[0].setAttribute("href", "/student/unregistration/"+id);
+}
+
+function studentScheduleId(id){
+    student_schedule_id = id;
+    console.log(student_schedule_id);
+}
+
+function verifyRegistration (subject_matter_id){
+    if($('#link-take-matter-'+subject_matter_id)[0].innerText == "Inscribirse"){
+        $('#form-registration')[0].setAttribute("action", "/students/registration/store");
+    } else if ($('#link-take-matter-'+subject_matter_id)[0].innerText == "Cambiar Horario") {
+        var schedule_student_id = $('#student-schedule-id-'+subject_matter_id)[0].value;
+        var url = "/students/registration/edit/"+schedule_student_id+"";
+        $('#form-registration')[0].setAttribute("action", url);
+
+        // var formData = new FormData($('#form-registration')[0]);
+
+        // $.ajax({
+        //     url : 'http://localhost:8000/students/registration/edit/'+schedule_student_id,
+        //     type: 'POST',
+        //     data: formData,
+        //     contentType: false,
+        //     processData: false,
+        //     success: (response) => {
+        //         console.log("todo cool");
+        //     },
+        //     error: function(){
+
+        //     }
+        // });
+    }
 }

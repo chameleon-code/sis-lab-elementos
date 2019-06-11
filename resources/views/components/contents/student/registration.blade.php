@@ -121,7 +121,8 @@
                             </select>
                         </div>
                         <div class="py-4 px-3" style="width: 20%;">
-                            <a id="link-take-matter-{{$item->id}}" class="float-right" href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="infReg({{ $item }}, {{ $id_select }}), $('#modal-footer').hide(), $('#info-inscription').hide()" style="display: none;">Inscribirse</a><br>
+                            <a id="link-take-matter-{{$item->id}}" class="float-right" href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="infReg({{ $item }}, {{ $id_select }}), $('#modal-footer').hide(), $('#info-inscription').hide(), verifyRegistration({{$item->id}})" style="display: none;">Inscribirse</a><br>
+                            <input id="student-schedule-id-{{$item->id}}" type="number" name="student_schedule_id" style="display: none;">
                             <a id="link-remove-matter-{{$item->id}}" class="float-right" href="#" class="btn btn-primary" data-toggle="modal" data-target="#unregistration" style="display: none;">Retirar Materia</a><br>
                             {{--  <a class="float-right" href="#" data-toggle="modal" data-target="#registration" onclick="confirmReg({{ $item }}, {{ $id_select }})">Inscribirse</a>  --}}
                         </div>
@@ -173,7 +174,7 @@
     
             
             <div class="modal-footer" id="modal-footer">
-                <form method="POST" action="{{ url('/students/registration/store') }}">
+                <form id="form-registration" method="POST" action="{{ url('/students/registration/store') }}">
                     {{ csrf_field() }}
                     <input id="block_schedule_id" type="number" name="block_schedule_id" style="display: none;">
                     <input id="group_id_input" type="number" name="group_id" style="display: none;">
