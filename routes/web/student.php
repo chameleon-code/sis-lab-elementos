@@ -18,4 +18,5 @@ Route::post('/students/registration/edit/{id}', 'StudentScheduleController@edit'
 // Tareas
 
 Route::post('/student/activities',['uses' => 'StudentTaskController@store']);
+Route::post('/student/activities/{id}/update',['uses' => 'StudentTaskController@update'])->name('activity.update');
 Route::get('student/{id}', 'StudentController@show');
