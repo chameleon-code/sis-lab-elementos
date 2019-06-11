@@ -86,9 +86,31 @@ class StudentScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+        $student_schedule = StudentSchedule::findOrFail($id);
+        // $messages = [
+        //     'group_id.required' => 'No puede inscribirse al grupo de la materia seleccionada. ',
+        // ];
+        // $this->validate($request, [
+        //     'group_id' => 'required'
+        // ], $messages);
+
+        $user = Auth::user();
+        $student = Student::where('user_id', '=', $user->id)->get()->first();
+        $block_schedule_id = BlockSchedule::find($request->block_schedule_id);
+        $group = Group::find($request->group_id);
+        $dir = Block::find($block_schedule_id->block_id)->block_path.'/'.$group->name.'/'.base64_encode($user->code_sis);
+        
+        $student_schedule->student_id = $student->id;
+        $student_schedule->block_schedule_id = $request->block_schedule_id;
+        $student_schedule->group_id = $request->group_id;
+        $student_schedule->student_path = $dir;
+        $student_schedule->save();
+        
+        Storage::makeDirectory($dir);
+
+        return redirect('/students/registration');
     }
 
     /**
@@ -111,6 +133,9 @@ class StudentScheduleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student_schedule = StudentSchedule::findOrFail($id);
+        $student_schedule->delete();
+
+        return redirect('/students/registration');
     }
 }
