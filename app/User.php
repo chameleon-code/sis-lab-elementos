@@ -41,4 +41,7 @@ class User extends Authenticatable
     public function calendars(){
         return $this->hasMany('App\Calendar');
     }
+    public function student(){
+        return $this->hasOne('App\Student');
+    }
 }

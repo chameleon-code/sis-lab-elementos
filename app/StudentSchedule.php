@@ -11,7 +11,7 @@ class StudentSchedule extends Model
         'student_id', 'block_schedule_id', 'group_id','student_path', 'user'
     ];
     protected $appends = [
-        'student', 'group', 'blockschedule'
+        'student', 'group', 'blockschedule', 'user'
     ];
     public function getStudentAttribute() {
         return Student::findOrFail($this->student_id);

@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Console\Scheduling\Schedule;
+use Carbon\Carbon;
+use App\ScheduleRecord;
+use App\BlockSchedule;
+use App\Student;
 
 class AuxiliarController extends Controller
 {
@@ -117,6 +122,71 @@ class AuxiliarController extends Controller
         ];
         
         return view('components.contents.auxiliar.profile')->withTitle('Perfil de Auxiliar')->with($data);
+    }
+
+    public function getStudentList(Request $request, $id){
+        $posible_schedules = ScheduleRecord::where('laboratory_id', $id)->get();
+        $schedules = array();
+        foreach ($posible_schedules as $schedule){
+            if(self::compareDay($schedule->day_id)) {
+                array_push($schedules, $schedule->id);
+            }
+        }
+        $blocksch = BlockSchedule::with('students')->whereIn('schedule_id', $schedules)->get();
+        if($request->ajax()){
+            $array = array();
+            foreach($blocksch as $bs){
+                if($bs->students->isNotEmpty()){
+                    foreach($bs->students as $s){
+                        $student = new \stdClass();
+                        $student->Codigo_Sis = $s->user->code_sis;
+                        $student->Apellidos = $s->user->first_name ." ". $s->user->second_name;
+                        $student->Nombres = $s->user->names;
+                        $student->Asistencia = (object)[
+                            'student_id' => $s->id,
+                            'bsch_id' => $bs->id
+                        ];
+                        array_push($array, $student);
+                    }
+                }
+            }
+            return response()->json($array);
+        }
+        return $blocksch;
+    }
+
+    public function compareDay($day_id){
+        $resp = false;
+        $day = '';
+        switch($day_id){
+            case 1:
+                $day = 'Mon';
+                break;
+            case 2:
+                $day = 'Tue';
+                break;
+            case 3:
+                $day = 'Wed';
+                break;
+            case 4:
+                $day = 'Thu';
+                break;
+            case 5:
+                $day = 'Fri';
+                break;
+            case 6;
+                $day = 'Sat';
+                break;
+        }
+
+        $today = Carbon::now()->format('D');
+
+        if($day == $today)
+        {
+            $resp = true;
+        }
+
+        return $resp;
     }
 
     public function rememberNav(){

@@ -169,7 +169,7 @@
 
             </div>
             <div class="modal-body" id="text_select_group" style="display: none;">
-                Seleccione un grupo.
+                Debe seleccionar un grupo.
             </div>
     
             
