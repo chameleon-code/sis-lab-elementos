@@ -122,13 +122,13 @@ class StudentTaskController extends Controller
                 
     
                 if($studentSchedule!=[]){
-                    $file -> move(public_path().'/storage/'.$studentSchedule->student_path.'/'.$fileSesion,$fileName);
+                    $file -> move(public_path().'/storage/'.$studentSchedule->student_path.'/sesion-'.$fileSesion,$fileName);
                     $data = [
                         "description" => $request->description,
                         "task_id" => $request->task_id,
                         "student_id" => $student->id,
                         "task_name" => $fileName,
-                        "task_path" => $studentSchedule->student_path.'/'.$fileSesion
+                        "task_path" => $studentSchedule->student_path.'/sesion-'.$fileSesion
                     ];
                     StudentTask::create($data);
                 }
@@ -137,7 +137,7 @@ class StudentTaskController extends Controller
                 return back()->withErrors('Procure enviar archivos formato: .zip .rar');
             }
         }else{
-            return back()->withErrors('Adjunte archivos');
+            return back()->withErrors('Archivo con tamaño mayor a 2MB');
         }
     }
 
@@ -172,7 +172,18 @@ class StudentTaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-       dd($request);
+        if($request->hasFile('practice')){
+            $file = $request->file('practice');
+            $fileName = $file->getClientOriginalName();
+            $studentTask = StudentTask::find($id);
+            $studentTask->description = $request->description;
+            $studentTask->task_name = $fileName;
+            $studentTask->save();
+            $file -> move(public_path().'/storage/'.$studentTask->task_path,$fileName);
+            return back();
+        }else{
+            return back()->withErrors('Archivo con tamaño mayor a 2MB');
+        }
     }
 
     /**

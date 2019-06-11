@@ -182,6 +182,9 @@
                                                         <div class="col-md-12 col-12" style="margin-top: 1rem">
                                                             <button type="submit" class="btn btn-primary btn-block">Entregar</button>
                                                         </div>
+                                                        <div class="col-md-12 col-12">
+                                                                <label class="error-label" id="error-create-{{$task->task->id}}" for="" style="color: crimson">Inserte un archivo <b>.zip</b> o <b>.rar</b></label>
+                                                        </div>
                                                     @else
                                                         <div class="col-md-7 col-7 custom-file">
                                                             <input class="custom-file-input input-create-{{$task->task->id}}" id="practice" type="file" accept=".zip,.rar" name="practice" style="cursor: pointer;" required="">
@@ -189,6 +192,9 @@
                                                         </div>
                                                         <div class="col-md-5 col-5">
                                                             <button type="submit" class="btn btn-primary btn-block" style="z-index:5; position: relative;">Entregar</button>
+                                                        </div>
+                                                        <div class="col-md-12 col-12">
+                                                            <label class="error-label" id="error-create-{{$task->task->id}}" for="" style="color: crimson">Inserte un archivo <b>.zip</b> o <b>.rar</b></label>
                                                         </div>
                                                     @endif
                                                 </div>
@@ -231,6 +237,7 @@
                                                         <label class="custom-file-label" for="practice" style="margin: 0px 10px; color:darkslateblue;">Subir un archivo*</label>
                                                     </div>
                                                 </div>
+                                                <label class="error-label" id="error-{{$task->done->id}}" for="" style="color: crimson">Inserte un archivo <b>.zip</b> o <b>.rar</b></label>
                                                 <div class="row">
                                                     @if (Agent::isMobile())
                                                         <div class="col-md-6 col-6" style="margin-top: 0.5rem">
@@ -274,6 +281,8 @@
 
         $(".to-edit").hide();
 
+        $('.error-label').hide();
+
         $(".edit-form").submit(function(event){
             var a = this.id.split('-');
             a = a[a.length-1];
@@ -282,8 +291,9 @@
             if(!verifyMimeType(nameinput)){
                 event.preventDefault();
                 console.log("verifique el mimetype");
+                $('#error-'+a).show();
             }else{
-                console.log("fucnca");
+                $('#error-'+a).hide();
             }
         });
 
@@ -294,9 +304,9 @@
             var nameinput = $(nameinput).val().split("\\").pop();
             if(!verifyMimeType(nameinput)){
                 event.preventDefault();
-                console.log("verifique el mimetype");
+                $('#error-create-'+a).show();
             }else{
-                console.log("funca");
+                $('#error-create-'+a).hide();
             }
         });
 
@@ -306,6 +316,7 @@
             $(name).show();
             $(notEditName).hide();
         }
+
         function cancel(string){
             var name = "#edit-"+string;
             var notEditName = "#not-edit-"+string;
