@@ -73,7 +73,7 @@ class DatabaseSeeder extends Seeder
 
         // BLOQUES
 
-        factory(\App\Block::class, 5)->create()
+        factory(\App\Block::class, 3)->create()
         ->each(function (\App\Block $b){
             Storage::makeDirectory($b->block_path);
             $dates = \App\Sesion::autodate('2019-02-4', '2019-06-24');
@@ -89,7 +89,7 @@ class DatabaseSeeder extends Seeder
             }
         });
 
-        factory(\App\BlockGroup::class, 20)->create();
+        factory(\App\BlockGroup::class, 10)->create();
 
         factory(\App\User::class, 1)->create([
             'names' => 'auxiliar',
@@ -116,7 +116,7 @@ class DatabaseSeeder extends Seeder
         ]);
         factory(\App\Student::class, 1)->create(['user_id' => 34]);
 
-        factory(\App\User::class, 100)->create([ 'role_id' => \App\Role::STUDENT ])
+        factory(\App\User::class, 50)->create([ 'role_id' => \App\Role::STUDENT ])
         ->each(function (\App\User $u){
             factory(\App\Student::class, 1)->create([
                 'user_id' => $u->id,
@@ -153,9 +153,9 @@ class DatabaseSeeder extends Seeder
             $l->save();
         });
 
-        factory(\App\ScheduleRecord::class, 30)->create();
+        factory(\App\ScheduleRecord::class, 20)->create();
 
-        factory(\App\BlockSchedule::class, 30)->create();
+        factory(\App\BlockSchedule::class, 20)->create();
         
         factory(\App\Task::class, 100)->create();
     }
