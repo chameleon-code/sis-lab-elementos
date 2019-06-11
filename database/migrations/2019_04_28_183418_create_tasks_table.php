@@ -22,7 +22,6 @@ class CreateTasksTable extends Migration
             $table->string('description', 500)->nullable();
             $table->string('task_path')->nullable();
             $table->string('task_file')->nullable();
-            $table->string('in_time')->nullable();
             $table->timestamps();
         });
     }

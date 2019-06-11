@@ -30,7 +30,6 @@ class StudentTaskController extends Controller
         //$testDate = Carbon::create(2019,6,6,17,15,0); 
         //Carbon::setTestNow($testDate);
         // end test 
-        $hour = Carbon::now()->format('H:i:s');
         $schedules = StudentSchedule::getDateTimeStudentSchedulesByStudentId($student->id);
         $message = '';
         $sesions = [];
@@ -115,7 +114,13 @@ class StudentTaskController extends Controller
             if($extension=='rar'||$extension=='zip'){
                 $user = Auth::user();
                 $student = Student::where('user_id','=',$user->id)->first();
-
+                
+                $hour = Carbon::now()->format('H:i:s');
+                $inHour = StudentTask::inHour($hour, $request->schedule_id);
+                $textInHour = "no";
+                if($inHour){
+                    $textInHour = "yes";
+                }
                 $fileName = $file->getClientOriginalName();
                 $fileSesion = $request->sesion_number;
 
@@ -130,7 +135,8 @@ class StudentTaskController extends Controller
                         "task_id" => $request->task_id,
                         "student_id" => $student->id,
                         "task_name" => $fileName,
-                        "task_path" => $studentSchedule->student_path.'/sesion-'.$fileSesion
+                        "task_path" => $studentSchedule->student_path.'/sesion-'.$fileSesion,
+                        "in_time" => $textInHour
                     ];
                     StudentTask::create($data);
                 }
