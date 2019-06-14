@@ -132,7 +132,11 @@ class AuxiliarController extends Controller
                 array_push($schedules, $schedule->id);
             }
         }
-        $blocksch = BlockSchedule::with('students')->whereIn('schedule_id', $schedules)->get();
+        $blocksch = BlockSchedule::with('students')->whereIn('schedule_id', $schedules)->get()
+        ->reject(function($item, $key){
+            if($item->students->isEmpty())
+                return true;
+        });
         if($request->ajax()){
             $array = array();
             foreach($blocksch as $bs){
@@ -143,7 +147,7 @@ class AuxiliarController extends Controller
                         $student->Apellidos = $s->user->first_name ." ". $s->user->second_name;
                         $student->Nombres = $s->user->names;
                         $student->Asistencia = (object)[
-                            'student_id' => $s->id,
+                            'student' => $s->id,
                             'bsch_id' => $bs->id
                         ];
                         array_push($array, $student);
@@ -152,7 +156,7 @@ class AuxiliarController extends Controller
             }
             return response()->json($array);
         }
-        return $blocksch;
+        return $blocksch->values()->all();
     }
 
     public function compareDay($day_id){

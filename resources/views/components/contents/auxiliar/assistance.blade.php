@@ -54,17 +54,17 @@
                                             </thead>
                                             <tbody id="tablebody">        
                                             @forelse ($block_schedules as $bsch)
-                                                @forelse ($bsch->students as $student)                                               
-                                                    <tr role="row" class="odd">
-                                                        <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->code_sis }}</font></font></td>
-                                                        <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->first_name }} {{ $item->user->second_name }}</font></font></td>
-                                                        <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->names }}</font></font></td>
-                                                        <td class="text-center" style="text-align: center; display: flex;">
-                                                            <a href="#" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Marcar Asistencia" data-toggle="modal" data-target="#studentProfile" ><i class="far fa-check-square"></i></a>
-                                                        </td>
-                                                    </tr>
+                                                @forelse ($bsch->students as $item)                                               
+                                                <tr role="row" class="odd">
+                                                    <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->code_sis }}</font></font></td>
+                                                    <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->first_name }} {{ $item->user->second_name }}</font></font></td>
+                                                    <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->names }}</font></font></td>
+                                                    <td class="text-center" style="text-align: center; display: flex;">
+                                                        <a href="#" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Marcar Asistencia" data-toggle="modal" data-target="#appModal" onclick="assistanceRegister({{$item}} , {{$bsch->id}})"><i class="far fa-check-square"></i></a>
+                                                    </td>
+                                                </tr>
                                                 @empty
-                                                @endforelse  
+                                                @endforelse                                           
                                             @empty                                  
                                             @endforelse
                                             </tbody>
@@ -88,7 +88,7 @@
                     </div>        
                     <div class="modal-body">
                         <form action="" id="registerStudent">
-                            <p>Desea confirmar la asistencia del alumno?</p>
+                            <p>Desea confirmar la asistencia del alumno? </p>
                             <input name="student_id" type="hidden" value="" id="student_id">
                             <input name="blockschedule_id" type="hidden" value="" id="blockschedule_id">
                         </form>

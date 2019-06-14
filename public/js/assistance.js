@@ -1,3 +1,10 @@
+function assistanceRegister(id,bsch_id){
+    //console.log(nombres);
+    //$('#registerStudent > p').text('Desea confirmar la asistencia del alumno' +nombres + ' '+apellidos+ '?');
+    $('#student_id').val(id);
+    $('#blockschedule_id').val(bsch_id);
+}
+
 $(document).ready(()=>{
     var modal = $('#appModal');
     $('#select-labs').change((event) => {        
@@ -21,8 +28,8 @@ $(document).ready(()=>{
                     { data: 'Nombres'},
                     { data: 'Asistencia',
                     render : function(data, type, row) {
-                        console.log(data);
-                        return `<a href="#" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Marcar Asistencia" data-toggle="modal" data-target="#appModal" data-student="1" onclick="assistanceRegister(${data.student_id} , ${data.bsch_id})"><i class="far fa-check-square"></i></a>`
+                        //console.log(row.Nombres);
+                        return `<a href="#" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Marcar Asistencia" data-toggle="modal" data-target="#appModal" onclick="assistanceRegister(${data.student}, ${data.bsch_id})"><i class="far fa-check-square"></i></a>`
                         } 
                     }                      
                 ]
@@ -59,9 +66,8 @@ $(document).ready(()=>{
                 }
             });
         });
+    $('#dataTable > .btn-warning').click( ()=>{
+        console.log('hi');
+    });
 });
 
-function assistanceRegister(id1, id2){
-    $('#student_id').val(id1);
-    $('#blockschedule_id').val(id2);
-}
