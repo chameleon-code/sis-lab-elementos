@@ -4,7 +4,10 @@
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <div class="panel-heading m-0 font-weight-bold text-primary">Estudiantes </div>
+                <div class="d-flex justify-content-between">
+                    <div class="panel-heading m-0 font-weight-bold text-primary">Estudiantes </div>
+                    {{-- <a href="/professor/practices/download" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Descargar portafolios" onclick="loadProfile()" id="profile"><i class="fas fa-download"></i></a> --}}
+                </div>
                 <div class="card-body">
                     @if (Session::has('status_message'))
                         <p class="alert alert-success"><strong> {{Session::get('status_message')}} </strong></p>
