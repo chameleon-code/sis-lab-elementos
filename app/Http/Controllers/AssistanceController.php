@@ -11,25 +11,17 @@ use App\StudentSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\ScheduleRecord;
-use Illuminate\Console\Scheduling\Schedule;
-use App\Laboratory;
-use App\Assistance;
 
 class AssistanceController extends Controller
 {
     public function index()
     {
-        $students = Student::getAllStudents();
-        //$user_id = $student->user_id;
-        //$user = User::findOrFail($user_id);
-        $labs = Laboratory::all();
-        $auxiliarctrl = new AuxiliarController();
-        $block_schedules = $auxiliarctrl->getStudentList(new Request, $labs->first()->id);
+        $schedules = StudentSchedule::all();
+        $students = $this->getStudentsByBlock(new Request, $schedules->first()->block_schedule->block->id);
+        //dd($students);
         $data = [
             'students' => $students,
-            'labs' => $labs,
-            'block_schedules' => $block_schedules,
+            'schedules' => $schedules,
         ];
         return view('components.contents.auxiliar.assistance', $data)->withTitle('Perfil de Estudiante');
     }
@@ -89,25 +81,7 @@ class AssistanceController extends Controller
         return view('components.contents.student.profile')->withTitle('Perfil de Estudiante')->with($data);
     }
 
-    public function store(Request $request){
-        $info = \request('info');
-    	$data = [];
-        parse_str($info, $data);
-        $block_schedule = BlockSchedule::find($data['blockschedule_id']);
-        try{
-            $assistance = new Assistance();
-            $assistance->block_id = $block_schedule->block_id;
-            $assistance->schedule_id = $block_schedule->schedule_id;
-            $assistance->student_id = $data['student_id'];
-            $assistance->attend = 1;
-            $assistance->save();
-            $success = true;
-        }
-        catch (\Exception $exception) {
-    		$success = false;
-	    }
-        return response()->json(['res' => $success]);
-    }
+
 
     public function confirm(Request $request)
     {
