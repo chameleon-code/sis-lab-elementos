@@ -100,6 +100,7 @@ class AssistanceController extends Controller
             $assistance->schedule_id = $block_schedule->schedule_id;
             $assistance->student_id = $data['student_id'];
             $assistance->attend = 1;
+            $assistance->day = date('Y-m-d');
             $assistance->save();
             $success = true;
         }

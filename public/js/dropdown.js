@@ -30,10 +30,14 @@ $(document).ready(function(){
             success: function (response){
                 console.log(response);
                 if (!added){
-                    if($('#groups_container').attr('data-frm') == 2)
+                    if($('#groups_container').data('frm') == 2){
+                        console.log('HOlA ===>');
                         count = iCnt + response.length;
-                    else
+                    }
+                    else{
                         count = response.length;
+                        iCnt = 1;
+                    }
                     added = true;
                 }
                 console.log('count: '+count+ ' length: '+response.length + ' icnt: '+iCnt);

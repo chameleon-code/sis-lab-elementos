@@ -60,6 +60,7 @@ class StudentTaskController extends Controller
             $sesionWeek = Sesion::find($sesion->sesionId);
             $tasks = Task::where('sesion_id',$sesion->sesionId)->get()->all();
             $taskAll = [];
+            $taskDone = null;
             foreach ($tasks as $task) {
                 $taskDone = StudentTask::where('task_id',$task->id)->get()->first();
                 $taskData = [
@@ -68,6 +69,7 @@ class StudentTaskController extends Controller
                 ]; 
                 array_push($taskAll,(object)$taskData);
             }
+            //dd($taskDone);
             $totalSesions = count(Sesion::where('block_id',$sesion->block_id)->get()->all());
             $sesionTask = [
                // 'tasks' => $tasks,
