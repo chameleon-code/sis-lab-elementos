@@ -157,7 +157,8 @@ class StudentController extends Controller
 
     public function getScheduleStudent(){
         $student = Student::where('user_id', '=', Auth::user()->id)->get()->first();
-        $shcedule_student = StudentSchedule::join('groups','group_id','=','groups.id')->select('groups.id AS group_id', 'groups.name', 'groups.subject_matter_id', 'groups.professor_id', 'student_schedules.id', 'student_schedules.student_id', 'student_schedules.block_schedule_id', 'student_schedules.student_path')->get();//->paginate(4);                 where('student_id', '=', $student->id)->get();
+        //$student = Student::where('user_id', '=', $id)->get()->first();
+        $shcedule_student = StudentSchedule::join('groups','group_id','=','groups.id')->select('groups.id AS group_id', 'groups.name', 'groups.subject_matter_id', 'groups.professor_id', 'student_schedules.id', 'student_schedules.student_id', 'student_schedules.block_schedule_id', 'student_schedules.student_path')->where('student_schedules.student_id', '=', $student->id)->get();//->paginate(4);                 where('student_id', '=', $student->id)->get();
         
         $shcedule_student->each(function ($item){
             $item->setAppends([]);

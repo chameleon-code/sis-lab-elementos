@@ -96,6 +96,8 @@
                     </div>
                 </form>  --}}
 
+                <script> addUserId({{json_encode(Auth::user()->id)}}); </script>
+
                 @php
                     $id_select = 1;
                 @endphp
