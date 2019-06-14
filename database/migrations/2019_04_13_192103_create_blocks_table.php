@@ -40,7 +40,7 @@ class CreateBlocksTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedInteger('block_id');
+            $table->unsignedInteger('block_id')->nullable();
             $table->foreign('block_id')->references('id')->on('blocks');
             $table->string('type')->nullable();
             $table->timestamps();
@@ -54,7 +54,7 @@ class CreateBlocksTable extends Migration
      */
     public function down()
     {
-        // Schema::dropIfExists('students');
+        Schema::dropIfExists('auxiliars');
         Schema::dropIfExists('blocks');
     }
 }

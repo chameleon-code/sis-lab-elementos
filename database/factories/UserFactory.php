@@ -34,7 +34,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'second_name' => $second_name,
         'role_id' => \App\Role::all()->random()->id,
         'email' => $faker->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
+        'password' => bcrypt('secret'),
         'remember_token' => str_random(10),
         'code_sis' => $code_sis,
        // 'img_path' => \Faker\Provider\Image::image(storage_path() . '/app/public/users', 200, 200, 'people', false),
@@ -63,7 +63,7 @@ $factory->define(App\Auxiliar::class, function (Faker\Generator $faker) {
     return [
         'user_id' => null,
         'type' => null,
-        'block_id' => $block->id,
+        'block_id' => null,
     ];
 });
 
