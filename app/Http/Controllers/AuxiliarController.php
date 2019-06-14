@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use App\ScheduleRecord;
 use App\BlockSchedule;
 use App\Student;
+use App\Assistance;
 
 class AuxiliarController extends Controller
 {
@@ -126,25 +127,34 @@ class AuxiliarController extends Controller
 
     public function getStudentList(Request $request, $id){
         $posible_schedules = ScheduleRecord::where('laboratory_id', $id)->get();
+        //$assistances = Assistance::all();
+        //dd($assistances->first()->created_at->format('Y m d'));
         $schedules = array();
         foreach ($posible_schedules as $schedule){
             if(self::compareDay($schedule->day_id)) {
                 array_push($schedules, $schedule->id);
             }
         }
-        $blocksch = BlockSchedule::with('students')->whereIn('schedule_id', $schedules)->get();
+        $blocksch = BlockSchedule::with('students')->whereIn('schedule_id', $schedules)->get()
+        ->reject(function($item, $key){
+            if($item->students->isEmpty())
+                return true;
+        });
+        $date = date('Y-m-d');
         if($request->ajax()){
             $array = array();
             foreach($blocksch as $bs){
                 if($bs->students->isNotEmpty()){
                     foreach($bs->students as $s){
+                        $assistance = $s->assistances->where('day', date('Y-m-d'))->all();
                         $student = new \stdClass();
                         $student->Codigo_Sis = $s->user->code_sis;
                         $student->Apellidos = $s->user->first_name ." ". $s->user->second_name;
                         $student->Nombres = $s->user->names;
                         $student->Asistencia = (object)[
-                            'student_id' => $s->id,
-                            'bsch_id' => $bs->id
+                            'student' => $s->id,
+                            'bsch_id' => $bs->id,
+                            'assist' => empty($assistance)
                         ];
                         array_push($array, $student);
                     }
@@ -152,7 +162,7 @@ class AuxiliarController extends Controller
             }
             return response()->json($array);
         }
-        return $blocksch;
+        return $blocksch->values()->all();
     }
 
     public function compareDay($day_id){

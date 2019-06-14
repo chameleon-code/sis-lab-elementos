@@ -1,3 +1,7 @@
+function assistanceRegister(id,bsch_id){
+    $('#student_id').val(id);
+    $('#blockschedule_id').val(bsch_id);
+}
 $(document).ready(()=>{
     var modal = $('#appModal');
     $('#select-labs').change((event) => {        
@@ -21,9 +25,13 @@ $(document).ready(()=>{
                     { data: 'Nombres'},
                     { data: 'Asistencia',
                     render : function(data, type, row) {
-                        console.log(data);
-                        return `<a href="#" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Marcar Asistencia" data-toggle="modal" data-target="#appModal" data-student="1" onclick="assistanceRegister(${data.student_id} , ${data.bsch_id})"><i class="far fa-check-square"></i></a>`
-                        } 
+                        if(data.assist === true){
+                            return `<a href="#" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Marcar Asistencia" data-toggle="modal" data-target="#appModal" onclick="assistanceRegister(${data.student}, ${data.bsch_id})" id="student${data.student}"><i class="far fa-check-square"></i></a>`
+                        }
+                        else{
+                            return `<a href="#" class="btn btn-success btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Estudiante registrado" data-toggle="modal" id="student${data.student}"><i class="far fa-check-square"></i></a>`
+                        }
+                    } 
                     }                      
                 ]
             }).draw();
@@ -46,9 +54,8 @@ $(document).ready(()=>{
                             'Registro de estudiante exitoso!',
                             'Revisalo en tu registro de asistencia',
                             'success'
-                        )
-                        modal.modal('hide');
-                        modal.find("input").val("");                    
+                        );
+                        modal.modal('hide');        
                     } else {
                         Swal.fire({
                             type: 'error',
@@ -59,9 +66,13 @@ $(document).ready(()=>{
                 }
             });
         });
+    $('#modalAction').click( ()=>{
+        var modal = $('#appModal');
+        var id = modal.find('#student_id').val();
+        $('#student'+id).attr('class', 'btn btn-success btn-circle btn-sm mx-1');
+        $('#student'+id).attr('title', 'Estudiante registrado');
+        $('#student'+id).attr('data-target', '');
+        $('#student'+id).attr('onclick', '');         
+    });
 });
 
-function assistanceRegister(id1, id2){
-    $('#student_id').val(id1);
-    $('#blockschedule_id').val(id2);
-}

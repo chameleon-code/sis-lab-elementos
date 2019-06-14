@@ -181,7 +181,11 @@ class ProfessorController extends Controller
                 return true;
             }
         }); 
-        $schedules = $this->studentListByGroup(new Request, $groups->first()->id);
+        if($groups->isNotEmpty()){
+            $schedules = $this->studentListByGroup(new Request, $groups->first()->id);
+        }
+        else
+            $schedules = collect();
         $data = [
                     'schedules' => $schedules,
                     'groups' => $groups,
