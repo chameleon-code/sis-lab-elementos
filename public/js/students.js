@@ -38,10 +38,16 @@
 var schedule_id;
 var subject_matters_ids = new Array();
 var student_schedule_id = undefined;
+//var user_id = undefined;
 
 function addSubjectMatterId(id) {
     subject_matters_ids.push(id);
 }
+
+// function addUserId(id){
+//     user_id = id;
+//     console.log(user_id);
+// }
 
 $(document).ready(function() {
     $('#info-inscription').hide();

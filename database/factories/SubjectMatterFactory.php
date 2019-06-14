@@ -17,14 +17,7 @@ use Illuminate\Support\Facades\Storage;
 $factory->define(App\SubjectMatter::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->unique()->randomElement(
-            [
-                'Introducción a la Programación',
-                'Circuitos',
-                'Taller de Sistemas Operativos',
-                'Base de Datos I',
-                'Elementos de Programación y Estructura de Datos',
-                'Redes de Computadoras',
-            ]
+            
         ),
     ];
 });
