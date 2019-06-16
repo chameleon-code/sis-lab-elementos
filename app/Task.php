@@ -16,6 +16,7 @@ class Task extends Model
         'task_file',
         'created_at',
         'updated_at',
+        'in_time'
     ];
 
     //protected $hidden = ['created_at', 'updated_at'];
