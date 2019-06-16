@@ -15,7 +15,7 @@ class Task extends Model
         'task_path',
         'task_file',
         'created_at',
-        'updated_at',
+        'updated_at'
     ];
 
     //protected $hidden = ['created_at', 'updated_at'];

@@ -11665,6 +11665,18 @@ a:focus {
   background-size: cover;
 }
 
+.bg-password-reset {
+  background: url("/img/reset-pass.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.bg-password-reenter {
+  background: url("/img/reEnter-pass.png");
+  background-position: center;
+  background-size: cover;
+}
+
 form.user .custom-checkbox.small label {
   line-height: 1.5rem;
 }

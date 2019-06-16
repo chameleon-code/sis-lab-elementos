@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Task;
 use App\Student;
 use App\User;
+use Carbon\Carbon;
 
 class StudentTask extends Model
 {
@@ -16,7 +17,8 @@ class StudentTask extends Model
         'score',
         'observation',
         'task_path',
-        'task_name'
+        'task_name',
+        'in_time'
     ];
     protected $appends = [
         'student', 'task'
@@ -27,6 +29,19 @@ class StudentTask extends Model
     }
     public function getTaskAttribute(){
         return Task::findOrFail($this->task_id);
+    }
+    public static function inHour($time, $scheduleId){
+        $res = false;
+        $schedule = ScheduleRecord::find($scheduleId);
+        $hourId = $schedule->hour_id;
+        $hour = Hour::find($hourId);
+        $hourStart = Carbon::createFromTimeString($hour->start);
+        $hourEnd = Carbon::createFromTimeString($hour->end);
+        $reTime = Carbon::createFromTimeString($time);
+        if($reTime->between($hourStart,$hourEnd)){
+            $res = true;
+        }
+        return $res;
     }
 }
 
