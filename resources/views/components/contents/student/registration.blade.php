@@ -107,7 +107,7 @@
                     $groups_sm = App\Group::where("subject_matter_id", "=", $item->id)->get();
                 @endphp
                     <div class="flex-row my-2 rounded card shadow">
-                        <img class="" style="width:100px; height: 80px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;" src="/img/subjectMatter.jpg" alt="">
+                        <img class="" style="width:100px; height: 92px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;" src="/img/subjectMatter.jpg" alt="">
                         <div class="py-2 px-3" id="subject-matter-{{$item->id}}" style="width: 65%;">
                             <strong> {{$item->name}} </strong>
                         </div>
@@ -150,7 +150,7 @@
         </div>
         <div class="modal-body" id="text_confirm_reg">
 
-                <table class="table table-striped table-light" style="border-radius: 0.35rem !important;">
+                <table id="schedules-table" class="table table-striped table-light" style="border-radius: 0.35rem !important;">
                         <thead class="">
                           <tr class="text-center">
                             <th class="text-dark" scope="col">Laboratorio</th>
