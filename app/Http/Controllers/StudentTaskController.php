@@ -26,16 +26,12 @@ class StudentTaskController extends Controller
     {
         $user = Auth::user();
         $student = Student::where('user_id','=',$user->id)->first();
-        //test for day and hours 
-        //$testDate = Carbon::create(2019,6,6,17,15,0); 
-        //Carbon::setTestNow($testDate);
-        // end test 
         $schedules = StudentSchedule::getDateTimeStudentSchedulesByStudentId($student->id);
         $message = '';
         $sesions = [];
         if($schedules != []){
             foreach ($schedules as $schedule) {
-                $sesionId = Sesion::getSesionIdToDayByBlock($schedule['block_id']);
+                $sesionId = Sesion::getSesionIdToDayByBlock($schedule['block_id'], $schedule['schedule_id']);
                 if($sesionId != -1){
                     $blockGroup = [
                         'sesionId' => $sesionId,
@@ -68,7 +64,6 @@ class StudentTaskController extends Controller
                 ]; 
                 array_push($taskAll,(object)$taskData);
             }
-            //dd($taskDone);
             $totalSesions = count(Sesion::where('block_id',$sesion->block_id)->get()->all());
             $sesionTask = [
                // 'tasks' => $tasks,
@@ -86,7 +81,6 @@ class StudentTaskController extends Controller
             'student' => $student,
             'sesions' => $sesionOfWeek
         ];
-
         return view('components.contents.student.activities')->with($data);
     }
 
