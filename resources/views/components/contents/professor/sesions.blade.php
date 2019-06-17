@@ -167,7 +167,7 @@
                                 {{ csrf_field() }}
                                 <div class="group col-sm-12">
                                         {{-- <label for="">Título</label> --}}
-                                        <input id="title" name="title" type="text" class="form-control col-md-12" placeholder="Título" required autofocus>
+                                        <input id="title" name="title" type="text" class="form-control col-md-12" placeholder="Título (*)" required autofocus>
                                 </div>
                                 <br>
                                 {{--  <div class='custom-control custom-checkbox small' style="margin-left: 13px; margin-top:-12px; margin-bottom: 5px;">
