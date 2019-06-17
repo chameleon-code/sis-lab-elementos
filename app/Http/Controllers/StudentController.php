@@ -21,6 +21,7 @@ use App\BlockGroup;
 use App\BlockSchedule;
 use App\ScheduleRecord;
 use App\StudentSchedule;
+use App\Professor;
 
 class StudentController extends Controller
 {
@@ -158,13 +159,24 @@ class StudentController extends Controller
     public function getScheduleStudent(){
         $student = Student::where('user_id', '=', Auth::user()->id)->get()->first();
         //$student = Student::where('user_id', '=', $id)->get()->first();
-        $shcedule_student = StudentSchedule::join('groups','group_id','=','groups.id')->select('groups.id AS group_id', 'groups.name', 'groups.subject_matter_id', 'groups.professor_id', 'student_schedules.id', 'student_schedules.student_id', 'student_schedules.block_schedule_id', 'student_schedules.student_path')->where('student_schedules.student_id', '=', $student->id)->get();//->paginate(4);                 where('student_id', '=', $student->id)->get();
-        
+        $groups = Group::all();
+        $professors = Professor::join('users', 'user_id', '=', 'users.id')->select('professors.id AS professor_id', 'users.names', 'users.first_name', 'users.second_name')->get();
+        $professors->each(function ($item){
+            $item->setAppends([]);
+        });
+        $shcedule_student = StudentSchedule::join('groups','group_id','=','groups.id')->select('groups.id AS group_id', 'groups.name', 'groups.subject_matter_id', 'groups.professor_id', 'student_schedules.id', 'student_schedules.student_id', 'student_schedules.block_schedule_id', 'student_schedules.student_path')->where('student_schedules.student_id', '=', $student->id)->get();
         $shcedule_student->each(function ($item){
             $item->setAppends([]);
         });
 
-        return $shcedule_student;
+        $response = [
+            'groups' => $groups,
+            'professors' => $professors,
+            'schedule_student' => $shcedule_student,
+        ];
+
+        //return $shcedule_student;
+        return $response;
     }
 
     public function rememberNav(){
