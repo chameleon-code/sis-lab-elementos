@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Traits\ValidationTrait;
-
+use App\Notifications\MyResetPassword;
 class User extends Authenticatable
 {
     use ValidationTrait;
@@ -43,5 +43,9 @@ class User extends Authenticatable
     }
     public function student(){
         return $this->hasOne('App\Student');
+    }
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new MyResetPassword($token));
     }
 }

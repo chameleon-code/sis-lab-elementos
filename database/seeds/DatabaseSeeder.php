@@ -112,10 +112,10 @@ class DatabaseSeeder extends Seeder
         ]);
         factory(\App\Professor::class, 1)->create(['user_id' => 7]);
 
-        factory(\App\User::class, 10)->create([ 'role_id' => \App\Role::PROFESSOR ])
-        ->each(function (\App\User $u){
-            factory(\App\Professor::class, 1)->create(['user_id' => $u->id]);
-        });
+        // factory(\App\User::class, 10)->create([ 'role_id' => \App\Role::PROFESSOR ])
+        // ->each(function (\App\User $u){
+        //     factory(\App\Professor::class, 1)->create(['user_id' => $u->id]);
+        // });
 
         // // GESTIONES
 
@@ -205,7 +205,7 @@ class DatabaseSeeder extends Seeder
 
         //factory(\App\BlockGroup::class, 2)->create();
             
-        factory(\App\User::class, 15)->create(['role_id' => \App\Role::AUXILIAR])
+        factory(\App\User::class, 5)->create(['role_id' => \App\Role::AUXILIAR])
             ->each(function (\App\User $u) {
                 factory(\App\Auxiliar::class, 1)->create(['user_id' => $u->id]);
         });
@@ -283,7 +283,7 @@ class DatabaseSeeder extends Seeder
                 'first_name' => App\Database::FIRST_NAME[$i],
                 'second_name' => App\Database::SECOND_NAME[$i],
                 'email' => App\Database::FIRST_NAME[$i]."@"."gmail.com",
-                'password' => bcrypt(App\Database::FIRST_NAME[$i]),
+                'password' => bcrypt('secret'),
             ]);
 
             $student = Student::create([

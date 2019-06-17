@@ -24,6 +24,7 @@ class CreateStudentTasksTable extends Migration
             $table->string('observation')->nullable();
             $table->string('task_path')->nullable();
             $table->string('task_name')->nullable();
+            $table->string('in_time')->nullable();
             $table->timestamps();
         });
     }

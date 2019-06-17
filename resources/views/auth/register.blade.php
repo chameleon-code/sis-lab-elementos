@@ -103,7 +103,7 @@
                             <a class="small" href="{{ url('/login') }}">¿Ya tienes una Cuenta?, Ingresa</a>
                         </div>
                         <div class="text-center">
-                                <a class="small" href="{{ url('/') }}">Volver</a>
+                                <a class="small" href="{{ url('/') }}">Inicio</a>
                         </div>
                     </div>
                 </div>

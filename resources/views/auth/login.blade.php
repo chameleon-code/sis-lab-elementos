@@ -68,7 +68,7 @@
                                             <a class="small" href="{{ url('/register') }}">Crea una Cuenta</a>
                                         </div>
                                         <div class="text-center">
-                                                <a class="small" href="{{ url('/') }}">Volver</a>
+                                                <a class="small" href="{{ url('/') }}">Inicio</a>
                                         </div>
                                     </div>
                                 </div>
