@@ -135,12 +135,19 @@ $(document).ready(function() {
         var color = $('#idcolortask').val();
         $('#DataEdit').modal('toggle');
         var docente = $('#nameDocente option:selected').text();
-        var block_name = $('#bloques option:selected').text();
         // $('.deltasker').on('click', function() {
         //     var element = $(this).parent();
         //     element.addClass('animated bounceOut');
         //     setTimeout(function() { element.remove(); }, 1000);
         // });
+        var block_name1 = $('#bloques option:selected').text();
+        var block_name2 = $("#block_name").val();
+        var block_name;
+        if (block_name1 > block_name2) {
+            block_name = block_name1
+        } else {
+            block_name = block_name2;
+        }
         var materia = $("#materia").val();
         var laboratory = $('#laboratory option:selected').val();
         var hours = $('#hours').val();
