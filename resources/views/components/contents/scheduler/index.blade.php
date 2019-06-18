@@ -117,6 +117,7 @@
                 <input id="hours" type="hidden" name="hours">
                 <input id="days" type="hidden" name="days">
                 <input id="block_id" type="hidden" name="block_id" value="{{$block_id}}">
+                <input id="block_name" type="hidden" name="block_name" value="{{$block_name}}">
               </form>
         
             </div>

@@ -19,7 +19,7 @@ class ScheduleRecord extends Model
         'subject'       => 'required',
         'color'         => 'required'
     ];
-    protected $appends = ['blockid', 'laboratory', 'day', 'hour'];
+    protected $appends = ['blockid','name_block', 'laboratory', 'day', 'hour'];
     public static function getSchedulesByLaboratory($id){
         return self::where('laboratory_id', $id)->orderBy('day_id')->get();
     }
@@ -39,6 +39,9 @@ class ScheduleRecord extends Model
     }
     public function blocks(){
         return $this->belongsToMany('App\Block','block_schedules','schedule_id','block_id');
+    }
+    public function getNameBlockAttribute(){
+        return $this->blocks()->first()->name;
     }
     public function getBlockidAttribute(){
         return $this->blocks()->first()->id;
