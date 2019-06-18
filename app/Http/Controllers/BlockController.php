@@ -76,9 +76,9 @@ class BlockController extends Controller
             foreach($groupsID as $key=>$value){
                 $group = Group::where('id', $value)->first();
                 $block->groups()->attach($group->id);
-                //$name .= '-'.$group->professor->first_name[0];
+                $name .= $group->professor->names[0];
             }
-            $name .= $block->id;
+            //$name .= $block->id;
             $dir = $man->management_path.'/'.$name;
             $block->block_path = $dir;
             $block->name = $name;

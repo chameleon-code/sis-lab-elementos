@@ -48,36 +48,42 @@ function loadPractice(sesion_id){
     $.ajax({
         url : '/professor/sesion/'+sesion_id+'/tasks',
         success: function (response){
-            var i = 1;
-            response.forEach(function(element){
-                var mes = getMonth(element.updated_at);
-                var dia = element.updated_at.charAt(8) + element.updated_at.charAt(9);
-                var hora = element.updated_at.charAt(11) + element.updated_at.charAt(12) + element.updated_at.charAt(13) + element.updated_at.charAt(14) +element.updated_at.charAt(15);
-                var dom_description;
-                if(element.description == "") {
-                    dom_description = "<div style='color: grey;'> <strong> Sin descripción </strong> </div>";
-                } else {
-                    dom_description = "<div style=''> <strong> Descripción:&nbsp; </strong> <div id=''>"+element.description+"</div> </div>";
-                }
-                var file;
-                var link_file;
-                if(element.task_file == undefined || element.task_file == null) {
-                    file = "ninguno";
-                    link_file = "<span style='color: grey;'>"+file+"</span>";
-                } else {
-                    file = element.task_file;
-                    link_file = "<a href='"+element.task_path+element.task_file+"' target='_blank'>"+file+"</a>";
-                }
-                var dom_file = "<div class='' style='margin-top: 15px; margin-bottom: -10px;'> Archivo adjunto: "+link_file+" </div>"
-                if(element.updated_at.charAt(8) == 0){
-                    dia = element.updated_at.charAt(9);
-                }
+            if(Object.keys(response).length > 0){
+                var i = 1;
+                response.forEach(function(element){
+                    var mes = getMonth(element.updated_at);
+                    var dia = element.updated_at.charAt(8) + element.updated_at.charAt(9);
+                    var hora = element.updated_at.charAt(11) + element.updated_at.charAt(12) + element.updated_at.charAt(13) + element.updated_at.charAt(14) +element.updated_at.charAt(15);
+                    var dom_description;
+                    if(element.description == "") {
+                        dom_description = "<div style='color: grey;'> <strong> Sin descripción </strong> </div>";
+                    } else {
+                        dom_description = "<div style=''> <strong> Descripción:&nbsp; </strong> <div id=''>"+element.description+"</div> </div>";
+                    }
+                    var file;
+                    var link_file;
+                    if(element.task_file == undefined || element.task_file == null) {
+                        file = "ninguno";
+                        link_file = "<span style='color: grey;'>"+file+"</span>";
+                    } else {
+                        file = element.task_file;
+                        link_file = "<a href='"+element.task_path+element.task_file+"' target='_blank'>"+file+"</a>";
+                    }
+                    var dom_file = "<div class='' style='margin-top: 15px; margin-bottom: -10px;'> Archivo adjunto: "+link_file+" </div>"
+                    if(element.updated_at.charAt(8) == 0){
+                        dia = element.updated_at.charAt(9);
+                    }
+                    $('#sesionTasks').append(
+                        "<div class='accordion-body bg-gray-300 rounded row my-2' id='task"+i+"' style='cursor: default;'> <div class='container d-flex justify-content-between p-1' style=''> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong> Título:&nbsp;</strong>"+element.title+" </div> <div class='d-flex justify-content-end'> <a href='#' id='btn-edit-task-"+i+"' class='mx-2' data-toggle-2='tooltip' title='Editar' onclick='editTask("+JSON.stringify(element)+", "+i+")'><i class='fas fa-edit'></i></a> <a href='#' id='btn-delete-task-"+i+"' class='mx-2' data-toggle-2='tooltip' title='Eliminar' onclick='deleteTask("+i+","+element.id+")'><i class='fas fa-trash'></i></a> </div> </div> <div class='my-2 mx-1' style='font-size: 15px;'> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong style='margin-right: 15px;'> "+element.published_by+" </strong> "+dia+" "+mes+" "+hora+" </div> <div class='my-2 mx-1' style='font-size: 15px;'> "+dom_description+" "+dom_file+" </div> </div>"
+                    );
+                    task_dom_max_id = i;
+                    i++;
+                });
+            } else {
                 $('#sesionTasks').append(
-                    "<div class='accordion-body bg-gray-300 rounded row my-2' id='task"+i+"' style='cursor: default;'> <div class='container d-flex justify-content-between p-1' style=''> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong> Título:&nbsp;</strong>"+element.title+" </div> <div class='d-flex justify-content-end'> <a href='#' id='btn-edit-task-"+i+"' class='mx-2' data-toggle-2='tooltip' title='Editar' onclick='editTask("+JSON.stringify(element)+", "+i+")'><i class='fas fa-edit'></i></a> <a href='#' id='btn-delete-task-"+i+"' class='mx-2' data-toggle-2='tooltip' title='Eliminar' onclick='deleteTask("+i+","+element.id+")'><i class='fas fa-trash'></i></a> </div> </div> <div class='my-2 mx-1' style='font-size: 15px;'> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong style='margin-right: 15px;'> "+element.published_by+" </strong> "+dia+" "+mes+" "+hora+" </div> <div class='my-2 mx-1' style='font-size: 15px;'> "+dom_description+" "+dom_file+" </div> </div>"
+                    "<div id='no-tasks' style='margin-bottom: 10px;'> <string> No hay tareas asignadas para esta sesión. </strong> </div>"
                 );
-                task_dom_max_id = i;
-                i++;
-            });
+            }
         },
         error: function() {
             console.log("No se ha podido obtener la información");
@@ -87,10 +93,12 @@ function loadPractice(sesion_id){
 }
 
 function storeTask(){
+    $('#no-tasks').remove();
     var formData = new FormData($('#taskForm')[0]);
-
+    var token = $("#token").val();
     $.ajax({
-        url : 'http://localhost:8000/professor/sesions/tasks/store',
+        url : '/professor/sesions/tasks/store',
+        headers: { "X-CSRF-TOKEN": token },
         type: 'POST',
         data: formData,
         contentType: false,
@@ -160,6 +168,9 @@ function destroyTask(id_dom_task, id_task){
         success: function (response){
             $('#task'+id_dom_task).remove();
             $('#confirm-delete-task'+id_dom_task).remove();
+            // $('#sesionTasks').append(
+            //     "<div id='no-tasks' style='margin-bottom: 10px;'> <string> No hay tareas asignadas para esta sesión. </strong> </div>"
+            // );
         },
         error: function() {
             console.log("No se pudo realizar la operación");
@@ -187,8 +198,10 @@ function editTask(task, i){
 
 function storeEditedTask(){
     var formData = new FormData($('#taskForm')[0]);
+    var token = $("#token").val();
     $.ajax({
-        url : 'http://localhost:8000/professor/sesions/tasks/edit',
+        url : '/professor/sesions/tasks/edit',
+        headers: { "X-CSRF-TOKEN": token },
         type: 'POST',
         data: formData,
         contentType: false,

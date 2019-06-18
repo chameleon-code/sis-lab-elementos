@@ -150,7 +150,7 @@ class DatabaseSeeder extends Seeder
             'professor_id' => 4,
         ]);
 
-        factory(\App\Group::class, 5)->create();
+        //factory(\App\Group::class, 5)->create();
 
         // BLOQUES
 

@@ -1,40 +1,3 @@
-// function setGroups(item) {
-//     item.forEach(function(element){
-//         $('#groups').append("<option value='"+element.id+"'>"+element.name +" - "+ element.professor.names +" "+ element.professor.first_name+" "+ element.professor.second_name+"</option>");
-//     });
-// }
-// $(document).ready(function(){
-//     var rmv = true;
-//     document.getElementById('groups_ids').style.visibility = 'hidden';
-//     $('#subjects').change(function(event) {
-//         if(rmv){
-//             $(this).find('option').get(0).remove();
-//             rmv = false;
-//         }
-//         document.getElementById('groups_ids').style.visibility = 'visible';
-//         $('#groups').empty(); 
-//         $.ajax({
-//             url : 'http://127.0.0.1:8000/students/registration/getBlocksBySubjects/'+event.target.value+'',
-//             success: function (response){
-//                 if(response.length == 0)
-//                     $('#groups').append("<option value=''> No existen grupos disponibles para la materia seleccionada </option>");
-//                 else{                
-//                     for(i=0; i<response.length; i++){
-//                         setGroups(response[i].groups);
-//                     }
-//                     $('#block_id').attr('value',response[0].id);
-//                     }
-//                 }
-//             });
-//         });
-//     $('#groups').change(function(event) {
-//         $.get('getGroup/'+event.target.value+'', function(response, groups){
-//             console.log(response);
-//             $('#block_id').attr('value',response.id);
-//         })
-//     });
-// });
-
 var schedule_id;
 var subject_matters_ids = new Array();
 var student_schedule_id = undefined;
@@ -43,11 +6,6 @@ var student_schedule_id = undefined;
 function addSubjectMatterId(id) {
     subject_matters_ids.push(id);
 }
-
-// function addUserId(id){
-//     user_id = id;
-//     console.log(user_id);
-// }
 
 $(document).ready(function() {
     $('#info-inscription').hide();
@@ -59,19 +17,30 @@ $(document).ready(function() {
     }
 
     $.ajax({
-        url : 'http://localhost:8000/students/registration/getScheduleStudent',
+        url : '/students/registration/getScheduleStudent',
         success: function (response){
-            console.log(response);
             if(Object.keys(response).length != 0){
                 for(var i=1 ; i<=subject_matters_ids.length ; i++){
-                    for(var j=0 ; j<Object.keys(response).length ; j++){
-                        if(subject_matters_ids[i-1] == response[j].subject_matter_id){
-                            $('#link-take-matter-'+response[j].subject_matter_id)[0].innerHTML = "Cambiar Horario";
-                            $('#student-schedule-id-'+response[j].subject_matter_id)[0].value = response[j].id;
-                            $('#link-remove-matter-'+response[j].subject_matter_id)[0].setAttribute("onclick", "sendStudentScheduleId("+response[j].id+")");
-                            $('#link-remove-matter-'+response[j].subject_matter_id).show();
+                    for(var j=0 ; j<Object.keys(response.schedule_student).length ; j++){
+                        if(subject_matters_ids[i-1] == response.schedule_student[j].subject_matter_id){
+                            $('#link-take-matter-'+response.schedule_student[j].subject_matter_id)[0].innerHTML = "Cambiar Horario";
+                            $('#student-schedule-id-'+response.schedule_student[j].subject_matter_id)[0].value = response.schedule_student[j].id;
+                            $('#link-remove-matter-'+response.schedule_student[j].subject_matter_id)[0].setAttribute("onclick", "sendStudentScheduleId("+response.schedule_student[j].id+")");
+                            $('#link-remove-matter-'+response.schedule_student[j].subject_matter_id).show();
+                            var grupo;
+                            for(var k=0 ; k<Object.keys(response.groups).length ; k++){
+                                if(response.groups[k].id == response.schedule_student[j].group_id){
+                                    grupo = response.groups[k].name;
+                                }
+                            }
+                            var docente;
+                            for(var k=0 ; k<Object.keys(response.professors).length ; k++){
+                                if(response.professors[k].professor_id == response.schedule_student[j].professor_id){
+                                    docente = response.professors[k].names+' '+response.professors[k].first_name+' '+response.professors[k].second_name;
+                                }
+                            }
                             $('#subject-matter-'+i).append(
-                                "<br><strong class='text-primary' style='margin-top: 10px;'>Se encuentra inscrito en esta materia.</strong>"
+                                "<br><strong class='text-primary' style='font-size: 14px;'>Se encuentra inscrito en esta materia. <br> Grupo "+grupo+" - "+docente+"</strong>"
                             );
                         }
                     }
@@ -97,80 +66,92 @@ function clearSelects(id) {
 }
 
 function infReg(item, id) {
-    console.log(item);
+    $('#no-schedules').remove();
     $('#body-table').empty();
     $('#group_id_input')[0].value = id;
     var select = $('#group_' + id)[0];
     if (select.options[select.selectedIndex].text !== "grupo") {
         $.ajax({
-            url : 'http://localhost:8000/students/registration/getGroupSchedules/'+select.value,
+            url : '/students/registration/getGroupSchedules/'+select.value,
             success: function (response){
-                var cont = 1;
-                response.forEach(function(element) {
-                    var day;
-                    switch (element.day_id) {
-                        case 1:
-                            day = 'Lunes';
-                            break;
-                        case 2:
-                            day = 'Martes';
-                            break;
-                        case 3:
-                            day = 'Miércoles';
-                            break;
-                        case 4:
-                            day = 'Jueves';
-                            break;
-                        case 5:
-                            day = 'Viernes';
-                            break;
-                        case 6:
-                            day = 'Sábado';
-                            break;
-                    }
+                console.log(response);
+                if(Object.keys(response).length > 0){
+                    var cont = 1;
+                    response.forEach(function(element) {
+                        var day;
+                        switch (element.day_id) {
+                            case 1:
+                                day = 'Lunes';
+                                break;
+                            case 2:
+                                day = 'Martes';
+                                break;
+                            case 3:
+                                day = 'Miércoles';
+                                break;
+                            case 4:
+                                day = 'Jueves';
+                                break;
+                            case 5:
+                                day = 'Viernes';
+                                break;
+                            case 6:
+                                day = 'Sábado';
+                                break;
+                        }
 
-                    var hour;
-                    switch (element.hour_id) {
-                        case 1:
-                            hour = '06:45 - 08:15';
-                            break;
-                        case 2:
-                            hour = '08:15 - 09:45';
-                            break;
-                        case 3:
-                            hour = '09:45 - 11:15';
-                            break;
-                        case 4:
-                            hour = '11:15 - 12:45';
-                            break;
-                        case 5:
-                            hour = '12:45 - 14:15';
-                            break;
-                        case 6:
-                            hour = '14:15 - 15:45';
-                            break;
-                        case 7:
-                            hour = '15:45 - 17:15';
-                            break;
-                        case 8:
-                            hour = '17:15 - 18:45';
-                            break;
-                        case 9:
-                            hour = '18:45 - 20:15';
-                            break;
-                        case 10:
-                            hour = '20:15 - 21:45';
-                            break;
-                    }
-
-                    $('#body-table').append(
-                        " <tr class='text-center'><td>" + element.laboratory_id + "</td><td>" + day + "</td><td>" + hour + "</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check" + cont + "' onclick='clearChecks(" + response.length + ", " + cont + ", " + element.schedule_record_id + ", " + element.block_schedule_id + ")'><label class='custom-control-label' for='Check" + cont + "'></label></div></td></tr> "
+                        var hour;
+                        switch (element.hour_id) {
+                            case 1:
+                                hour = '06:45 - 08:15';
+                                break;
+                            case 2:
+                                hour = '08:15 - 09:45';
+                                break;
+                            case 3:
+                                hour = '09:45 - 11:15';
+                                break;
+                            case 4:
+                                hour = '11:15 - 12:45';
+                                break;
+                            case 5:
+                                hour = '12:45 - 14:15';
+                                break;
+                            case 6:
+                                hour = '14:15 - 15:45';
+                                break;
+                            case 7:
+                                hour = '15:45 - 17:15';
+                                break;
+                            case 8:
+                                hour = '17:15 - 18:45';
+                                break;
+                            case 9:
+                                hour = '18:45 - 20:15';
+                                break;
+                            case 10:
+                                hour = '20:15 - 21:45';
+                                break;
+                        }
+                        $('#schedules-table').show();
+                        $('#body-table').append(
+                            " <tr class='text-center'><td>" + element.laboratory_id + "</td><td>" + day + "</td><td>" + hour + "</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check" + cont + "' onclick='clearChecks(" + response.length + ", " + cont + ", " + element.schedule_record_id + ", " + element.block_schedule_id + ")'><label class='custom-control-label' for='Check" + cont + "'></label></div></td></tr> "
+                        );
+                        cont++;
+                    });
+                } else {
+                    $('#schedules-table').hide();
+                    $('#schedules-table').after(
+                        "<div id='no-schedules'> <strong> No hay horarios disponibles para este grupo. </strong> </div>"
                     );
-                    cont++;
-                });
+                }
             },
             error: function() {
-                console.log("No se ha podido obtener la información");
+                //console.log("No se ha podido obtener la información");
+                $('#schedules-table').hide();
+                $('#schedules-table').after(
+                    "<div id='no-schedules'> <strong> No hay horarios disponibles para este grupo. </strong> </div>"
+                );
             }
         });
 
