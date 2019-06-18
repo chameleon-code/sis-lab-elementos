@@ -28,4 +28,8 @@ class BlockSchedule extends Model
     public function getScheduleAttribute(){
         return ScheduleRecord::find($this->schedule_id);
     }
+    public function getStudentsByGroup($id){
+        return $this->belongsToMany('App\Student', 'student_schedules', 'block_schedule_id', 'student_id')
+        ->wherePivotIn('group_id', $id);
+    }
 }

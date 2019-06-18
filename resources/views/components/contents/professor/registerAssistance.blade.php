@@ -10,8 +10,8 @@
 
                 <div class="col-sm-3">
                     <select class="form-control" name="bloques" id="select-labs">
-                        @foreach ($labs as $item)
-                            <option class="form-control" value="{{$item->id}}">Laboratorio {{$item->name}}</option>
+                        @foreach ($groups as $item)
+                            <option class="form-control" value="{{$item->id}}">Grupo {{$item->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -35,39 +35,39 @@
                                                         style="vertical-align: inherit; color: white;">Código SIS</font></font>
                                         </th>
 
-                                        <th class="sorting_desc mgx-1" tabindex="0" aria-controls="dataTable"
+                                        {{-- <th class="sorting_desc mgx-1" tabindex="0" aria-controls="dataTable"
                                             rowspan="1"
                                             colspan="1" aria-label="Position: activate to sort column ascending"
                                             style="width: 380px;" aria-sort="descending"><font
                                                     style="vertical-align: inherit;"><font
-                                                        style="vertical-align: inherit; color: white;">Apellidos</font></font>
-                                        </th>
-
-                                        <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                        style="vertical-align: inherit; color: white;">Nombres</font></font>
+                                        </th> --}}
+                                        @forelse ($sesions as $sesion)
+                                            <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1"
                                             colspan="1" aria-label="Office: activate to sort column ascending"
                                             style="width: 380px;"><font style="vertical-align: inherit;"><font
-                                                        style="vertical-align: inherit; color: white;">Nombres</font></font>
-                                        </th>
+                                                        style="vertical-align: inherit; color: white;">{{ $loop->iteration }}</font></font>
+                                            </th>
+                                        @empty
+                                            
+                                        @endforelse
+                                        
 
                                         {{-- <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Email</font></font></th> --}}
 
-                                        <th class="text-center" data-orderable="false"
-                                            rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending">
-                                            <font style="vertical-align: inherit;"><font
-                                                        style="vertical-align: inherit; color: white;">Sesión
-                                                    x</font></font></th>
+                                        
                                     </tr>
 
                                     </thead>
                                     <tbody id="tablebody">
-                                    @forelse ($block_schedules as $bsch)
+                                    {{-- @forelse ($block_schedules as $bsch)
                                         @forelse ($bsch->students as $item)
                                             <tr role="row" class="odd">
                                                 <td class="mgx-1"><font style="vertical-align: inherit;"><font
                                                                 style="vertical-align: inherit;">{{ $item->user->code_sis }}</font></font>
                                                 </td>
                                                 <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font
-                                                                style="vertical-align: inherit;">{{ $item->user->first_name }} {{ $item->user->second_name }}</font></font>
+                                                                style="vertical-align: inherit;">{{ $item->user->first_name }} {{ $item->user->second_name }} {{ $item->user->names }}</font></font>
                                                 </td>
                                                 <td class="mgx-1"><font style="vertical-align: inherit;"><font
                                                                 style="vertical-align: inherit;">{{ $item->user->names }}</font></font>
@@ -90,7 +90,7 @@
                                         @empty
                                         @endforelse
                                     @empty
-                                    @endforelse
+                                    @endforelse --}}
                                     </tbody>
                                 </table>
                             </div>

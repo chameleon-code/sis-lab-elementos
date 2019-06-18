@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use App\Block;
+use App\BlockSchedule;
 
 class ProfessorController extends Controller
 {
@@ -47,13 +49,30 @@ class ProfessorController extends Controller
         $students = Student::getAllStudents();
         //$user_id = $student->user_id;
         //$user = User::findOrFail($user_id);
-        $labs = Laboratory::all();
+        $groups = Group::where('professor_id', auth()->user()->professor->id)->get()
+        ->reject(function($item, $key){
+            if($item->blocks->isEmpty())
+                return true;
+        });
+        //dd($groups);
+        $sesions = $groups->first()->blocks()->first()->sesions;
+        //dd(array_pluck($groups->toArray(), 'id'));
+        $block_schedules = BlockSchedule::all()->reject(function($item, $key) use ($groups){
+            dd($item->students->wherePivot('group_id', 1)->get());
+            if($item->students->wherePivot('group_id', 1)){
+
+            }
+            //dd($item->getStudentsByGroup(array_pluck($groups->toArray(), 'id'))->get());
+            // if(empty($item->getStudentsByGroup(array_pluck($groups->toArray(), 'id'))))
+            //     return true;
+        });
+        dd($block_schedules->last()->students);
         $auxiliarctrl = new AuxiliarController();
-        $block_schedules = $auxiliarctrl->getStudentList(new Request, $labs->first()->id);
+        //$block_schedules = $auxiliarctrl->getStudentList(new Request, $labs->first()->id);
         $data = [
             'students' => $students,
-            'labs' => $labs,
-            'block_schedules' => $block_schedules,
+            'groups' => $groups,
+            'sesions' => $sesions
         ];
         return view('components.contents.professor.registerAssistance', $data)->withTitle('Perfil de Estudiante');
     }
