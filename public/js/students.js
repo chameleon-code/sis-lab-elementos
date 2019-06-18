@@ -17,7 +17,7 @@ $(document).ready(function() {
     }
 
     $.ajax({
-        url : 'http://localhost:8000/students/registration/getScheduleStudent',
+        url : '/students/registration/getScheduleStudent',
         success: function (response){
             if(Object.keys(response).length != 0){
                 for(var i=1 ; i<=subject_matters_ids.length ; i++){
@@ -72,7 +72,7 @@ function infReg(item, id) {
     var select = $('#group_' + id)[0];
     if (select.options[select.selectedIndex].text !== "grupo") {
         $.ajax({
-            url : 'http://localhost:8000/students/registration/getGroupSchedules/'+select.value,
+            url : '/students/registration/getGroupSchedules/'+select.value,
             success: function (response){
                 console.log(response);
                 if(Object.keys(response).length > 0){
