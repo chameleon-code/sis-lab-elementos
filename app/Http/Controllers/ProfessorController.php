@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Group;
+use App\Laboratory;
+use App\Mail\ProfessorMailController;
 use App\Professor;
 use App\Role;
-use App\User;
 use App\Student;
-use App\Mail\ProfessorMailController;
-use Illuminate\Support\Facades\Mail;
-use App\SubjectMatter;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Auth;
-use App\Block;
-use App\BlockGroup;
-use App\Group;
-use Illuminate\Support\Facades\Cache;
-use App\Mail\StudentMailController;
 use App\StudentSchedule;
+use App\SubjectMatter;
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class ProfessorController extends Controller
 {
@@ -42,6 +40,22 @@ class ProfessorController extends Controller
             ];
         }
         return view('components.contents.professor.index',$data);
+    }
+
+    public function registro()
+    {
+        $students = Student::getAllStudents();
+        //$user_id = $student->user_id;
+        //$user = User::findOrFail($user_id);
+        $labs = Laboratory::all();
+        $auxiliarctrl = new AuxiliarController();
+        $block_schedules = $auxiliarctrl->getStudentList(new Request, $labs->first()->id);
+        $data = [
+            'students' => $students,
+            'labs' => $labs,
+            'block_schedules' => $block_schedules,
+        ];
+        return view('components.contents.professor.registerAssistance', $data)->withTitle('Perfil de Estudiante');
     }
 
     /**

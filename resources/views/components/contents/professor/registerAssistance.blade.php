@@ -1,4 +1,4 @@
-@extends('components.sections.auxiliarSection')
+@extends('components.sections.professorSection')
 @section('userContent')
 
 

@@ -31,22 +31,6 @@ class AssistanceController extends Controller
         return view('components.contents.auxiliar.assistance', $data)->withTitle('Perfil de Estudiante');
     }
 
-    public function registro()
-    {
-        $students = Student::getAllStudents();
-        //$user_id = $student->user_id;
-        //$user = User::findOrFail($user_id);
-        $labs = Laboratory::all();
-        $auxiliarctrl = new AuxiliarController();
-        $block_schedules = $auxiliarctrl->getStudentList(new Request, $labs->first()->id);
-        $data = [
-            'students' => $students,
-            'labs' => $labs,
-            'block_schedules' => $block_schedules,
-        ];
-        return view('components.contents.auxiliar.registerAssistance', $data)->withTitle('Perfil de Estudiante');
-    }
-
     public static function getStudentsByBlock(Request $request, $id){
         $block_schedules = BlockSchedule::where('block_id', $id)->get();
         $students = collect();
