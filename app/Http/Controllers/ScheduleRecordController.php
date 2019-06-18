@@ -20,6 +20,7 @@ class ScheduleRecordController extends Controller
         //$scheduleRecords = ScheduleRecord::getSchedulesByLaboratory($laboratory_id);
         //$blockGroups = BlockGroup::getAllBlockIdGroups($block_id);
         $block = Block::findOrFail($block_id);
+        $block_name=$block->name;
         $groups = $block->groups;
         //dd($groups->first()->subject->name);
         //dd($blockGroups);
@@ -33,7 +34,8 @@ class ScheduleRecordController extends Controller
             'laboratories'    => $laboratorys,
             'days'            => $days,
             'hours'           => $hours,
-            'block_id'        => $block_id
+            'block_id'        => $block_id,
+            'block_name'      => $block_name
         ];
         return view('components.contents.scheduler.index',$data);
     }
