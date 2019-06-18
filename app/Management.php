@@ -8,7 +8,7 @@ use App\Traits\ValidationTrait;
 class Management extends Model
 {
     use ValidationTrait;
-    protected $fillable = ['semester','managements','start_management','end_management', 'management_path'];
+    protected $fillable = ['semester','managements','start_management','end_management', 'enable_inscription', 'management_path'];
 
     protected $hidden = ['created_at','update_at'];
 
