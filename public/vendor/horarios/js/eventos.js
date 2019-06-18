@@ -144,7 +144,7 @@ $(document).ready(function() {
         var block_name2 = $("#block_name").val();
         var block_name;
         if (block_name1 > block_name2) {
-            block_name = block_name1
+            block_name = block_name1;
         } else {
             block_name = block_name2;
         }
