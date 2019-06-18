@@ -181,9 +181,15 @@ class SesionController extends Controller
                 $class = new \stdClass;
                 $class->sesion_id = $sesion->id;
                 $class->tasks = 0;
+                $class->assist = 0;
                 foreach($schedule->getStudentAttribute()->tasks as $task){
                     if($task->sesion_id == $sesion->id){
                         $class->tasks += 1;
+                    }
+                    foreach($schedule->getStudentAttribute()->assistances as $ass){
+                        if($ass->block_id == $sesion->block_id){
+                            $class->assist = 1;
+                        }
                     }
                 } 
                 array_push($tasks_finisheds, $class);
