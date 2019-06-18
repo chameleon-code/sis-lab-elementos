@@ -10,3 +10,6 @@ Route::post('/auxiliar/assistance' , 'AssistanceController@store');
 
 //horarios
 Route::get('/auxiliar/schedule','ScheduleRecordController@getHorarios');
+
+//TaskControl
+Route::get('/auxiliar/taskControl','AuxiliarTaskController@index');

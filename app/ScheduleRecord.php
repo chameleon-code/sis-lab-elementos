@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ValidationTrait;
+use Carbon\Carbon;
 
 class ScheduleRecord extends Model
 {
@@ -54,5 +55,23 @@ class ScheduleRecord extends Model
     }
     function getHourAttribute(){
         return Hour::find($this->hour_id);
+    }
+    public static function schedulesNow(){
+        $date = Carbon::now();
+        $data = [];
+        $schedules = ScheduleRecord::all();
+        foreach ($schedules as $schedule) {
+            $sesions = Sesion::getSesionDayReal($schedule->id);
+            $hourSesion =Carbon::parse($sesions['hour']);
+            $endHour = new Carbon($hourSesion->toTimeString());
+            $endHour->addHours(1)->addMinutes(30);
+            //dd($date,$endHour,$hourSesion);
+            if ($sesions['same'] && $date->between($hourSesion,$endHour,true)) {
+                $sesions['laboratory_id'] = $schedule->laboratory_id;
+                $sesions['schedule_id'] = $schedule->id;
+                array_push($data,(Object)$sesions);
+            }
+        }
+        return $data;
     }
 }
