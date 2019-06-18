@@ -38,6 +38,11 @@
       <i class="fas fa-fw fa-chalkboard-teacher"></i>
       <span>Asistencia</span></a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url("/auxiliar/registerAssistance")}}">
+      <i class="fas fa-fw fa-chalkboard-teacher"></i>
+      <span>Registro de Asistencia</span></a>
+  </li>
 
 {{--  
   <!-- Nav Item - Utilities Collapse Menu -->
