@@ -81,7 +81,7 @@ function loadPractice(sesion_id){
                 });
             } else {
                 $('#sesionTasks').append(
-                    "<div> <string> No hay tareas asignadas para esta sesión. </strong> </div>"
+                    "<div id='no-tasks' style='margin-bottom: 10px;'> <string> No hay tareas asignadas para esta sesión. </strong> </div>"
                 );
             }
         },
@@ -93,10 +93,12 @@ function loadPractice(sesion_id){
 }
 
 function storeTask(){
+    $('#no-tasks').remove();
     var formData = new FormData($('#taskForm')[0]);
-
+    var token = $("#token").val();
     $.ajax({
-        url : 'http://localhost:8000/professor/sesions/tasks/store',
+        url : '/professor/sesions/tasks/store',
+        headers: { "X-CSRF-TOKEN": token },
         type: 'POST',
         data: formData,
         contentType: false,
@@ -166,6 +168,9 @@ function destroyTask(id_dom_task, id_task){
         success: function (response){
             $('#task'+id_dom_task).remove();
             $('#confirm-delete-task'+id_dom_task).remove();
+            // $('#sesionTasks').append(
+            //     "<div id='no-tasks' style='margin-bottom: 10px;'> <string> No hay tareas asignadas para esta sesión. </strong> </div>"
+            // );
         },
         error: function() {
             console.log("No se pudo realizar la operación");
@@ -193,8 +198,10 @@ function editTask(task, i){
 
 function storeEditedTask(){
     var formData = new FormData($('#taskForm')[0]);
+    var token = $("#token").val();
     $.ajax({
-        url : 'http://localhost:8000/professor/sesions/tasks/edit',
+        url : '/professor/sesions/tasks/edit',
+        headers: { "X-CSRF-TOKEN": token },
         type: 'POST',
         data: formData,
         contentType: false,

@@ -164,10 +164,10 @@
                     <div class="my-1 mx-2" id="formActivity" style="font-size: 15px;">
                         <strong id="title-form" class="px-2"> </strong> <br><br>
                             <form class="user" id="taskForm" action="" enctype="multipart/form-data">
-                                {{ csrf_field() }}
+                                <input type="hidden" name="_token" value="{{csrf_token()}}" id="token">
                                 <div class="group col-sm-12">
                                         {{-- <label for="">Título</label> --}}
-                                        <input id="title" name="title" type="text" class="form-control col-md-12" placeholder="Título" required autofocus>
+                                        <input id="title" name="title" type="text" class="form-control col-md-12" placeholder="Título (*)" required autofocus>
                                 </div>
                                 <br>
                                 {{--  <div class='custom-control custom-checkbox small' style="margin-left: 13px; margin-top:-12px; margin-bottom: 5px;">
@@ -277,12 +277,8 @@
         });
     </script>
     <script src="/js/accordion.js"></script>
-    <script src="/js/sesions.js"></script>
 @endsection
 
-
 @push('scripts')
-    <script src="{{ asset('js/datepicker/datepinker.js') }}"></script>
-    <script src="{{ asset("https://cdn.jsdelivr.net/npm/sweetalert2@8") }}"></script>
-    <link rel="stylesheet" href="{{ asset('/css/calendar.css') }}">
+    <script src="/js/sesions.js"></script>
 @endpush

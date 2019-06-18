@@ -20,6 +20,7 @@ class CreateManagementsTable extends Migration
             $table->date('start_management');
             $table->date('end_management');
             $table->string('management_path')->nullable();
+            $table->boolean('enable_inscription')->nullable();
             $table->timestamps();
         });
     }
