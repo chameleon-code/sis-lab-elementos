@@ -297,6 +297,7 @@ class DatabaseSeeder extends Seeder
                 'student_id' => $student->id,
                 'block_schedule_id' => App\Database::BLOCK_SCHEDULES[$i],
                 'group_id' => $group->id,
+                'student_path' => Block::find(1)->block_path.'/'.$group->name.'/'.$user->code_sis,
             ]);
         }
     }

@@ -55,7 +55,7 @@ class StudentScheduleController extends Controller
         $student = Student::where('user_id', '=', $user->id)->get()->first();
         $block_schedule_id = BlockSchedule::find($request->block_schedule_id);
         $group = Group::find($request->group_id);
-        $dir = Block::find($block_schedule_id->block_id)->block_path.'/'.$group->name.'/'.base64_encode($user->code_sis);
+        $dir = Block::find($block_schedule_id->block_id)->block_path.'/'.$group->name.'/'.$user->code_sis;//base64_encode($user->code_sis);
         
         StudentSchedule::create([
             'student_id' => $student->id,
@@ -64,7 +64,7 @@ class StudentScheduleController extends Controller
             'student_path' => $dir,
         ]);
         
-        Storage::makeDirectory($dir);
+        //Storage::makeDirectory($dir);
 
         return redirect('/students/registration');
     }
