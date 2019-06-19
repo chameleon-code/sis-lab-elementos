@@ -4,9 +4,9 @@
   <hr class="sidebar-divider my-0">
   <!-- Nav Item - Dashboard -->
   <li class="nav-item">
-    <a class="nav-link" href="index.html">
+    <a class="nav-link" href="{{ url("/professor/registerAssistance")}}">
       <i class="fas fa-fw fa-chart-bar"></i>
-      <span>Desempeño</span></a>
+      <span>Registro de Asistencia</span></a>
   </li>
 
   <!-- Divider -->

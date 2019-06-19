@@ -34,4 +34,7 @@ class Block extends Model
     public function getScheduleAttribute(){
         return $this->scheduleRecords()->get();
     }
+    public function sesions(){
+        return $this->hasMany('App\Sesion');
+    }
 }

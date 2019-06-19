@@ -40,6 +40,12 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                                     <strong style="color: gray;"> Sesión:&nbsp; </strong> {{ $sesion->number_sesion }}
+                                                    <br>
+                                                    @if ($tasks_finisheds[$loop->index]->assist == 1)
+                                                        <strong>Realizado en clase</strong>
+                                                        @else
+                                                        <strong>Realizado en casa</strong>
+                                                    @endif
                                                 </div>
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col-auto">
@@ -78,7 +84,8 @@
                             
                             <div class="mx-2" style="font-size: 15px;">
                                 <div style="margin-top: 12px; margin-bottom: -15px;">
-                                    <p> <strong> Estado de tarea: </strong> <a href="/professor/student/{{$schedule->student->id}}/task/{{$task->id}}">{{ $task->title }}</a> </p>
+                                    {{-- <p> <strong> Estado de tarea: </strong> <a href="/professor/student/{{$schedule->student->id}}/task/{{$task->id}}">{{ $task->title }}</a> </p> --}}
+                                    <p> <strong> Tarea: </strong> {{ $task->title }}</p>
                                 </div>
                                 <div class="row" style="margin-top: -15px;">
                                     <div class="row" style="margin-left: 12px;" >

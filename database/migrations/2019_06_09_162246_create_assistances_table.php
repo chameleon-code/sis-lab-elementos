@@ -21,6 +21,8 @@ class CreateAssistancesTable extends Migration
             $table->foreign('schedule_id')->references('id')->on('schedule_records');
             $table->unsignedInteger('student_id');
             $table->foreign('student_id')->references('id')->on('students');
+            $table->unsignedInteger('sesion_id');
+            $table->foreign('sesion_id')->references('id')->on('sesions');
             $table->boolean('attend');
             $table->date('day')->nullable();
             $table->timestamps();

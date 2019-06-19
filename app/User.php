@@ -48,4 +48,7 @@ class User extends Authenticatable
     {
         $this->notify(new MyResetPassword($token));
     }
+    public function professor(){
+        return $this->hasOne('App\Professor');
+    }
 }

@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Assistance;
 use App\Block;
 use App\BlockSchedule;
 use App\Group;
+use App\Laboratory;
 use App\Student;
 use App\User;
-use App\StudentSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\ScheduleRecord;
-use Illuminate\Console\Scheduling\Schedule;
-use App\Laboratory;
-use App\Assistance;
+use Symfony\Component\HttpFoundation\Session\Session;
+use App\Sesion;
 
 class AssistanceController extends Controller
 {
@@ -33,12 +32,13 @@ class AssistanceController extends Controller
         ];
         return view('components.contents.auxiliar.assistance', $data)->withTitle('Perfil de Estudiante');
     }
+
     public static function getStudentsByBlock(Request $request, $id){
         $block_schedules = BlockSchedule::where('block_id', $id)->get();
         $students = collect();
         $block_schedules->each(function($item) use ($students){
             if($item->students->isNotEmpty()){
-                foreach($item->students as $student){}                
+                foreach($item->students as $student){}
                 $students->push($student);
             }
         });
@@ -58,7 +58,8 @@ class AssistanceController extends Controller
             return response()->json($array);
         }
         return $students;
-    } 
+    }
+
     //muestra contenido block_schedules
     public function bloque_schedules()
     {
@@ -91,7 +92,7 @@ class AssistanceController extends Controller
 
     public function store(Request $request){
         $info = \request('info');
-    	$data = [];
+        $data = [];
         parse_str($info, $data);
         $block_schedule = BlockSchedule::find($data['blockschedule_id']);
         try{
@@ -101,12 +102,12 @@ class AssistanceController extends Controller
             $assistance->student_id = $data['student_id'];
             $assistance->attend = 1;
             $assistance->day = date('Y-m-d');
+            $assistance->sesion_id = Sesion::getSesionIdToDayByBlock($block_schedule->block_id, $block_schedule->schedule_id);
             $assistance->save();
             $success = true;
+        } catch (\Exception $exception) {
+            $success = false;
         }
-        catch (\Exception $exception) {
-    		$success = false;
-	    }
         return response()->json(['res' => $success]);
     }
 
@@ -125,16 +126,14 @@ class AssistanceController extends Controller
     }
 
 
-
-
-   /* public function rememberNav(){
-        $tmp = 0.05;
-        Cache::put('professor_nav', '', $tmp);
-        Cache::put('auxiliar_nav', '', $tmp);
-        Cache::put('student_nav', ' show', $tmp);
-        Cache::put('management_nav', '', $tmp);
-        Cache::put('subject_matter_nav', '', $tmp);
-        Cache::put('group_nav', '', $tmp);
-        Cache::put('block_nav', '', $tmp);
-    }*/
+    /* public function rememberNav(){
+         $tmp = 0.05;
+         Cache::put('professor_nav', '', $tmp);
+         Cache::put('auxiliar_nav', '', $tmp);
+         Cache::put('student_nav', ' show', $tmp);
+         Cache::put('management_nav', '', $tmp);
+         Cache::put('subject_matter_nav', '', $tmp);
+         Cache::put('group_nav', '', $tmp);
+         Cache::put('block_nav', '', $tmp);
+     }*/
 }

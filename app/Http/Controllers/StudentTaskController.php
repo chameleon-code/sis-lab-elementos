@@ -57,7 +57,7 @@ class StudentTaskController extends Controller
             $taskAll = [];
             $taskDone = null;
             foreach ($tasks as $task) {
-                $taskDone = StudentTask::where('task_id',$task->id)->get()->first();
+                $taskDone = StudentTask::where('task_id',$task->id)->where('student_id',$student->id)->get()->first();
                 $taskData = [
                     'task' => $task,
                     'done' => $taskDone

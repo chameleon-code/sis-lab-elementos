@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Group;
+use App\Laboratory;
+use App\Mail\ProfessorMailController;
 use App\Professor;
 use App\Role;
-use App\User;
 use App\Student;
-use App\Mail\ProfessorMailController;
-use Illuminate\Support\Facades\Mail;
-use App\SubjectMatter;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Auth;
-use App\Block;
-use App\BlockGroup;
-use App\Group;
-use Illuminate\Support\Facades\Cache;
-use App\Mail\StudentMailController;
 use App\StudentSchedule;
+use App\SubjectMatter;
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
+use App\Block;
+use App\BlockSchedule;
 
 class ProfessorController extends Controller
 {
@@ -42,6 +42,31 @@ class ProfessorController extends Controller
             ];
         }
         return view('components.contents.professor.index',$data);
+    }
+
+    public function registro()
+    {
+        $professor = Professor::where('user_id', auth()->user()->id)->first();
+        $groups = Group::where('professor_id', $professor->id)->get()->reject(function ($item, $key){
+            if(is_null($item->blocks->first())){
+                return true;
+            }
+        }); 
+        if($groups->isNotEmpty()){
+            $schedules = $this->studentListByGroup(new Request, $groups->first()->id);
+            $sesions = $groups->first()->blocks()->first()->sesions;
+        }
+        else{
+            $schedules = collect();
+            $sesions = collect();
+        }
+        $data = [
+            'schedules' => $schedules,
+            'groups' => $groups,
+            'sesions' => $sesions,
+            'title' => 'Estudiantes'
+        ];
+        return view('components.contents.professor.registerAssistance', $data)->withTitle('Perfil de Estudiante');
     }
 
     /**

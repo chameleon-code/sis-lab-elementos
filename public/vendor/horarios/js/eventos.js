@@ -1,7 +1,7 @@
 $(document).ready(function() {
     url = "/schedule/records/1";
     $.get(url, function(response, state) {
-        //console.log(response);
+        console.log(response);
         $('#bloque').empty();
         for (f = 1; f < 11; f++) {
             for (c = 1; c < 7; c++) {
@@ -11,7 +11,7 @@ $(document).ready(function() {
         for (i = 0; i < response.length; i++) {
             var valorColor = 360 / (parseInt(response[i].blockid, 10));
             $("#r" + response[i].hour_id + "c" + response[i].day_id).append('<label class="label-desc" ' + 'style="color: #FFF;background:hsl(' + valorColor + ',100%,40%);">' + '<dfn title="Docente: ' +
-                response[i].professor + ', Materia: ' + response[i].subject + '">Bloque :' + response[i].blockid + '</dfn>' +
+                response[i].professor + ', Materia: ' + response[i].subject + '">' + response[i].name_block + '</dfn>' +
                 ' <a data-id="' + response[i].id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
         }
         $('.deltasker').on('click', function(e) {
@@ -96,7 +96,7 @@ $(document).ready(function() {
             for (i = 0; i < response.length; i++) {
                 var valorColor = 360 / (parseInt(response[i].blockid, 10));
                 $("#r" + response[i].hour_id + "c" + response[i].day_id).append('<label class="label-desc" ' + 'style="color: #FFF;background:hsl(' + valorColor + ',100%,40%);">' + '<dfn title="Docente: ' +
-                    response[i].professor + ', Materia: ' + response[i].subject + '">Bloque :' + response[i].blockid + '</dfn>' +
+                    response[i].professor + ', Materia: ' + response[i].subject + '">' + response[i].name_block + '</dfn>' +
                     ' <a data-id="' + response[i].id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
                 $('.deltasker').on('click', function(e) {
                     e.preventDefault();
@@ -135,12 +135,19 @@ $(document).ready(function() {
         var color = $('#idcolortask').val();
         $('#DataEdit').modal('toggle');
         var docente = $('#nameDocente option:selected').text();
-
         // $('.deltasker').on('click', function() {
         //     var element = $(this).parent();
         //     element.addClass('animated bounceOut');
         //     setTimeout(function() { element.remove(); }, 1000);
         // });
+        var block_name1 = $('#bloques option:selected').text();
+        var block_name2 = $("#block_name").val();
+        var block_name;
+        if (block_name1 > block_name2) {
+            block_name = block_name1;
+        } else {
+            block_name = block_name2;
+        }
         var materia = $("#materia").val();
         var laboratory = $('#laboratory option:selected').val();
         var hours = $('#hours').val();
@@ -168,7 +175,7 @@ $(document).ready(function() {
             success: function(data) {
                 //alert(data.success);
                 var valorColor = 360 / parseInt(block_id);
-                $('#' + tede).append('<label class="label-desc" ' + 'style="color: #FFF;background:hsl(' + valorColor + ',100%,40%);">' + '<dfn title="Docente: ' + docente + ', Materia: ' + materia + '">Bloque :' + block_id + '</dfn>' +
+                $('#' + tede).append('<label class="label-desc" ' + 'style="color: #FFF;background:hsl(' + valorColor + ',100%,40%);">' + '<dfn title="Docente: ' + docente + ', Materia: ' + materia + '">' + block_name + '</dfn>' +
                     ' <a data-id="' + data.id + '" class="deltasker"><i class="fa fa-times"></i></a></label>');
                 $('.deltasker').on('click', function(e) {
                     e.preventDefault();
@@ -201,7 +208,7 @@ $(document).ready(function() {
     //fin de guardar horario
     $("#bloques").change(function(event) {
         var id = $('#bloques option:selected').val();
-        console.log(id);
+        // console.log(id);
         $('#idcolortask').val(id);
         $('#block_id').val(id);
         url = "/schedule/groups/" + id;
@@ -209,7 +216,7 @@ $(document).ready(function() {
             console.log(response);
             //materia
             $('#nameDocente').empty();
-            var materia = response[1].subject.name;
+            var materia = response[0].subject.name;
             $('#materia').val(materia);
             for (f = 0; f < response.length; f++) {
                 var docente = response[f].professor;
