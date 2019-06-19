@@ -34,14 +34,6 @@
                                             style="width: 230px;"><font style="vertical-align: inherit;"><font
                                                         style="vertical-align: inherit; color: white;">Código SIS</font></font>
                                         </th>
-
-                                        {{-- <th class="sorting_desc mgx-1" tabindex="0" aria-controls="dataTable"
-                                            rowspan="1"
-                                            colspan="1" aria-label="Position: activate to sort column ascending"
-                                            style="width: 380px;" aria-sort="descending"><font
-                                                    style="vertical-align: inherit;"><font
-                                                        style="vertical-align: inherit; color: white;">Nombres</font></font>
-                                        </th> --}}
                                         @forelse ($sesions as $sesion)
                                             <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1"
                                             colspan="1" aria-label="Office: activate to sort column ascending"
@@ -51,46 +43,23 @@
                                         @empty
                                             
                                         @endforelse
-                                        
-
-                                        {{-- <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Email</font></font></th> --}}
-
-                                        
                                     </tr>
-
                                     </thead>
                                     <tbody id="tablebody">
-                                    {{-- @forelse ($block_schedules as $bsch)
-                                        @forelse ($bsch->students as $item)
+                                        @foreach ($schedules as $item)
                                             <tr role="row" class="odd">
-                                                <td class="mgx-1"><font style="vertical-align: inherit;"><font
-                                                                style="vertical-align: inherit;">{{ $item->user->code_sis }}</font></font>
-                                                </td>
-                                                <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font
-                                                                style="vertical-align: inherit;">{{ $item->user->first_name }} {{ $item->user->second_name }} {{ $item->user->names }}</font></font>
-                                                </td>
-                                                <td class="mgx-1"><font style="vertical-align: inherit;"><font
-                                                                style="vertical-align: inherit;">{{ $item->user->names }}</font></font>
-                                                </td>
-                                                <td class="text-center" style="text-align: center; display: flex;">
-                                                    @if(empty($item->assistances->where('day', date('Y-m-d'))->all()))
-                                                        <a href="#" class="btn btn-warning btn-circle btn-sm mx-1"
-                                                           data-toggle-2="tooltip" title="Marcar Asistencia"
-                                                           data-toggle="modal" data-target="#appModal"
-                                                           onclick="assistanceRegister({{$item->id}} , {{$bsch->id}})"
-                                                           id="student{{$item->id}}"><i class="far fa-check-square"></i></a>
-                                                    @else
-                                                        <a href="#" class="btn btn-success btn-circle btn-sm mx-1"
-                                                           data-toggle-2="tooltip" title="Marcar Asistencia"
-                                                           data-toggle="modal" id="student{{$item->id}}"><i
-                                                                    class="far fa-check-square"></i></a>
-                                                    @endif
-                                                </td>
+                                                <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->code_sis }}</font></font></td>
+                                                @forelse ($sesions as $sesion)
+                                                    @if (in_array($sesion->id ,array_pluck($item->student->assistances->toArray(), 'sesion_id')))
+                                                        <td><a href="#" class="btn btn-success btn-circle btn-sm mx-1" ><i class="far fa-check-square"></i></a></td>
+                                                    @else  
+                                                        <td ><a href="#" class="btn btn-danger btn-circle btn-sm mx-1" ><i class="fas fa-times"></i></a></td>    
+                                                    @endif                                                  
+                                                @empty
+                                                    
+                                                @endforelse
                                             </tr>
-                                        @empty
-                                        @endforelse
-                                    @empty
-                                    @endforelse --}}
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

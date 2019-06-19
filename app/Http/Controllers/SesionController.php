@@ -187,7 +187,7 @@ class SesionController extends Controller
                         $class->tasks += 1;
                     }
                     foreach($schedule->getStudentAttribute()->assistances as $ass){
-                        if($ass->block_id == $sesion->block_id){
+                        if($ass->sesion_id == $sesion->id){
                             $class->assist = 1;
                         }
                     }

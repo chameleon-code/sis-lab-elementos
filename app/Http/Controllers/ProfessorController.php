@@ -46,33 +46,22 @@ class ProfessorController extends Controller
 
     public function registro()
     {
-        $students = Student::getAllStudents();
-        //$user_id = $student->user_id;
-        //$user = User::findOrFail($user_id);
-        $groups = Group::where('professor_id', auth()->user()->professor->id)->get()
-        ->reject(function($item, $key){
-            if($item->blocks->isEmpty())
+        $professor = Professor::where('user_id', auth()->user()->id)->first();
+        $groups = Group::where('professor_id', $professor->id)->get()->reject(function ($item, $key){
+            if(is_null($item->blocks->first())){
                 return true;
-        });
-        //dd($groups);
-        $sesions = $groups->first()->blocks()->first()->sesions;
-        //dd(array_pluck($groups->toArray(), 'id'));
-        $block_schedules = BlockSchedule::all()->reject(function($item, $key) use ($groups){
-            dd($item->students->wherePivot('group_id', 1)->get());
-            if($item->students->wherePivot('group_id', 1)){
-
             }
-            //dd($item->getStudentsByGroup(array_pluck($groups->toArray(), 'id'))->get());
-            // if(empty($item->getStudentsByGroup(array_pluck($groups->toArray(), 'id'))))
-            //     return true;
-        });
-        dd($block_schedules->last()->students);
-        $auxiliarctrl = new AuxiliarController();
-        //$block_schedules = $auxiliarctrl->getStudentList(new Request, $labs->first()->id);
+        }); 
+        if($groups->isNotEmpty()){
+            $schedules = $this->studentListByGroup(new Request, $groups->first()->id);
+        }
+        else
+            $schedules = collect();
         $data = [
-            'students' => $students,
+            'schedules' => $schedules,
             'groups' => $groups,
-            'sesions' => $sesions
+            'sesions' => $groups->first()->blocks()->first()->sesions,
+            'title' => 'Estudiantes'
         ];
         return view('components.contents.professor.registerAssistance', $data)->withTitle('Perfil de Estudiante');
     }
