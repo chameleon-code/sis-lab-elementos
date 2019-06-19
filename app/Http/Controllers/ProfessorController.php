@@ -54,13 +54,16 @@ class ProfessorController extends Controller
         }); 
         if($groups->isNotEmpty()){
             $schedules = $this->studentListByGroup(new Request, $groups->first()->id);
+            $sesions = $groups->first()->blocks()->first()->sesions;
         }
-        else
+        else{
             $schedules = collect();
+            $sesions = collect();
+        }
         $data = [
             'schedules' => $schedules,
             'groups' => $groups,
-            'sesions' => $groups->first()->blocks()->first()->sesions,
+            'sesions' => $sesions,
             'title' => 'Estudiantes'
         ];
         return view('components.contents.professor.registerAssistance', $data)->withTitle('Perfil de Estudiante');

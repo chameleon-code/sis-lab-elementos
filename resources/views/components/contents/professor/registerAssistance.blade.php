@@ -10,9 +10,11 @@
 
                 <div class="col-sm-3">
                     <select class="form-control" name="bloques" id="select-labs">
-                        @foreach ($groups as $item)
-                            <option class="form-control" value="{{$item->id}}">Grupo {{$item->name}}</option>
-                        @endforeach
+                        @forelse ($groups as $item)
+                            <option class="form-control" value="{{$item->id}}">Grupo {{$item->name .' - '. $item->subject->name}}</option>
+                        @empty
+                            <option value="">No tiene grupos relacionados con algun bloque</option>
+                        @endforelse
                     </select>
                 </div>
 
