@@ -91,3 +91,5 @@ Route::delete('/schedule/records/delete/{id}','ScheduleRecordController@destroy'
 //Horarios con seleccion de bloques
 Route::get('/schedule/create/','ScheduleRecordController@createSchedule');
 Route::get('/schedule/groups/{block_id}','ScheduleRecordController@getGroups');
+
+Route::get('/download', 'DownloadTaskController@downloadTask');

@@ -21,7 +21,12 @@
             <div class="container">
                 <strong>Estudiante: </strong> {{ $schedule->user->first_name.' '.$schedule->user->second_name.' '.$schedule->user->names }} <br>
                 <strong>Materia: </strong> {{ $schedule->group->subject->name }} <br>
-                <strong>Grupo: </strong> {{ $schedule->group->name }}
+                <strong>Grupo: </strong> {{ $schedule->group->name }} <br>
+                <form action="/download" method="get">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="schedule_id" value="{{ $schedule->id }}">
+                    <strong><button type="submit" class="btn btn-primary">Descargar portafolio<i class="fa fa-download" aria-hidden="true"></i></button></strong>
+                </form>
             </div>
 
                 <div class="card-body">
@@ -90,7 +95,10 @@
                                 <div class="row" style="margin-top: -15px;">
                                     <div class="row" style="margin-left: 12px;" >
                                         @if (in_array($task->id, $student_tasks_ids))
-                                        <div data-parent-id="panel{{$sesion->id}}"><strong> Entregado &#10003  </strong></div>
+                                        <div data-parent-id="panel{{$sesion->id}}">
+                                            <strong> Entregado &#10003  </strong>                                            
+                                        </div><br>
+                                        <div><strong> <a href="/storage/{{ $student_tasks->where('task_id', $task->id)->first()->task_path}}/{{$student_tasks->where('task_id', $task->id)->first()->task_name  }}" download="{{ $student_tasks->where('task_id', $task->id)->first()->task_name }}">Descargar<i class="fa fa-download" aria-hidden="true"></i></a></strong></div>
                                         {{--  <div><strong data-id="score"> Puntuacion: {{ $student_tasks->where('task_id', $task->id)->first()->score }}</strong></div>  --}}
                                         @else
                                             <strong>Sin entregar &#10005</strong>
