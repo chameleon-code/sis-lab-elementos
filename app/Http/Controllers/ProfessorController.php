@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use App\Block;
+use App\BlockSchedule;
 
 class ProfessorController extends Controller
 {
@@ -44,16 +46,25 @@ class ProfessorController extends Controller
 
     public function registro()
     {
-        $students = Student::getAllStudents();
-        //$user_id = $student->user_id;
-        //$user = User::findOrFail($user_id);
-        $labs = Laboratory::all();
-        $auxiliarctrl = new AuxiliarController();
-        $block_schedules = $auxiliarctrl->getStudentList(new Request, $labs->first()->id);
+        $professor = Professor::where('user_id', auth()->user()->id)->first();
+        $groups = Group::where('professor_id', $professor->id)->get()->reject(function ($item, $key){
+            if(is_null($item->blocks->first())){
+                return true;
+            }
+        }); 
+        if($groups->isNotEmpty()){
+            $schedules = $this->studentListByGroup(new Request, $groups->first()->id);
+            $sesions = $groups->first()->blocks()->first()->sesions;
+        }
+        else{
+            $schedules = collect();
+            $sesions = collect();
+        }
         $data = [
-            'students' => $students,
-            'labs' => $labs,
-            'block_schedules' => $block_schedules,
+            'schedules' => $schedules,
+            'groups' => $groups,
+            'sesions' => $sesions,
+            'title' => 'Estudiantes'
         ];
         return view('components.contents.professor.registerAssistance', $data)->withTitle('Perfil de Estudiante');
     }

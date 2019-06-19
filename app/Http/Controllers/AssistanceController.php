@@ -12,6 +12,8 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Session\Session;
+use App\Sesion;
 
 class AssistanceController extends Controller
 {
@@ -100,6 +102,7 @@ class AssistanceController extends Controller
             $assistance->student_id = $data['student_id'];
             $assistance->attend = 1;
             $assistance->day = date('Y-m-d');
+            $assistance->sesion_id = Sesion::getSesionIdToDayByBlock($block_schedule->block_id, $block_schedule->schedule_id);
             $assistance->save();
             $success = true;
         } catch (\Exception $exception) {
