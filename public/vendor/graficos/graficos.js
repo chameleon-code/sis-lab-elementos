@@ -29,7 +29,7 @@ $(document).ready(function() {
                 ]);
 
                 var options = {
-                    title: 'Porcentaje de Notas Mayores y menores a 51'
+                    title: 'Porcentaje de notas mayores y menores a 51'
                 };
 
                 var chart = new google.visualization.PieChart(document.getElementById('management'));
@@ -71,7 +71,7 @@ $(document).ready(function() {
                     ]);
 
                     var options = {
-                        title: 'Porcentaje de Notas Mayores y menores a 51'
+                        title: 'Porcentaje de notas mayores y menores a 51'
                     };
 
                     var chart = new google.visualization.PieChart(document.getElementById('management'));
@@ -114,7 +114,7 @@ $(document).ready(function() {
                 ]);
 
                 var options = {
-                    title: 'Porcentaje de Notas Mayores y menores a 51'
+                    title: 'Porcentaje de notas mayores y menores a 51'
                 };
 
                 var chart = new google.visualization.PieChart(document.getElementById('subjectMatter'));
@@ -156,7 +156,7 @@ $(document).ready(function() {
                     ]);
 
                     var options = {
-                        title: 'Porcentaje de Notas Mayores y menores a 51'
+                        title: 'Porcentaje de notas mayores y menores a 51'
                     };
 
                     var chart = new google.visualization.PieChart(document.getElementById('subjectMatter'));
@@ -198,7 +198,7 @@ $(document).ready(function() {
                 ]);
 
                 var options = {
-                    title: 'Porcentaje de Notas Mayores y menores a 51'
+                    title: 'Porcentaje de notas mayores y menores a 51'
                 };
 
                 var chart = new google.visualization.PieChart(document.getElementById('group'));
@@ -239,7 +239,7 @@ $(document).ready(function() {
                     ]);
 
                     var options = {
-                        title: 'Porcentaje de Notas Mayores y menores a 51'
+                        title: 'Porcentaje de notas mayores y menores a 51'
                     };
 
                     var chart = new google.visualization.PieChart(document.getElementById('group'));
