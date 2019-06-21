@@ -46,4 +46,7 @@ class Student extends Model
     public function assistances(){
         return $this->hasMany('App\Assistance');
     }
+    public function studentTasks(){
+        return $this->hasMany('App\StudentTask');
+    }
 }
