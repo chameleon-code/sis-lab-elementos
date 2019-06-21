@@ -36,4 +36,7 @@ class Task extends Model
     public function sesion(){
         return $this->belongsTo('App\Sesion');
     }
+    public function studentTasks(){
+        return $this->hasMany('App\StudentTask');
+    }
 }
