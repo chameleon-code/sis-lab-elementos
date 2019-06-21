@@ -6,20 +6,25 @@ use Illuminate\Http\Request;
 use App\Block;
 use App\Sesion;
 use App\Group;
+use App\Management;
+use App\SubjectMatter;
 class GraphicController extends Controller
 {
     public function index(){
-        return view('components.contents.graphics.graficos');
+        $subjectMatters=SubjectMatter::getAllSubjectMatters();
+        $managements=Management::getAllManagements();
+        $groups=Group::getAllGroups();
+        //dd($groups->first()->subject);
+        $data=[
+            'subjectMatters' => $subjectMatters,
+            'managements'    => $managements,
+            'groups'         => $groups
+        ];
+        return view('components.contents.graphics.graficos',$data);
     }
-    public function getTaskByBlockId(){
-        $block_sesions=Block::find(1)->sesions()->get();
-        // $sesions=Sesion::getAllSesionByBlockId($block->id);
+    public function getTaskByBlockId($block_id){
+        $block_sesions=Block::find($block_id)->sesions()->get();
         $task_student=[];
-        // $valor = $block_sesions[19]->tasks()->get();
-        // // dd($valor);
-        // $task_student = $valor->first()->studentTasks()->get();
-        // dd($task_student);
-        // // dd($valor->first()->studentTasks()->get());
         foreach($block_sesions as $key => $value){
             $tasks = $value->tasks()->get();
             foreach($tasks as $key => $value){
@@ -28,8 +33,8 @@ class GraphicController extends Controller
             }
             //dd($valor->first()->studentTasks()->get());
         }
-        dd($task_student);
-        return view('components.contents.graphics.graficos');
+        //dd($task_student);
+        return $task_student;
     }
     public function getTaskByGroupID($group_id){
         $group_student = Group::find($group_id)->studentSchedules()->get();
@@ -43,30 +48,40 @@ class GraphicController extends Controller
         }
         //dd($tasks_students);
         return $tasks_students;
-        //dd($group_student);
-        //dd($group_student->first()->student()->get());
-        $student=$group_student->first()->student()->get();
-        $student_tasks = $student->first()->studentTasks()->get();
-        dd($student_tasks);
-        dd($group_student->first()->student()->get());
-
-        $block_sesions=Block::find(2)->sesions()->get();
-        // $sesions=Sesion::getAllSesionByBlockId($block->id);
+    }
+    public function getTaskByManagemenId($management_id){
+        $blocks_managements=Management::find($management_id)->blocks()->get();
         $task_student=[];
-        // $valor = $block_sesions[19]->tasks()->get();
-        // // dd($valor);
-        // $task_student = $valor->first()->studentTasks()->get();
-        // dd($task_student);
-        // // dd($valor->first()->studentTasks()->get());
-        foreach($block_sesions as $key => $value){
-            $tasks = $value->tasks()->get();
-            foreach($tasks as $key => $value){
-                $taskStudent=$value->studentTasks()->get()->first();
-                array_push ( $task_student , $taskStudent);
+        foreach($blocks_managements as $key => $value){
+            $block_sesions=$value->sesions()->get();
+            //dd($block_sesions);
+            foreach($block_sesions as $key => $value){
+                $tasks = $value->tasks()->get();
+                foreach($tasks as $key => $value){
+                    $taskStudent=$value->studentTasks()->get()->first();
+                    if($taskStudent != null){
+                        array_push ( $task_student , $taskStudent);
+                    }
+                }
             }
-            //dd($valor->first()->studentTasks()->get());
         }
-        dd($task_student);
-        return view('components.contents.graphics.graficos');
+        //dd($task_student);
+        return $task_student;
+    }
+    public function getTaskBySubjectMatterId($subject_id){
+        $groups=SubjectMatter::find($subject_id)->groups()->get();
+        $tasks_students=[];
+        foreach($groups as $key => $value){
+            $group_student = $value->studentSchedules()->get();
+            foreach($group_student as  $key => $value){
+                $student=$value->student()->get()->first();
+                $tasks=$student->studentTasks()->get();
+                foreach($tasks as $key => $value){
+                    array_push($tasks_students,$value);
+                }
+            }
+        }
+        //dd($tasks_students);
+        return $tasks_students;
     }
 }
