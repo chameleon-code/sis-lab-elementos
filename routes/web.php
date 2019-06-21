@@ -97,3 +97,5 @@ Route::get('/graphics','GraphicController@index');
 Route::get('/graphics/group/{group_id}','GraphicController@getTaskByGroupID');
 Route::get('/graphics/subjectMatter/{subject_id}','GraphicController@getTaskBySubjectMatterId');
 Route::get('/graphics/management/{management_id}','GraphicController@getTaskByManagemenId');
+//descargas
+Route::get('/download', 'DownloadTaskController@downloadTask');
