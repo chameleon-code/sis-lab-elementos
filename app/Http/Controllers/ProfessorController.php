@@ -9,6 +9,7 @@ use App\Professor;
 use App\Role;
 use App\Student;
 use App\StudentSchedule;
+use App\StudentTask;
 use App\SubjectMatter;
 use App\User;
 use Illuminate\Http\Request;
