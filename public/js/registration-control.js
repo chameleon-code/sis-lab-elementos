@@ -28,11 +28,10 @@ function enableOrDisableCheck(){
 }
 
 function enableRegistration(){
-    console.log("habilitando inscripción para: " + actualId);
     $.ajax({
         url : '/admin/management/registration/'+actualId+'/1',
         success: function (response){
-            console.log(response);
+            
         },
         error: function(){
             console.log("Ha ocurrido un error");
@@ -41,11 +40,10 @@ function enableRegistration(){
 }
 
 function disableRegistration(){
-    console.log("deshabilitando inscripción para: " + actualId);
     $.ajax({
         url : '/admin/management/registration/'+actualId+'/0',
         success: function (response){
-            console.log(response);
+            
         },
         error: function(){
             console.log("Ha ocurrido un error");

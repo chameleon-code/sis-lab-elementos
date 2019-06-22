@@ -10910,6 +10910,26 @@ a:focus {
   border-bottom: 0.25rem solid #e74a3b !important;
 }
 
+.border-right-primary {
+  border-right: 0.25rem solid #4e73df !important;
+}
+
+.border-right-success {
+  border-right: 0.25rem solid #1cc88a !important;
+}
+
+.border-right-info {
+  border-right: 0.25rem solid #36b9cc !important;
+}
+
+.border-right-warning {
+  border-right: 0.25rem solid #f6c23e !important;
+}
+
+.border-right-danger {
+  border-right: 0.25rem solid #e74a3b !important;
+}
+
 .progress-sm {
   height: .5rem;
 }
