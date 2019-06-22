@@ -40,4 +40,8 @@ class StudentSchedule extends Model
         }
         return $schedules;
     }
+
+    public function student(){
+        return $this->belongsTo('App\Student');
+    }
 }

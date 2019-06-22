@@ -143,10 +143,10 @@ $(document).ready(function() {
         var block_name1 = $('#bloques option:selected').text();
         var block_name2 = $("#block_name").val();
         var block_name;
-        if (block_name1 > block_name2) {
-            block_name = block_name1;
-        } else {
+        if (block_name2 != null) {
             block_name = block_name2;
+        } else {
+            block_name = block_name1;
         }
         var materia = $("#materia").val();
         var laboratory = $('#laboratory option:selected').val();
