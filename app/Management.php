@@ -22,4 +22,7 @@ class Management extends Model
     public static function getAllManagements(){
         return self::all();
     }
+    public function blocks(){
+        return $this->hasMany('App\Block');
+    }
 }

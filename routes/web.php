@@ -91,3 +91,11 @@ Route::delete('/schedule/records/delete/{id}','ScheduleRecordController@destroy'
 //Horarios con seleccion de bloques
 Route::get('/schedule/create/','ScheduleRecordController@createSchedule');
 Route::get('/schedule/groups/{block_id}','ScheduleRecordController@getGroups');
+
+//graficos
+Route::get('/graphics','GraphicController@index');
+Route::get('/graphics/group/{group_id}','GraphicController@getTaskByGroupID');
+Route::get('/graphics/subjectMatter/{subject_id}','GraphicController@getTaskBySubjectMatterId');
+Route::get('/graphics/management/{management_id}','GraphicController@getTaskByManagemenId');
+//descargas
+Route::get('/download', 'DownloadTaskController@downloadTask');

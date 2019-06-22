@@ -126,4 +126,8 @@ class Sesion extends Model
         }
         return $res;
     }
+
+    public static function getAllSesionByBlockId($block_id){
+        return self::where('block_id',$block_id)->get();
+    }
 }

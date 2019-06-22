@@ -47,4 +47,10 @@ class Group extends Model
     public static function getSubjectById($id){
         return SubjectMatter::find(self::find($id)->subject_matter_id);
     }
+    public function blockSchedule(){
+        return $this->belongsToMany('App\BlockSchedule','student_schedules','group_id','block_schedule_id');
+    }
+    public function studentSchedules(){
+        return $this->hasMany('App\StudentSchedule');
+    }
 }

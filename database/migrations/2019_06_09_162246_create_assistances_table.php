@@ -15,10 +15,8 @@ class CreateAssistancesTable extends Migration
     {
         Schema::create('assistances', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('block_id');
-            $table->foreign('block_id')->references('id')->on('block_schedules');
-            $table->unsignedInteger('schedule_id');
-            $table->foreign('schedule_id')->references('id')->on('schedule_records');
+            $table->unsignedInteger('blockschedule_id');
+            $table->foreign('blockschedule_id')->references('id')->on('block_schedules');
             $table->unsignedInteger('student_id');
             $table->foreign('student_id')->references('id')->on('students');
             $table->unsignedInteger('sesion_id');
