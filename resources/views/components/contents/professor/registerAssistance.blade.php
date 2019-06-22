@@ -57,8 +57,7 @@
                                                     @else  
                                                         <td ><a href="#" class="btn btn-danger btn-circle btn-sm mx-1" ><i class="fas fa-times"></i></a></td>    
                                                     @endif                                                  
-                                                @empty
-                                                    
+                                                @empty                                                    
                                                 @endforelse
                                             </tr>
                                         @endforeach

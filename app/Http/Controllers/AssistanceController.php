@@ -97,8 +97,7 @@ class AssistanceController extends Controller
         $block_schedule = BlockSchedule::find($data['blockschedule_id']);
         try{
             $assistance = new Assistance();
-            $assistance->block_id = $block_schedule->block_id;
-            $assistance->schedule_id = $block_schedule->schedule_id;
+            $assistance->blockschedule_id = $block_schedule->id;
             $assistance->student_id = $data['student_id'];
             $assistance->attend = 1;
             $assistance->day = date('Y-m-d');
