@@ -97,6 +97,14 @@ class ManagementController extends Controller
         return redirect('/admin/managements');
     }
 
+    public function enableOrDisable($id, $value){
+        $management = Management::findOrFail($id);
+        $management->enable_inscription = $value;
+        $management->save();
+
+        return response(["response" => $management]);
+    }
+
     public function rememberNav(){
         $tmp = 0.05;
         Cache::put('professor_nav', '', $tmp);

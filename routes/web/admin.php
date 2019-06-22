@@ -86,3 +86,4 @@ Route::get('/admin/blocks/getGro', 'BlockGroupController@getAllBlockGroups');
 // Inscripciones
 
 Route::get('/admin/inscriptions', 'AdminController@registrations');
+Route::get('/admin/management/registration/{id}/{value}', 'ManagementController@enableOrDisable');

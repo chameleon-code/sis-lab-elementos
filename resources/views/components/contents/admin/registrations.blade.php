@@ -39,6 +39,15 @@
                                                             <span class="slider round"></span>
                                                         </label>
                                                     </td>
+                                                    @if($item->enable_inscription == 1)
+                                                    <script>
+                                                        $("#checkbox-{!!json_encode($item->id)!!}")[0].checked = 1;
+                                                    </script>
+                                                    @else
+                                                    <script>
+                                                        $("#checkbox-{!!json_encode($item->id)!!}")[0].checked = 0;
+                                                    </script>
+                                                    @endif
                                                 </tr>
                                             @endforeach
                                         </tbody>
