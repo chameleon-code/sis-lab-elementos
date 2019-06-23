@@ -27,5 +27,6 @@ $factory->define(App\Management::class, function (Faker\Generator $faker) {
         'start_management' => $start_management,
         'end_management' => $end_management,
         'management_path' => $management_path,
+        'enable_inscription' => 0,
     ];
 });

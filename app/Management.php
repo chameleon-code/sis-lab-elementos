@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ValidationTrait;
+use Carbon\Carbon;
 
 class Management extends Model
 {
     use ValidationTrait;
-    protected $fillable = ['semester','managements','start_management','end_management', 'enable_inscription', 'management_path'];
+    protected $fillable = ['semester','managements','start_management','end_management', 'enable_inscription', 'management_path', 'enable_inscription'];
 
     protected $hidden = ['created_at','update_at'];
 
@@ -24,5 +25,17 @@ class Management extends Model
     }
     public function blocks(){
         return $this->hasMany('App\Block');
+    }
+
+    public static function getActualManagement(){
+        $managements = Management::all();
+        $today = Carbon::now()->format('Y-m-d');
+        $actual_management = null;
+        foreach($managements as $management){
+            if($today > $management->start_management && $today < $management->end_management) {
+                $actual_management = $management;
+            }
+        }
+        return $actual_management;
     }
 }

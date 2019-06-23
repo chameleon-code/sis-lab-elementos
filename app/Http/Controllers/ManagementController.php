@@ -28,7 +28,8 @@ class ManagementController extends Controller
         $managements=Carbon::now()->format('Y');
         $data=[
             'semesters' => $semesters,
-            'managements' => $managements
+            'managements' => $managements,
+            'enable_inscription' => 0,
         ];
         return view('components.contents.management.create',$data);
     }
@@ -95,6 +96,14 @@ class ManagementController extends Controller
 
         Session::flash('status_message',$status_message);
         return redirect('/admin/managements');
+    }
+
+    public function enableOrDisable($id, $value){
+        $management = Management::findOrFail($id);
+        $management->enable_inscription = $value;
+        $management->save();
+
+        return response(["response" => $management]);
     }
 
     public function rememberNav(){

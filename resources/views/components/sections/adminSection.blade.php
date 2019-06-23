@@ -132,7 +132,7 @@
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="/admin/inscriptions">
       <i class="fas fa-fw fa-address-card"></i>
       <span>Inscripciones</span>
     </a>
