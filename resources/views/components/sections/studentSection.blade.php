@@ -13,16 +13,22 @@
   <!-- Divider -->
   <hr class="sidebar-divider">
 
+  @php
+  $actual_management = App\Management::getActualManagement();
+  @endphp
+
+  @if($actual_management->enable_inscription === 1)
   <!-- Heading -->
   <div class="sidebar-heading">
     Interface
   </div>
-
+  
   <li class="nav-item">
     <a class="nav-link" href="{{url("/students/registration")}}">
       <i class="fas fa-fw fa-calendar-alt"></i>
       <span>Inscripción</span>
     </a>
   </li>
+  @endif
 
 @endsection

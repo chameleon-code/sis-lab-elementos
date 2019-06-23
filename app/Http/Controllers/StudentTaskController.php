@@ -14,6 +14,7 @@ use App\BlockGroup;
 use App\Group;
 use App\BlockSchedule;
 use App\StudentTask;
+use App\Management;
 
 class StudentTaskController extends Controller
 {
@@ -27,6 +28,7 @@ class StudentTaskController extends Controller
         $user = Auth::user();
         $student = Student::where('user_id','=',$user->id)->first();
         $schedules = StudentSchedule::getDateTimeStudentSchedulesByStudentId($student->id);
+        $management = Management::getActualManagement();
         $message = '';
         $sesions = [];
         if($schedules != []){
@@ -46,7 +48,8 @@ class StudentTaskController extends Controller
             $message = 'No te encuentras inscrito a ninguna materia aún';        
             $data = [
                 'student' => $student,
-                'sesions' => []
+                'sesions' => [],
+                'management' => $management,
             ];
             return view('components.contents.student.activities')->with($data)->withErrors($message);
         }
@@ -79,7 +82,8 @@ class StudentTaskController extends Controller
         }
         $data = [
             'student' => $student,
-            'sesions' => $sesionOfWeek
+            'sesions' => $sesionOfWeek,
+            'management' => $management,
         ];
         return view('components.contents.student.activities')->with($data);
     }

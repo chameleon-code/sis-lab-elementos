@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ValidationTrait;
+use Carbon\Carbon;
 
 class Management extends Model
 {
@@ -24,5 +25,17 @@ class Management extends Model
     }
     public function blocks(){
         return $this->hasMany('App\Block');
+    }
+
+    public static function getActualManagement(){
+        $managements = Management::all();
+        $today = Carbon::now()->format('Y-m-d');
+        $actual_management = null;
+        foreach($managements as $management){
+            if($today > $management->start_management && $today < $management->end_management) {
+                $actual_management = $management;
+            }
+        }
+        return $actual_management;
     }
 }

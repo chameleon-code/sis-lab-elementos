@@ -23,7 +23,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <div class="d-flex justify-content-between">
-                <div class="panel-heading m-0 font-weight-bold text-primary container">Inscripción</div>
+                <div class="panel-heading m-0 font-weight-bold text-primary">Inscripción</div>
                 <div class="mx-3">
                     <button type="button" class="btn btn-primary py-1" data-toggle-2="tooltip" title="Estado de inscripción" data-toggle="modal" data-target="#infoInscription" style="font-size: 14px; width: 100px;"> Estado </button>
                 </div>
@@ -52,14 +52,14 @@
                     $groups_sm = App\Group::where("subject_matter_id", "=", $item->id)->get();
                 @endphp
                     {{--  <div class="flex-row my-2 rounded card shadow">  --}}
-                    <div class="d-flex justify-content-between my-2 px-2 rounded shadow card-matter" style="height: 90px;">
+                    <div class="d-flex justify-content-between my-2 px-1 rounded shadow card-matter" style="height: 90px;">
                         <div class="row">
                             <img id="img-matter" class="" style="width:100px; height: 100%; border-top-left-radius: 5px; border-bottom-left-radius: 5px;" src="/img/subjectMatter.jpg" alt="">
                             <div class="my-2 mx-3" id="subject-matter-{{$item->id}}" style="font-size: 15px;">
                                 <strong> {{$item->name}} </strong>
                             </div>
                         </div>
-                        <div class="" style="width: 30%;">
+                        <div class="" style="width: 35%;">
                             <div class="py-1 px-1" style="">
                                 <select name="group_id" class="form-control col-md-12 my-1" id="group_{{ $id_select }}" onchange="clearSelects({{ $id_select }})" style="">
                                         <option class="form-control text-center" value="">grupo</option>

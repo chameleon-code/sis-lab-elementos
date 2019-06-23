@@ -138,13 +138,13 @@ class StudentController extends Controller
 
     public function registration()
     {
-        $managements = Management::getAllManagements()->reverse();
+        $management = Management::getActualManagement();
         $blocks = Block::getAllBlocks();
         $subjectMatters = SubjectMatter::all();
         $groups = Group::getGroupBlocks();
         $data=[ 'blocks' => $blocks,
                 'groups' => $groups,
-                'managements' =>$managements,
+                'management' =>$management,
                 'subjectMatters' => $subjectMatters,
             ];
         return view('components.contents.student.registration', $data);

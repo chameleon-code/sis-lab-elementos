@@ -28,7 +28,8 @@ class ManagementController extends Controller
         $managements=Carbon::now()->format('Y');
         $data=[
             'semesters' => $semesters,
-            'managements' => $managements
+            'managements' => $managements,
+            'enable_inscription' => 0,
         ];
         return view('components.contents.management.create',$data);
     }
