@@ -3,11 +3,10 @@
   <!-- Divider -->
   <hr class="sidebar-divider my-0">
 
-  <!-- Nav Item - Dashboard -->
   <li class="nav-item">
-    <a class="nav-link" href="index.html">
-      <i class="fas fa-fw fa-home"></i>
-      <span>Inicio</span></a>
+    <a class="nav-link" href="{{ url("/auxiliar/assistance")}}">
+      <i class="fas fa-fw fa-chalkboard-teacher"></i>
+      <span>Asistencia</span></a>
   </li>
 
   <!-- Divider -->
@@ -15,7 +14,7 @@
 
   <!-- Heading -->
   <div class="sidebar-heading">
-    Interface
+    Academia
   </div>
 
   {{--  <!-- Nav Item - Pages Collapse Menu -->
@@ -33,11 +32,6 @@
     </div>
   </li>  --}}
 
-  <li class="nav-item">
-    <a class="nav-link" href="{{ url("/auxiliar/assistance")}}">
-      <i class="fas fa-fw fa-chalkboard-teacher"></i>
-      <span>Asistencia</span></a>
-  </li>
 
 
   {{--
@@ -99,7 +93,4 @@
       <i class="fas fa-fw fa-table"></i>
       <span>Horario</span></a>
   </li>
-
-  <!-- Divider -->
-  <hr class="sidebar-divider d-none d-md-block">
 @endsection

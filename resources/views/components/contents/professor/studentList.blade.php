@@ -14,8 +14,8 @@
                     @endif
                     <div class="">
                         <div class="row">
-                            <div class="form-group">
-                                    <select name="group_id" class="form-control col-md-12" id="groups">
+                            <div class="form-group col-md-5 col-12 col-sm-12">
+                                    <select name="group_id" class="form-control" id="groups">
                                         @forelse ($groups as $group)
                                         @if ($loop->first)
                                             <option class="form-control" value="{{$group->id}}" selected> Grupo {{$group->name . " - " . $group->subject->name}}</option>
@@ -23,7 +23,7 @@
                                         @endif
                                             <option class="form-control" value="{{$group->id}}"> Grupo {{$group->name . " - " . $group->subject->name}}</option>
                                         @empty
-                                        <option class="form-control" value="">No existen materias registradas</option>
+                                        <option class="form-control" value="">No tiene grupos relacionados con algun bloque</option>
                                         @endempty
                                         @endforelse
                                     </select>

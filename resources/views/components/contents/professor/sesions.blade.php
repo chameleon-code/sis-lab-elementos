@@ -22,7 +22,7 @@
             </div>
                 <div class="card-body">
                     @if ($blocks==null)
-                        <div class="alert alert-danger">
+                        <div class="alert alert-warning">
                             <br>
                             <ul>Aun no esta asignado a un bloque</ul>
                         </div>

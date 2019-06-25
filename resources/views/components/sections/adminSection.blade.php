@@ -145,7 +145,7 @@
     </a>
   </li>
   
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a class="nav-link" href="charts.html">
       <i class="fas fa-fw fa-chart-area"></i>
       <span>Estadisticas</span></a>
@@ -155,7 +155,7 @@
     <a class="nav-link" href="tables.html">
       <i class="fas fa-fw fa-shield-alt"></i>
       <span>Log</span></a>
-  </li>
+  </li> --}}
 
    <hr class="sidebar-divider d-none d-md-block">
 @endsection
