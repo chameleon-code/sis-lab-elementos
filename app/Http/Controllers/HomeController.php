@@ -30,10 +30,12 @@ class HomeController extends Controller
                 return view('components.sections.adminSection');
                 break;
             case Role::PROFESSOR:
-                return view('components.contents.professor.statistics');
+                $controller = new GraphicController();
+                return $controller->index();
                 break;
             case Role::AUXILIAR:
-                return view('components.sections.auxiliarSection');
+                $controller = new AssistanceController();
+                return $controller->index();
                 break;
             case Role::STUDENT:
                 $controller = new StudentTaskController();
