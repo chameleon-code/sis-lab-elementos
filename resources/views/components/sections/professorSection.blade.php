@@ -39,7 +39,7 @@
       <i class="fas fa-fw fa-calendar-day"></i>
       <span>Sesiones</span></a>
   </li>
-
+{{-- 
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTasks" aria-expanded="true" aria-controls="collapseTasks">
       <i class="fas fa-fw fa-tasks"></i>
@@ -52,7 +52,7 @@
           <a class="collapse-item" href="#"><i class="fas fa-check"></i> Calificar</a>
         </div>
       </div>
-    </li>
+  </li> --}}
 
 
 
