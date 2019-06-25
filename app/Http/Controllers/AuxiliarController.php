@@ -127,12 +127,16 @@ class AuxiliarController extends Controller
 
     public function getStudentList(Request $request, $id){
         $posible_schedules = ScheduleRecord::where('laboratory_id', $id)->get();
-        //$assistances = Assistance::all();
-        //dd($assistances->first()->created_at->format('Y m d'));
         $schedules = array();
         foreach ($posible_schedules as $schedule){
             if(self::compareDay($schedule->day_id)) {
-                array_push($schedules, $schedule->id);
+                $start = Carbon::create(date('Y'), date('m'), date('d'),substr($schedule->getHourAttribute()->start, -8,-6), substr($schedule->getHourAttribute()->start, -5, -3),substr($schedule->getHourAttribute()->start, -2));
+                $end = Carbon::create(date('Y'), date('m'), date('d'),substr($schedule->getHourAttribute()->start, -8,-6), substr($schedule->getHourAttribute()->start, -5, -3),substr($schedule->getHourAttribute()->start, -2))->addMinutes(90);
+                $now = Carbon::now();
+                if($start->lt($now) && $end->gt($now)){
+                    array_push($schedules, $schedule->id);
+                }
+                    
             }
         }
         $blocksch = BlockSchedule::with('students')->whereIn('schedule_id', $schedules)->get()
