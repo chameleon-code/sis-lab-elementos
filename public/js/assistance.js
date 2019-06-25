@@ -8,7 +8,7 @@ $(document).ready(()=>{
         var array = Array();
         var table = $('#dataTable').DataTable();
         $.ajax({
-            url: `http://localhost:8000/auxiliar/getStudentList/${event.target.value}`,
+            url: window.location.host+`auxiliar/getStudentList/${event.target.value}`,
             success: (response)=>{
                 array = response;
             }
@@ -40,7 +40,7 @@ $(document).ready(()=>{
     $('#modalAction').click(function(event){
             console.log($("#registerEvent").serialize());
             $.ajax({
-                url : 'http://localhost:8000/auxiliar/assistance',
+                url : window.location.host+'auxiliar/assistance',
                 type: 'POST',
                 headers: {
                     'x-csrf-token': $("meta[name=csrf-token]").attr('content')
@@ -52,7 +52,7 @@ $(document).ready(()=>{
                     if(res.res) {
                        Swal.fire(
                             'Registro de estudiante exitoso!',
-                            'Revisalo en tu registro de asistencia',
+                            'Revisa en tu registro de asistencia',
                             'success'
                         );
                         modal.modal('hide');        

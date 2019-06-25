@@ -20,12 +20,14 @@ $('document').ready(function(){
                     { data: 'Acciones',
                     render : function(data, type, row) {
                         console.log(data);
-                        return `<a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick="loadProfile(${ data.student })"><i class="fas fa-eye"></i></a>
-                        <a href="/professor/studentSesions/${data.schedule_id}" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Portafolios"><i class="fas fa-briefcase"></i></a>`
+                        return `<a href="#" class="buttons-icons btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick="loadProfile(${ data.student })"><i class="fas fa-eye"></i></a>
+                                <a href="/professor/studentSesions/${data.schedule_id}" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Portafolios"><i class="fas fa-briefcase"></i></a>`
                         } 
                     }                      
                 ]
             }).draw();
+            console.log($('.buttons-icons').parent().attr('style','text-align: center; display: flex;').attr('class','text-center')); 
         });
     });
 });
+
