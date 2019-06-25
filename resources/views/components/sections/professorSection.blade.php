@@ -8,6 +8,11 @@
       <i class="fas fa-fw fa-chart-bar"></i>
       <span>Registro de Asistencia</span></a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url("/professor/graphics")}}">
+      <i class="fas fa-chart-pie"></i>
+      <span>Estadisticas de notas</span></a>
+  </li>
 
   <!-- Divider -->
   <hr class="sidebar-divider">
