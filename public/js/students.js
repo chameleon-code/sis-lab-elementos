@@ -78,61 +78,8 @@ function infReg(item, id) {
                 if(Object.keys(response).length > 0){
                     var cont = 1;
                     response.forEach(function(element) {
-                        var day;
-                        switch (element.day_id) {
-                            case 1:
-                                day = 'Lunes';
-                                break;
-                            case 2:
-                                day = 'Martes';
-                                break;
-                            case 3:
-                                day = 'Miércoles';
-                                break;
-                            case 4:
-                                day = 'Jueves';
-                                break;
-                            case 5:
-                                day = 'Viernes';
-                                break;
-                            case 6:
-                                day = 'Sábado';
-                                break;
-                        }
-
-                        var hour;
-                        switch (element.hour_id) {
-                            case 1:
-                                hour = '06:45 - 08:15';
-                                break;
-                            case 2:
-                                hour = '08:15 - 09:45';
-                                break;
-                            case 3:
-                                hour = '09:45 - 11:15';
-                                break;
-                            case 4:
-                                hour = '11:15 - 12:45';
-                                break;
-                            case 5:
-                                hour = '12:45 - 14:15';
-                                break;
-                            case 6:
-                                hour = '14:15 - 15:45';
-                                break;
-                            case 7:
-                                hour = '15:45 - 17:15';
-                                break;
-                            case 8:
-                                hour = '17:15 - 18:45';
-                                break;
-                            case 9:
-                                hour = '18:45 - 20:15';
-                                break;
-                            case 10:
-                                hour = '20:15 - 21:45';
-                                break;
-                        }
+                        var day = dayById(element.day_id);
+                        var hour = hourById(element.hour_id);
                         $('#schedules-table').show();
                         $('#body-table').append(
                             " <tr class='text-center'><td>" + element.laboratory_id + "</td><td>" + day + "</td><td>" + hour + "</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check" + cont + "' onclick='clearChecks(" + response.length + ", " + cont + ", " + element.schedule_record_id + ", " + element.block_schedule_id + ")'><label class='custom-control-label' for='Check" + cont + "'></label></div></td></tr> "
@@ -226,4 +173,118 @@ function verifyRegistration (subject_matter_id){
         //     }
         // });
     }
+}
+
+function status(){
+    $('#info-ins').empty();
+    $.ajax({
+        url : '/students/registration/getScheduleStudent',
+        success: function (response){
+            if(Object.keys(response.schedule_student).length > 0){
+                var matter = undefined;
+                var group_name = undefined;
+                var professor = undefined;
+                var day = undefined;
+                var hour = undefined;
+                var lab;
+                for(var i=0 ; i<Object.keys(response.schedule_student).length ; i++){
+                    for(var j=0 ; j<Object.keys(response.subject_matters).length ; j++){
+                        if(response.subject_matters[j].id == response.schedule_student[i].subject_matter_id){
+                            matter = response.subject_matters[j].name;
+                        }
+                    }
+                    for(var j=0 ; j<Object.keys(response.groups).length ; j++){
+                        if(response.groups[j].id == response.schedule_student[i].group_id){
+                            console.log(response.groups[j].name);
+                            group_name = response.groups[j].name;
+                        }
+                    }
+                    for(var j=0 ; j<Object.keys(response.professors).length ; j++){
+                        if(response.professors[j].professor_id == response.schedule_student[i].professor_id){
+                            professor = response.professors[j].names + " " + response.professors[j].first_name + " " + response.professors[j].second_name;
+                        }
+                    }
+                    for(var j=0 ; j<Object.keys(response.block_schedules).length ; j++){
+                        if(response.block_schedules[j].id == response.schedule_student[i].block_schedule_id){
+                            day = response.block_schedules[j].schedule.day.name;
+                            hour = hourById(response.block_schedules[j].schedule.hour_id);
+                            lab = response.block_schedules[j].schedule.laboratory.name;
+                        }
+                    }
+                }
+                $('#info-ins').append(
+                    `<div class='accordion-body bg-gray-300 rounded row my-2' style='cursor: default;'> <div class='container d-flex justify-content-between px-1' style=''> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong class='py-0 my-0'> Materia:&nbsp;</strong> ${ matter } </div> </div> <div class='my-0 mx-1' style='font-size: 15px;'> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong class='py-0 my-0'> Laboratorio:&nbsp; </strong> ${ lab } </div> <div class='d-flex justify-content-start' style='padding-left: 2px;'> Grupo ${ group_name } - ${ professor } </div> <div class='' style='font-size: 15px; padding-left: 2px;'> ${ day } ${ hour } </div> </div> </div>`
+                )
+            } else {
+                $('#info-ins').append(
+                    "<div> No se cuenta con ninguna materia inscrita. </div>"
+                );
+            }
+        },
+        error: function(){
+            console.log("Ha ocurrido un error.");
+        }
+    });
+}
+
+function dayById(day_id){
+    day = undefined;
+    switch (day_id) {
+        case 1:
+            day = 'Lunes';
+            break;
+        case 2:
+            day = 'Martes';
+            break;
+        case 3:
+            day = 'Miércoles';
+            break;
+        case 4:
+            day = 'Jueves';
+            break;
+        case 5:
+            day = 'Viernes';
+            break;
+        case 6:
+            day = 'Sábado';
+            break;
+    }
+    return day;
+}
+
+function hourById(hour_id){
+    hour = undefined;
+    switch (hour_id) {
+        case 1:
+            hour = '06:45 - 08:15';
+            break;
+        case 2:
+            hour = '08:15 - 09:45';
+            break;
+        case 3:
+            hour = '09:45 - 11:15';
+            break;
+        case 4:
+            hour = '11:15 - 12:45';
+            break;
+        case 5:
+            hour = '12:45 - 14:15';
+            break;
+        case 6:
+            hour = '14:15 - 15:45';
+            break;
+        case 7:
+            hour = '15:45 - 17:15';
+            break;
+        case 8:
+            hour = '17:15 - 18:45';
+            break;
+        case 9:
+            hour = '18:45 - 20:15';
+            break;
+        case 10:
+            hour = '20:15 - 21:45';
+            break;
+    }
+    return hour;
 }
