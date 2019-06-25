@@ -30,7 +30,7 @@ class HomeController extends Controller
                 return view('components.sections.adminSection');
                 break;
             case Role::PROFESSOR:
-                return view('components.contents.professor.statistics');
+                return redirect('/professor/graphics');
                 break;
             case Role::AUXILIAR:
                 return view('components.sections.auxiliarSection');
