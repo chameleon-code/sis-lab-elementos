@@ -217,7 +217,7 @@ function status(){
                 )
             } else {
                 $('#info-ins').append(
-                    "<div> No se cuenta con ninguna materia inscrita. </div>"
+                    "<div> No cuenta con materias inscritas. </div>"
                 );
             }
         },
