@@ -99,3 +99,7 @@ Route::get('/graphics/subjectMatter/{subject_id}','GraphicController@getTaskBySu
 Route::get('/graphics/management/{management_id}','GraphicController@getTaskByManagemenId');
 //descargas
 Route::get('/download', 'DownloadTaskController@downloadTask');
+Route::get('/downloadGroupRegister', 'DownloadTaskController@downloadGroupPortfolies');
+
+//portafolios
+Route::get('/portflies','ProfessorController@downloadPortflies');
