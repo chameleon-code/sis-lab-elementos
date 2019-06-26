@@ -40,6 +40,11 @@
       <i class="fas fa-fw fa-calendar-day"></i>
       <span>Sesiones</span></a>
   </li>
+  <li class="nav-item">
+      <a class="nav-link" href="/portflies">
+        <i class="far fa-folder"></i>
+        <span>Portafolios segun grupo</span></a>
+    </li>
 {{-- 
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTasks" aria-expanded="true" aria-controls="collapseTasks">

@@ -22,11 +22,13 @@
                 <strong>Estudiante: </strong> {{ $schedule->user->first_name.' '.$schedule->user->second_name.' '.$schedule->user->names }} <br>
                 <strong>Materia: </strong> {{ $schedule->group->subject->name }} <br>
                 <strong>Grupo: </strong> {{ $schedule->group->name }} <br>
-                <form action="/download" method="get">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="schedule_id" value="{{ $schedule->id }}">
-                    <strong><button type="submit" class="btn btn-primary">Descargar portafolio<i class="fa fa-download" aria-hidden="true"></i></button></strong>
-                </form>
+                @if (!empty($tasks_finisheds))
+                    <form action="/download" method="get">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="schedule_id" value="{{ $schedule->id }}">
+                        <strong><button type="submit" class="btn btn-primary">Descargar portafolio<i class="fa fa-download" aria-hidden="true"></i></button></strong>
+                    </form>
+                @endif                
             </div>
 
                 <div class="card-body">

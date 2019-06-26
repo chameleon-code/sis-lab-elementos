@@ -5,7 +5,7 @@ $('document').ready(function(){
         var array = Array();
         var data = Array();
         $.ajax({
-            url: '/professor/students/listByGroup/'+event.target.value+'',
+            url: window.location.origin+'/professor/students/listByGroup/'+event.target.value+'',
             success: (response) => {
                 array = response;
             },
