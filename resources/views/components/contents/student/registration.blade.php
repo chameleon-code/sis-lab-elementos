@@ -25,7 +25,7 @@
             <div class="d-flex justify-content-between">
                 <div class="panel-heading m-0 font-weight-bold text-primary">Inscripción</div>
                 <div class="mx-3">
-                    <button type="button" class="btn btn-primary py-1" data-toggle-2="tooltip" title="Estado de inscripción" data-toggle="modal" data-target="#infoInscription" style="font-size: 14px; width: 100px;"> Estado </button>
+                    <a class="py-1" href="#" data-toggle="modal" data-target="#infoInscription" style="font-size: 14px; width: 100px;" onclick="status()"> Estado de Inscripción </a>
                 </div>
             </div>
             <div class="card-body">                
@@ -169,10 +169,9 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                INFO
+            <div id="info-ins" class="modal-body">
+                
             </div>
-        </div>
     </div>
   </div>
 </div>

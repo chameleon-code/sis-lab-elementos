@@ -8,7 +8,7 @@
             <div class="card-header py-3">
                 <div class="panel-heading m-0 py-4 font-weight-bold text-primary container">Registro de Asistencia</div>
 
-                <div class="col-sm-3">
+                <div class="col-md-5 col-sm-5 col-12">
                     <select class="form-control" name="bloques" id="select-labs">
                         @forelse ($groups as $item)
                             <option class="form-control" value="{{$item->id}}">Grupo {{$item->name .' - '. $item->subject->name}}</option>

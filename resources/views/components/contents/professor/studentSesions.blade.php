@@ -91,14 +91,21 @@
                                 <div style="margin-top: 12px; margin-bottom: -15px;">
                                     {{-- <p> <strong> Estado de tarea: </strong> <a href="/professor/student/{{$schedule->student->id}}/task/{{$task->id}}">{{ $task->title }}</a> </p> --}}
                                     <p> <strong> Tarea: </strong> {{ $task->title }}</p>
-                                </div>
+                                </div>                                
                                 <div class="row" style="margin-top: -15px;">
                                     <div class="row" style="margin-left: 12px;" >
                                         @if (in_array($task->id, $student_tasks_ids))
                                         <div data-parent-id="panel{{$sesion->id}}">
-                                            <strong> Entregado &#10003  </strong>                                            
+                                            <strong> Entregado  
+                                                @if ($tasks_finisheds[$loop->parent->index]->assist == 1 && $student_tasks->where('task_id', $task->id)->first()->in_time != 'no')
+                                                    en clase a tiempo
+                                                @else
+                                                    a horas: {{ $student_tasks->where('task_id', $task->id)->first()->updated_at->format('H:i:s') }} desde su casa
+                                                @endif
+                                                &#10003 
+                                            </strong>                                            
                                         </div><br>
-                                        <div><strong> <a href="/storage/{{ $student_tasks->where('task_id', $task->id)->first()->task_path}}/{{$student_tasks->where('task_id', $task->id)->first()->task_name  }}" download="{{ $student_tasks->where('task_id', $task->id)->first()->task_name }}">Descargar<i class="fa fa-download" aria-hidden="true"></i></a></strong></div>
+                                        <div><strong> <a href="/storage/{{ $student_tasks->where('task_id', $task->id)->first()->task_path}}/{{$student_tasks->where('task_id', $task->id)->first()->task_name  }}" download="{{ $student_tasks->where('task_id', $task->id)->first()->task_name }}" data-toggle-2='tooltip' title='Descargar Tarea'><i class="fa fa-download" aria-hidden="true"></i></a></strong></div>
                                         {{--  <div><strong data-id="score"> Puntuacion: {{ $student_tasks->where('task_id', $task->id)->first()->score }}</strong></div>  --}}
                                         @else
                                             <strong>Sin entregar &#10005</strong>

@@ -141,6 +141,7 @@ class StudentController extends Controller
         $management = Management::getActualManagement();
         $blocks = Block::getAllBlocks();
         $subjectMatters = SubjectMatter::all();
+        $subjectMatters = SubjectMatter::getActualSubjectMatters($management->id);
         $groups = Group::getGroupBlocks();
         $data=[ 'blocks' => $blocks,
                 'groups' => $groups,
@@ -168,11 +169,15 @@ class StudentController extends Controller
         $shcedule_student->each(function ($item){
             $item->setAppends([]);
         });
+        $subject_matters = SubjectMatter::all();
+        $block_schedules = BlockSchedule::all();
 
         $response = [
             'groups' => $groups,
             'professors' => $professors,
             'schedule_student' => $shcedule_student,
+            'subject_matters' => $subject_matters,
+            'block_schedules' => $block_schedules,
         ];
 
         //return $shcedule_student;
