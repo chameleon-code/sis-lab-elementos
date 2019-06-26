@@ -192,6 +192,13 @@ class StudentTaskController extends Controller
         }
     }
 
+    public function updateAuxiliar(Request $request){
+        $studentTask = StudentTask::find($request->id);
+        $studentTask->observation = $request->observation;
+        $studentTask->save();
+        return response()->json(['success'=>'correcto!']);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
