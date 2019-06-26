@@ -21,7 +21,7 @@ class Professor extends Model
         'code_sis' => 'required|max:10|min:8'
     ];
     public function subjectMatters(){
-        return $this->belongsToMany('App\SubjectMatter', 'professor_subject_matter', 'professor_id', 'subject_matter_id');
+        return $this->belongsToMany('App\SubjectMatter', 'groups', 'professor_id', 'subject_matter_id');
     }
     public static function getAllProfessors(){
         return Professor::join('users','user_id','=','users.id')->select('users.role_id', 'users.code_sis', 'users.names', 'users.first_name', 'users.second_name', 'users.email', 'users.password', 'users.img_path', 'users.remember_token', 'users.created_at', 'users.updated_at', 'professors.id')->get();
@@ -64,4 +64,7 @@ class Professor extends Model
         return $subjectName;
     }
     
+    public function groups(){
+        return $this->hasMany('App\Group');
+    }
 }
