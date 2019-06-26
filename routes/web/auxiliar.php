@@ -13,3 +13,4 @@ Route::get('/auxiliar/schedule','ScheduleRecordController@getHorarios');
 
 //TaskControl
 Route::get('/auxiliar/taskControl','AuxiliarTaskController@index');
+Route::post('/auxiliar/activities/update','StudentTaskController@updateAuxiliar');

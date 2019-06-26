@@ -32,6 +32,9 @@ class AuxiliarTaskController extends Controller
                 $studentTasks = Array();
                 foreach ($tasks as $task) {
                     $studentTask = StudentTask::where('task_id','=',$task->id)->where('student_id','=',$studentID)->get()->first();
+                    if($studentTask!=null){
+                        $studentTask['title'] = $task->title;
+                    }
                     array_push($studentTasks,$studentTask);
                 }
                 if($studentTasks[0]!=null){
@@ -54,6 +57,6 @@ class AuxiliarTaskController extends Controller
             'list' => $list
         ];
         // dd($data);
-        return view('components.contents.auxiliar.controlTask',$data);
+        return view('components.contents.auxiliar.controlTaskS',$data);
     }
 }

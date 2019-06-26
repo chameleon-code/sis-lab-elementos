@@ -45,28 +45,28 @@
                                                         <!-- Modal -->
                                                           <div class="modal fade" id="eliminar{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                               <div class="modal-dialog" role="document">
-                                                              <div class="modal-content">
-                                                                  <div class="modal-header">
-                                                                  <h5 class="modal-title" id="exampleModalLabel"> Eliminar Auxiliar </h5>
-                                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                      <span aria-hidden="true">&times;</span>
-                                                                  </button>
-                                                                  </div>
-                                                                  <div class="modal-body text-left">
-                                                                      ¿Esta seguro que desea eliminar al auxiliar {{ $item->names }} {{ $item->first_name }}?
-                                                                  </div>
-                                                                  <div class="modal-footer">
-                                                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                                  <input type="hidden" id="id_auxiliar">
-                                                                      <form action="{{route('auxiliar.destroy', [$item->id])}}" method="POST">
-                                                                          {{csrf_field()}}
-                                                                          {{method_field('DELETE')}}
-                                                                      <button type="submit" class="btn btn-danger">Eliminar</button>
-                                                                      </form>
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-
+                                                                <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel"> Eliminar Auxiliar </h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                        </div>
+                                                                        <div class="modal-body text-left">
+                                                                            ¿Esta seguro que desea eliminar al auxiliar {{ $item->names }} {{ $item->first_name }}?
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                                        <input type="hidden" id="id_auxiliar">
+                                                                            <form action="{{route('auxiliar.destroy', [$item->id])}}" method="POST">
+                                                                                {{csrf_field()}}
+                                                                                {{method_field('DELETE')}}
+                                                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                       </td>
 
                                                   </tr>
