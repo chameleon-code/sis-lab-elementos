@@ -29,11 +29,12 @@ class HomeController extends Controller
     {
         switch (Auth::user()->role_id) {
             case Role::ADMIN:
-                return view('components.sections.adminSection');
+                $controller = new GraphicController();
+                return $controller->index();
                 break;
             case Role::PROFESSOR:
                 $controller = new GraphicController();
-                return $controller->index();
+                return $controller->indexProfessor();
                 break;
             case Role::AUXILIAR:
                 $auxiliar = Auxiliar::where('user_id','=',Auth::user()->id)->get()->first();

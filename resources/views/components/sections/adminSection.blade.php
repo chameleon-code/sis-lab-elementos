@@ -8,13 +8,11 @@
   <!-- Divider -->
   <hr class="sidebar-divider my-0">
 
-  <!-- Nav Item - Dashboard -->
   <li class="nav-item">
-    <a class="nav-link" href="/admin">
-      <i class="fas fa-fw fa-home"></i>
-      <span>Inicio</span></a>
-  </li>
-
+      <a class="nav-link" href="{{ url("/admin/graphics")}}">
+        <i class="fas fa-chart-pie"></i>
+        <span>Estadisticas de notas</span></a>
+    </li>
   <!-- Divider -->
   <hr class="sidebar-divider">
 

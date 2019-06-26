@@ -23,6 +23,7 @@ class GraphicController extends Controller
         ];
         return view('components.contents.graphics.graficos',$data);
     }
+
     public function getTaskByBlockId($block_id){
         $block_sesions=Block::find($block_id)->sesions()->get();
         $task_student=[];
