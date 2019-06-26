@@ -78,11 +78,11 @@ function infReg(item, id) {
                 if(Object.keys(response).length > 0){
                     var cont = 1;
                     response.forEach(function(element) {
-                        var day = dayById(element.day_id);
-                        var hour = hourById(element.hour_id);
+                        var day = element.schedule.day.name;
+                        var hour = (element.schedule.hour.start).substr(0, 5) + " - " + (element.schedule.hour.end).substr(0, 5);
                         $('#schedules-table').show();
                         $('#body-table').append(
-                            " <tr class='text-center'><td>" + element.laboratory_id + "</td><td>" + day + "</td><td>" + hour + "</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check" + cont + "' onclick='clearChecks(" + response.length + ", " + cont + ", " + element.schedule_record_id + ", " + element.block_schedule_id + ")'><label class='custom-control-label' for='Check" + cont + "'></label></div></td></tr> "
+                            " <tr class='text-center'><td>" + element.schedule.laboratory.name + "</td><td>" + day + "</td><td>" + hour + "</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check" + cont + "' onclick='clearChecks(" + response.length + ", " + cont + ", " + element.schedule_id + ", " + element.id + ")'><label class='custom-control-label' for='Check" + cont + "'></label></div></td></tr> "
                         );
                         cont++;
                     });
@@ -207,7 +207,7 @@ function status(){
                     for(var j=0 ; j<Object.keys(response.block_schedules).length ; j++){
                         if(response.block_schedules[j].id == response.schedule_student[i].block_schedule_id){
                             day = response.block_schedules[j].schedule.day.name;
-                            hour = hourById(response.block_schedules[j].schedule.hour_id);
+                            hour = (response.block_schedules[j].schedule.hour.start).substr(0, 5) + " - " + (response.block_schedules[j].schedule.hour.end).substr(0, 5);
                             lab = response.block_schedules[j].schedule.laboratory.name;
                         }
                     }
@@ -217,7 +217,7 @@ function status(){
                 )
             } else {
                 $('#info-ins').append(
-                    "<div> No se cuenta con ninguna materia inscrita. </div>"
+                    "<div> No cuenta con materias inscritas. </div>"
                 );
             }
         },

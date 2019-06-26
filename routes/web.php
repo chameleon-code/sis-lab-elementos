@@ -93,7 +93,7 @@ Route::get('/schedule/create/','ScheduleRecordController@createSchedule');
 Route::get('/schedule/groups/{block_id}','ScheduleRecordController@getGroups');
 
 //graficos
-Route::get('/professor/graphics','GraphicController@index');
+Route::get('/admin/graphics','GraphicController@index');
 Route::get('/graphics/group/{group_id}','GraphicController@getTaskByGroupID');
 Route::get('/graphics/subjectMatter/{subject_id}','GraphicController@getTaskBySubjectMatterId');
 Route::get('/graphics/management/{management_id}','GraphicController@getTaskByManagemenId');
@@ -103,3 +103,4 @@ Route::get('/downloadGroupRegister', 'DownloadTaskController@downloadGroupPortfo
 
 //portafolios
 Route::get('/portflies','ProfessorController@downloadPortflies');
+Route::get('/professor/graphics','GraphicController@indexProfessor');

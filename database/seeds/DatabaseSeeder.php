@@ -14,6 +14,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use App\ScheduleRecord;
 use App\BlockSchedule;
 use App\StudentSchedule;
+use App\Management;
 
 class DatabaseSeeder extends Seeder
 {
@@ -119,10 +120,22 @@ class DatabaseSeeder extends Seeder
 
         // // GESTIONES
 
-        factory(\App\Management::class, 2)->create()
-        ->each(function (\App\Management $m){
-            Storage::makeDirectory($m->management_path);
-        });
+        Management::create([
+            'semester' => 1,
+            'managements' => 2019,
+            'start_management' => '2019-02-01',
+            'end_management' => '2019-07-10',
+            'management_path' => 'folders/2019-1',
+            'enable_inscription' => 1,
+        ]);
+        Management::create([
+            'semester' => 2,
+            'managements' => 2019,
+            'start_management' => '2019-07-30',
+            'end_management' => '2019-11-30',
+            'management_path' => 'folders/2019-2',
+            'enable_inscription' => 0,
+        ]);
 
         // // MATERIAS
 
@@ -155,13 +168,13 @@ class DatabaseSeeder extends Seeder
         // BLOQUES
 
         $block_lcv = Block::create([
-            'management_id' => 2,
+            'management_id' => 1,
             'name' => 'Bloque-lcv',
             'available' => 1,
             'block_path' => 'folders/2019-1/Bloque-lcv'
         ]);
-
         Storage::makeDirectory($block_lcv->block_path);
+        
         $dates = \App\Sesion::autodate('2019-02-4', '2019-06-24');
         $i = 1;
         foreach($dates as $date){
