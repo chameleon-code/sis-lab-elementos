@@ -42,7 +42,7 @@ $(document).ready(function(){
     $('#modalAction').click(function(event){
         console.log($("#registerEvent").serialize());
         $.ajax({
-            url : 'http://127.0.0.1:8000/registerEvent',
+            url : window.location.origin+'/registerEvent',
             type: 'POST',
             headers: {
                 'x-csrf-token': $("meta[name=csrf-token]").attr('content')

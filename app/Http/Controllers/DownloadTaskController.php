@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\StudentSchedule;
 use \RecursiveIteratorIterator;
 use \RecursiveArrayIterator;
+use App\Block;
+use App\Group;
 
 class DownloadTaskController extends Controller
 {
@@ -21,6 +23,25 @@ class DownloadTaskController extends Controller
             if (!$file->isDir()) {
                 $filePath     = $file->getRealPath();
                 $relativePath = 'sesiones/' . substr($filePath, strlen($path) + 1);
+                $zip->addFile($filePath, $relativePath);
+            }
+        }
+        $zip->close();
+        return response()->download($zip_file);
+    }
+    public function downloadGroupPortfolies(Request $request){
+        $group = Group::find($request->group_id);
+        $block = $group->blocks()->first();
+        $zip_file = 'Grupo '.$group->name .'.zip';
+        $zip = new \ZipArchive();
+        $zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+        $path = public_path().'/storage/' . $block->block_path .'/'.$group->name;
+        $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
+        foreach ($files as $name => $file)
+        {
+            if (!$file->isDir()) {
+                $filePath     = $file->getRealPath();
+                $relativePath = 'estudiantes/' . substr($filePath, strlen($path) + 1);
                 $zip->addFile($filePath, $relativePath);
             }
         }

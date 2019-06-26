@@ -6,7 +6,7 @@ $(document).ready(function(){
         iCnt = 1;
         added = false;
         $.ajax({
-            url: 'http://localhost:8000/admin/blocks/getGroups/'+event.target.value+'',
+            url: window.location.origin+'/admin/blocks/getGroups/'+event.target.value+'',
             success: function (response){
                 $("#groups_container").empty();
                 $('#groups_container').append(
@@ -28,7 +28,6 @@ $(document).ready(function(){
         $.ajax({
             url: "http://localhost:8000/admin/blocks/getGroups/"+subjectID+"",
             success: function (response){
-                console.log(response);
                 if (!added){
                     if($('#groups_container').data('frm') == 2){
                         console.log('HOlA ===>');
@@ -40,7 +39,6 @@ $(document).ready(function(){
                     }
                     added = true;
                 }
-                console.log('count: '+count+ ' length: '+response.length + ' icnt: '+iCnt);
                 if (iCnt < count ) {                            
                     iCnt = iCnt + 1;  
                     $(container).append(
