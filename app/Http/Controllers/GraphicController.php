@@ -8,6 +8,7 @@ use App\Sesion;
 use App\Group;
 use App\Management;
 use App\SubjectMatter;
+use App\Professor;
 class GraphicController extends Controller
 {
     public function index(){
@@ -84,4 +85,18 @@ class GraphicController extends Controller
         //dd($tasks_students);
         return $tasks_students;
     }
+
+    public function indexProfessor(){
+        $professor=Auth()->user()->Professor;
+        //dd($professor_id);
+        $subjectMatters=$professor->subjectMatters()->get();
+        $groups=$professor->groups()->get();;
+        //dd($groups->first()->subject);
+        $data=[
+            'subjectMatters' => $subjectMatters,
+            'groups'         => $groups
+        ];
+        return view('components.contents.graphics.graficosProfessor',$data);
+    }
+
 }
