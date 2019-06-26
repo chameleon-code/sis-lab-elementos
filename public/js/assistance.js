@@ -8,7 +8,7 @@ $(document).ready(()=>{
         var array = Array();
         var table = $('#dataTable').DataTable();
         $.ajax({
-            url: window.location.host+`auxiliar/getStudentList/${event.target.value}`,
+            url: window.location.origin+`auxiliar/getStudentList/${event.target.value}`,
             success: (response)=>{
                 array = response;
             }
@@ -40,7 +40,7 @@ $(document).ready(()=>{
     $('#modalAction').click(function(event){
             console.log($("#registerEvent").serialize());
             $.ajax({
-                url : window.location.host+'auxiliar/assistance',
+                url : window.location.origin+'auxiliar/assistance',
                 type: 'POST',
                 headers: {
                     'x-csrf-token': $("meta[name=csrf-token]").attr('content')
