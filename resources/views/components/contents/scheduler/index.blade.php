@@ -122,8 +122,8 @@
         
             </div>
             <div class="modal-footer">
-              <button type="button" class="savetask btn btn-success"><i class="fa fa-floppy-o"></i> Guardar</button>
-              <button type="button" class="canceltask btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
+              <button type="button" class="savetask btn btn-primary">Guardar</button>
+              <button type="button" class="canceltask btn btn-danger" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>

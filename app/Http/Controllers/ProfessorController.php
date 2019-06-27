@@ -266,4 +266,18 @@ class ProfessorController extends Controller
         Cache::put('group_nav', '', $tmp);
         Cache::put('block_nav', '', $tmp);
     }
+
+    public function downloadPortflies(){
+        $professor = Professor::where('user_id', auth()->user()->id)->first();
+        $groups = Group::where('professor_id', $professor->id)->get()->reject(function ($item, $key){
+            if(is_null($item->blocks->first())){
+                return true;
+            }
+        }); 
+        $data = [
+            'groups' => $groups,
+            'title' => 'Portafolios en base a grupos'
+        ];
+        return view('components.contents.professor.portflies', $data);
+    }
 }

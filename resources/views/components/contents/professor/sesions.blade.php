@@ -281,4 +281,5 @@
 
 @push('scripts')
     <script src="/js/sesions.js"></script>
+    <script src="{{ asset('js/datepicker/datepinker.js') }}"></script>
 @endpush

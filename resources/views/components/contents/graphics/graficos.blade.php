@@ -1,4 +1,4 @@
-@extends('components.sections.professorSection')
+@extends('components.sections.adminSection')
 @section('userContent')
 <div class="container-fluid">
     <div class="card shadow mb-4">
@@ -13,7 +13,7 @@
                     <div class="col-sm-12 table-responsive text-center">
                         <div class="row">
                             {{-- <label>Gestión</label> --}}
-                            <div class="col-md-5 col-sm-5">
+                            <div class="col-md-5 col-sm-5 col-12">
                                 <select class="form-control" name="managements" id="managements">
                                     @foreach ($managements as $item)
                                 <option class="form-control" value="{{$item->id}}">{{$item->semester}}-{{$item->managements}}</option>
@@ -42,7 +42,7 @@
                     <div class="col-sm-12 table-responsive text-center">
                         <div class="row">
                             {{-- <label>Materia</label> --}}
-                            <div class="col-md-5 col-sm-5">
+                            <div class="col-md-5 col-sm-5 col-12">
                                 <select class="form-control" name="subjectMatters" id="subjectMatters">
                                     @foreach ($subjectMatters as $item)
                                 <option class="form-control" value="{{$item->id}}">{{$item->name}}</option>
@@ -70,7 +70,7 @@
                     <div class="col-sm-12 table-responsive text-center">
                         <div class="row">
                             {{-- <label>Grupo</label> --}}
-                            <div class="col-md-5 col-sm-5">
+                            <div class="col-md-5 col-sm-5 col-12">
                                 <select class="form-control" name="groups" id="groups">
                                     @foreach ($groups as $item)
                                 <option class="form-control" value="{{$item->id}}">{{$item->name}} - {{$item->subject->name}} - {{$item->professor->names}} {{$item->professor->first_name}} {{$item->professor->second_name}}</option>
