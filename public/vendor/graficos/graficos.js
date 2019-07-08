@@ -37,7 +37,7 @@ $(document).ready(function() {
                 chart.draw(data, options);
             }
         } else {
-            $('#management').append('<p class="alert alert-warning m-5">No existe notas disponibles aún</p>');
+            $('#management').append('<br><p class="alert alert-warning m-12">No existe notas disponibles aún</p>');
         }
     });
 
@@ -79,7 +79,7 @@ $(document).ready(function() {
                     chart.draw(data, options);
                 }
             } else {
-                $('#management').append('<p class="alert alert-warning m-5">No existe notas disponibles aún</p>');
+                $('#management').append('<br><p class="alert alert-warning m-12">No existe notas disponibles aún</p>');
             }
         });
     });
@@ -122,7 +122,7 @@ $(document).ready(function() {
                 chart.draw(data, options);
             }
         } else {
-            $('#subjectMatter').append('<p class="alert alert-warning m-5">No existe notas disponibles aún</p>');
+            $('#subjectMatter').append('<br><p class="alert alert-warning m-12">No existe notas disponibles aún</p>');
         }
     });
 
@@ -164,7 +164,7 @@ $(document).ready(function() {
                     chart.draw(data, options);
                 }
             } else {
-                $('#subjectMatter').append('<p class="alert alert-warning m-5">No existe notas disponibles aún</p>');
+                $('#subjectMatter').append('<br><p class="alert alert-warning m-12">No existe notas disponibles aún</p>');
             }
         });
     });
@@ -206,7 +206,7 @@ $(document).ready(function() {
                 chart.draw(data, options);
             }
         } else {
-            $('#group').append('<p class="alert alert-warning m-5">No existe notas disponibles aún</p>');
+            $('#group').append('<br><p class="alert alert-warning m-12">No existe notas disponibles aún</p>');
         }
     });
     $("#groups").change(function(event) {
@@ -247,7 +247,7 @@ $(document).ready(function() {
                     chart.draw(data, options);
                 }
             } else {
-                $('#group').append('<p class="alert alert-warning m-5">No existe notas disponibles aún</p>');
+                $('#group').append('<br><p class="alert alert-warning m-12">No existe notas disponibles aún</p>');
             }
         });
     });
