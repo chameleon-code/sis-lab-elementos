@@ -131,7 +131,7 @@ class DatabaseSeeder extends Seeder
         Management::create([
             'semester' => 2,
             'managements' => 2019,
-            'start_management' => '2019-07-30',
+            'start_management' => '2019-07-20',
             'end_management' => '2019-11-30',
             'management_path' => 'folders/2019-2',
             'enable_inscription' => 0,
