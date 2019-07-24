@@ -19,7 +19,7 @@ class CreateBlockSchedulesTable extends Migration
             $table->foreign('schedule_id')->references('id')->on('schedule_records')->onDelete('cascade');
             $table->unsignedInteger('block_id');
             $table->foreign('block_id')->references('id')->on('blocks')->onDelete('cascade');
-            $table->unsignedInteger('registered');
+            $table->unsignedInteger('registered')->default(0);
             $table->timestamps();
         });
     }
