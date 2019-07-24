@@ -18,7 +18,7 @@ class Laboratory extends Model
     ];
 
     CONST LABS = ['1', '2', '3', '4'];
-    CONST CAPS = [60, 40, 50, 50];
+    CONST CAPS = [40, 35, 35, 35];
 
     public static function getAllLaboratory(){
         return self::all();

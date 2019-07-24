@@ -126,15 +126,15 @@ class DatabaseSeeder extends Seeder
             'start_management' => '2019-02-01',
             'end_management' => '2019-07-10',
             'management_path' => 'folders/2019-1',
-            'enable_inscription' => 1,
+            'enable_inscription' => 0,
         ]);
         Management::create([
             'semester' => 2,
             'managements' => 2019,
-            'start_management' => '2019-07-30',
+            'start_management' => '2019-07-20',
             'end_management' => '2019-11-30',
             'management_path' => 'folders/2019-2',
-            'enable_inscription' => 0,
+            'enable_inscription' => 1,
         ]);
 
         // // MATERIAS
@@ -168,7 +168,7 @@ class DatabaseSeeder extends Seeder
         // BLOQUES
 
         $block_lcv = Block::create([
-            'management_id' => 1,
+            'management_id' => 2,
             'name' => 'Bloque-lcv',
             'available' => 1,
             'block_path' => 'folders/2019-1/Bloque-lcv'
@@ -276,9 +276,40 @@ class DatabaseSeeder extends Seeder
         // factory(\App\ScheduleRecord::class, 20)->create();
 
         for($i=1 ; $i<=9 ; $i++){
+            $registered = 0;
+            switch($i){
+                case 1:
+                    $registered = 35;
+                    break;
+                case 2:
+                    $registered = 35;
+                    break;
+                case 3:
+                    $registered = 21;
+                    break;
+                case 4:
+                    $registered = 26;
+                    break;
+                case 5:
+                    $registered = 35;
+                    break;
+                case 6:
+                    $registered = 17;
+                    break;
+                case 7:
+                    $registered = 34;
+                    break;
+                case 8:
+                    $registered = 34;
+                    break;
+                case 9:
+                    $registered = 21;
+                    break;
+            }
             BlockSchedule::create([
                 'schedule_id' => $i,
                 'block_id' => 1,
+                'registered' => $registered,
             ]);
         }
 
