@@ -37,7 +37,8 @@ class AuxiliarTaskController extends Controller
                     }
                     array_push($studentTasks,$studentTask);
                 }
-                if($studentTasks[0]!=null){
+                
+                if($studentTasks!=[] && $studentTasks[0]!=null){
                     $data = [
                         'student'=> $user,
                         'studentTasks'=> $studentTasks
