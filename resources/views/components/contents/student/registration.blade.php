@@ -28,18 +28,20 @@
                     <a class="py-1" href="#" data-toggle="modal" data-target="#infoInscription" style="font-size: 14px; width: 100px;" onclick="status()"> Estado de Inscripción </a>
                 </div>
             </div>
-            <div class="card-body">                
-                
-                @if (count($errors)>0)
-                    <div class="alert alert-danger">
-                        <b>Ha ocurrido un error!</b>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{$error}}</li>
-                            @endforeach
-                        </ul>
+
+            @if(isset($error))
+                <div id="schedule-error" class="alert alert-danger mt-3 mb-0">
+                    <div class="d-flex justify-content-between">
+                        <b>Horario no disponible.</b>
+                        <a style="color: #78261f;" href="#" onclick="$('#schedule-error').hide()"> <i class="fa fa-times"></i> </a>
                     </div>
-                @endif
+                    <ul class="m-0">
+                        <li>{{ $error }}</li>
+                    </ul>
+                </div>
+            @endif
+
+            <div class="card-body">
 
                 <script> addUserId({{json_encode(Auth::user()->id)}}); </script>
 
