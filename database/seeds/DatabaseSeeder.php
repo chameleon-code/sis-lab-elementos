@@ -175,7 +175,7 @@ class DatabaseSeeder extends Seeder
         ]);
         Storage::makeDirectory($block_lcv->block_path);
         
-        $dates = \App\Sesion::autodate('2019-02-4', '2019-06-24');
+        $dates = \App\Sesion::autodate('2019-07-20', '2019-11-30');
         $i = 1;
         foreach($dates as $date){
             Sesion::create([
