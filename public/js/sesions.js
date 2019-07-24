@@ -8,7 +8,6 @@ $(document).ready(function(){
     $('#formActivity').hide();
     $('#btnsTasks').hide();
     $('#btnsEditTasks').hide();
-    $('#checkbox-description')[0].checked = 1;
     hideErrors();
 });
 

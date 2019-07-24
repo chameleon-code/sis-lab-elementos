@@ -15,6 +15,7 @@ use App\ScheduleRecord;
 use App\BlockSchedule;
 use App\StudentSchedule;
 use App\Management;
+use App\Task;
 
 class DatabaseSeeder extends Seeder
 {
@@ -342,6 +343,21 @@ class DatabaseSeeder extends Seeder
                 'block_schedule_id' => App\Database::BLOCK_SCHEDULES[$i],
                 'group_id' => $group->id,
                 'student_path' => Block::find(1)->block_path.'/'.$group->name.'/'.$user->code_sis,
+            ]);
+        }
+
+        for($i=0 ; $i<sizeof(App\Database::TASKS) ; $i++){
+            $professors = ['Leticia Blanco', 'Corina Flores', 'Vladimir Abel Costas'];
+            $dir = App\Block::findOrFail(1)->block_path;
+            $semiPath =$dir.'/practices/sesion-'.($i+1).'/';
+            Storage::makeDirectory($semiPath);
+            Task::create([
+                'sesion_id' => $i+1,
+                'title' => App\Database::TASKS[$i],
+                'published_by' => $faker->randomElement($professors),
+                'description' => null,
+                'task_path' => '/storage/'.$semiPath,
+                'task_file' => App\Database::NAME_TASKS[$i],
             ]);
         }
     }

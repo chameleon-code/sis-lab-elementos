@@ -1334,4 +1334,40 @@ class Database extends Model
         10,
         10,
     ];
+
+    const TASKS = [
+        'PracticaSaludador',
+        'Clases',
+        'ClasesConstructores',
+        'ImplementandoMetodos',
+        'ImplementandoMetodos',
+        'InteraccionObjetos',
+        'InteraccionObjetos',
+        'InteraccionObjetos',
+        'InteraccionObjetos',
+        'Colecciones',
+        'ColeccionesCadenas',
+        'ColeccionesCadenas',
+        'ArreglosCadenas',
+        'Herencia',
+        'HerenciaTres'
+    ];
+
+    const NAME_TASKS = [
+        'Sesion1_PracticaSaludador.pdf',
+        'Sesion2_Clases.pdf',
+        'Sesion3_ClasesConstructores.pdf',
+        'Sesion4_ImplementandoMetodos.pdf',
+        'Sesion5_ImplementandoMetodos.pdf',
+        'Sesion6_InteraccionObjetos.pdf',
+        'Sesion7_InteraccionObjetos.pdf',
+        'Sesion8_InteraccionObjetos.pdf',
+        'Sesion9_InteraccionObjetos.pdf',
+        'Sesion10.rar',
+        'Sesion11_ColeccionesCadenas.pdf',
+        'Sesion12_ColeccionesCadenas.pdf',
+        'Sesion13_ArreglosCadenas.pdf',
+        'Sesion14_Herencia.pdf',
+        'Sesion15_HerenciaTres.pdf',
+    ];
 }
