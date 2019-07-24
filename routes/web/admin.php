@@ -81,7 +81,7 @@ Route::get('/admin/groups/getGroupsName/{id}', 'GroupController@getGroupsNameByS
 
 Route::get('/admin/blocks/getGroups/{id}', 'BlockController@getGroups');
 Route::get('/admin/blocks/getGroupsId', 'BlockGroupController@getAllBlockGroups');
-Route::get('/admin/blocks/getGro', 'BlockGroupController@getAllBlockGroups');
+Route::get('/admin/blocks/setStatus/{id}/{value}', 'BlockController@setStatus');
 
 // Inscripciones
 
