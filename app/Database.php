@@ -1440,4 +1440,11 @@ class Database extends Model
         'sesion9.rar',
         'sesion10.rar'
     ];
+
+    const TASK_DESCRIPTION = [
+        'Completo el ejercicio ',
+        'Hizo el ejercicio ',
+        'Funcionó ',
+        'Termnado ',
+    ];
 }
