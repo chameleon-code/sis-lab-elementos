@@ -53,9 +53,9 @@
                                                 <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->code_sis }}</font></font></td>
                                                 @forelse ($sesions as $sesion)
                                                     @if (in_array($sesion->id ,array_pluck($item->student->assistances->toArray(), 'sesion_id')))
-                                                        <td><a href="#" class="btn btn-success btn-circle btn-sm mx-1" ><i class="far fa-check-square"></i></a></td>
+                                                        <td><a href="#" class="btn btn-success btn-circle btn-sm mx-1" onclick="assistanceRegister({{ $item->student->id }}, {{ $item->id }}, 0)"><i class="far fa-check-square"></i></a></td>
                                                     @else  
-                                                        <td ><a href="#" class="btn btn-danger btn-circle btn-sm mx-1" ><i class="fas fa-times"></i></a></td>    
+                                                        <td ><a href="#" class="btn btn-danger btn-circle btn-sm mx-1" onclick="assistanceRegister({{ $item->student->id }}, {{ $item->id }}, 1)"><i class="fas fa-times"></i></a></td>    
                                                     @endif                                                  
                                                 @empty                                                    
                                                 @endforelse
@@ -70,34 +70,6 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="appModal" tabindex="-1" role="dialog" aria-labelledby="appModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="appModalLabel">Confirmacion de Asistencia</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="" id="registerStudent">
-                        <p>Desea confirmar la asistencia del alumno? </p>
-                        <input name="student_id" type="hidden" value="" id="student_id">
-                        <input name="blockschedule_id" type="hidden" value="" id="blockschedule_id">
-                    </form>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="modalAction">Confirmar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 @endsection
 
 @push('scripts')
