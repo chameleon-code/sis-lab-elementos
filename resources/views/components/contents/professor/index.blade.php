@@ -35,7 +35,7 @@
                                                       <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->names }}</font></font></td>
                                                       {{-- <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->email }}</font></font></td> --}}
 
-                                                      <td class="p-2" style="text-align: center; display: flex;">
+                                                      <td class="p-2" style="text-align: center; display: inline-flex;">
                                                           <a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#professorProfile" onclick="loadProfile({{ $item }})"><i class="fas fa-eye"></i></a>
 
                                                           <a href="/admin/professors/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Editar"><i class="fas fa-edit"></i></a>
