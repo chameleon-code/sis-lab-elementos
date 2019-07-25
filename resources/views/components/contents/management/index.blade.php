@@ -32,7 +32,7 @@
                                                     <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->start_management}}</font></font></td>
                                                     <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->end_management}}</font></font></td>
                                                     
-                                                    <td class="text-center" style="text-align: center; display: flex;">
+                                                    <td class="text-center" style="text-align: center; display: inline-flex;">
                                                         <a href="/admin/management/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Editar"> <i class="fas fa-edit"></i> </a>
 
                                                         <button type="button" class="btn btn-danger btn-circle btn-sm mx-1" data-toggle="modal" data-toggle-2="tooltip" title="Eliminar" data-target="#eliminar{{ $item->id }}"> <i class="fas fa-trash"></i> </button>

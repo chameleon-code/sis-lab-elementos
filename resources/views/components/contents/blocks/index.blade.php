@@ -21,7 +21,7 @@
                                             
                                             <th class="sorting mx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 400px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Grupo / s</font></font></th>
 
-                                            <th class="text-center" data-orderable="false" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Acciones</font></font></th>
+                                            <th class="text-center" data-orderable="false" rowspan="1" colspan="1" style="width: 39px;" aria-label="Age: activate to sort column ascending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Acciones</font></font></th>
                                         </tr>
                                     </thead>
                                         {{-- <tfoot>
@@ -50,7 +50,7 @@
                                                         @endforelse
                                                     </td>
                                                     
-                                                    <td class="text-center" style="text-align: center; display: flex;">
+                                                    <td class="text-center" style="text-align: center; display: inline-flex;">
                                                         <a href="/admin/blocks/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Editar"><i class="fas fa-edit"></i></a>
                                                         <a href="/schedule/create/{{$item->id}}" class="btn btn-success btn-circle btn-sm mx-1" data-toggle="tooltip" title="Asiganción De Horarios"><i class="far fa-calendar-alt"></i></a>
                                                     </td>                                                    

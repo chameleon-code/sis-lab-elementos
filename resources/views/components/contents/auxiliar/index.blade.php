@@ -24,7 +24,7 @@
 
                                               <th class="sorting_asc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Office: activate to sort column ascending" style="width: 380px;"><font style="vertical-align: inherit;"><font color: white; style="color: white; vertical-align: inherit;">Nombres</font></font></th>
 
-                                              <th class="text-center" data-orderable="false" id="arrow-hide" rowspan="1" colspan="1" style="background: none;" ><font style="vertical-align: inherit;"><font style=" width: 200px; color: white; vertical-align; inherit;">Acciones</font></font></th>
+                                              <th class="text-center" data-orderable="false" id="arrow-hide" rowspan="1" colspan="1" style="width: 39px;"><font style="vertical-align: inherit;"><font style="color: white; vertical-align; inherit;">Acciones</font></font></th>
                                           </tr>
                                       </thead>
                                           <tbody>
@@ -36,7 +36,7 @@
                                                       <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->first_name }} {{ $item->second_name }}</font></font></td>
                                                       <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->names }}</font></font></td>
 
-                                                      <td class="p-2" style="text-align: center; display: flex;">
+                                                      <td class="p-2" style="text-align: center; display: inline-flex;">
                                                             <a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Pefil" data-toggle="modal" data-target="#auxiliarProfile" onclick="loadProfile({{ $item }})"><i class="fas fa-eye"></i></a>
                                                         
                                                             <a href="/admin/auxiliars/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Editar"><i class="fas fa-edit"></i></a>
