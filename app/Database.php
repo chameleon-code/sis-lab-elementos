@@ -1335,6 +1335,8 @@ class Database extends Model
         10,
     ];
 
+    // GUIA PRÁCTICA
+
     const TASKS = [
         'PracticaSaludador',
         'Clases',
@@ -1369,5 +1371,73 @@ class Database extends Model
         'Sesion13_ArreglosCadenas.pdf',
         'Sesion14_Herencia.pdf',
         'Sesion15_HerenciaTres.pdf',
+    ];
+
+    // TAREAS DE ESTUDIANTES
+
+    const NUMBER_TASKS = [9, 9, 9, 9, 10];
+    const STUDENTS_ID = [123, 197, 183, 121, 216];
+
+    const TASKS_STUDENT_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const TASKS_STUDENT_2 = [1, 2, 3, 4, 5, 6, 7, 9, 10];
+    const TASKS_STUDENT_3 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const TASKS_STUDENT_4 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const TASKS_STUDENT_5 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    const TASK_NAME_STUDENT_1 = [
+        'PrimerProyecto.rar',
+        'tarea2.rar',
+        'tarea3.rar',
+        'tarea4.rar',
+        'tarea5.rar',
+        'tarea6.rar',
+        'ejercicio7.rar',
+        'ejercicio8.rar',
+        'ejercicio9.rar'
+    ];
+    const TASK_NAME_STUDENT_2 = [
+        'SESION 1.rar',
+        'SESION 2.rar',
+        'SESION 3.rar',
+        'SESION 4.rar',
+        'SESION 5.rar',
+        'SESION 6.rar',
+        'SESION 7.rar',
+        'SESION 9.rar',
+        'SESION 10.rar'
+    ];
+    const TASK_NAME_STUDENT_3 = [
+        'Semana1.rar',
+        'Semana2.rar',
+        'Semana3.rar',
+        'Semana4.rar',
+        'Semana5.rar',
+        'Semana6.rar',
+        'Semana7.rar',
+        'Semana8.rar',
+        'Semana9.rar'
+    ];
+    const TASK_NAME_STUDENT_4 = [
+        'semana 1.rar',
+        'semana 2.rar',
+        'semana 3.rar',
+        'semana 4.rar',
+        'semana 5.rar',
+        'semana 6.rar',
+        'semana 7.rar',
+        'semana 8.rar',
+        'semana 9.rar'
+    ];
+    const TASK_NAME_STUDENT_5 = [
+        'sesion1.rar',
+        'sesion2.rar',
+        'sesion3.rar',
+        'sesion4.rar',
+        'sesion5.rar',
+        'sesion6.rar',
+        'sesion7.rar',
+        'sesion8.rar',
+        'sesion9.rar',
+        'sesion10.rar'
     ];
 }

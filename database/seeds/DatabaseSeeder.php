@@ -16,6 +16,7 @@ use App\BlockSchedule;
 use App\StudentSchedule;
 use App\Management;
 use App\Task;
+use App\StudentTask;
 
 class DatabaseSeeder extends Seeder
 {
@@ -359,6 +360,56 @@ class DatabaseSeeder extends Seeder
                 'task_path' => '/storage/'.$semiPath,
                 'task_file' => App\Database::NAME_TASKS[$i],
             ]);
+        }
+
+        for($i=0 ; $i<sizeof(App\Database::NUMBER_TASKS) ; $i++){
+            for($j=0 ; $j<App\Database::NUMBER_TASKS[$i] ; $j++){
+                $tasks_student = null;
+                switch($i){
+                    case 0:
+                        $tasks_student = App\Database::TASKS_STUDENT_1;
+                        break;
+                    case 1:
+                        $tasks_student = App\Database::TASKS_STUDENT_2;
+                        break;
+                    case 2:
+                        $tasks_student = App\Database::TASKS_STUDENT_3;
+                        break;
+                    case 3:
+                        $tasks_student = App\Database::TASKS_STUDENT_4;
+                        break;
+                    case 4:
+                        $tasks_student = App\Database::TASKS_STUDENT_5;
+                        break;
+                }
+                $task_names_student = null;
+                switch($i){
+                    case 0:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_1;
+                        break;
+                    case 1:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_2;
+                        break;
+                    case 2:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_3;
+                        break;
+                    case 3:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_4;
+                        break;
+                    case 4:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_5;
+                        break;
+                }
+                $student_schedule = StudentSchedule::where('student_id', '=', App\Database::STUDENTS_ID[$i])->get()->first();
+                $task_path = $student_schedule->student_path.'/sesion-'.$tasks_student[$j].'/';
+                Storage::makeDirectory($task_path);
+                StudentTask::create([
+                    'student_id' => App\Database::STUDENTS_ID[$i],
+                    'task_id' => $tasks_student[$j],
+                    'task_path' => $task_path,
+                    'task_name' => $task_names_student[$j],
+                ]);
+            }
         }
     }
 }

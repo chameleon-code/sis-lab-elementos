@@ -54,7 +54,7 @@ function loadPractice(sesion_id){
                     var dia = element.updated_at.charAt(8) + element.updated_at.charAt(9);
                     var hora = element.updated_at.charAt(11) + element.updated_at.charAt(12) + element.updated_at.charAt(13) + element.updated_at.charAt(14) +element.updated_at.charAt(15);
                     var dom_description;
-                    if(element.description == "") {
+                    if(element.description == "" || element.description == null) {
                         dom_description = "<div style='color: grey;'> <strong> Sin descripción </strong> </div>";
                     } else {
                         dom_description = "<div style=''> <strong> Descripción:&nbsp; </strong> <div id=''>"+element.description+"</div> </div>";
