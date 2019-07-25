@@ -27,7 +27,7 @@ class DownloadTaskController extends Controller
             }
         }
         $zip->close();
-        return response()->download($zip_file);
+        return response()->download($zip_file)->deleteFileAfterSend(true);
     }
     public function downloadGroupPortfolies(Request $request){
         $group = Group::find($request->group_id);
@@ -46,6 +46,6 @@ class DownloadTaskController extends Controller
             }
         }
         $zip->close();
-        return response()->download($zip_file);
+        return response()->download($zip_file)->deleteFileAfterSend(true);
     }
 }
