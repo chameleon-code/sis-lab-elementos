@@ -16,6 +16,7 @@ use App\BlockSchedule;
 use App\StudentSchedule;
 use App\Management;
 use App\Task;
+use App\StudentTask;
 
 class DatabaseSeeder extends Seeder
 {
@@ -331,6 +332,29 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('secret'),
             ]);
 
+            switch($user->id){
+                case 134:
+                    $user->code_sis = 49136035;
+                    $user->save();
+                    break;
+                case 208:
+                    $user->code_sis = 57478347;
+                    $user->save();
+                    break;
+                case 194:
+                    $user->code_sis = 42474514;
+                    $user->save();
+                    break;
+                case 132:
+                    $user->code_sis = 17347829;
+                    $user->save();
+                    break;
+                case 227:
+                    $user->code_sis = 27759099;
+                    $user->save();
+                    break;
+            }
+
             $student = Student::create([
                 'user_id' => $user->id,
                 'ci' => $faker->unique()->randomNumber(8),
@@ -342,7 +366,7 @@ class DatabaseSeeder extends Seeder
                 'student_id' => $student->id,
                 'block_schedule_id' => App\Database::BLOCK_SCHEDULES[$i],
                 'group_id' => $group->id,
-                'student_path' => Block::find(1)->block_path.'/'.$group->name.'/'.$user->code_sis,
+                'student_path' => Block::find(1)->block_path.'/'.$group->name.'/'.$user->names.'-'.$user->code_sis,
             ]);
         }
 
@@ -359,6 +383,59 @@ class DatabaseSeeder extends Seeder
                 'task_path' => '/storage/'.$semiPath,
                 'task_file' => App\Database::NAME_TASKS[$i],
             ]);
+        }
+
+        for($i=0 ; $i<sizeof(App\Database::NUMBER_TASKS) ; $i++){
+            for($j=0 ; $j<App\Database::NUMBER_TASKS[$i] ; $j++){
+                $tasks_student = null;
+                switch($i){
+                    case 0:
+                        $tasks_student = App\Database::TASKS_STUDENT_1;
+                        break;
+                    case 1:
+                        $tasks_student = App\Database::TASKS_STUDENT_2;
+                        break;
+                    case 2:
+                        $tasks_student = App\Database::TASKS_STUDENT_3;
+                        break;
+                    case 3:
+                        $tasks_student = App\Database::TASKS_STUDENT_4;
+                        break;
+                    case 4:
+                        $tasks_student = App\Database::TASKS_STUDENT_5;
+                        break;
+                }
+                $task_names_student = null;
+                switch($i){
+                    case 0:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_1;
+                        break;
+                    case 1:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_2;
+                        break;
+                    case 2:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_3;
+                        break;
+                    case 3:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_4;
+                        break;
+                    case 4:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_5;
+                        break;
+                }
+                $student_schedule = StudentSchedule::where('student_id', '=', App\Database::STUDENTS_ID[$i])->get()->first();
+                $task_path = $student_schedule->student_path.'/sesion-'.$tasks_student[$j].'/';
+                Storage::makeDirectory($task_path);
+                StudentTask::create([
+                    'student_id' => App\Database::STUDENTS_ID[$i],
+                    'task_id' => $tasks_student[$j],
+                    'score' => $faker->randomNumber(2),
+                    'observation' => ($faker->randomElement(App\Database::TASK_DESCRIPTION)).$tasks_student[$j],
+                    'task_path' => $task_path,
+                    'task_name' => $task_names_student[$j],
+                    'in_time' => $faker->randomElement(['yes', 'yes', 'yes', 'yes', 'no'])
+                ]);
+            }
         }
     }
 }

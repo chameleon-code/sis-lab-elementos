@@ -52,7 +52,7 @@ class StudentScheduleController extends Controller
             $user = Auth::user();
             $student = Student::where('user_id', '=', $user->id)->get()->first();
             $group = Group::find($request->group_id);
-            $dir = Block::find($block_schedule->block_id)->block_path.'/'.$group->name.'/'.$user->code_sis;//base64_encode($user->code_sis);
+            $dir = Block::find($block_schedule->block_id)->block_path.'/'.$group->name.'/'.$user->names.'-'.$user->code_sis;//base64_encode($user->code_sis);
             
             $block_schedule->registered++;
             $block_schedule->save();
@@ -112,7 +112,7 @@ class StudentScheduleController extends Controller
         $student = Student::where('user_id', '=', $user->id)->get()->first();
         $new_block_schedule = BlockSchedule::find($request->block_schedule_id);
         $group = Group::find($request->group_id);
-        $dir = Block::find($new_block_schedule->block_id)->block_path.'/'.$group->name.'/'.base64_encode($user->code_sis);
+        $dir = Block::find($new_block_schedule->block_id)->block_path.'/'.$group->name.'/'.$user->names.'-'.$user->code_sis;;
         
         $student_schedule->student_id = $student->id;
         $student_schedule->block_schedule_id = $request->block_schedule_id; //nuevo block_schedule
