@@ -1,14 +1,10 @@
 function checkAssistance(id, bsch_id){
-    console.log('check');
-    $('#student'+id).attr('class', 'btn btn-warning btn-circle btn-sm mx-1');
-    $('#student'+id).attr('title', 'Marcar Asistencia');
-    $('#student'+id).attr('onclick', `assistanceRegister(${id}, ${bsch_id}, 1)`);  
+    console.log('check #student'+id);
+    $('#student'+id).attr('onclick', `assistanceRegister(${id}, ${bsch_id}, 0)`);  
 }
 function uncheckAssistance(id, bsch_id){
-    console.log('uncheck');
-    $('#student'+id).attr('class', 'btn btn-warning btn-circle btn-sm mx-1');
-    $('#student'+id).attr('title', 'Quitar asistencia');
-    $('#student'+id).attr('onclick', `assistanceRegister(${id}, ${bsch_id}, 0)`); 
+    console.log('uncheck #student'+id);
+    $('#student'+id).attr('onclick', `assistanceRegister(${id}, ${bsch_id}, 1)`); 
 }
 function assistanceRegister(id, bsch_id, status){
     var param = {
@@ -26,12 +22,10 @@ function assistanceRegister(id, bsch_id, status){
         success: (res) => {
             if(res.res) {
                 if(status == 1){
-                    //checkAssistance(param['student_id'], param['blockschedule_id']);  
-                    $('#dataTable').DataTable().ajax.reload();                  
+                    checkAssistance(param['student_id'], param['blockschedule_id']); 
                 }   
                 else{
-                    //uncheckAssistance(param['student_id'], param['blockschedule_id']);
-                    $('#dataTable').DataTable().ajax.reload();
+                    uncheckAssistance(param['student_id'], param['blockschedule_id']);
                 }           
             } else {
                 Swal.fire({
@@ -42,8 +36,6 @@ function assistanceRegister(id, bsch_id, status){
             }
         }
     });
-    $('#student_id').val(id);
-    $('#blockschedule_id').val(bsch_id);
 }
 $(document).ready(()=>{
     var modal = $('#appModal');
@@ -68,10 +60,10 @@ $(document).ready(()=>{
                     { data: 'Asistencia',
                         render: function(data, type, row) {
                             if(data.assist === true){
-                                return `<a href="#" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Marcar Asistencia" onclick="assistanceRegister(${data.student}, ${data.bsch_id}, 1)" id="${data.student}"><i class="far fa-check-square"></i></a>`
+                                return `<input type="checkbox" class="form-check-input" id="student${data.student}" onclick="assistanceRegister(${data.student} , ${data.bsch_id}, 0)" checked>`
                             }
                             else{
-                                return `<a href="#" class="btn btn-success btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Quitar asistencia" onclick="assistanceRegister(${data.student}, ${data.bsch_id}, 0)" id="${data.student}"><i class="far fa-check-square"></i></a>`
+                                return `<input type="checkbox" class="form-check-input" id="student${data.student}" onclick="assistanceRegister(${data.student} , ${data.bsch_id}, 1)" >`
                             }
                         } 
                     }                      
@@ -79,42 +71,5 @@ $(document).ready(()=>{
             }).draw();
         });
     });
-    // $('#modalAction').click(function(event){
-    //         console.log($("#registerEvent").serialize());
-    //         $.ajax({
-    //             url : window.location.origin+'/auxiliar/assistance',
-    //             type: 'POST',
-    //             headers: {
-    //                 'x-csrf-token': $("meta[name=csrf-token]").attr('content')
-    //             },
-    //             data: {
-    //                 info: $("#registerStudent").serialize()
-    //             },
-    //             success: (res) => {
-    //                 if(res.res) {
-    //                    Swal.fire(
-    //                         'Registro de estudiante exitoso!',
-    //                         'Revisa en tu registro de asistencia',
-    //                         'success'
-    //                     );
-    //                     modal.modal('hide');        
-    //                 } else {
-    //                     Swal.fire({
-    //                         type: 'error',
-    //                         title: 'Algo salio mal...',
-    //                         text: 'No se pudo guardar la informacion, vuelve a intentarlo',
-    //                       })
-    //                 }
-    //             }
-    //         });
-    //     });
-    // $('#modalAction').click( ()=>{
-    //     var modal = $('#appModal');
-    //     var id = modal.find('#student_id').val();
-    //     $('#student'+id).attr('class', 'btn btn-success btn-circle btn-sm mx-1');
-    //     $('#student'+id).attr('title', 'Estudiante registrado');
-    //     $('#student'+id).attr('data-target', '');
-    //     $('#student'+id).attr('onclick', '');         
-    // });
 });
 

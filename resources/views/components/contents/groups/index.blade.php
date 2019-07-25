@@ -33,7 +33,7 @@
                                                     <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->subject->name}}</font></font></td>
                                                     <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->professor->first_name ." ". $item->professor->second_name ." ". $item->professor->names}}</font></font></td>
                                                     
-                                                    <td class="text-center" style="text-align: center; display: flex;">
+                                                    <td class="text-center" style="text-align: center; display: inline-flex;">
                                                         <a href="/admin/groups/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Editar"> <i class="fas fa-edit"></i> </a>
                                                         <form class="pull-right" action="{{route('groups.destroy',[$item->id])}}" method="POST">
                                                                 {{csrf_field()}}
