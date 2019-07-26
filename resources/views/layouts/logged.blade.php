@@ -224,7 +224,6 @@
 
   <!-- Page level custom scripts -->
   <script src="/js/datatables-demo.js"></script>
-  {{-- para las fechas--}}
 </body>
 
 </html>
