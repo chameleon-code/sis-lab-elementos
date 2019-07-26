@@ -38,7 +38,19 @@ function assistanceRegister(id, bsch_id, status){
     });
 }
 $(document).ready(()=>{
-    var modal = $('#appModal');
+    $('#dataTableRegister').DataTable( {
+        "columnDefs": [
+            {
+                "targets": [ 1 ],
+                "visible": false,
+                "searchable": false
+            }
+        ],
+        dom: 'Bfrtip',
+        buttons: [
+                'pdf'
+        ]
+    } );
     $('#select-labs').change((event) => {        
         var array = Array();
         var table = $('#dataTable').DataTable();
