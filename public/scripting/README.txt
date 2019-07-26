@@ -4,3 +4,6 @@ Tareas entregadas de los estudiantes (cod_sis):
 3. 57478347
 4. 27759099
 5. 42474514
+6. 65772817
+7. 2942076
+8. 87906344
