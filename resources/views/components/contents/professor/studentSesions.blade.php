@@ -1,16 +1,6 @@
 @extends('components.sections.professorSection')
 @section('userContent')
 
-{{--  <style>
-        .accordion-body:after {
-            content: '\02228';
-            color: #777;
-            font-weight: bold;
-            float: right;
-            margin-left: 5px;
-          }
-</style>  --}}
-
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-2">

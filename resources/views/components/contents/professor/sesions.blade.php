@@ -103,7 +103,11 @@
                                     Aun no tiene sesiones en este bloque
                                 </div>
                             @endif
+                            
                             @foreach ($sesions as $sesion)
+                            @php
+                                $i = 0;
+                            @endphp
                                 @foreach ($sesion as $s)
                                     @if ($s->block_id==$block->block_id)
                                         <thead>
@@ -123,18 +127,50 @@
                                                     </div>
                                                 </tr>
                                         </thead>
-                                        <div class="py-2" id="panel{{$s->id}}" style="max-height: 100%;">
-                                            <div class="my-2 mx-2" style="font-size: 15px;">
-                                                <div style="margin-top: 12px; margin-bottom: -15px;"> 
-                                                    <p> <strong> Inicio: </strong> {{$s->date_start}} </p> 
+
+                                        <div id="panel{{$s->id}}">
+                                            <div class="d-flex justify-content-between">
+                                                <div id="sesion-dates{{$s->id}}" class="col-xl-5 py-1 px-2 my-1 mx-1 card shadow" style="font-size: 15px;"></div>
+                                                    
+                                                <div class="col-xl-7 mt-1 pl-0" style="padding-right: 12px;">
+                                                    <div class="card shadow m-0">
+                                                        <div class="card-body" style="padding: 8px;">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col">
+                                                                    <div class="text-xs font-weight-bold text-info text-uppercase">Tareas entregadas</div>
+                                                                    <div class="row no-gutters align-items-center">
+                                                                        <div class="col-auto">
+                                                                            <div class="h6 mb-0 mr-3 font-weight-bold text-gray-800">{{ $tasks_by_sesion[$i] }}/{{ $block_registered }}</div>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                        <div class="progress progress-sm mr-2">
+                                                                            @php
+                                                                                $porcent_tasks = ($tasks_by_sesion[$i] * 100) / $block_registered;
+                                                                            @endphp
+                                                                            <div class="progress-bar bg-info" role="progressbar" style="width: {{ $porcent_tasks }}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div style="margin-top: 12px; margin-bottom: -15px;"> 
-                                                    <p> <strong> Fin: </strong>  {{$s->date_end}}</p> 
-                                                </div>
+
                                             </div>
                                         </div>
+
+                                        <script>
+                                            var start_month = getSesionMonth({!! json_encode($s->date_start) !!});
+                                            $('#sesion-dates'+{!! json_encode($s->id) !!}).append(`<div> <strong> Inicio: </strong> ${start_month} </div>`);
+                                            var end_month = getSesionMonth({!! json_encode($s->date_end) !!});
+                                            $('#sesion-dates'+{!! json_encode($s->id) !!}).append(`<div> <strong> Fin: </strong> ${end_month} </div>`);
+                                        </script>
                                         
                                     @endif
+                                    @php
+                                        $i++;
+                                    @endphp
                                 @endforeach
                             @endforeach
                         </div>

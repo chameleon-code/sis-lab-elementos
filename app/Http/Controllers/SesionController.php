@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 use App\Sesion;
 use App\Task;
 use App\Block;
+use App\BlockGroup;
 use App\Professor;
 use App\Management;
 use App\StudentSchedule;
 use App\StudentTask;
+use App\BlockSchedule;
+use App\Group;
 
 class SesionController extends Controller
 {
@@ -35,12 +38,37 @@ class SesionController extends Controller
                 $dateEnd = Management::where('id','=',$management_id)->get()->first()->end_management;
                 array_push($subjectNames, $subjectName);
             }
+            $block_schedules = BlockSchedule::all();
+            $block_registered = 0;
+            foreach($block_schedules as $block_schedule) {
+                if($block_schedule->block_id == $blockId){
+                    $block_registered = $block_registered + $block_schedule->registered;
+                }
+            }
+            
+            $tasks_by_sesion[] = [];
+            $student_tasks = StudentTask::all();
+            for($i=0 ; $i<sizeof($sesionsBlocks[0]) ; $i++){
+                $tasks_by_sesion[$i] = 0;
+            }
+            $sesions = $sesionsBlocks[0];
+            $i = 0;
+            foreach($sesions as $sesion) {
+                foreach($student_tasks as $student_task) {
+                    if($student_task->task->sesion_id == $sesion->id) {
+                        $tasks_by_sesion[$i]++;
+                    }
+                }
+                $i++;
+            }
             $data = [
                 'blocks' => $blockGroups,
                 'sesions' => $sesionsBlocks,
+                'tasks_by_sesion' => $tasks_by_sesion,
                 'start' => $dateStart,
                 'end' => $dateEnd,
-                'subjects'=>$subjectNames
+                'subjects' => $subjectNames,
+                'block_registered' => $block_registered
             ];
             return view('components.contents.professor.sesions', $data);
         }else{
