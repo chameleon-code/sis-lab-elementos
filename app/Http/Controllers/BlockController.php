@@ -237,4 +237,11 @@ class BlockController extends Controller
 
         return $block_schedules;
     }
+    public function setStatus($id, $value){
+        $block = Block::findOrFail($id);
+        $block->available = $value;
+        $block->save();
+
+        return response(["response" => $block]);
+    }
 }
