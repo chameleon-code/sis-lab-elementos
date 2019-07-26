@@ -173,7 +173,7 @@ class DatabaseSeeder extends Seeder
             'management_id' => 2,
             'name' => 'Bloque-lcv',
             'available' => 1,
-            'block_path' => 'folders/2019-1/Bloque-lcv'
+            'block_path' => 'folders/2019-2/Bloque-lcv'
         ]);
         Storage::makeDirectory($block_lcv->block_path);
         
@@ -352,6 +352,18 @@ class DatabaseSeeder extends Seeder
                 case 227:
                     $user->code_sis = 27759099;
                     $user->save();
+                    break;//
+                case 145:
+                    $user->code_sis = 65772817;
+                    $user->save();
+                    break;
+                case 173:
+                    $user->code_sis = 2942076;
+                    $user->save();
+                    break;
+                case 259:
+                    $user->code_sis = 87906344;
+                    $user->save();
                     break;
             }
 
@@ -403,6 +415,15 @@ class DatabaseSeeder extends Seeder
                         break;
                     case 4:
                         $tasks_student = App\Database::TASKS_STUDENT_5;
+                        break;//
+                    case 5:
+                        $tasks_student = App\Database::TASKS_STUDENT_6;
+                        break;
+                    case 6:
+                        $tasks_student = App\Database::TASKS_STUDENT_7;
+                        break;
+                    case 7:
+                        $tasks_student = App\Database::TASKS_STUDENT_8;
                         break;
                 }
                 $task_names_student = null;
@@ -421,6 +442,15 @@ class DatabaseSeeder extends Seeder
                         break;
                     case 4:
                         $task_names_student = App\Database::TASK_NAME_STUDENT_5;
+                        break;//
+                    case 5:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_6;
+                        break;
+                    case 6:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_7;
+                        break;
+                    case 7:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_8;
                         break;
                 }
                 $student_schedule = StudentSchedule::where('student_id', '=', App\Database::STUDENTS_ID[$i])->get()->first();
