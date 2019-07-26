@@ -61,9 +61,11 @@
                                                     <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->names }}</font></font></td>
                                                     <td class="text-center" style="text-align: center; display: flex;">
                                                         @if(empty($item->assistances->where('day', date('Y-m-d'))->all()))
-                                                            <a href="#" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Marcar Asistencia" data-toggle="modal" data-target="#appModal" onclick="assistanceRegister({{$item->id}} , {{$bsch->id}})" id="student{{$item->id}}"><i class="far fa-check-square"></i></a>
+                                                            <input type="checkbox" class="form-check-input" id="student{{ $item->id }}" onclick="assistanceRegister({{$item->id}} , {{$bsch->id}}, 1)">
+                                                            {{-- <a href="#" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Marcar Asistencia" data-toggle="modal" data-target="#appModal" onclick="assistanceRegister({{$item->id}} , {{$bsch->id}})" id="student{{$item->id}}"><i class="far fa-check-square"></i></a> --}}
                                                         @else
-                                                            <a href="#" class="btn btn-success btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Marcar Asistencia" data-toggle="modal" id="student{{$item->id}}"><i class="far fa-check-square"></i></a>
+                                                            <input type="checkbox" class="form-check-input" id="student{{ $item->id }}" checked onclick="assistanceRegister({{$item->id}} , {{$bsch->id}}, 0)">
+                                                            {{-- <a href="#" class="btn btn-success btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Marcar Asistencia" data-toggle="modal" id="student{{$item->id}}"><i class="far fa-check-square"></i></a> --}}
                                                         @endif                                                        
                                                     </td>
                                                 </tr>

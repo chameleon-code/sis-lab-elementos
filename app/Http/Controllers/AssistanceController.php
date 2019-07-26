@@ -91,19 +91,24 @@ class AssistanceController extends Controller
     }
 
     public function store(Request $request){
-        $info = \request('info');
-        $data = [];
-        parse_str($info, $data);
-        $block_schedule = BlockSchedule::find($data['blockschedule_id']);
+        $block_schedule = BlockSchedule::find($request['blockschedule_id']);
         try{
-            $assistance = new Assistance();
-            $assistance->blockschedule_id = $block_schedule->id;
-            $assistance->student_id = $data['student_id'];
-            $assistance->attend = 1;
-            $assistance->day = date('Y-m-d');
-            $assistance->sesion_id = Sesion::getSesionIdToDayByBlock($block_schedule->block_id, $block_schedule->schedule_id);
-            $assistance->save();
-            $success = true;
+            if($request['status'] == 1){
+                $assistance = new Assistance();
+                $assistance->blockschedule_id = $block_schedule->id;
+                $assistance->student_id = $request['student_id'];
+                $assistance->attend = 1;
+                $assistance->day = date('Y-m-d');
+                $assistance->sesion_id = Sesion::getSesionIdToDayByBlock($block_schedule->block_id, $block_schedule->schedule_id);
+                //dd($assistance);
+                $assistance->save();
+                $success = true;
+            }
+            else {
+                $assistance = Assistance::where('blockschedule_id', $block_schedule->id)->get()->last();
+                $assistance->delete();
+                $success = true;
+            }
         } catch (\Exception $exception) {
             $success = false;
         }
