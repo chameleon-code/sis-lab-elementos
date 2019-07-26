@@ -16,7 +16,7 @@
     
                                                 <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" ><font style="vertical-align: inherit;" style="width: 35%;"><font style="vertical-align: inherit; color: white;">Materia</font></font></th>
                                                 
-                                                <th class="text-center" data-orderable="false" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" ><font style="vertical-align: inherit;" style="width: 10%;"><font style="vertical-align: inherit; color: white;">Descargar</font></font></th>
+                                                <th class="text-center" data-orderable="false" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 80px;"><font style="vertical-align: inherit;" style="width: 10%;"><font style="vertical-align: inherit; color: white;">Descargar</font></font></th>
                                             </tr>
                                         </thead>
                                             
@@ -25,11 +25,11 @@
                                                     <tr role="row" class="odd">
                                                         <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->name}}</font></font></td>
                                                         <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->subject->name}}</font></font></td>
-                                                        <td class="text-center" style="text-align: center; display: flex;">
+                                                        <td class="text-center" style="text-align: center; display: inline-flex;">
                                                             <form action="/downloadGroupRegister" method="get">
                                                                 {{ csrf_field() }}
                                                                 <input type="hidden" name="group_id" value="{{ $item->id }}">
-                                                                <strong><button type="submit" class="btn btn-primary">Descargar portafolio<i class="fa fa-download" aria-hidden="true"></i></button></strong>
+                                                                <strong><button type="submit" class="btn btn-primary"><i class="fa fa-download" aria-hidden="true"></i></button></strong>
                                                             </form>
                                                         </td>
                                                     </tr>

@@ -131,7 +131,7 @@
                 @else
                     @if(empty($tasks_finisheds))
                         <div class="alert alert-danger">
-                            <b>El estudiante no realiz&oacute; ningua sesi&oacute;n!</b>
+                            <b>El estudiante no realiz&oacute; ninguna sesi&oacute;n!</b>
                         </div>
                         @break
                     @endif
