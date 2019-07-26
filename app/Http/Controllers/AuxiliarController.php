@@ -158,7 +158,7 @@ class AuxiliarController extends Controller
                         $student->Asistencia = (object)[
                             'student' => $s->id,
                             'bsch_id' => $bs->id,
-                            'assist' => empty($assistance)
+                            'assist' => !empty($assistance)
                         ];
                         array_push($array, $student);
                     }
