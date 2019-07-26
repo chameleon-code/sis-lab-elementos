@@ -53,4 +53,8 @@ class Group extends Model
     public function studentSchedules(){
         return $this->hasMany('App\StudentSchedule');
     }
+
+    public static function getStudentsByGroup() {
+        
+    }
 }
