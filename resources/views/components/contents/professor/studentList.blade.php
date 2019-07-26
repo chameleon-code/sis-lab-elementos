@@ -53,7 +53,7 @@
                                         {{-- <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Email</font></font></th> --}}
 
                                         <th class="text-center" data-orderable="false"
-                                            rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending">
+                                            rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 39px;"> 
                                             <font style="vertical-align: inherit;"><font
                                             style="vertical-align: inherit; color: white;">Acciones</font></font></th>
                                     </tr>
@@ -65,7 +65,7 @@
                                             <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->code_sis }}</font></font></td>
                                             <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->first_name }} {{ $item->user->second_name }}</font></font></td>
                                             <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->names }}</font></font></td>
-                                            <td class="text-center" style="text-align: center; display: flex;">
+                                            <td class="text-center" style="text-align: center; display: inline-flex;">
                                                 <a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick="loadProfile({{ $item->user }})" id="profile"><i class="fas fa-eye"></i></a>
 
                                                 <a href="/professor/studentSesions/{{$item->id}}" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Portafolios"><i class="fas fa-briefcase"></i></a>

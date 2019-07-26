@@ -113,7 +113,7 @@
                                         <thead>
                                                 <tr>
                                                     <div class="accordion-body bg-gray-300 rounded row" style="cursor: default;">
-                                                        <div class="container d-flex justify-content-between p-1" style="">
+                                                        <div class="container d-flex justify-content-between p-1" style="margin-right: 0px;">
                                                             <div class="d-flex justify-content-start">
                                                                 <strong style="color: gray;"> Sesión:&nbsp; </strong> {{ $s->number_sesion }}
                                                             </div>
