@@ -303,6 +303,17 @@ function getMonth(date){
     return resp;
 }
 
+function getSesionMonth(date) {
+    var day = date.charAt(8) + date.charAt(9);
+    if(day.charAt(0) == '0') {
+        day = day.charAt(1);
+    }
+    var month = getMonth(date);
+    var year = date.substring(0, 4);
+
+    return day + ' ' + month + ' ' + year;
+}
+
 function hideErrors(){
     $('#errors-div').hide();
     $('#errors-form').empty();
