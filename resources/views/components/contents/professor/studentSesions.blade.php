@@ -4,21 +4,21 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-2">
-            <div class="panel-heading my-2 font-weight-bold text-primary container py-2">
-                Portafolios
+            <div class="d-flex justify-content-between">
+                <div class="panel-heading my-2 font-weight-bold text-primary container py-2"> Portafolios </div>
+                @if (!empty($tasks_finisheds))
+                    <form action="/download" method="get">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="schedule_id" value="{{ $schedule->id }}">
+                        <strong><button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Descargar portafolio" style="margin-top: 11px; margin-right: 18px;"><i class="fa fa-download" aria-hidden="true"></i></button></strong>
+                    </form>
+                @endif
             </div>
 
             <div class="container">
                 <strong>Estudiante: </strong> {{ $schedule->user->first_name.' '.$schedule->user->second_name.' '.$schedule->user->names }} <br>
                 <strong>Materia: </strong> {{ $schedule->group->subject->name }} <br>
                 <strong>Grupo: </strong> {{ $schedule->group->name }} <br>
-                @if (!empty($tasks_finisheds))
-                    <form action="/download" method="get">
-                        {{ csrf_field() }}
-                        <input type="hidden" name="schedule_id" value="{{ $schedule->id }}">
-                        <strong><button type="submit" class="btn btn-primary">Descargar portafolio<i class="fa fa-download" aria-hidden="true"></i></button></strong>
-                    </form>
-                @endif                
             </div>
 
                 <div class="card-body">
