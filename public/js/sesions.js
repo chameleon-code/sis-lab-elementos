@@ -8,7 +8,6 @@ $(document).ready(function(){
     $('#formActivity').hide();
     $('#btnsTasks').hide();
     $('#btnsEditTasks').hide();
-    $('#checkbox-description')[0].checked = 1;
     hideErrors();
 });
 
@@ -55,7 +54,7 @@ function loadPractice(sesion_id){
                     var dia = element.updated_at.charAt(8) + element.updated_at.charAt(9);
                     var hora = element.updated_at.charAt(11) + element.updated_at.charAt(12) + element.updated_at.charAt(13) + element.updated_at.charAt(14) +element.updated_at.charAt(15);
                     var dom_description;
-                    if(element.description == "") {
+                    if(element.description == "" || element.description == null) {
                         dom_description = "<div style='color: grey;'> <strong> Sin descripción </strong> </div>";
                     } else {
                         dom_description = "<div style=''> <strong> Descripción:&nbsp; </strong> <div id=''>"+element.description+"</div> </div>";
@@ -302,6 +301,17 @@ function getMonth(date){
             break;
     }
     return resp;
+}
+
+function getSesionMonth(date) {
+    var day = date.charAt(8) + date.charAt(9);
+    if(day.charAt(0) == '0') {
+        day = day.charAt(1);
+    }
+    var month = getMonth(date);
+    var year = date.substring(0, 4);
+
+    return day + ' ' + month + ' ' + year;
 }
 
 function hideErrors(){

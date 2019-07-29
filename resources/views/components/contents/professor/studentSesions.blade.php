@@ -1,34 +1,24 @@
 @extends('components.sections.professorSection')
 @section('userContent')
 
-{{--  <style>
-        .accordion-body:after {
-            content: '\02228';
-            color: #777;
-            font-weight: bold;
-            float: right;
-            margin-left: 5px;
-          }
-</style>  --}}
-
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-2">
-            <div class="panel-heading my-2 font-weight-bold text-primary container py-2">
-                Portafolios
+            <div class="d-flex justify-content-between">
+                <div class="panel-heading my-2 font-weight-bold text-primary container py-2"> Portafolios </div>
+                @if (!empty($tasks_finisheds))
+                    <form action="/download" method="get">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="schedule_id" value="{{ $schedule->id }}">
+                        <strong><button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Descargar portafolio" style="margin-top: 11px; margin-right: 18px;"><i class="fa fa-download" aria-hidden="true"></i></button></strong>
+                    </form>
+                @endif
             </div>
 
             <div class="container">
                 <strong>Estudiante: </strong> {{ $schedule->user->first_name.' '.$schedule->user->second_name.' '.$schedule->user->names }} <br>
                 <strong>Materia: </strong> {{ $schedule->group->subject->name }} <br>
                 <strong>Grupo: </strong> {{ $schedule->group->name }} <br>
-                @if (!empty($tasks_finisheds))
-                    <form action="/download" method="get">
-                        {{ csrf_field() }}
-                        <input type="hidden" name="schedule_id" value="{{ $schedule->id }}">
-                        <strong><button type="submit" class="btn btn-primary">Descargar portafolio<i class="fa fa-download" aria-hidden="true"></i></button></strong>
-                    </form>
-                @endif                
             </div>
 
                 <div class="card-body">
@@ -141,7 +131,7 @@
                 @else
                     @if(empty($tasks_finisheds))
                         <div class="alert alert-danger">
-                            <b>El estudiante no realiz&oacute; ningua sesi&oacute;n!</b>
+                            <b>El estudiante no realiz&oacute; ninguna sesi&oacute;n!</b>
                         </div>
                         @break
                     @endif

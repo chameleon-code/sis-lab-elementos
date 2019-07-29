@@ -28,18 +28,20 @@
                     <a class="py-1" href="#" data-toggle="modal" data-target="#infoInscription" style="font-size: 14px; width: 100px;" onclick="status()"> Estado de Inscripción </a>
                 </div>
             </div>
-            <div class="card-body">                
-                
-                @if (count($errors)>0)
-                    <div class="alert alert-danger">
-                        <b>Ha ocurrido un error!</b>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{$error}}</li>
-                            @endforeach
-                        </ul>
+
+            @if(isset($error))
+                <div id="schedule-error" class="alert alert-danger mt-3 mb-0">
+                    <div class="d-flex justify-content-between">
+                        <b>Horario no disponible.</b>
+                        <a style="color: #78261f;" href="#" onclick="$('#schedule-error').hide()"> <i class="fa fa-times"></i> </a>
                     </div>
-                @endif
+                    <ul class="m-0">
+                        <li>{{ $error }}</li>
+                    </ul>
+                </div>
+            @endif
+
+            <div class="card-body">
 
                 <script> addUserId({{json_encode(Auth::user()->id)}}); </script>
 
@@ -101,13 +103,13 @@
         </div>
         <div class="modal-body" id="text_confirm_reg">
 
-                <table id="schedules-table" class="table table-striped table-light" style="border-radius: 0.35rem !important;">
+                <table id="schedules-table" class="table table-striped table-light table-responsive" style="border-radius: 0.35rem !important;">
                         <thead class="">
                           <tr class="text-center">
-                            <th class="text-dark" scope="col">Laboratorio</th>
-                            <th class="text-dark" scope="col">Día</th>
-                            <th class="text-dark" scope="col">Periodo</th>
-                            <th class="text-dark" style="border-radius-topright: 0.35rem !important;" scope="col">Seleccionar</th>
+                            <th class="text-dark" scope="col" style="width: 25%;">Laboratorio</th>
+                            <th class="text-dark" scope="col" style="width: 25%;">Día</th>
+                            <th class="text-dark" scope="col" style="width: 35%;">Periodo</th>
+                            <th class="text-dark" style="border-radius-topright: 0.35rem !important; width: 25%;" scope="col">Seleccionar</th>
                           </tr>
                         </thead>
                         <tbody id="body-table">

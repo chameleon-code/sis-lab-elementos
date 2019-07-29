@@ -15,6 +15,8 @@ use App\ScheduleRecord;
 use App\BlockSchedule;
 use App\StudentSchedule;
 use App\Management;
+use App\Task;
+use App\StudentTask;
 
 class DatabaseSeeder extends Seeder
 {
@@ -126,15 +128,15 @@ class DatabaseSeeder extends Seeder
             'start_management' => '2019-02-01',
             'end_management' => '2019-07-10',
             'management_path' => 'folders/2019-1',
-            'enable_inscription' => 1,
+            'enable_inscription' => 0,
         ]);
         Management::create([
             'semester' => 2,
             'managements' => 2019,
-            'start_management' => '2019-07-30',
+            'start_management' => '2019-07-20',
             'end_management' => '2019-11-30',
             'management_path' => 'folders/2019-2',
-            'enable_inscription' => 0,
+            'enable_inscription' => 1,
         ]);
 
         // // MATERIAS
@@ -168,14 +170,14 @@ class DatabaseSeeder extends Seeder
         // BLOQUES
 
         $block_lcv = Block::create([
-            'management_id' => 1,
+            'management_id' => 2,
             'name' => 'Bloque-lcv',
             'available' => 1,
-            'block_path' => 'folders/2019-1/Bloque-lcv'
+            'block_path' => 'folders/2019-2/Bloque-lcv'
         ]);
         Storage::makeDirectory($block_lcv->block_path);
         
-        $dates = \App\Sesion::autodate('2019-02-4', '2019-06-24');
+        $dates = \App\Sesion::autodate('2019-07-20', '2019-11-30');
         $i = 1;
         foreach($dates as $date){
             Sesion::create([
@@ -276,9 +278,40 @@ class DatabaseSeeder extends Seeder
         // factory(\App\ScheduleRecord::class, 20)->create();
 
         for($i=1 ; $i<=9 ; $i++){
+            $registered = 0;
+            switch($i){
+                case 1:
+                    $registered = 35;
+                    break;
+                case 2:
+                    $registered = 35;
+                    break;
+                case 3:
+                    $registered = 21;
+                    break;
+                case 4:
+                    $registered = 26;
+                    break;
+                case 5:
+                    $registered = 35;
+                    break;
+                case 6:
+                    $registered = 17;
+                    break;
+                case 7:
+                    $registered = 34;
+                    break;
+                case 8:
+                    $registered = 34;
+                    break;
+                case 9:
+                    $registered = 21;
+                    break;
+            }
             BlockSchedule::create([
                 'schedule_id' => $i,
                 'block_id' => 1,
+                'registered' => $registered,
             ]);
         }
 
@@ -299,6 +332,41 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('secret'),
             ]);
 
+            switch($user->id){
+                case 134:
+                    $user->code_sis = 49136035;
+                    $user->save();
+                    break;
+                case 208:
+                    $user->code_sis = 57478347;
+                    $user->save();
+                    break;
+                case 194:
+                    $user->code_sis = 42474514;
+                    $user->save();
+                    break;
+                case 132:
+                    $user->code_sis = 17347829;
+                    $user->save();
+                    break;
+                case 227:
+                    $user->code_sis = 27759099;
+                    $user->save();
+                    break;//
+                case 145:
+                    $user->code_sis = 65772817;
+                    $user->save();
+                    break;
+                case 173:
+                    $user->code_sis = 2942076;
+                    $user->save();
+                    break;
+                case 259:
+                    $user->code_sis = 87906344;
+                    $user->save();
+                    break;
+            }
+
             $student = Student::create([
                 'user_id' => $user->id,
                 'ci' => $faker->unique()->randomNumber(8),
@@ -310,8 +378,94 @@ class DatabaseSeeder extends Seeder
                 'student_id' => $student->id,
                 'block_schedule_id' => App\Database::BLOCK_SCHEDULES[$i],
                 'group_id' => $group->id,
-                'student_path' => Block::find(1)->block_path.'/'.$group->name.'/'.$user->code_sis,
+                'student_path' => Block::find(1)->block_path.'/'.$group->name.'/'.$user->names.'-'.$user->code_sis,
             ]);
+        }
+
+        for($i=0 ; $i<sizeof(App\Database::TASKS) ; $i++){
+            $professors = ['Leticia Blanco', 'Corina Flores', 'Vladimir Abel Costas'];
+            $dir = App\Block::findOrFail(1)->block_path;
+            $semiPath =$dir.'/practices/sesion-'.($i+1).'/';
+            Storage::makeDirectory($semiPath);
+            Task::create([
+                'sesion_id' => $i+1,
+                'title' => App\Database::TASKS[$i],
+                'published_by' => $faker->randomElement($professors),
+                'description' => null,
+                'task_path' => '/storage/'.$semiPath,
+                'task_file' => App\Database::NAME_TASKS[$i],
+            ]);
+        }
+
+        for($i=0 ; $i<sizeof(App\Database::NUMBER_TASKS) ; $i++){
+            for($j=0 ; $j<App\Database::NUMBER_TASKS[$i] ; $j++){
+                $tasks_student = null;
+                switch($i){
+                    case 0:
+                        $tasks_student = App\Database::TASKS_STUDENT_1;
+                        break;
+                    case 1:
+                        $tasks_student = App\Database::TASKS_STUDENT_2;
+                        break;
+                    case 2:
+                        $tasks_student = App\Database::TASKS_STUDENT_3;
+                        break;
+                    case 3:
+                        $tasks_student = App\Database::TASKS_STUDENT_4;
+                        break;
+                    case 4:
+                        $tasks_student = App\Database::TASKS_STUDENT_5;
+                        break;//
+                    case 5:
+                        $tasks_student = App\Database::TASKS_STUDENT_6;
+                        break;
+                    case 6:
+                        $tasks_student = App\Database::TASKS_STUDENT_7;
+                        break;
+                    case 7:
+                        $tasks_student = App\Database::TASKS_STUDENT_8;
+                        break;
+                }
+                $task_names_student = null;
+                switch($i){
+                    case 0:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_1;
+                        break;
+                    case 1:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_2;
+                        break;
+                    case 2:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_3;
+                        break;
+                    case 3:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_4;
+                        break;
+                    case 4:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_5;
+                        break;//
+                    case 5:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_6;
+                        break;
+                    case 6:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_7;
+                        break;
+                    case 7:
+                        $task_names_student = App\Database::TASK_NAME_STUDENT_8;
+                        break;
+                }
+                $student_schedule = StudentSchedule::where('student_id', '=', App\Database::STUDENTS_ID[$i])->get()->first();
+                $task_path = $student_schedule->student_path.'/sesion-'.$tasks_student[$j].'/';
+                Storage::makeDirectory($task_path);
+                StudentTask::create([
+                    'student_id' => App\Database::STUDENTS_ID[$i],
+                    'task_id' => $tasks_student[$j],
+                    'score' => $faker->randomNumber(2),
+                    'observation' => ($faker->randomElement(App\Database::TASK_DESCRIPTION)).$tasks_student[$j],
+                    'task_path' => $task_path,
+                    'task_name' => $task_names_student[$j],
+                    'in_time' => $faker->randomElement(['yes', 'yes', 'yes', 'yes', 'no'])
+                ]);
+            }
         }
     }
 }
