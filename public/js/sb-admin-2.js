@@ -55,3 +55,11 @@ $(function () {
 $(function () {
   $('[data-toggle-2="tooltip"]').tooltip()
 })
+
+function loading() {
+  $("body").append('<div id="overlay" style="background-color:black; opacity: 0.5; position:absolute; top:0; left:0; height:100%; width:100%; z-index:999"> <div class="row justify-content-center align-items-center" style="height: 100vh;"> <div class="preloader"></div> </div>  </div>');
+}
+
+function endLoading() {
+  $("#overlay").remove();
+}

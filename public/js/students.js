@@ -74,6 +74,9 @@ function infReg(item, id) {
     if (select.options[select.selectedIndex].text !== "grupo") {
         $.ajax({
             url : '/students/registration/getGroupSchedules/'+select.value,
+            beforeSend: function () {
+                loading();
+            },
             success: function (response){
                 if(Object.keys(response).length > 0){
                     var cont = 1;
@@ -94,7 +97,10 @@ function infReg(item, id) {
                             cont++;
                         }
                     });
+                    endLoading();
+                    $("#inf-reg-modal").modal("show");
                 } else {
+                    endLoading();
                     $('#schedules-table').hide();
                     $('#schedules-table').after(
                         "<div id='no-schedules'> <strong> No hay horarios disponibles para este grupo. </strong> </div>"
@@ -102,7 +108,7 @@ function infReg(item, id) {
                 }
             },
             error: function() {
-                //console.log("No se ha podido obtener la información");
+                
                 $('#schedules-table').hide();
                 $('#schedules-table').after(
                     "<div id='no-schedules'> <strong> No hay horarios disponibles para este grupo. </strong> </div>"
@@ -122,6 +128,8 @@ function infReg(item, id) {
         $('#btn_cancel')[0].setAttribute("style", "display: none;");
         $('#btn_confirm')[0].setAttribute("style", "display: none;");
         $('#text_select_group')[0].setAttribute("style", "");
+        endLoading();
+        $("#inf-reg-modal").modal("show");
     }
 }
 
@@ -185,6 +193,9 @@ function status(){
     $('#info-ins').empty();
     $.ajax({
         url : '/students/registration/getScheduleStudent',
+        beforeSend: function() {
+            loading();
+        },
         success: function (response){
             if(Object.keys(response.schedule_student).length > 0){
                 var matter = undefined;
@@ -220,11 +231,15 @@ function status(){
                     $('#info-ins').append(
                         `<div class='accordion-body bg-gray-300 rounded row my-2' style='cursor: default;'> <div class='container d-flex justify-content-between px-1' style=''> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong class='py-0 my-0'> Materia:&nbsp;</strong> ${ matter } </div> </div> <div class='my-0 mx-1' style='font-size: 15px;'> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong class='py-0 my-0'> Laboratorio:&nbsp; </strong> ${ lab } </div> <div class='d-flex justify-content-start' style='padding-left: 2px;'> Grupo ${ group_name } - ${ professor } </div> <div class='' style='font-size: 15px; padding-left: 2px;'> ${ day } ${ hour } </div> </div> </div>`
                     )
+                    endLoading();
+                    $("#infoInscription").modal("show");
                 }
             } else {
                 $('#info-ins').append(
                     "<div> No cuenta con materias inscritas. </div>"
                 );
+                endLoading();
+                $("#infoInscription").modal("show");
             }
         },
         error: function(){

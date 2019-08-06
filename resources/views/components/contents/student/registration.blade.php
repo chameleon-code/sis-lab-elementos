@@ -25,7 +25,7 @@
             <div class="d-flex justify-content-between">
                 <div class="panel-heading m-0 font-weight-bold text-primary">Inscripción</div>
                 <div class="mx-3">
-                    <a class="py-1" href="#" data-toggle="modal" data-target="#infoInscription" style="font-size: 14px; width: 100px;" onclick="status()"> Estado de Inscripción </a>
+                    <a class="py-1" href="#" style="font-size: 14px; width: 100px;" onclick="status()"> Estado de Inscripción </a>
                 </div>
             </div>
 
@@ -76,7 +76,7 @@
                             <div id="option-inscriptions" class="mx-2 row px-1" style="font-size: 14px;">
                                 <input id="student-schedule-id-{{$item->id}}" type="number" name="student_schedule_id" style="display: none;">
                                 <a id="link-remove-matter-{{$item->id}}" class="" href="#" class="btn btn-primary" data-toggle="modal" data-target="#unregistration" style="display: none; margin-right: 10px;">Retirar Materia</a>
-                                <a id="link-take-matter-{{$item->id}}" class="" href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="infReg({{ $item }}, {{ $id_select }}), $('#modal-footer').hide(), $('#info-inscription').hide(), verifyRegistration({{$item->id}})" style="display: none;">Inscribirse</a><br>
+                                <a id="link-take-matter-{{$item->id}}" class="" href="#" class="btn btn-primary" onclick="infReg({{ $item }}, {{ $id_select }}), $('#modal-footer').hide(), $('#info-inscription').hide(), verifyRegistration({{$item->id}})" style="display: none;">Inscribirse</a><br>
                                 {{--  <a class="float-right" href="#" data-toggle="modal" data-target="#registration" onclick="confirmReg({{ $item }}, {{ $id_select }})">Inscribirse</a>  --}}
                             </div>
                         </div>
@@ -92,7 +92,7 @@
     </div>
 </div>
 
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div id="inf-reg-modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content container">
         <div class="modal-header">
