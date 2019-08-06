@@ -39,7 +39,7 @@ class SesionController extends Controller
                 array_push($subjectNames, $subjectName);
             }
             $block_schedules = BlockSchedule::all();
-            $block_registered = 0;
+            $block_registered = 1;
             foreach($block_schedules as $block_schedule) {
                 if($block_schedule->block_id == $blockId){
                     $block_registered = $block_registered + $block_schedule->registered;

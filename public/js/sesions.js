@@ -46,6 +46,7 @@ function loadPractice(sesion_id){
         
     $.ajax({
         url : '/professor/sesion/'+sesion_id+'/tasks',
+        beforeSend: loading(),
         success: function (response){
             if(Object.keys(response).length > 0){
                 var i = 1;
@@ -78,13 +79,18 @@ function loadPractice(sesion_id){
                     task_dom_max_id = i;
                     i++;
                 });
+                endLoading();
+                $("#practice-sesion-modal").modal("show");
             } else {
+                endLoading();
+                $("#practice-sesion-modal").modal("show");
                 $('#sesionTasks').append(
                     "<div id='no-tasks' style='margin-bottom: 10px;'> <string> No hay tareas asignadas para esta sesión. </strong> </div>"
                 );
             }
         },
         error: function() {
+            endLoading();
             console.log("No se ha podido obtener la información");
         }
     });
@@ -102,8 +108,11 @@ function storeTask(){
         data: formData,
         contentType: false,
         processData: false,
+        beforeSend: function() {
+            $("#practice-sesion-modal").modal("hide");
+            loading();
+        },
         success: (response) => {
-            console.log(response.response == "error_file");
             if(response.title && !(response.response == "error_file")){
                 hideFormActivity();
                 var mes = getMonth(response.updated_at);
@@ -129,20 +138,27 @@ function storeTask(){
                     dia = response.updated_at.charAt(9);
                 }
                 task_dom_max_id++;
+                endLoading();
+                $("#practice-sesion-modal").modal("show");
                 $('#sesionTasks').append(
                     "<div class='accordion-body bg-gray-300 rounded row my-2' id=task"+task_dom_max_id+" style='cursor: default;'> <div class='container d-flex justify-content-between p-1' style=''> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong> Título:&nbsp;</strong>"+response.title+" </div> <div class='d-flex justify-content-end'> <a href='#' id='btn-edit-task-"+task_dom_max_id+"' class='mx-2' data-toggle-2='tooltip' title='Editar' onclick='editTask("+JSON.stringify(response)+", "+task_dom_max_id+")'><i class='fas fa-edit'></i></a> <a href='#' id='btn-delete-task-"+task_dom_max_id+"' class='mx-2' data-toggle-2='tooltip' title='Eliminar' onclick='deleteTask("+task_dom_max_id+","+response.id+")'><i class='fas fa-trash'></i></a> </div> </div> <div class='my-2 mx-1' style='font-size: 15px;'> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong style='margin-right: 15px;'> "+response.published_by+" </strong> "+dia+" "+mes+" "+hora+" </div> <div class='my-2 mx-1' style='font-size: 15px;'> "+dom_description+" "+dom_file+" </div> </div>"
                 );
             } else if (response.response == "no_title"){
+                endLoading();
+                $("#practice-sesion-modal").modal("show");
                 $('#errors-form').empty();
                 $('#errors-div').show();
                 $('#errors-form').append("<li> Campo Título requerido. </li>");
             } else if (response.response == "error_file") {
+                endLoading();
+                $("#practice-sesion-modal").modal("show");
                 $('#errors-form').empty();
                 $('#errors-div').show();
                 $('#errors-form').append("<li> Formato de archivo no aceptado </li>");
             }
         },
         error: function() {
+            endLoading();
             console.log("Algo salió mal");
             $('#errors-form').empty();
                 $('#errors-div').show();
@@ -163,6 +179,10 @@ function destroyTask(id_dom_task, id_task){
     //var token = $("#token").val();
     $.ajax({
         url : '/professor/task/delete/'+id_task,
+        beforeSend: function () {
+            loading();
+            $("#practice-sesion-modal").modal("hide");
+        },
         //headers: { "X-CSRF-TOKEN": token },
         success: function (response){
             $('#task'+id_dom_task).remove();
@@ -170,8 +190,12 @@ function destroyTask(id_dom_task, id_task){
             // $('#sesionTasks').append(
             //     "<div id='no-tasks' style='margin-bottom: 10px;'> <string> No hay tareas asignadas para esta sesión. </strong> </div>"
             // );
+            endLoading();
+            $("#practice-sesion-modal").modal("show");
         },
         error: function() {
+            endLoading();
+            $("#practice-sesion-modal").modal("show");
             console.log("No se pudo realizar la operación");
         }
     });
@@ -205,6 +229,10 @@ function storeEditedTask(){
         data: formData,
         contentType: false,
         processData: false,
+        beforeSend: function() {
+            loading();
+            $("#practice-sesion-modal").modal("hide");
+        },
         success: (response) => {
             if(response.title){
                 hideFormActivity();
@@ -231,20 +259,27 @@ function storeEditedTask(){
                 if(response.updated_at.charAt(8) == 0){
                     dia = response.updated_at.charAt(9);
                 }
+                endLoading();
+                $("#practice-sesion-modal").modal("show");
                 $('#task'+(task_dom_id)).replaceWith(
                     "<div class='accordion-body bg-gray-300 rounded row my-2' id='task"+task_dom_id+"' style='cursor: default;'> <div class='container d-flex justify-content-between p-1' style=''> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong> Título:&nbsp;</strong>"+response.title+" </div> <div class='d-flex justify-content-end'> <a href='#' id='btn-edit-task-"+task_dom_id+"' class='mx-2' data-toggle-2='tooltip' title='Editar' onclick='editTask("+JSON.stringify(response)+", "+task_dom_id+")'><i class='fas fa-edit'></i></a> <a href='#' id='btn-delete-task-"+task_dom_id+"' class='mx-2' data-toggle-2='tooltip' title='Eliminar' onclick='deleteTask("+task_dom_id+","+response.id+")'><i class='fas fa-trash'></i></a> </div> </div> <div class='my-2 mx-1' style='font-size: 15px;'> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong style='margin-right: 15px;'> "+response.published_by+" </strong> "+dia+" "+mes+" "+hora+" </div> <div class='my-2 mx-1' style='font-size: 15px;'> "+dom_description+" "+dom_file+" </div> </div>"
                 );
             } else if (response.response == "no_title"){
+                endLoading();
+                $("#practice-sesion-modal").modal("show");
                 $('#errors-form').empty();
                 $('#errors-div').show();
                 $('#errors-form').append("<li> Campo Título requerido. </li>");
             } else if (response.response == "error_file") {
+                endLoading();
+                $("#practice-sesion-modal").modal("show");
                 $('#errors-form').empty();
                 $('#errors-div').show();
                 $('#errors-form').append("<li> Formato de archivo no aceptado </li> <li>Archivo con tamaño mayor a 2MB. </li>");
             }
         },
         error: function() {
+            endLoading();
             console.log("Algo salió mal");
         }
     });
