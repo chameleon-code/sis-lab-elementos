@@ -38,7 +38,7 @@ Route::get('admin/students/{id}/edit', 'StudentController@edit')->middleware('au
 Route::get('/admin/students/profile/{id}', 'StudentController@show')->middleware('auth','admin');
 
 Route::get('student', ['uses' => 'StudentController@index'])->middleware('auth','admin');
-Route::post('student/register', 'StudentController@store')->name('student.register')->middleware('auth','admin');
+Route::post('student/register', 'StudentController@store')->name('student.register');
 Route::post('student/{id}/update', 'StudentController@update')->name('student.update')->middleware('auth','admin');
 Route::delete('student/{id}', 'StudentController@destroy')->name('student.destroy')->middleware('auth','admin');
 
