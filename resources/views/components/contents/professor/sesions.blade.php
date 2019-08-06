@@ -119,7 +119,7 @@
                                                             </div>
                                                             <div class="d-flex justify-content-end">
                                                                 <div class="mx-4">
-                                                                    <a href="#" class="mx-2" onclick="showSesion({{$s}}), loadPractice({{$s->id}})" data-toggle-2="tooltip" title="Guía práctica" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-book-open"></i></a>
+                                                                    <a href="#" class="mx-2" onclick="showSesion({{$s}}), loadPractice({{$s->id}})" data-toggle-2="tooltip" title="Guía práctica"><i class="fas fa-book-open"></i></a>
                                                                 </div>
                                                                 <div class="text-center" onclick="showAccordion({{$s->id}})" style="cursor: pointer; width: 18px;"><strong id="arrowAccordion{{$s->id}}" style="color: #8b8b8b; font-weight: bold;">&#709;</strong></div>
                                                             </div>
@@ -181,7 +181,7 @@
         </div>
     </div>
 
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div id="practice-sesion-modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -255,31 +255,19 @@
                 </div>
 
                 <div id="btnsTasks" style="margin-bottom: 25px;">
-                    @if (Agent::isMobile())
-                        <div class="d-flex justify-content-center bd-highlight mb-3">
-                            <button type="button" class="btn btn-primary btn-block btn-sm p-2 bd-highlight" style="">Guardar</button>
-                            <button type="button" class="btn btn-secondary btn-block btn-sm p-2 bd-highlight" style="">Cancelar</button>
-                        </div>
-                    @else
+                    
                         <div class="d-flex justify-content-center">
                             <button type="button" class="btn btn-primary btn-block btn-sm col-md-3 mx-2" style="" onclick="storeTask()">Guardar</button>
                             <button type="button" class="btn btn-secondary btn-block btn-sm col-md-3 mx-2" style="margin-top: 0px;" onclick="hideFormActivity()">Cancelar</button>
                         </div>
-                    @endif
+                    
                 </div>
                 
                 <div id="btnsEditTasks" style="margin-bottom: 25px;">
-                    @if (Agent::isMobile())
-                        <div class="d-flex justify-content-center bd-highlight mb-3">
-                            <button type="button" class="btn btn-primary btn-block btn-sm p-2 bd-highlight" style="">Guardar</button>
-                            <button type="button" class="btn btn-secondary btn-block btn-sm p-2 bd-highlight" style="">Cancelar</button>
-                        </div>
-                    @else
                         <div class="d-flex justify-content-center">
                             <button type="button" class="btn btn-primary btn-block btn-sm col-md-3 mx-2" style="" onclick="storeEditedTask()">Guardar</button>
                             <button type="button" class="btn btn-secondary btn-block btn-sm col-md-3 mx-2" style="margin-top: 0px;" onclick="hideFormActivity()">Cancelar</button>
                         </div>
-                    @endif
                 </div>
 
                 {{-- <form method="POST" action="{{ url('/students/registration/store') }}">
