@@ -15,11 +15,11 @@
                                 <table class="table dataTable text-center table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                     <thead>
                                         <tr role="row" class="bg-dark">
-                                            <th class="sorting mx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 100px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Id</font></font></th>
+                                            <th class="sorting mx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 100px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nombre</font></font></th>
                                             
                                             <th class="sorting_desc mx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 200px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Materia</font></font></th>
                                             
-                                            <th class="sorting mx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 400px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Grupo / s</font></font></th>
+                                            <th class="sorting mx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 400px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Grupos</font></font></th>
 
                                             <th class="text-center" data-orderable="false" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Acciones</font></font></th>
 
