@@ -11,18 +11,15 @@ $(document).ready(function() {
     $('#info-inscription').hide();
     $('#modal-footer').hide();
 
-    for(var i=0 ; i<subject_matters_ids.length ; i++)
-    {
-        $('#link-take-matter-'+subject_matters_ids[i]).show();
-    }
-
     $.ajax({
         url : '/students/registration/getScheduleStudent',
         success: function (response){
+            //console.log(subject_matters_ids.length);
             if(Object.keys(response).length != 0){
-                for(var i=1 ; i<=subject_matters_ids.length ; i++){
+                for(var i=0 ; i<subject_matters_ids.length ; i++){
                     for(var j=0 ; j<Object.keys(response.schedule_student).length ; j++){
-                        if(subject_matters_ids[i-1] == response.schedule_student[j].subject_matter_id){
+                        //console.log(subject_matters_ids[i] + " - " + response.schedule_student[j].subject_matter_id);
+                        if(subject_matters_ids[i] == response.schedule_student[j].subject_matter_id){
                             $('#link-take-matter-'+response.schedule_student[j].subject_matter_id)[0].innerHTML = "Cambiar Horario";
                             $('#student-schedule-id-'+response.schedule_student[j].subject_matter_id)[0].value = response.schedule_student[j].id;
                             $('#link-remove-matter-'+response.schedule_student[j].subject_matter_id)[0].setAttribute("onclick", "sendStudentScheduleId("+response.schedule_student[j].id+")");
@@ -39,12 +36,16 @@ $(document).ready(function() {
                                     docente = response.professors[k].names+' '+response.professors[k].first_name+' '+response.professors[k].second_name;
                                 }
                             }
-                            $('#subject-matter-'+i).append(
+                            $('#subject-matter-'+response.schedule_student[j].subject_matter_id).append(
                                 "<br><strong class='text-primary' style='font-size: 14px;'>Se encuentra inscrito en esta materia. <br> Grupo "+grupo+" - "+docente+"</strong>"
                             );
                         }
                     }
                 }
+            }
+            for(var i=0 ; i<subject_matters_ids.length ; i++)
+            {
+                $('#link-take-matter-'+subject_matters_ids[i]).show();
             }
         },
         error: function() {
@@ -74,17 +75,24 @@ function infReg(item, id) {
         $.ajax({
             url : '/students/registration/getGroupSchedules/'+select.value,
             success: function (response){
-                console.log(response);
                 if(Object.keys(response).length > 0){
                     var cont = 1;
+                    let longChecks = 0;
                     response.forEach(function(element) {
-                        var day = element.schedule.day.name;
-                        var hour = (element.schedule.hour.start).substr(0, 5) + " - " + (element.schedule.hour.end).substr(0, 5);
-                        $('#schedules-table').show();
-                        $('#body-table').append(
-                            " <tr class='text-center'><td>" + element.schedule.laboratory.name + "</td><td>" + day + "</td><td>" + hour + "</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check" + cont + "' onclick='clearChecks(" + response.length + ", " + cont + ", " + element.schedule_id + ", " + element.id + ")'><label class='custom-control-label' for='Check" + cont + "'></label></div></td></tr> "
-                        );
-                        cont++;
+                        if(element.block_id == id) {
+                            longChecks++;
+                        }
+                    });
+                    response.forEach(function(element) {
+                        if(element.block_id == id) {
+                            var day = element.schedule.day.name;
+                            var hour = (element.schedule.hour.start).substr(0, 5) + " - " + (element.schedule.hour.end).substr(0, 5);
+                            $('#schedules-table').show();
+                            $('#body-table').append(
+                                " <tr class='text-center'><td>" + element.schedule.laboratory.name + "</td><td>" + day + "</td><td>" + hour + "</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check" + cont + "' onclick='clearChecks(" + longChecks + ", " + cont + ", " + element.schedule_id + ", " + element.id + ")'><label class='custom-control-label' for='Check" + cont + "'></label></div></td></tr> "
+                            );
+                            cont++;
+                        }
                     });
                 } else {
                     $('#schedules-table').hide();
@@ -130,7 +138,6 @@ function clearChecks(longChecks, idCheck, schedule_record_id, block_schedule_id)
         schedule_id = undefined;
         $('#block_schedule_id')[0].value = null;
     }
-    console.log(schedule_id);
     if (schedule_id != undefined) {
         $('#info-inscription').show();
         $('#modal-footer').show();
@@ -146,7 +153,6 @@ function sendStudentScheduleId(id){
 
 function studentScheduleId(id){
     student_schedule_id = id;
-    console.log(student_schedule_id);
 }
 
 function verifyRegistration (subject_matter_id){
@@ -191,11 +197,11 @@ function status(){
                     for(var j=0 ; j<Object.keys(response.subject_matters).length ; j++){
                         if(response.subject_matters[j].id == response.schedule_student[i].subject_matter_id){
                             matter = response.subject_matters[j].name;
+                            console.log(matter);
                         }
                     }
                     for(var j=0 ; j<Object.keys(response.groups).length ; j++){
                         if(response.groups[j].id == response.schedule_student[i].group_id){
-                            console.log(response.groups[j].name);
                             group_name = response.groups[j].name;
                         }
                     }
@@ -211,10 +217,10 @@ function status(){
                             lab = response.block_schedules[j].schedule.laboratory.name;
                         }
                     }
+                    $('#info-ins').append(
+                        `<div class='accordion-body bg-gray-300 rounded row my-2' style='cursor: default;'> <div class='container d-flex justify-content-between px-1' style=''> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong class='py-0 my-0'> Materia:&nbsp;</strong> ${ matter } </div> </div> <div class='my-0 mx-1' style='font-size: 15px;'> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong class='py-0 my-0'> Laboratorio:&nbsp; </strong> ${ lab } </div> <div class='d-flex justify-content-start' style='padding-left: 2px;'> Grupo ${ group_name } - ${ professor } </div> <div class='' style='font-size: 15px; padding-left: 2px;'> ${ day } ${ hour } </div> </div> </div>`
+                    )
                 }
-                $('#info-ins').append(
-                    `<div class='accordion-body bg-gray-300 rounded row my-2' style='cursor: default;'> <div class='container d-flex justify-content-between px-1' style=''> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong class='py-0 my-0'> Materia:&nbsp;</strong> ${ matter } </div> </div> <div class='my-0 mx-1' style='font-size: 15px;'> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong class='py-0 my-0'> Laboratorio:&nbsp; </strong> ${ lab } </div> <div class='d-flex justify-content-start' style='padding-left: 2px;'> Grupo ${ group_name } - ${ professor } </div> <div class='' style='font-size: 15px; padding-left: 2px;'> ${ day } ${ hour } </div> </div> </div>`
-                )
             } else {
                 $('#info-ins').append(
                     "<div> No cuenta con materias inscritas. </div>"
