@@ -23,7 +23,6 @@ class BlockController extends Controller
     public function index()
     {
         self::rememberNav();
-
         $blocks = Block::getAllBlocks();
         $data = [
             'blocks' => $blocks

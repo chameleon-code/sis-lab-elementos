@@ -60,12 +60,22 @@ class ScheduleRecord extends Model
         $date = Carbon::now();
         $data = [];
         $schedules = ScheduleRecord::all();
+        $validSchedules = [];
         foreach ($schedules as $schedule) {
+            $blockSchedules = BlockSchedule::where('schedule_id',$schedule->id)->get()->all();
+            foreach ($blockSchedules as $blockSchedule) {
+                $blockId = $blockSchedule->block_id;
+                $block = Block::find($blockId);
+                if(Management::getActualManagement()->id == $block->management_id){
+                    array_push($validSchedules,(Object)$schedule);
+                }
+            }
+        }
+        foreach ($validSchedules as $schedule) {
             $sesions = Sesion::getSesionDayReal($schedule->id);
-            $hourSesion =Carbon::parse($sesions['hour']);
+            $hourSesion = Carbon::parse($sesions['hour']);
             $endHour = new Carbon($hourSesion->toTimeString());
             $endHour->addHours(1)->addMinutes(30);
-            //dd($date,$endHour,$hourSesion);
             if ($sesions['same'] && $date->between($hourSesion,$endHour,true)) {
                 $sesions['laboratory_id'] = $schedule->laboratory_id;
                 $sesions['schedule_id'] = $schedule->id;

@@ -32,11 +32,14 @@ class StudentSchedule extends Model
         $schedules=[];
         foreach ($studentSchedules as $student) {
             $blockSchedule = BlockSchedule::where('id',$student->block_schedule_id)->get()->first();
-            $date = ScheduleRecord::getDayAndHourFormatWithId($blockSchedule->schedule_id);
-            $date['group_id'] = $student->group_id;
-            $date['block_id'] = $blockSchedule->block_id;
-            $date['schedule_id'] = $blockSchedule->schedule_id;
-            array_push($schedules,$date);
+            $blockManagement = Block::findOrFail($blockSchedule->block_id)->management_id;
+            if( $blockManagement == Management::getActualManagement()->id){
+                $date = ScheduleRecord::getDayAndHourFormatWithId($blockSchedule->schedule_id);
+                $date['group_id'] = $student->group_id;
+                $date['block_id'] = $blockSchedule->block_id;
+                $date['schedule_id'] = $blockSchedule->schedule_id;
+                array_push($schedules,$date);
+            }
         }
         return $schedules;
     }

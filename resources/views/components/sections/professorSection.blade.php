@@ -14,7 +14,7 @@
 
   <!-- Heading -->
   <div class="sidebar-heading">
-    Interface
+    Opciones
   </div>
   <!-- Nav Item - Pages Collapse Menu -->
   <li class="nav-item">
