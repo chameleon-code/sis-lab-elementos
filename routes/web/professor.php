@@ -5,21 +5,21 @@ use Illuminate\Support\Facades\Route;
 
 // Administración de Sesiones
 
-Route::get('/sesions','SesionController@index');
-Route::post('/sesions/store','SesionController@store');
-Route::get('/professor/sesion/{id}/tasks','TaskController@getTasksBySesion');
-Route::get('/professor/task/{id}','TaskController@getTaskById');
-Route::post('/professor/sesions/tasks/store','TaskController@store');
-Route::get('/professor/task/delete/{id}','TaskController@destroy')->name('task.delete');
-Route::post('/professor/sesions/tasks/edit','TaskController@edit');
+Route::get('/sesions','SesionController@index')->middleware('auth','professor');
+Route::post('/sesions/store','SesionController@store')->middleware('auth','professor');
+Route::get('/professor/sesion/{id}/tasks','TaskController@getTasksBySesion')->middleware('auth','professor');
+Route::get('/professor/task/{id}','TaskController@getTaskById')->middleware('auth','professor');
+Route::post('/professor/sesions/tasks/store','TaskController@store')->middleware('auth','professor');
+Route::get('/professor/task/delete/{id}','TaskController@destroy')->name('task.delete')->middleware('auth','professor');
+Route::post('/professor/sesions/tasks/edit','TaskController@edit')->middleware('auth','professor');
 
 // Monitoreo de Estudiantes
 
-Route::get('/professor/students/profile/{id}', 'ProfessorController@profileStudent');
-Route::get('/professor/students/list/', 'ProfessorController@studentList');
-Route::get('/professor/students/listByGroup/{id}', 'ProfessorController@studentListByGroup');
-Route::get('/professor/studentSesions/{id}', 'SesionController@showStudentSesions');
-Route::get('/professor/student/{idStudent}/task/{idTask}', 'TaskController@showStudentTask');
+Route::get('/professor/students/profile/{id}', 'ProfessorController@profileStudent')->middleware('auth','professor');
+Route::get('/professor/students/list/', 'ProfessorController@studentList')->middleware('auth','professor');
+Route::get('/professor/students/listByGroup/{id}', 'ProfessorController@studentListByGroup')->middleware('auth','professor');
+Route::get('/professor/studentSesions/{id}', 'SesionController@showStudentSesions')->middleware('auth','professor');
+Route::get('/professor/student/{idStudent}/task/{idTask}', 'TaskController@showStudentTask')->middleware('auth','professor');
 
 // Tareas o Practicas
 
