@@ -9,6 +9,8 @@ $(document).ready(function(){
     $('#btnsTasks').hide();
     $('#btnsEditTasks').hide();
     hideErrors();
+
+    loadPracticeInfo();
 });
 
 function showSesion(sesion){
@@ -352,4 +354,52 @@ function getSesionMonth(date) {
 function hideErrors(){
     $('#errors-div').hide();
     $('#errors-form').empty();
+}
+
+function displaySesionByBlock(blocks) {
+    let select = $("#block-selector")[0];
+    
+    blocks.forEach(function (block) {
+        if(select.value == block.block_id) {
+            $("#block-"+block.block_id).show();
+        } else {
+            $("#block-"+block.block_id).hide();
+        }
+    });
+}
+
+function displayIndexSesionByBlock(blocks) {
+    $("#block-"+blocks[0].block_id).show();
+}
+
+function loadPracticeInfo() {
+    $.ajax({
+        url : "/professor/practices/info",
+        success: function (response){
+            for(i=0 ; i<Object.keys(response.sesions).length ; i++) {
+                $("#sesion-badge-"+response.sesions[i].id).append('<span class="badge badge-danger badge-counter">'+ response.quantity_sesion_tasks[response.sesions[i].id] +'</span>');
+            }
+
+            console.log(response);
+            for(i=0 ; i<Object.keys(response.sesions).length ; i++) {
+                quantity_sesion_tasks = 0;
+                for(j=0 ; j<Object.keys(response.block_groups).length ; j++) {
+                    if(response.sesions[i].block_id == response.block_groups[j].block_id) {
+                        quantity_sesion_tasks = response.quantity_students_group[response.block_groups[j].group_id];
+                        break;
+                    }
+                }
+                $("#proportion-tasks-"+response.sesions[i].id)[0].innerHTML = response.tasks_by_sesion[response.sesions[i].id] + "/" + quantity_sesion_tasks;
+                if(quantity_sesion_tasks != 0) {
+                    porcent = (response.tasks_by_sesion[response.sesions[i].id] * 100) / quantity_sesion_tasks;
+                } else {
+                    porcent = 0;
+                }
+                $("#porcent-tasks-"+response.sesions[i].id)[0].setAttribute("style", "width: "+ porcent +"%;");
+            }
+        },
+        error: function() {
+            console.log("Ha ocurrido un error.");
+        }
+    });
 }

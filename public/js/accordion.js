@@ -1,7 +1,5 @@
 function showAccordion(id){
 
-  console.log(id);
-
   //var acc = document.getElementsByClassName("accordion-body");
   //var i;
 
@@ -10,7 +8,6 @@ function showAccordion(id){
   if($('#arrowAccordion'+id)[0].innerHTML == "˅")
   {
     $('#arrowAccordion'+id)[0].innerHTML = "&#707;";
-    console.log("ocultando accordion");
     panel.hide();
   } else if($('#arrowAccordion'+id)[0].innerHTML == "˃") {
     $('#arrowAccordion'+id)[0].innerHTML = "&#709;";
@@ -27,7 +24,5 @@ function showAccordion(id){
     //   });
     // }
     panel.show();
-
-    console.log("mostrando accordion");
   }
 }
