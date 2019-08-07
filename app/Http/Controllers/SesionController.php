@@ -38,37 +38,36 @@ class SesionController extends Controller
                 $dateEnd = Management::where('id','=',$management_id)->get()->first()->end_management;
                 array_push($subjectNames, $subjectName);
             }
-            $block_schedules = BlockSchedule::all();
-            $block_registered = 1;
-            foreach($block_schedules as $block_schedule) {
-                if($block_schedule->block_id == $blockId){
-                    $block_registered = $block_registered + $block_schedule->registered;
-                }
+
+            $id_groups = array();
+            $block_groups = BlockGroup::all();
+            for($i=0 ; $i<sizeof($block_groups) ; $i++) {
+                array_push($id_groups, $block_groups[$i]->group_id);
             }
+            $quantity_students_group = Group::quantityStudentsByGroup();
             
-            $tasks_by_sesion[] = [];
-            $student_tasks = StudentTask::all();
-            for($i=0 ; $i<sizeof($sesionsBlocks[0]) ; $i++){
-                $tasks_by_sesion[$i] = 0;
-            }
-            $sesions = $sesionsBlocks[0];
-            $i = 0;
-            foreach($sesions as $sesion) {
-                foreach($student_tasks as $student_task) {
-                    if($student_task->task->sesion_id == $sesion->id) {
-                        $tasks_by_sesion[$i]++;
-                    }
-                }
-                $i++;
-            }
+            // $student_tasks = StudentTask::all();
+            // $tasks_by_sesion = [];
+            // foreach(Sesion::all() as $sesion) {
+            //     $tasks_by_sesion[$sesion->id] = 0;
+            // }
+            // foreach(Sesion::all() as $sesion) {
+            //     foreach ($student_tasks as $student_task) {
+            //         if($student_task->task->sesion->id == $sesion->id){
+            //             $tasks_by_sesion[$sesion->id]++;
+            //         }
+            //     }
+            // }
+
             $data = [
                 'blocks' => $blockGroups,
                 'sesions' => $sesionsBlocks,
-                'tasks_by_sesion' => $tasks_by_sesion,
                 'start' => $dateStart,
                 'end' => $dateEnd,
                 'subjects' => $subjectNames,
-                'block_registered' => $block_registered
+                'id_groups' => $id_groups,
+                'quantity_students_group' => $quantity_students_group,
+                // 'tasks_by_sesion' => $tasks_by_sesion,
             ];
             return view('components.contents.professor.sesions', $data);
         }else{
@@ -78,6 +77,52 @@ class SesionController extends Controller
             ];
             return view('components.contents.professor.sesions', $data);
         }
+    }
+
+    public function practicesInfo(){
+        $id_groups = array();
+        $block_groups = BlockGroup::all();
+        for($i=0 ; $i<sizeof($block_groups) ; $i++) {
+            array_push($id_groups, $block_groups[$i]->group_id);
+        }
+
+        $quantity_sesion_tasks = [];
+        foreach(Sesion::all() as $sesion) {
+            $quantity_sesion_tasks[$sesion->id] = 0;
+        }
+        foreach(Sesion::all() as $sesion) {
+            foreach(Task::all() as $task) {
+                if($task->sesion->id == $sesion->id) {
+                    $quantity_sesion_tasks[$sesion->id]++;
+                }
+            }
+        }
+
+        $student_tasks = StudentTask::all();
+        $tasks_by_sesion = [];
+        foreach(Sesion::all() as $sesion) {
+            $tasks_by_sesion[$sesion->id] = 0;
+        }
+        foreach(Sesion::all() as $sesion) {
+            foreach ($student_tasks as $student_task) {
+                if($student_task->task->sesion->id == $sesion->id){
+                    $tasks_by_sesion[$sesion->id]++;
+                }
+            }
+        }
+
+        $quantity_students_group = Group::quantityStudentsByGroup();
+
+        $data = [
+            'sesions' => Sesion::all(),
+            'id_groups' => $id_groups,
+            'quantity_sesion_tasks' => $quantity_sesion_tasks,
+            'tasks_by_sesion' => $tasks_by_sesion,
+            'quantity_students_group' => $quantity_students_group,
+            'block_groups' => $block_groups
+        ];
+
+        return $data;
     }
 
     /**

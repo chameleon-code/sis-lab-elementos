@@ -54,7 +54,27 @@ class Group extends Model
         return $this->hasMany('App\StudentSchedule');
     }
 
-    public static function getStudentsByGroup() {
-        
+    public static function quantityStudentsByGroup() {
+        $id_groups = array();
+        $block_groups = BlockGroup::all();
+        for($i=0 ; $i<sizeof($block_groups) ; $i++) {
+            array_push($id_groups, $block_groups[$i]->group_id);
+        }
+
+        $block_schedules = BlockSchedule::all();
+        $group_registered = [];
+        for($i=0 ; $i<sizeof($id_groups) ; $i++) {
+            $group_registered[$id_groups[$i]] = 0;
+        }
+
+        $student_schedules = StudentSchedule::all();
+        for($i=0 ; $i<sizeof($id_groups) ; $i++) {
+            for($j=0 ; $j<sizeof($student_schedules) ; $j++) {
+                if($id_groups[$i] == $student_schedules[$j]->group_id) {
+                    $group_registered[$id_groups[$i]]++;
+                }
+            }
+        }
+        return $group_registered;
     }
 }
