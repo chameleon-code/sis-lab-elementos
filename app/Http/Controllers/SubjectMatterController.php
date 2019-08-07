@@ -29,6 +29,7 @@ class SubjectMatterController extends Controller
         $input =$request->all();
         $subjectMatters = new SubjectMatter();
         if($subjectMatters->validate($input)){
+            $input['name'] = strtoupper($input['name']);
             SubjectMatter::create($input);
             Session::flash('status_message','Materia añadida!');
             

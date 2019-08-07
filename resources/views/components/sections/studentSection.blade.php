@@ -18,7 +18,7 @@
     @if (App\Management::getActualManagement()->enable_inscription == 1)
     <!-- Heading -->
     <div class="sidebar-heading">
-      Interface
+      Opciones
     </div>
     
     <li class="nav-item">

@@ -57,7 +57,6 @@ class AuxiliarTaskController extends Controller
         $data = [
             'list' => $list
         ];
-        // dd($data);
-        return view('components.contents.auxiliar.controlTaskS',$data);
+        return view('components.contents.auxiliar.controlTaskView',$data);
     }
 }

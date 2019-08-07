@@ -32,7 +32,7 @@
                                                         style="vertical-align: inherit; color: white;">Nombres</font></font></th>
 
                                         <th class="text-center" data-orderable="false"
-                                            rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending">
+                                            rowspan="1" colspan="1" style="width: 39px;">
                                             <font style="vertical-align: inherit;"><font
                                             style="vertical-align: inherit; color: white;">Acciones</font></font></th>
                                     </tr>
@@ -44,7 +44,7 @@
                                                 <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $student->student->code_sis }}</font></font></td>
                                                 <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $student->student->first_name }} {{ $student->student->second_name }}</font></font></td>
                                                 <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $student->student->names }}</font></font></td>
-                                                <td class="text-center" style="text-align: center; display: flex;">
+                                                <td class="text-center" style="text-align: center; display: inline-flex;">
                                                     <button class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="modal" title="Ver Portafolio" data-target="#student{{$student->student->code_sis}}"><i class="fas fa-briefcase"></i></button>
                                                     <div class="modal fade studentModal" id="student{{$student->student->code_sis}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">

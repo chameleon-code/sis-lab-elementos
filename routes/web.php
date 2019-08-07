@@ -21,10 +21,6 @@ Route::get('/', function () {
 Route::get('error', function () {
     return view('errors.404');
 });
-Route::get('register', function () {
-    return view('layouts.register');
-});
-
 //roles
 Route::get('admin', function () {
     return view('components.sections.adminSection');
