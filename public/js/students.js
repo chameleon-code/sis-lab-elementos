@@ -93,7 +93,7 @@ function infReg(item, id) {
                             var hour = (element.schedule.hour.start).substr(0, 5) + " - " + (element.schedule.hour.end).substr(0, 5);
                             $('#schedules-table').show();
                             $('#body-table').append(
-                                " <tr class='text-center'><td style='display: none;'>" + element.schedule.laboratory.name + "</td><td>" + day + "</td><td>" + hour + "</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check" + cont + "' onclick='clearChecks(" + longChecks + ", " + cont + ", " + element.schedule_id + ", " + element.id + ")'><label class='custom-control-label' for='Check" + cont + "'></label></div></td></tr> "
+                                " <tr class='text-center'><td style='display: none;'>" + element.schedule.laboratory.name + "</td><td>" + day + "</td><td style='display: none;'>" + hour + "</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check" + cont + "' onclick='clearChecks(" + longChecks + ", " + cont + ", " + element.schedule_id + ", " + element.id + ")'><label class='custom-control-label' for='Check" + cont + "'></label></div></td></tr> "
                             );
                             cont++;
                             longitud_horarios++;
