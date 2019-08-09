@@ -86,25 +86,37 @@ function infReg(item, id) {
                             longChecks++;
                         }
                     });
+                    var longitud_horarios = 0;
                     response.forEach(function(element) {
                         if(element.block_id == id) {
                             var day = element.schedule.day.name;
                             var hour = (element.schedule.hour.start).substr(0, 5) + " - " + (element.schedule.hour.end).substr(0, 5);
                             $('#schedules-table').show();
                             $('#body-table').append(
-                                " <tr class='text-center'><td>" + element.schedule.laboratory.name + "</td><td>" + day + "</td><td>" + hour + "</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check" + cont + "' onclick='clearChecks(" + longChecks + ", " + cont + ", " + element.schedule_id + ", " + element.id + ")'><label class='custom-control-label' for='Check" + cont + "'></label></div></td></tr> "
+                                " <tr class='text-center'><td style='display: none;'>" + element.schedule.laboratory.name + "</td><td>" + day + "</td><td style='display: none;'>" + hour + "</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check" + cont + "' onclick='clearChecks(" + longChecks + ", " + cont + ", " + element.schedule_id + ", " + element.id + ")'><label class='custom-control-label' for='Check" + cont + "'></label></div></td></tr> "
                             );
                             cont++;
+                            longitud_horarios++;
                         }
                     });
-                    endLoading();
-                    $("#inf-reg-modal").modal("show");
+                    if(longitud_horarios == 0) {
+                        endLoading();
+                        $('#schedules-table').hide();
+                        $('#schedules-table').after(
+                            "<div id='no-schedules'> <strong> No hay horarios disponibles para este grupo. </strong> </div>"
+                        );
+                        $("#inf-reg-modal").modal("show");
+                    } else {
+                        endLoading();
+                        $("#inf-reg-modal").modal("show");
+                    }
                 } else {
                     endLoading();
                     $('#schedules-table').hide();
                     $('#schedules-table').after(
                         "<div id='no-schedules'> <strong> No hay horarios disponibles para este grupo. </strong> </div>"
                     );
+                    $("#inf-reg-modal").modal("show");
                 }
             },
             error: function() {
@@ -229,7 +241,7 @@ function status(){
                         }
                     }
                     $('#info-ins').append(
-                        `<div class='accordion-body bg-gray-300 rounded row my-2' style='cursor: default;'> <div class='container d-flex justify-content-between px-1' style=''> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong class='py-0 my-0'> Materia:&nbsp;</strong> ${ matter } </div> </div> <div class='my-0 mx-1' style='font-size: 15px;'> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong class='py-0 my-0'> Laboratorio:&nbsp; </strong> ${ lab } </div> <div class='d-flex justify-content-start' style='padding-left: 2px;'> Grupo ${ group_name } - ${ professor } </div> <div class='' style='font-size: 15px; padding-left: 2px;'> ${ day } ${ hour } </div> </div> </div>`
+                        `<div class='accordion-body bg-gray-300 rounded row my-2' style='cursor: default;'> <div class='container d-flex justify-content-between px-1' style=''> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong class='py-0 my-0'> Materia:&nbsp;</strong> ${ matter } </div> </div> <div class='my-0 mx-1' style='font-size: 15px;'> <div class='d-flex justify-content-start' style='padding-left: 3px; display: none !important;'> <strong class='py-0 my-0'> Laboratorio:&nbsp; </strong> ${ lab } </div> <div class='d-flex justify-content-start' style='padding-left: 2px;'> Grupo ${ group_name } - ${ professor } </div> <div class='' style='font-size: 15px; padding-left: 2px;'> ${ day } ${ hour } </div> </div> </div>`
                     )
                     endLoading();
                     $("#infoInscription").modal("show");
