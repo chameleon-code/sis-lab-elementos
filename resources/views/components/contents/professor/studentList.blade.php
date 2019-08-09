@@ -14,7 +14,7 @@
                     @endif
                     <div class="">
                         <div class="row">
-                            <div class="form-group col-md-5 col-12 col-sm-12">
+                            <div class="form-group col-lg-7 col-md-8 col-12 col-sm-12" style="display: inline-flex;">
                                     <select name="group_id" class="form-control" id="groups">
                                         @forelse ($groups as $group)
                                         @if ($loop->first)
@@ -27,6 +27,14 @@
                                         @endempty
                                         @endforelse
                                     </select>
+                                    <br>
+                                    <div class="form-group col-lg-4 col-md-4 col-12 col-sm-12">
+                                        <form class="mx-auto" action="/downloadGroupRegister" method="get">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="group_id" value="{{ $group->id }}" id="group_id">
+                                            <button type="submit" class="btn btn-primary" data-toggle-2="tooltip" title="Descargar portafolios"><i class="fa fa-download" aria-hidden="true">Descargar</i></button>
+                                        </form>
+                                    </div>
                             </div>
                             <div class="col-sm-12 table-responsive">
                                 <table class="table dataTable text-center table-striped table-secondary" id="dataTable" width="100%"
