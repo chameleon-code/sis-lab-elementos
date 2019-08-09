@@ -86,6 +86,7 @@ function infReg(item, id) {
                             longChecks++;
                         }
                     });
+                    var longitud_horarios = 0;
                     response.forEach(function(element) {
                         if(element.block_id == id) {
                             var day = element.schedule.day.name;
@@ -95,16 +96,27 @@ function infReg(item, id) {
                                 " <tr class='text-center'><td style='display: none;'>" + element.schedule.laboratory.name + "</td><td>" + day + "</td><td>" + hour + "</td><td><div class='custom-control custom-checkbox small'><input type='checkbox' class='custom-control-input' id='Check" + cont + "' onclick='clearChecks(" + longChecks + ", " + cont + ", " + element.schedule_id + ", " + element.id + ")'><label class='custom-control-label' for='Check" + cont + "'></label></div></td></tr> "
                             );
                             cont++;
+                            longitud_horarios++;
                         }
                     });
-                    endLoading();
-                    $("#inf-reg-modal").modal("show");
+                    if(longitud_horarios == 0) {
+                        endLoading();
+                        $('#schedules-table').hide();
+                        $('#schedules-table').after(
+                            "<div id='no-schedules'> <strong> No hay horarios disponibles para este grupo. </strong> </div>"
+                        );
+                        $("#inf-reg-modal").modal("show");
+                    } else {
+                        endLoading();
+                        $("#inf-reg-modal").modal("show");
+                    }
                 } else {
                     endLoading();
                     $('#schedules-table').hide();
                     $('#schedules-table').after(
                         "<div id='no-schedules'> <strong> No hay horarios disponibles para este grupo. </strong> </div>"
                     );
+                    $("#inf-reg-modal").modal("show");
                 }
             },
             error: function() {
