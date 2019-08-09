@@ -87,6 +87,19 @@
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
 
+              @php
+              $management = App\Management::getActualManagement();
+              $carbon = new \Carbon\Carbon();
+              $actual_date = $carbon->now()->format('Y-m-d');
+          @endphp
+          
+          <li class="nav-item">
+            <div class="nav-link" style="pointer-events: none !important;">
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{ substr($actual_date, 8, 2) }} {{ App\Management::getMonth($actual_date) }} </span>
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <strong> {{ $management->semester }}-{{ $management->managements }} </strong> </span> &nbsp;
+            </div>
+          </li>
+
           <!-- Nav Item - User Information -->
           <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -131,6 +144,7 @@
       <footer class="sticky-footer">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
+            <h6 title="Si tienes alguna queja u observación, haz click aquí"><a href="/about">Contactanos</a><h6> 
             <span>Copyright &copy; Chameleon Code 2019</span>
           </div>
         </div>

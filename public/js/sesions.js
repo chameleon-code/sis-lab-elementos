@@ -3,6 +3,7 @@ var task_dom_id = undefined;
 var task_dom_max_id = undefined;
 var modificando_form = false;
 var with_description = true;
+var schedules = undefined;
 
 $(document).ready(function(){
     $('#formActivity').hide();
@@ -379,19 +380,11 @@ function loadPracticeInfo() {
             for(i=0 ; i<Object.keys(response.sesions).length ; i++) {
                 $("#sesion-badge-"+response.sesions[i].id).append('<span class="badge badge-danger badge-counter">'+ response.quantity_sesion_tasks[response.sesions[i].id] +'</span>');
             }
-
-            console.log(response);
             for(i=0 ; i<Object.keys(response.sesions).length ; i++) {
-                quantity_sesion_tasks = 0;
-                for(j=0 ; j<Object.keys(response.block_groups).length ; j++) {
-                    if(response.sesions[i].block_id == response.block_groups[j].block_id) {
-                        quantity_sesion_tasks = response.quantity_students_group[response.block_groups[j].group_id];
-                        break;
-                    }
-                }
-                $("#proportion-tasks-"+response.sesions[i].id)[0].innerHTML = response.tasks_by_sesion[response.sesions[i].id] + "/" + quantity_sesion_tasks;
-                if(quantity_sesion_tasks != 0) {
-                    porcent = (response.tasks_by_sesion[response.sesions[i].id] * 100) / quantity_sesion_tasks;
+                proportion_task = $("#proportion-tasks-"+response.sesions[i].id)[0].innerHTML;
+                $("#proportion-tasks-"+response.sesions[i].id)[0].innerHTML = response.tasks_by_sesion[response.sesions[i].id] + ( proportion_task ).substring(1, proportion_task.length);
+                if(proportion_task.substring(2, proportion_task.length) != 0) {
+                    porcent = (response.tasks_by_sesion[response.sesions[i].id] * 100) / proportion_task.substring(2, proportion_task.length);
                 } else {
                     porcent = 0;
                 }
