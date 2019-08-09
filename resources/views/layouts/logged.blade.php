@@ -121,7 +121,7 @@
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profile">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#loggedProfile">
                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                 Perfil
               </a>
@@ -185,7 +185,7 @@
     </div>
   </div>
 
-<div class="modal fade" id="profile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal fade" id="loggedProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document" style="pointer-events: inherit;">
     <div class="card card-profile o-hidden border-0 my-3 rounded">
         <div style="background-image: url(/img/lab.jpg);" class="card-header">
