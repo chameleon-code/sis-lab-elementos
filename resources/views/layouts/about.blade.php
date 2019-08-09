@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <img class="img-fluid rounded-circle mb-3" src="/img/broster.jpg" alt="">
+                        <img class="img-fluid rounded-circle mb-3" src="/img/broster.jpeg" alt="">
                         <h5>Josue Flores R.</h5>
                         <p class="font-weight-light mb-0"><a href="https://github.com/josue1090">josue1090</a></p>
                     </div>
