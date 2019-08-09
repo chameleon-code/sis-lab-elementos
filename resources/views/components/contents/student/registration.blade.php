@@ -104,18 +104,18 @@
         <div class="modal-body" id="text_confirm_reg">
 
                 <table id="schedules-table" class="table table-striped table-light table-responsive" style="border-radius: 0.35rem !important;">
-                        <thead class="">
-                          <tr class="text-center">
-                            <th class="text-dark" scope="col" style="width: 25%;">Laboratorio</th>
-                            <th class="text-dark" scope="col" style="width: 25%;">Día</th>
-                            <th class="text-dark" scope="col" style="width: 35%;">Periodo</th>
-                            <th class="text-dark" style="border-radius-topright: 0.35rem !important; width: 25%;" scope="col">Seleccionar</th>
-                          </tr>
-                        </thead>
-                        <tbody id="body-table">
-                            
-                        </tbody>
-                      </table>
+                    <thead class="">
+                        <tr class="text-center">
+                        <th class="text-dark" scope="col" style="width: 25%; display: none;">Laboratorio</th>
+                        <th class="text-dark" scope="col" style="width: 25%;">Día</th>
+                        <th class="text-dark" scope="col" style="width: 65%;">Periodo</th>
+                        <th class="text-dark" style="border-radius-topright: 0.35rem !important; width: 25%;" scope="col">Seleccionar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="body-table">
+                        
+                    </tbody>
+                </table>
 
                     <hr>
                     <div id="info-inscription">
