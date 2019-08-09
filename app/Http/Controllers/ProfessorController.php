@@ -217,8 +217,9 @@ class ProfessorController extends Controller
                     'groups' => $groups,
                     'title' => 'Estudiantes'
                 ];
-            return view('components.contents.professor.studentList', $data);
+        return view('components.contents.professor.studentList', $data);
     }
+
     public function studentListByGroup(Request $request, $id){
         $schedules = StudentSchedule::all();
         $schedules2 = $schedules->reject(function($item, $key) use ($id){
@@ -256,17 +257,7 @@ class ProfessorController extends Controller
         return view('components.contents.professor.profileStudent')->withTitle('Perfil de Estudiante')->with($data);
     }
 
-    public function rememberNav(){
-        $tmp = 0.05;
-        Cache::put('professor_nav', ' show', $tmp);
-        Cache::put('auxiliar_nav', '', $tmp);
-        Cache::put('student_nav', '', $tmp);
-        Cache::put('management_nav', '', $tmp);
-        Cache::put('subject_matter_nav', '', $tmp);
-        Cache::put('group_nav', '', $tmp);
-        Cache::put('block_nav', '', $tmp);
-    }
-
+    
     public function downloadPortflies(){
         $professor = Professor::where('user_id', auth()->user()->id)->first();
         $groups = Group::where('professor_id', $professor->id)->get()->reject(function ($item, $key){
@@ -279,5 +270,16 @@ class ProfessorController extends Controller
             'title' => 'Portafolios en base a grupos'
         ];
         return view('components.contents.professor.portflies', $data);
+    }
+
+    public function rememberNav(){
+        $tmp = 0.05;
+        Cache::put('professor_nav', ' show', $tmp);
+        Cache::put('auxiliar_nav', '', $tmp);
+        Cache::put('student_nav', '', $tmp);
+        Cache::put('management_nav', '', $tmp);
+        Cache::put('subject_matter_nav', '', $tmp);
+        Cache::put('group_nav', '', $tmp);
+        Cache::put('block_nav', '', $tmp);
     }
 }

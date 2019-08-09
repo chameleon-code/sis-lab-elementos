@@ -44,20 +44,8 @@ class SesionController extends Controller
             for($i=0 ; $i<sizeof($block_groups) ; $i++) {
                 array_push($id_groups, $block_groups[$i]->group_id);
             }
-            $quantity_students_group = Group::quantityStudentsByGroup();
-            
-            // $student_tasks = StudentTask::all();
-            // $tasks_by_sesion = [];
-            // foreach(Sesion::all() as $sesion) {
-            //     $tasks_by_sesion[$sesion->id] = 0;
-            // }
-            // foreach(Sesion::all() as $sesion) {
-            //     foreach ($student_tasks as $student_task) {
-            //         if($student_task->task->sesion->id == $sesion->id){
-            //             $tasks_by_sesion[$sesion->id]++;
-            //         }
-            //     }
-            // }
+
+            $group_registered = Group::quantityStudentsByGroup();
 
             $data = [
                 'blocks' => $blockGroups,
@@ -65,8 +53,8 @@ class SesionController extends Controller
                 'start' => $dateStart,
                 'end' => $dateEnd,
                 'subjects' => $subjectNames,
-                'id_groups' => $id_groups,
-                'quantity_students_group' => $quantity_students_group,
+                'groups' => Group::all(),
+                'group_registered' => $group_registered
                 // 'tasks_by_sesion' => $tasks_by_sesion,
             ];
             return view('components.contents.professor.sesions', $data);
@@ -111,14 +99,11 @@ class SesionController extends Controller
             }
         }
 
-        $quantity_students_group = Group::quantityStudentsByGroup();
-
         $data = [
             'sesions' => Sesion::all(),
             'id_groups' => $id_groups,
             'quantity_sesion_tasks' => $quantity_sesion_tasks,
             'tasks_by_sesion' => $tasks_by_sesion,
-            'quantity_students_group' => $quantity_students_group,
             'block_groups' => $block_groups
         ];
 
