@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use \Illuminate\Http\Request;
 class LoginController extends Controller
 {
     /*
@@ -27,6 +27,13 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/home';
 
+    protected function validateLogin(Request $request){
+        $this->validate($request, [
+            'email' => 'required',
+            'password' => 'required',
+            'g-recaptcha-response' => 'required',
+        ]);
+    }
     /**
      * Create a new controller instance.
      *

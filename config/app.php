@@ -179,6 +179,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         // Externals
         Jenssegers\Agent\AgentServiceProvider::class,
+        // captchat
+        Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
     ],
 
     /*
@@ -228,6 +230,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         //Externals
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
+
+        'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
     ],
 
 ];

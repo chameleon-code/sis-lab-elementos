@@ -90,6 +90,14 @@
                             {!! $errors -> first('password','<label style="color:crimson">:message</label>')!!} 
                             <input type="text" name="mode" hidden value="register">
                             <br>
+                            <div class="form-group">
+                                {!! Recaptcha::render() !!}
+                                @if ($errors->has('g-recaptcha-response'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                    </span>
+                                @endif                                                 
+                            </div>
                             <div class="form-group row">
                                     <div class="form-group col-md-6 col">
                                       <button type="submit" class="form-control btn btn-primary btn-block col-md-12">Registrar</button>

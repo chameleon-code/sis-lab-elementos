@@ -64,6 +64,15 @@
                                             </div>
                                             {!! $errors -> first('email','<label style="color:crimson">:message</label>')!!} 
                                             <br>
+                                            <div class="form-group">
+                                                {!! Recaptcha::render() !!}
+                                                @if ($errors->has('g-recaptcha-response'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                                    </span>
+                                                @endif                                                 
+                                            </div>
+                                            {{-- {!! ReCaptcha::displaySubmit('register-form', 'Register', ['class' => 'btn btn-primary']) !!} --}}
                                             <button id="login" type="submit" class="btn btn-primary btn-block">
                                                     Ingresar
                                             </button>
