@@ -144,6 +144,7 @@
       <footer class="sticky-footer">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
+            <h6 title="Si tienes alguna queja u observación, haz click aquí"><a href="/about">Contactanos</a><h6> 
             <span>Copyright &copy; Chameleon Code 2019</span>
           </div>
         </div>
