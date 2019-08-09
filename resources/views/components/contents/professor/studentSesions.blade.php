@@ -90,9 +90,9 @@
                                         <div data-parent-id="panel{{$sesion->id}}">
                                             <strong> Entregado  
                                                 @if ($tasks_finisheds[$loop->parent->index]->assist == 1 && $student_tasks->where('task_id', $task->id)->first()->in_time != 'no')
-                                                    en clase a tiempo
+                                                    en el dia correcto
                                                 @else
-                                                    a horas: {{ $student_tasks->where('task_id', $task->id)->first()->updated_at->format('H:i:s') }} desde su casa
+                                                    el dia: {{ $student_tasks->where('task_id', $task->id)->first()->updated_at) }}
                                                 @endif
                                                 &#10003 
                                             </strong>                                            

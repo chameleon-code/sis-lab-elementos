@@ -1,36 +1,46 @@
 @extends('components.sections.professorSection')
 @section('userContent')
 
-<div class="container-fluid">
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <div class="d-flex justify-content-between">
-                <div class="panel-heading m-0 font-weight-bold text-primary">Estudiantes </div>
-                {{-- <a href="/professor/practices/download" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Descargar portafolios" onclick="loadProfile()" id="profile"><i class="fas fa-download"></i></a> --}}
-            </div>
-            <div class="card-body">
-                @if (Session::has('status_message'))
-                    <p class="alert alert-success"><strong> {{Session::get('status_message')}} </strong></p>
-                @endif
-                <div class="">
-                    <div class="row">
-                        <div class="form-group col-md-5 col-12 col-sm-12">
-                            <select name="group_id" class="form-control" id="groups">
-                                @forelse ($groups as $group)
-                                    @if ($loop->first)
-                                        <option class="form-control" value="{{$group->id}}" selected> Grupo {{$group->name . " - " . $group->subject->name}}</option>
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <div class="d-flex justify-content-between">
+                    <div class="panel-heading m-0 font-weight-bold text-primary">Estudiantes </div>
+                    {{-- <a href="/professor/practices/download" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Descargar portafolios" onclick="loadProfile()" id="profile"><i class="fas fa-download"></i></a> --}}
+                </div>
+                <div class="card-body">
+                    @if (Session::has('status_message'))
+                        <p class="alert alert-success"><strong> {{Session::get('status_message')}} </strong></p>
+                    @endif
+                    <div class="">
+                        <div class="row">
+                            <div class="form-group col-lg-7 col-md-8 col-12 col-sm-12" style="display: inline-flex;">
+                                    <select name="group_id" class="form-control" id="groups">
+                                        @forelse ($groups as $group)
+                                        @if ($loop->first)
+                                            <option class="form-control" value="{{$group->id}}" selected> Grupo {{$group->name . " - " . $group->subject->name}}</option>
                                         @continue
                                     @endif
                                         <option class="form-control" value="{{$group->id}}"> Grupo {{$group->name . " - " . $group->subject->name}}</option>
                                     @empty
                                         <option class="form-control" value="">No tiene grupos relacionados con algun bloque</option>
-                                    @endempty
-                                @endforelse
-                            </select>
-                        </div>
-                        <div class="col-sm-12 table-responsive">
-                            <table class="table dataTable text-center table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
-                                <thead>
+                                        @endempty
+                                        @endforelse
+                                    </select>
+                                    <br>
+                                    <div class="form-group col-lg-4 col-md-4 col-12 col-sm-12">
+                                        <form class="mx-auto" action="/downloadGroupRegister" method="get">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="group_id" value="{{ $group->id }}" id="group_id">
+                                            <button type="submit" class="btn btn-primary" data-toggle-2="tooltip" title="Descargar portafolios"><i class="fa fa-download" aria-hidden="true">Descargar</i></button>
+                                        </form>
+                                    </div>
+                            </div>
+                            <div class="col-sm-12 table-responsive">
+                                <table class="table dataTable text-center table-striped table-secondary" id="dataTable" width="100%"
+                                       cellspacing="0" role="grid" aria-describedby="dataTable_info"
+                                       style="width: 100%;">
+                                    <thead>
                                     <tr role="row" class="bg-dark">
                                         <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 230px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: white;">Código SIS</font></font></th>
                                         <th class="sorting_desc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 380px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: white;">Apellidos</font></font></th>
