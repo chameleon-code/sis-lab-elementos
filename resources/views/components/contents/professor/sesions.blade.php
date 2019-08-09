@@ -13,10 +13,18 @@
                     <ul>Aun no esta asignado a un bloque</ul>
                 </div>
             @else
-                <label for="">Bloque: </label>
+                <label for="">Grupo: </label>
                 <select class="form-control col-md-6 col-12" name="" id="block-selector" onchange="displaySesionByBlock({{ json_encode($blocks) }})">
                     @foreach ($blocks as $key => $block)
-                        <option class="optional" value="{{$block->block_id}}">{{$block->block_id}} - {{$subjects[$key]}}</option>
+                    @php
+                        $g = null;
+                        foreach ($groups as $group) {
+                            if($block->group_id == $group->id) {
+                                $g = $group->name;
+                            }
+                        }
+                    @endphp
+                        <option class="optional" value="{{$block->block_id}}"> {{$g}} - {{$subjects[$key]}}</option>
                     @endforeach
                 </select>
                 
@@ -96,7 +104,7 @@
                                         <thead>
                                             <tr>
                                                 <div class="accordion-body bg-gray-300 rounded row" style="cursor: default;">
-                                                    <div class="container d-flex justify-content-between p-1" style="margin-right: 0px;">
+                                                    <div class="container d-flex justify-content-between p-1" style="">
                                                         <div class="d-flex justify-content-start">
                                                             <strong style="color: gray;"> Sesión:&nbsp; </strong> {{ $s->number_sesion }}
                                                         </div>
@@ -127,15 +135,15 @@
                                                                     <div class="row no-gutters align-items-center">
                                                                         <div class="col-auto">
                                                                             @php
-                                                                                // $quantity_students = 1;
-                                                                                // for($i=0 ; $i<sizeof($id_groups) ; $i++) {
-                                                                                //     if($block->group_id == $id_groups[$i]) {
-                                                                                //         $quantity_students = $quantity_students_group[$i];
-                                                                                //     }
-                                                                                // }
+                                                                                $quantity_students = null;
+                                                                                foreach ($groups as $group) {
+                                                                                    if($group->id == $block->group_id) {
+                                                                                        $quantity_students = $group_registered[$block->id];
+                                                                                    }
+                                                                                }
                                                                             @endphp
                                                                             {{-- <div class="h6 mb-0 mr-3 font-weight-bold text-gray-800">{{ $tasks_by_sesion[$s->id] }}/{{ $quantity_students }}</div> --}}
-                                                                            <div id="proportion-tasks-{{$s->id}}" class="h6 mb-0 mr-3 font-weight-bold text-gray-800">-/-</div>
+                                                                            <div id="proportion-tasks-{{$s->id}}" class="h6 mb-0 mr-3 font-weight-bold text-gray-800">-/{{ $quantity_students }}</div>
                                                                         </div>
                                                                         <div class="col">
                                                                             <div class="progress progress-sm mr-2">

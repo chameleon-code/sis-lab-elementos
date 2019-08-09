@@ -43,7 +43,11 @@ class StudentTask extends Model
         }
         return $res;
     }
-
+     public static function inDay($scheduleId){
+        $schedule = ScheduleRecord::find($scheduleId);
+        $ctrl = new AuxiliarController();
+        return $ctrl->compareDay($schedule->day_id);
+     }
     
 }
 

@@ -114,10 +114,16 @@ class StudentTaskController extends Controller
                 $student = Student::where('user_id','=',$user->id)->first();
                 
                 $hour = Carbon::now()->format('H:i:s');
-                $inHour = StudentTask::inHour($hour, $request->schedule_id);
-                $textInHour = "no";
-                if($inHour){
-                    $textInHour = "yes";
+                // Refactorizacion para ver si se entrego la tarea en el dia correcto
+                //$inHour = StudentTask::inHour($hour, $request->schedule_id);
+                $inDay = StudentTask::inDay($request->schedule_id);
+                //$textInHour = "no";
+                $textInDay = "no";
+                // if($inHour){
+                //     $textInHour = "yes";
+                // }
+                if($inDay){
+                    $textInDay = "yes";
                 }
                 $fileName = $file->getClientOriginalName();
                 $fileSesion = $request->sesion_number;
@@ -134,7 +140,8 @@ class StudentTaskController extends Controller
                         "student_id" => $student->id,
                         "task_name" => $fileName,
                         "task_path" => $studentSchedule->student_path.'/sesion-'.$fileSesion,
-                        "in_time" => $textInHour
+                        //"in_time" => $textInHour
+                        "in_time" => $textInDay
                     ];
                     StudentTask::create($data);
                 }

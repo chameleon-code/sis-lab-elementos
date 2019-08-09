@@ -18,6 +18,7 @@
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
                 <script src="/js/preloadWindow/preload.js"></script>
                 <link rel="stylesheet" href="/css/preloadWindow/preload.css"/>
+                <link rel="stylesheet" href="/css/about.css">
         </head>
 
 <body class="bg-gradient-success">
@@ -119,6 +120,15 @@
         </div>
     </div>
 </div>
+<br>
+    <footer>
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto" style="color: aliceblue;">
+             <h6 title="Si tienes alguna queja u observación, haz click aquí"><a href="/about" style="color: paleturquoise;">Contactanos</a></h6> 
+            <h6>Copyright &copy; Chameleon Code 2019</h6>
+          </div>
+        </div>
+    </footer>
 </body>
 
 

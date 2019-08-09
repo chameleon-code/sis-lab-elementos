@@ -18,6 +18,9 @@ use App\Laboratory;
 Route::get('/', function () {
     return view('layouts.home');
 });
+Route::get('/about', function () {
+    return view('layouts.about');
+});
 Route::get('error', function () {
     return view('errors.404');
 });

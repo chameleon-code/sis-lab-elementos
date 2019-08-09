@@ -29,7 +29,7 @@
   <nav class="navbar navbar-light bg-light navbar-expand-lg">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Sis-Lab</a>
+          <a class="navbar-brand" href="#">SIS-LAB</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
           <li><a id="login" class="btn btn-primary col-11" href=" {{ url('/login') }} ">Ingresa</a></li>
@@ -44,30 +44,34 @@
     <div class="container">
       <div class="row">
         <div class="col-xl-9 mx-auto">
-          <h1 class="mb-5">Sistema de Administración de Horarios de Laboratorio</h1>
+          <h1 class="mb-5">Sistema de Información de Sesiones de Laboratorio</h1>
         </div>
       </div>
     </div>
   </header>
-  <!-- Footer -->
+
   <footer class="footer bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
-          
-          <p class="text-muted small mb-4 mb-lg-0">&copy; Chameleon Code 2019</p>
-        </div>
-        <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
-          <ul class="list-inline mb-0">
-            <li class="list-inline-item mr-3">
-              <a href="https://github.com/chameleon-code/">
-                <i class="fab fa-github fa-2x fa-fw"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+                  <ul class="list-inline mb-2">
+                      <li class="list-inline-item">
+                          <a href="/about"  title="Si tienes alguna queja u observación, haz click aquí">Contactanos</a>
+                      </li>
+                  </ul>
+              <p class="text-muted small mb-4 mb-lg-0">Copyright &copy; Chameleon Code 2019</p>
+              </div>
+              <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+              <ul class="list-inline mb-0">
+                  <li class="list-inline-item mr-3">
+                  <a href="https://github.com/chameleon-code/">
+                      <i class="fab fa-github fa-2x fa-fw"></i>
+                  </a>
+                  </li>
+              </ul>
+              </div>
+          </div>
       </div>
-    </div>
   </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
