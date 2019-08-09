@@ -38,4 +38,47 @@ class Management extends Model
         }
         return $actual_management;
     }
+
+    public static function getMonth($date){
+        $resp;
+        switch(substr($date, 5, 2)){
+            case '01':
+                $resp = "Enero";
+                break;
+            case '02':
+                $resp = "Febrero";
+                break;
+            case '03':
+                $resp = "Marzo";
+                break;
+            case '04':
+                $resp = "Abril";
+                break;
+            case '05':
+                $resp = "Mayo";
+                break;
+            case '06':
+                $resp = "Junio";
+                break;
+            case '07':
+                $resp = "Julio";
+                break;
+            case '08':
+                $resp = "Agosto";
+                break;
+            case '09':
+                $resp = "Septiembre";
+                break;
+            case '10':
+                $resp = "Octubre";
+                break;
+            case '11':
+                $resp = "Noviembre";
+                break;
+            case '12':
+                $resp = "Diciembre";
+                break;
+        }
+        return $resp;
+    }
 }
