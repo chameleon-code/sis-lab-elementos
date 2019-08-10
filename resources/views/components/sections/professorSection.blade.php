@@ -8,12 +8,14 @@
 @endphp
 
 @if(Agent::isMobile())
-<!-- Divider -->
-<hr class="sidebar-divider my-0">
-<!-- Nav Item - Dashboard -->
-<li class="nav-item">
+  <hr class="sidebar-divider my-0">
+  <li class="nav-item">
   <div class="nav-link" style="pointer-events: none !important;">
-      <span> {{ substr($actual_date, 8, 2) }} {{ App\Management::getMonth($actual_date) }} <br> <strong> {{ $management->semester }}-{{ $management->managements }} </strong> </span> 
+  @if($management != null)
+    <span> {{ substr($actual_date, 8, 2) }} {{ App\Management::getMonth($actual_date) }} <br> <strong> {{ $management->semester }}-{{ $management->managements }} </strong> </span> 
+  @else
+    <span> {{ substr($actual_date, 8, 2) }} {{ App\Management::getMonth($actual_date) }} </span> 
+  @endif
   </div>
 </li>
 @endif
