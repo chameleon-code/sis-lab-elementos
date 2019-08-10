@@ -191,5 +191,6 @@ return [
         'end_management'        => 'fecha de fin',
         'date_start'            => 'fecha de inicio',
         'date_end'              => 'fecha de fin',
+        'g-recaptcha-response'  => 'captcha', 
     ],
 ];
