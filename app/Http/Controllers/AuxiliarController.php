@@ -204,9 +204,9 @@ class AuxiliarController extends Controller
     }
 
     public function rememberNav(){
-        $tmp = 0.5;
+        $tmp = 0.05;
         Cache::put('professor_nav', '', $tmp);
-        Cache::put('auxiliar_nav', ' show', 0.1);
+        Cache::put('auxiliar_nav', ' show', $tmp);
         Cache::put('student_nav', '', $tmp);
         Cache::put('management_nav', '', $tmp);
         Cache::put('subject_matter_nav', '', $tmp);
