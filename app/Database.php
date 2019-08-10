@@ -9,26 +9,26 @@ class Database extends Model
     // HORARIOS
 
     const DAY_ID = [
-        2, 3, 5
+        1, 2, 3, 4, 5
     ];
 
     const HOUR_ID = [
-        6, 7, 8
+        1
     ];
 
     const PROFESSOR = [
-        'Leticia', 'Corina', 'Vladimir Abel'
+        'Leticia Blanco Coca'
     ];
 
     // MATERIAS
 
     const SUBJECT_MATTERS = [
-        'Introducción a la Programación',
-        'Circuitos',
-        'Taller de Sistemas Operativos',
-        'Base de Datos I',
-        'Elementos de Programación y Estructura de Datos',
-        'Redes de Computadoras',
+        // 'Introducción a la Programación',
+        // 'Circuitos',
+        // 'Taller de Sistemas Operativos',
+        // 'Base de Datos I',
+        'ELEMENTOS DE PROGRAMACIÓN Y ESTRUCTURA DE DATOS',
+        //'Redes de Computadoras',
     ];
 
     // USERS

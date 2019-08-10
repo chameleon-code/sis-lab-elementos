@@ -15,15 +15,18 @@
                                 <table class="table dataTable text-center table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                     <thead>
                                         <tr role="row" class="bg-dark">
+                                            <th class="text-center" data-orderable="false" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; width: 90px;">Gestión</font></font></th>
+                                            
                                             <th class="sorting mx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 100px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nombre</font></font></th>
                                             
-                                            <th class="sorting_desc mx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 200px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Materia</font></font></th>
+                                            <th class="sorting_desc mx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 270px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Materia</font></font></th>
                                             
-                                            <th class="sorting mx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 400px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Grupos</font></font></th>
+                                            <th class="sorting mx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 260px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Grupos</font></font></th>
 
                                             <th class="text-center" data-orderable="false" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Acciones</font></font></th>
 
-                                            <th class="text-center" data-orderable="false" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Habilitar/Deshabilitar</font></font></th>
+                                            {{-- <th class="text-center" data-orderable="false" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Habilitar/Deshabilitar</font></font></th> --}}
+
                                         </tr>
                                     </thead>
                                         {{-- <tfoot>
@@ -32,6 +35,11 @@
                                         <tbody> 
                                             @foreach ($blocks as $item)
                                                 <tr role="row" class="odd">
+                                                    @php
+                                                        $management = App\Management::findOrFail($item->management_id);
+                                                    @endphp
+                                                    <td class="sorting_1 mx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $management->semester }}-{{ $management->managements }}</font></font></td>
+
                                                     <td class="sorting_1 mx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{$item->name}}</font></font></td>
 
                                                     <td class="mx-1">
@@ -56,7 +64,7 @@
                                                         <a href="/admin/blocks/{{$item->id}}/edit" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Editar"><i class="fas fa-edit"></i></a>
                                                         <a href="/schedule/create/{{$item->id}}" class="btn btn-success btn-circle btn-sm mx-1" data-toggle="tooltip" title="Asiganción De Horarios"><i class="far fa-calendar-alt"></i></a>
                                                     </td>   
-                                                    <td class="text-center">
+                                                    {{-- <td class="text-center">
                                                         <label class="switch">
                                                             <input id="checkbox-{{$item->id}}" data-toggle="modal" data-target="#modal-inscription" type="checkbox" onclick="registrationMessage({{$item}})">
                                                             <span class="slider round"></span>
@@ -70,7 +78,7 @@
                                                     <script>
                                                         $("#checkbox-{!!json_encode($item->id)!!}")[0].checked = 0;
                                                     </script>
-                                                    @endif                                                 
+                                                    @endif --}}
                                                 </tr>
                                           @endforeach
                                             
