@@ -58,21 +58,4 @@
       <i class="fas fa-fw fa-calendar-day"></i>
       <span>Sesiones</span></a>
   </li>
-{{-- 
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTasks" aria-expanded="true" aria-controls="collapseTasks">
-      <i class="fas fa-fw fa-tasks"></i>
-      <span>Prácticas</span>
-    </a>
-      <div id="collapseTasks" class="collapse" aria-labelledby="headingTasks" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <h6 class="collapse-header">Opciones:</h6>
-          <a class="collapse-item" href="{{url('/tasks')}}"><i class="fas fa-cogs"></i>  Administrar</a>
-          <a class="collapse-item" href="#"><i class="fas fa-check"></i> Calificar</a>
-        </div>
-      </div>
-  </li> --}}
-
-
-
 @endsection

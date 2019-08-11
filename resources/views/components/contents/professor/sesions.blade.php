@@ -13,7 +13,7 @@
                     <ul>Aun no esta asignado a un bloque</ul>
                 </div>
             @else
-                <label for="">Grupo: </label>
+                <label for="">Bloque: </label>
                 <select class="form-control col-md-6 col-12" name="" id="block-selector" onchange="displaySesionByBlock({{ json_encode($blocks) }})">
                     @foreach ($blocks as $key => $block)
                     @php
@@ -24,7 +24,8 @@
                             }
                         }
                     @endphp
-                        <option class="optional" value="{{$block->block_id}}"> {{$g}} - {{$subjects[$key]}}</option>
+                        {{-- <option class="optional" value="{{$block->block_id}}"> {{$g}} - {{$subjects[$key]}}</option> --}}
+                        <option class="optional" value="{{$block->block_id}}">{{$subjects[$key]}}</option>
                     @endforeach
                 </select>
                 

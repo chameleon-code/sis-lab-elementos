@@ -68,7 +68,7 @@
                                                 {!! Recaptcha::render() !!}
                                                 @if ($errors->has('g-recaptcha-response'))
                                                     <span class="help-block">
-                                                        <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                                        <label style="color:crimson">{{ $errors->first('g-recaptcha-response') }}</label>
                                                     </span>
                                                 @endif                                                 
                                             </div>

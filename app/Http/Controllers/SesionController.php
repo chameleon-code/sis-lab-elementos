@@ -24,19 +24,34 @@ class SesionController extends Controller
     public function index()
     {
         $blockGroups = Professor::getBlocksProfessor();
+        $blockResult = array();
+        $blockVisits = array();
+        foreach ($blockGroups as $block) {
+            foreach($blockVisits as $blockVisit) {
+               if($block->id != $blockVisit->id) {
+                    array_push($blockResult,$block);
+                }
+            }
+            array_push($blockVisits,$block);
+        }
+        //dd($blockResult);
         $sesionsBlocks=[];
         $dateStart = '';
         $dateEnd = '';
         $subjectNames=[];
+        $blockFlag = -1;
         if($blockGroups!=null){
             foreach ($blockGroups as $blockGroup) {
                 $blockId = $blockGroup->block_id;
-                $subjectName = Professor::getSubjectByBlockGroup($blockGroup->id);
-                array_push($sesionsBlocks, Sesion::where('block_id','=',$blockId)->get());
-                $management_id = Block::where('id','=',$blockId)->get()->first()->management_id;
-                $dateStart = Management::where('id','=',$management_id)->get()->first()->start_management;
-                $dateEnd = Management::where('id','=',$management_id)->get()->first()->end_management;
-                array_push($subjectNames, $subjectName);
+                if($blockId!=$blockFlag){
+                    $subjectName = Professor::getSubjectByBlockGroup($blockGroup->id);
+                    array_push($sesionsBlocks, Sesion::where('block_id','=',$blockId)->get());
+                    $management_id = Block::where('id','=',$blockId)->get()->first()->management_id;
+                    $dateStart = Management::where('id','=',$management_id)->get()->first()->start_management;
+                    $dateEnd = Management::where('id','=',$management_id)->get()->first()->end_management;
+                    array_push($subjectNames, $subjectName);
+                    $blockFlag = $blockId;
+                }
             }
 
             $id_groups = array();
@@ -48,7 +63,7 @@ class SesionController extends Controller
             $group_registered = Group::quantityStudentsByGroup();
 
             $data = [
-                'blocks' => $blockGroups,
+                'blocks' => $blockResult,
                 'sesions' => $sesionsBlocks,
                 'start' => $dateStart,
                 'end' => $dateEnd,
@@ -57,6 +72,7 @@ class SesionController extends Controller
                 'group_registered' => $group_registered
                 // 'tasks_by_sesion' => $tasks_by_sesion,
             ];
+            //dd($data);
             return view('components.contents.professor.sesions', $data);
         }else{
             $data = [
