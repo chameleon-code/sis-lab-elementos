@@ -60,7 +60,7 @@ class SesionController extends Controller
                 array_push($id_groups, $block_groups[$i]->group_id);
             }
 
-            $group_registered = Group::quantityStudentsByGroup();
+            $block_registered = Block::quantityStudentsByBlock();
 
             $data = [
                 'blocks' => $blockResult,
@@ -69,7 +69,7 @@ class SesionController extends Controller
                 'end' => $dateEnd,
                 'subjects' => $subjectNames,
                 'groups' => Group::all(),
-                'group_registered' => $group_registered
+                'group_registered' => $block_registered
                 // 'tasks_by_sesion' => $tasks_by_sesion,
             ];
             //dd($data);

@@ -215,8 +215,8 @@ class DatabaseSeeder extends Seeder
 
         factory(\App\Hour::class, 1)->create()
         ->each(function (\App\Hour $h){
-            $h->start = App\Hour::START_HOURS[9];
-            $h->end = App\Hour::END_HOURS[9];
+            $h->start = App\Hour::START_HOURS[10];
+            $h->end = App\Hour::END_HOURS[10];
             $h->save();
         });
 

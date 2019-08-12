@@ -37,4 +37,25 @@ class Block extends Model
     public function sesions(){
         return $this->hasMany('App\Sesion');
     }
+
+    public static function quantityStudentsByBlock() {
+        $blocks = Block::all();
+        $block_schedules = BlockSchedule::all();
+        
+        $block_registered = [];
+        for($i=0 ; $i<sizeof($blocks) ; $i++) {
+            $block_registered[$blocks[$i]->id] = 0;
+        }
+
+        $student_schedules = StudentSchedule::all();
+        for($i=0 ; $i<sizeof($blocks) ; $i++) {
+            for($j=0 ; $j<sizeof($student_schedules) ; $j++) {
+                if($blocks[$i]->id == $student_schedules[$j]->block_schedule->id) {
+                    $block_registered[$blocks[$i]->id]++;
+                }
+            }
+        }
+        dd($block_registered);
+        return $group_registered;
+    }
 }
