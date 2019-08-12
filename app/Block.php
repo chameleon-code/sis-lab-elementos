@@ -50,12 +50,11 @@ class Block extends Model
         $student_schedules = StudentSchedule::all();
         for($i=0 ; $i<sizeof($blocks) ; $i++) {
             for($j=0 ; $j<sizeof($student_schedules) ; $j++) {
-                if($blocks[$i]->id == $student_schedules[$j]->block_schedule->id) {
+                if($blocks[$i]->id == $student_schedules[$j]->block_schedule->block_id) {
                     $block_registered[$blocks[$i]->id]++;
                 }
             }
         }
-        dd($block_registered);
-        return $group_registered;
+        return $block_registered;
     }
 }
