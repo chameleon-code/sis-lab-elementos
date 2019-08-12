@@ -1,28 +1,38 @@
 <?php
+
 namespace App;
+
 use Illuminate\Database\Eloquent\Model;
+
 class Database extends Model
 {
     // HORARIOS
+
     const DAY_ID = [
-        2, 3, 5
+        1, 2, 3, 4, 5
     ];
+
     const HOUR_ID = [
-        6, 7, 8
+        1
     ];
+
     const PROFESSOR = [
-        'Leticia', 'Corina', 'Vladimir Abel'
+        'Leticia Blanco Coca'
     ];
+
     // MATERIAS
+
     const SUBJECT_MATTERS = [
-        'Introducción a la Programación',
-        'Circuitos',
-        'Taller de Sistemas Operativos',
-        'Base de Datos I',
-        'Elementos de Programación y Estructura de Datos',
-        'Redes de Computadoras',
+        // 'Introducción a la Programación',
+        // 'Circuitos',
+        // 'Taller de Sistemas Operativos',
+        // 'Base de Datos I',
+        'ELEMENTOS DE PROGRAMACIÓN Y ESTRUCTURA DE DATOS',
+        //'Redes de Computadoras',
     ];
+
     // USERS
+
     const NAMES = [
         "ABAD",
         "ABIGAIL ELISA",
@@ -282,6 +292,7 @@ class Database extends Model
         "WILSON",
         "YESUA",
     ];
+
     const FIRST_NAME = [
         "CHAMBI",
         "GALZIN",
@@ -541,6 +552,7 @@ class Database extends Model
         "CESPEDES",
         "JIMENEZ"
     ];
+
     const SECOND_NAME = [
         "LEON",
         "BAZOALTO",
@@ -800,7 +812,9 @@ class Database extends Model
         "R.",
         "GONZALES"
     ];
+
     // INSCRIPCIONES
+
     const BLOCK_SCHEDULES = [
         4,
         3,
@@ -1060,6 +1074,7 @@ class Database extends Model
         5,
         1,
     ];
+
     const STUDENT_GROUP = [
         10,
         10,
@@ -1319,7 +1334,9 @@ class Database extends Model
         10,
         10,
     ];
+
     // GUIA PRÁCTICA
+
     const TASKS = [
         'PracticaSaludador',
         'Clases',
@@ -1337,6 +1354,7 @@ class Database extends Model
         'Herencia',
         'HerenciaTres'
     ];
+
     const NAME_TASKS = [
         'Sesion1_PracticaSaludador.pdf',
         'Sesion2_Clases.pdf',
@@ -1354,9 +1372,12 @@ class Database extends Model
         'Sesion14_Herencia.pdf',
         'Sesion15_HerenciaTres.pdf',
     ];
+
     // TAREAS DE ESTUDIANTES
+
     const NUMBER_TASKS = [9, 9, 9, 9, 10, 9, 8, 12];
     const STUDENTS_ID = [123, 197, 183, 121, 216, 134, 162, 248];
+
     const TASKS_STUDENT_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const TASKS_STUDENT_2 = [1, 2, 3, 4, 5, 6, 7, 9, 10];
     const TASKS_STUDENT_3 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -1365,6 +1386,7 @@ class Database extends Model
     const TASKS_STUDENT_6 = [1, 2, 3, 4, 5, 6, 7, 9, 11];
     const TASKS_STUDENT_7 = [1, 2, 3, 4, 5, 6, 7, 8];
     const TASKS_STUDENT_8 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
     const TASK_NAME_STUDENT_1 = [
         'PrimerProyecto.rar',
         'tarea2.rar',
@@ -1456,6 +1478,7 @@ class Database extends Model
         'sesion11.rar',
         'sesion12.rar'
     ];
+
     const TASK_DESCRIPTION = [
         'Completo el ejercicio ',
         'Hizo el ejercicio ',
