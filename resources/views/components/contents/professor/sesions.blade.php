@@ -144,7 +144,7 @@
                                                                                 }
                                                                             @endphp --}}
                                                                             {{-- <div class="h6 mb-0 mr-3 font-weight-bold text-gray-800">{{ $tasks_by_sesion[$s->id] }}/{{ $quantity_students }}</div> --}}
-                                                                            <div id="proportion-tasks-{{$s->id}}" class="h6 mb-0 mr-3 font-weight-bold text-gray-800">-/{{ $block_registered[$block->id] }}</div>
+                                                                            <div id="proportion-tasks-{{$s->id}}" class="h6 mb-0 mr-3 font-weight-bold text-gray-800">-/{{ $block_registered[$block->block_id] }}</div>
                                                                         </div>
                                                                         <div class="col">
                                                                             <div class="progress progress-sm mr-2">

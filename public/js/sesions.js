@@ -377,6 +377,7 @@ function loadPracticeInfo() {
     $.ajax({
         url : "/professor/practices/info",
         success: function (response){
+            console.log(response);
             for(i=0 ; i<Object.keys(response.sesions).length ; i++) {
                 $("#sesion-badge-"+response.sesions[i].id).append('<span class="badge badge-danger badge-counter">'+ response.quantity_sesion_tasks[response.sesions[i].id] +'</span>');
             }

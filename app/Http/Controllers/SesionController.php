@@ -32,6 +32,7 @@ class SesionController extends Controller
             foreach($blockVisits as $blockVisit) {
                if($block_group->id != $blockVisit->id) {
                     array_push($blockResult,$block_group);
+                    break;
                 }
             }
             array_push($blockVisits,$block_group);

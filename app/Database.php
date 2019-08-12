@@ -9,7 +9,7 @@ class Database extends Model
     // HORARIOS
 
     const DAY_ID = [
-        1, 2, 3, 4, 5
+        1, 2, 3, 4, 5, 6
     ];
 
     const HOUR_ID = [
