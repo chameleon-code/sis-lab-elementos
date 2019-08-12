@@ -5,7 +5,7 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <div class="d-flex justify-content-between">
-                    <div class="panel-heading m-0 font-weight-bold text-primary">Estudiantes </div>
+                    <div class="panel-heading m-0 font-weight-bold text-primary container">Estudiantes </div>
                     {{-- <a href="/professor/practices/download" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Descargar portafolios" onclick="loadProfile()" id="profile"><i class="fas fa-download"></i></a> --}}
                 </div>
                 <div class="card-body">
@@ -13,9 +13,10 @@
                         <p class="alert alert-success"><strong> {{Session::get('status_message')}} </strong></p>
                     @endif
                     <div class="">
-                        <div class="row">
-                            <div class="form-group col-lg-7 col-md-8 col-12 col-sm-12" style="display: inline-flex;">
-                                    <select name="group_id" class="form-control" id="groups">
+                        <div class="">
+                            <div class="form-group" style="">
+                                <div class="d-flex justify-content-between">
+                                    <select name="group_id" class="form-control" id="groups" style="width: 30%;">
                                         @forelse ($groups as $group)
                                         @if ($loop->first)
                                             <option class="form-control" value="{{$group->id}}" selected> Grupo {{$group->name . " - " . $group->subject->name}}</option>
@@ -28,13 +29,14 @@
                                         @endforelse
                                     </select>
                                     <br>
-                                    <div class="form-group col-lg-4 col-md-4 col-12 col-sm-12">
-                                        <form class="mx-auto" action="/downloadGroupRegister" method="get">
+                                    <div class="form-group">
+                                        <form class="mx-2" action="/downloadGroupRegister" method="get">
                                             {{ csrf_field() }}
                                             <input type="hidden" name="group_id" value="{{ $group->id }}" id="group_id">
-                                            <button type="submit" class="btn btn-primary" data-toggle-2="tooltip" title="Descargar portafolios"><i class="fa fa-download" aria-hidden="true">Descargar</i></button>
+                                            <button type="submit" class="btn btn-primary" data-toggle-2="tooltip" title="Descargar portafolios"><i class="fa fa-download" aria-hidden="true"></i></button>
                                         </form>
                                     </div>
+                                </div>
                             </div>
                             <div class="col-sm-12 table-responsive">
                                 <table class="table dataTable text-center table-striped table-secondary" id="dataTable" width="100%"

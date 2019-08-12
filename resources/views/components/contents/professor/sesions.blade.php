@@ -135,16 +135,16 @@
 
                                                                     <div class="row no-gutters align-items-center">
                                                                         <div class="col-auto">
-                                                                            @php
+                                                                            {{-- @php
                                                                                 $quantity_students = null;
                                                                                 foreach ($groups as $group) {
                                                                                     if($group->id == $block->group_id) {
                                                                                         $quantity_students = $group_registered[$block->id];
                                                                                     }
                                                                                 }
-                                                                            @endphp
+                                                                            @endphp --}}
                                                                             {{-- <div class="h6 mb-0 mr-3 font-weight-bold text-gray-800">{{ $tasks_by_sesion[$s->id] }}/{{ $quantity_students }}</div> --}}
-                                                                            <div id="proportion-tasks-{{$s->id}}" class="h6 mb-0 mr-3 font-weight-bold text-gray-800">-/{{ $quantity_students }}</div>
+                                                                            <div id="proportion-tasks-{{$s->id}}" class="h6 mb-0 mr-3 font-weight-bold text-gray-800">-/{{ $block_registered[$block->id] }}</div>
                                                                         </div>
                                                                         <div class="col">
                                                                             <div class="progress progress-sm mr-2">
