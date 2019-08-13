@@ -7,6 +7,7 @@ use App\Task;
 use App\Student;
 use App\User;
 use Carbon\Carbon;
+use App\Http\Controllers\AuxiliarController;
 
 class StudentTask extends Model
 {

@@ -25,7 +25,9 @@
         <!-- Custom scripts for all pages-->
         <script src="js/sb-admin-2.min.js"></script>
         <link rel="stylesheet" href="/css/about.css">
+        <script src="/js/preloadWindow/preload.js"></script>
     </head>
+    <div id="overlay" style="background-color:black; opacity: 0.5; position:absolute; top:0; left:0; height:100%; width:100%; z-index:999"> <div class="row justify-content-center align-items-center" style="height: 100vh;"> <div class="preloader"></div> </div>  </div> 
     <body class="bg-gradient-success">
         <div class="container">
             <div class="row justify-content-center">

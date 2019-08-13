@@ -1,7 +1,7 @@
 @extends('components.sections.adminSection')
 @section('userContent')
 <script src="/js/generatekey.js"></script>
-<div class="loader"></div>
+<div id="overlay" style="background-color:black; opacity: 0.5; position:absolute; top:0; left:0; height:100%; width:100%; z-index:999"> <div class="row justify-content-center align-items-center" style="height: 100vh;"> <div class="preloader"></div> </div>  </div>
 <div class="row justify-content-center">
     <div class="col-xl-6 col-lg-10 col-md-9">
       <div class="card o-hidden border-0 my-5">

@@ -22,7 +22,8 @@
         </head>
 
 <body class="bg-gradient-success">
-<div class="loader"></div>
+{{-- <div class="loader"></div> --}}
+<div id="overlay" style="background-color:black; opacity: 0.5; position:absolute; top:0; left:0; height:100%; width:100%; z-index:999"> <div class="row justify-content-center align-items-center" style="height: 100vh;"> <div class="preloader"></div> </div>  </div>
 <script src="/js/validateFields.js"></script>
 <div class="container">
     <div class="card o-hidden border-0 shadow-lg my-5">

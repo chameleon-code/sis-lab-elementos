@@ -50,7 +50,9 @@ $(document).ready(function() {
         },
         error: function() {
             console.log("No se ha podido obtener la información");
-        }
+            alert("Error de conexión. Vuelva a intentarlo.");
+        },
+        timeout: 10000
     });
 });
 
@@ -125,7 +127,9 @@ function infReg(item, id) {
                 $('#schedules-table').after(
                     "<div id='no-schedules'> <strong> No hay horarios disponibles para este grupo. </strong> </div>"
                 );
-            }
+                alert("Error de conexión. Vuelva a intentarlo.");
+            },
+            timeout: 10000
         });
 
         $('#text_select_group')[0].setAttribute("style", "display: none;");
@@ -241,7 +245,8 @@ function status(){
                         }
                     }
                     $('#info-ins').append(
-                        `<div class='accordion-body bg-gray-300 rounded row my-2' style='cursor: default;'> <div class='container d-flex justify-content-between px-1' style=''> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong class='py-0 my-0'> Materia:&nbsp;</strong> ${ matter } </div> </div> <div class='my-0 mx-1' style='font-size: 15px;'> <div class='d-flex justify-content-start' style='padding-left: 3px; display: none !important;'> <strong class='py-0 my-0'> Laboratorio:&nbsp; </strong> ${ lab } </div> <div class='d-flex justify-content-start' style='padding-left: 2px;'> Grupo ${ group_name } - ${ professor } </div> <div class='' style='font-size: 15px; padding-left: 2px;'> ${ day } ${ hour } </div> </div> </div>`
+                        //`<div class='accordion-body bg-gray-300 rounded row my-2' style='cursor: default;'> <div class='container d-flex justify-content-between px-1' style=''> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong class='py-0 my-0'> Materia:&nbsp;</strong> ${ matter } </div> </div> <div class='my-0 mx-1' style='font-size: 15px;'> <div class='d-flex justify-content-start' style='padding-left: 3px; display: none !important;'> <strong class='py-0 my-0'> Laboratorio:&nbsp; </strong> ${ lab } </div> <div class='d-flex justify-content-start' style='padding-left: 2px;'> Grupo ${ group_name } - ${ professor } </div> <div class='' style='font-size: 15px; padding-left: 2px;'> ${ day } ${ hour } </div> </div> </div>`
+                        `<div class='accordion-body bg-gray-300 rounded row my-2' style='cursor: default;'> <div class='container d-flex justify-content-between px-1' style=''> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong class='py-0 my-0'> Materia:&nbsp;</strong> ${ matter } </div> </div> <div class='my-0 mx-1' style='font-size: 15px;'> <div class='d-flex justify-content-start' style='padding-left: 3px; display: none !important;'> <strong class='py-0 my-0'> Laboratorio:&nbsp; </strong> ${ lab } </div> <div class='d-flex justify-content-start' style='padding-left: 2px;'> Grupo ${ group_name } - ${ professor } </div> <div class='' style='font-size: 15px; padding-left: 2px;'> ${ day } </div> </div> </div>`
                     )
                     endLoading();
                     $("#infoInscription").modal("show");
@@ -256,7 +261,9 @@ function status(){
         },
         error: function(){
             console.log("Ha ocurrido un error.");
-        }
+            alert("Error de conexión. Vuelva a intentarlo.");
+        },
+        timeout: 10000
     });
 }
 
