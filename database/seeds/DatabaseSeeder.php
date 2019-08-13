@@ -94,7 +94,16 @@ class DatabaseSeeder extends Seeder
             'role_id' => \App\Role::PROFESSOR
         ]);
         factory(\App\Professor::class, 1)->create(['user_id' => 2]);
-
+        factory(\App\User::class, 1)->create([
+            'names' => 'Rosemary',
+            'first_name' => 'Torrico',
+            'second_name' => 'Bascopé',
+            'email'=>'rosemary.torrico@gmail.com',
+            'password' => bcrypt('secret'),
+            'role_id' => \App\Role::PROFESSOR
+        ]);
+        factory(\App\Professor::class, 1)->create(['user_id' => 3]);
+        
         // factory(\App\User::class, 1)->create([
         //     'names' => 'Corina',
         //     'first_name' => 'Flores',
@@ -154,6 +163,16 @@ class DatabaseSeeder extends Seeder
             'subject_matter_id' => 1,
             'professor_id' => 1,
         ]);
+        $group1 = Group::create([
+            'name' => '1',
+            'subject_matter_id' => 1,
+            'professor_id' => 2,
+        ]);
+        $group5 = Group::create([
+            'name' => '5',
+            'subject_matter_id' => 1,
+            'professor_id' => 2,
+        ]);
         // $group7 = Group::create([
         //     'name' => '7',
         //     'subject_matter_id' => 1,
@@ -169,13 +188,13 @@ class DatabaseSeeder extends Seeder
 
         // BLOQUES
 
-        $block_L = Block::create([
+        $block_LR = Block::create([
             'management_id' => 1,
-            'name' => 'Bloque-L',
+            'name' => 'Bloque-LR',
             'available' => 1,
-            'block_path' => 'folders/2019-2/Bloque-L'
+            'block_path' => 'folders/2019-2/Bloque-LR'
         ]);
-        Storage::makeDirectory($block_L->block_path);
+        Storage::makeDirectory($block_LR->block_path);
         
         // $dates = \App\Sesion::autodate('2019-07-20', '2019-11-30');
         // $i = 1;
@@ -190,12 +209,20 @@ class DatabaseSeeder extends Seeder
         // }
 
         BlockGroup::create([
-            'block_id' => $block_L->id,
+            'block_id' => $block_LR->id,
             'group_id' => $group2->id,
         ]);
         BlockGroup::create([
-            'block_id' => $block_L->id,
+            'block_id' => $block_LR->id,
             'group_id' => $group3->id,
+        ]);
+        BlockGroup::create([
+            'block_id' => $block_LR->id,
+            'group_id' => $group1->id,
+        ]);
+        BlockGroup::create([
+            'block_id' => $block_LR->id,
+            'group_id' => $group5->id,
         ]);
         // BlockGroup::create([
         //     'block_id' => $block_lcv->id,
@@ -220,7 +247,7 @@ class DatabaseSeeder extends Seeder
             $h->save();
         });
 
-        factory(\App\Day::class, 5)->create()
+        factory(\App\Day::class, 6)->create()
         ->each(function (\App\Day $d){
             $d->name = App\Day::DAYS[$d->id-1];
             $d->save();
