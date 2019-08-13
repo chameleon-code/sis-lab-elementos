@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $(".loader").fadeOut();
+    $("#overlay").fadeOut();
 });
 $(document).on('submit','form.user',function(){
-    $(".loader").fadeIn("slow");    
+    $("#overlay").fadeIn("slow");    
 });

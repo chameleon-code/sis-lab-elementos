@@ -95,7 +95,9 @@ function loadPractice(sesion_id){
         error: function() {
             endLoading();
             console.log("No se ha podido obtener la información");
-        }
+            alert("Error de conexión. Vuelva a intentarlo.");
+        },
+        timeout: 10000
     });
     
 }
@@ -164,9 +166,11 @@ function storeTask(){
             endLoading();
             console.log("Algo salió mal");
             $('#errors-form').empty();
-                $('#errors-div').show();
-                $('#errors-form').append("<li>Archivo con tamaño mayor a 2MB. </li>");
-        }
+            $('#errors-div').show();
+            $('#errors-form').append("<li>Archivo con tamaño mayor a 2MB. </li>");
+            alert("Error de conexión. Vuelva a intentarlo.");
+        },
+        timeout: 10000
     });
 }
 
@@ -200,7 +204,9 @@ function destroyTask(id_dom_task, id_task){
             endLoading();
             $("#practice-sesion-modal").modal("show");
             console.log("No se pudo realizar la operación");
-        }
+            alert("Error de conexión. Vuelva a intentarlo.");
+        },
+        timeout: 10000
     });
 }
 
@@ -284,7 +290,9 @@ function storeEditedTask(){
         error: function() {
             endLoading();
             console.log("Algo salió mal");
-        }
+            alert("Error de conexión. Vuelva a intentarlo.");
+        },
+        timeout: 10000
     });
 }
 
@@ -393,6 +401,8 @@ function loadPracticeInfo() {
         },
         error: function() {
             console.log("Ha ocurrido un error.");
-        }
+            alert("Error de conexión. Vuelva a intentarlo.");
+        },
+        timeout: 10000
     });
 }

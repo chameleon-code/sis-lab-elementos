@@ -30,12 +30,22 @@ class SesionController extends Controller
         }
         $blocksIds = array_unique($blocksIds);
         $blockResult = array();
+// <<<<<<< HEAD
+//         $blockVisits = array();
+//         array_push($blockResult, $blockGroups[0]); array_push($blockVisits, $blockGroups[0]);
+//         foreach ($blockGroups as $block_group) {
+//             foreach($blockVisits as $blockVisit) {
+//                if($block_group->id != $blockVisit->id) {
+//                     array_push($blockResult,$block_group);
+//                     break;
+// =======
         foreach ($blocksIds as $ids) {
             $blockFlag=false;
             foreach ($blockGroups as $block) {
                 if($block->block_id == $ids && $blockFlag == false){
                     $blockFlag=true;
                     array_push($blockResult,$block);
+//>>>>>>> develop
                 }
             }    
         }
