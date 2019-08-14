@@ -289,23 +289,23 @@
     </div>
 </div>
     
-{{-- <script>
-    $('.blocks-sesions').hide();
-    $( '#selector' ).change(function() {
-        $('select option:selected').each(function() {
-            $('.blocks-sesions').hide();
-            $('#block-'+$(this).attr('value')).show();
-        });
-    });
-    var firts_id = $( "#selector option:selected" ).attr('value');
-    $('#block-'+firts_id).show();
+<script>
+    // $('.blocks-sesions').hide();
+    // $( '#selector' ).change(function() {
+    //     $('select option:selected').each(function() {
+    //         $('.blocks-sesions').hide();
+    //         $('#block-'+$(this).attr('value')).show();
+    //     });
+    // });
+    // var firts_id = $( "#selector option:selected" ).attr('value');
+    // $('#block-'+firts_id).show();
 
     // Add the following code if you want the name of the file appear on select
     $(".custom-file-input").on("change", function() {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
-</script> --}}
+</script>
 
 @endsection
 
