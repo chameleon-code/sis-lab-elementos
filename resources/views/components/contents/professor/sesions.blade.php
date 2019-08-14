@@ -214,7 +214,7 @@
                         <input type="hidden" name="_token" value="{{csrf_token()}}" id="token">
                         <div class="group col-sm-12">
                             {{-- <label for="">Título</label> --}}
-                            <input id="title" name="title" type="text" class="form-control col-md-12" placeholder="Título (*)" required autofocus>
+                            <input id="title" name="title" type="text" class="form-control col-md-12" placeholder="Título (*)" autofocus>
                         </div>
                         <br>
                         {{--  <div class='custom-control custom-checkbox small' style="margin-left: 13px; margin-top:-12px; margin-bottom: 5px;">
@@ -289,23 +289,23 @@
     </div>
 </div>
     
-{{-- <script>
-    $('.blocks-sesions').hide();
-    $( '#selector' ).change(function() {
-        $('select option:selected').each(function() {
-            $('.blocks-sesions').hide();
-            $('#block-'+$(this).attr('value')).show();
-        });
-    });
-    var firts_id = $( "#selector option:selected" ).attr('value');
-    $('#block-'+firts_id).show();
+<script>
+    // $('.blocks-sesions').hide();
+    // $( '#selector' ).change(function() {
+    //     $('select option:selected').each(function() {
+    //         $('.blocks-sesions').hide();
+    //         $('#block-'+$(this).attr('value')).show();
+    //     });
+    // });
+    // var firts_id = $( "#selector option:selected" ).attr('value');
+    // $('#block-'+firts_id).show();
 
     // Add the following code if you want the name of the file appear on select
     $(".custom-file-input").on("change", function() {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
-</script> --}}
+</script>
 
 @endsection
 

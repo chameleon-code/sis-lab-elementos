@@ -47,7 +47,7 @@
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="{{url("/professor/students/list")}}"><i class="fas fa-list"></i>  Listar</a>
         <a class="collapse-item" href="{{ url("/professor/registerAssistance")}}"><i class="fas fa-clipboard-list"></i>  Registro de Asistencia</a>
-        <a class="collapse-item" href="/portflies"><i class="far fa-folder"></i>  Portafolios</a>
+        {{-- <a class="collapse-item" href="/portflies"><i class="far fa-folder"></i>  Portafolios</a> --}}
       </div>
     </div>
   </li>

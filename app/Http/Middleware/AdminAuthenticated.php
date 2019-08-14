@@ -15,6 +15,7 @@ class AdminAuthenticated
      */
     public function handle($request, Closure $next,$guard=null)
     {
+        //dd($request);
         if (Auth::guard($guard)->check()) {
             $role = Auth::guard($guard)->user()->role_id;
             if($role==1){
