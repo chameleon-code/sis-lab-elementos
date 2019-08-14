@@ -137,7 +137,7 @@ class DatabaseSeeder extends Seeder
         Management::create([
             'semester' => 2,
             'managements' => 2019,
-            'start_management' => '2019-08-19',
+            'start_management' => '2019-08-08',
             'end_management' => '2019-12-02',
             'management_path' => 'folders/2019-2',
             'enable_inscription' => 0,
@@ -275,7 +275,7 @@ class DatabaseSeeder extends Seeder
 
         // factory(\App\ScheduleRecord::class, 20)->create();
 
-        for($i=1 ; $i<=5 ; $i++){
+        for($i=1 ; $i<=6 ; $i++){
             $registered = 0;
             switch($i){
                 case 1:
