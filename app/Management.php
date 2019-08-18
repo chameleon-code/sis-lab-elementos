@@ -32,7 +32,7 @@ class Management extends Model
         $today = Carbon::now()->format('Y-m-d');
         $actual_management = null;
         foreach($managements as $management){
-            if($today > $management->start_management && $today < $management->end_management) {
+            if($today >= $management->start_management && $today < $management->end_management) {
                 $actual_management = $management;
             }
         }

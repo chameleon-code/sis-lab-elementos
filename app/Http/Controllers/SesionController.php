@@ -24,19 +24,21 @@ class SesionController extends Controller
     public function index()
     {
         $blockGroups = Professor::getBlocksProfessor();
-        //dd($blockGroups);
-        $blockResult = array();
-        $blockVisits = array();
-        array_push($blockResult, $blockGroups[0]); array_push($blockVisits, $blockGroups[0]);
-        foreach ($blockGroups as $block_group) {
-            foreach($blockVisits as $blockVisit) {
-               if($block_group->id != $blockVisit->id) {
-                    array_push($blockResult,$block_group);
-                }
-            }
-            array_push($blockVisits,$block_group);
+        $blocksIds = array();
+        foreach ($blockGroups as $block) {
+            array_push($blocksIds,$block->block_id);
         }
-        
+        $blocksIds = array_unique($blocksIds);
+        $blockResult = array();
+        foreach ($blocksIds as $ids) {
+            $blockFlag=false;
+            foreach ($blockGroups as $block) {
+                if($block->block_id == $ids && $blockFlag == false){
+                    $blockFlag=true;
+                    array_push($blockResult,$block);
+                }
+            }    
+        }
         $sesionsBlocks=[];
         $dateStart = '';
         $dateEnd = '';
