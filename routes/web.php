@@ -103,3 +103,6 @@ Route::get('/downloadGroupRegister', 'DownloadTaskController@downloadGroupPortfo
 //portafolios
 Route::get('/portflies','ProfessorController@downloadPortflies')->middleware('auth');
 Route::get('/professor/graphics','GraphicController@indexProfessor')->middleware('auth');
+
+Route::get('/downloadPractice/{any}','DownloadsController@practiceDowload')->where('any', '.*')->middleware('auth');
+Route::get('/downloadTask/{any}','DownloadsController@taskDownload')->where('any', '.*')->middleware('auth');

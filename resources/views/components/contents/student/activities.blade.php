@@ -85,7 +85,7 @@
                                                     <br>
                                                     @if ( $task->task->task_file != null )
                                                         <label for="">
-                                                            <b>Archivo adjunto:</b>  <a href="{{$task->task->task_path.$task->task->task_file}}" target="_blank">{{$task->task->task_file}}</a>
+                                                            <b>Archivo adjunto:</b>  <a href="{{'/downloadPractice/'.$task->task->task_path.$task->task->task_file}}" target="_blank">{{$task->task->task_file}}</a>
                                                         </label>
                                                     @endif
                                                 </div>
@@ -141,7 +141,7 @@
                                                 <b>Descripción: </b>{{$task->done->description}}
                                             </div>
                                             <div class="group col-sm-12">
-                                                <b>Archivo: </b><a href="{{'/storage/'.$task->done->task_path.'/'.$task->done->task_name}}" target="_blank">{{$task->done->task_name}}</a>
+                                                <b>Archivo: </b><a href="{{'/downloadTask/'.$task->done->task_path.'/'.$task->done->task_name}}" target="_blank">{{$task->done->task_name}}</a>
                                             </div>
                                             <div class="group col-sm-12">
                                                 <button type="button" class="btn btn-warning btn-block" onclick="showEdit({{$task->done->id}})">Modificar Entrega</button>

@@ -133,7 +133,7 @@ class StudentTaskController extends Controller
                 
     
                 if($studentSchedule!=[]){
-                    $file -> move(public_path().'/storage/'.$studentSchedule->student_path.'/sesion-'.$fileSesion,$fileName);
+                    $file -> move(storage_path('app').'/public/'.$studentSchedule->student_path.'/sesion-'.$fileSesion,$fileName);
                     $data = [
                         "description" => $request->description,
                         "task_id" => $request->task_id,
@@ -192,7 +192,7 @@ class StudentTaskController extends Controller
             $studentTask->description = $request->description;
             $studentTask->task_name = $fileName;
             $studentTask->save();
-            $file -> move(public_path().'/storage/'.$studentTask->task_path,$fileName);
+            $file -> move(storage_path('app').'/public/'.$studentTask->task_path,$fileName);
             return back();
         }else{
             return back()->withErrors('Archivo con tamaño mayor a 2MB');
