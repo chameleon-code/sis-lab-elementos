@@ -62,9 +62,9 @@ class Sesion extends Model
             $dateStart = date_format(date_create($sesion->date_start),'Y-m-d');
             $dateEnd = date_format(date_create($sesion->date_end),'Y-m-d');
             $data = self::getSesionDayReal($schedule_id);
-            if($index != 0){
+            //if($index != 0){
                 $date = $data['date'];
-            }
+            //}
             $date = date_format(date_create($date),'Y-m-d');
             if($date >= $dateStart && $date < $dateEnd){
                 $n = $sesion->id;
@@ -117,7 +117,7 @@ class Sesion extends Model
             case 'Viernes':
                 $res = 'Friday';
                 break;
-            case 'Sabado':
+            case 'Sábado':
                 $res = 'Saturday';
                 break;
             case 'Domingo':
