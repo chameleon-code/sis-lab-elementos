@@ -45,7 +45,6 @@ class SesionController extends Controller
                 if($block->block_id == $ids && $blockFlag == false){
                     $blockFlag=true;
                     array_push($blockResult,$block);
-//>>>>>>> develop
                 }
             }    
         }
