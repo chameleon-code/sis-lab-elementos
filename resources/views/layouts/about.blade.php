@@ -39,6 +39,7 @@
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
                         <img class="img-fluid rounded-circle mb-3" src="/img/broster.jpeg" alt="">
                         <h5>Josue Flores R.</h5>
+                        <label>Software Developer</label>
                         <p class="font-weight-light mb-0"><a href="https://github.com/josue1090">josue1090</a></p>
                     </div>
                 </div>
@@ -46,6 +47,7 @@
                         <div class="testimonial-item mx-auto mb-5 mb-lg-0">
                             <img class="img-fluid rounded-circle mb-3" src="/img/gus.jpg" alt="">
                             <h5>Gustavo Patiño L.</h5>
+                           <label>Software Developer</label>
                             <p class="font-weight-light mb-0"><a href="https://github.com/xen12">xen12</a></p>
                         </div>
                 </div>
@@ -53,14 +55,16 @@
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
                         <img class="img-fluid rounded-circle mb-3" src="/img/mauri.png" alt="">
                         <h5>Mauricio Matias C.</h5>
+                        <label>Software and Hardware Developer</label>
                         <p class="font-weight-light mb-0"><a href="https://github.com/cr0wg4n">cr0wg4n</a></p>
                     </div>
                 </div>
                 
                 <div class="col-lg-6">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <img class="img-fluid rounded-circle mb-3" src="/img/steve.jpg" alt="">
+                        <img class="img-fluid rounded-circle mb-3" src="/img/steve.jpg" alt="" width="250%">
                         <h5>Gustavo Rojas V.</h5>
+                        <label>Software Developer</label>
                         <p class="font-weight-light mb-0"><a href="https://github.com/Gustavo-RV">Gustavo-RV</a></p>
                     </div>
                 </div>
@@ -68,6 +72,7 @@
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
                         <img class="img-fluid rounded-circle mb-3" src="/img/deni.jpg" alt="">
                         <h5>Denikin Santos U.</h5>
+                        <label>Software Developer</label>
                         <p class="font-weight-light mb-0"><a href="https://github.com/denikin007">denikin007</a></p>
                     </div>
                 </div>
@@ -101,7 +106,7 @@
                             |
                         </li>
                         <li class="list-inline-item">
-                            <a href="/about"  title="Si tienes alguna queja u observación, haz click aquí">Contactanos</a>
+                            <a href="/"  title="Si tienes alguna queja u observación, haz click aquí">Home</a>
                         </li>
                     </ul>
                 <p class="text-muted small mb-4 mb-lg-0">Copyright &copy; Chameleon Code 2019</p>
