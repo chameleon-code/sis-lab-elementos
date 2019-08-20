@@ -194,12 +194,10 @@ class AuxiliarController extends Controller
         }
 
         $today = Carbon::now()->format('D');
-
         if($day == $today)
         {
             $resp = true;
         }
-
         return $resp;
     }
 

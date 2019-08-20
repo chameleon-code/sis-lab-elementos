@@ -76,6 +76,8 @@
                                     <div class="alert alert-warning">
                                         <label for="">Aún no existen practicas para la sesión</label>
                                     </div>
+                                @else
+                                    <label for=""><strong>Nota:</strong> Tu día de trabajo es <strong>{{$sesion->day}}</strong>, procura entregar tus prácticas en ese momento.</label>
                                 @endif
                                 @foreach ($sesion->tasks as $task)
                                     <div class="row">

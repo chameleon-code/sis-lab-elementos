@@ -17,6 +17,7 @@
 
             <div class="container">
                 <strong>Estudiante: </strong> {{ $schedule->user->first_name.' '.$schedule->user->second_name.' '.$schedule->user->names }} <br>
+                <strong>Código SIS: </strong> {{ $schedule->user->code_sis }}<br>
                 <strong>Materia: </strong> {{ $schedule->group->subject->name }} <br>
                 <strong>Grupo: </strong> {{ $schedule->group->name }} <br>
             </div>
@@ -89,7 +90,7 @@
                                         @if (in_array($task->id, $student_tasks_ids))
                                         <div data-parent-id="panel{{$sesion->id}}">
                                             <strong>Entrega:&nbsp;</strong>
-                                                @if ($tasks_finisheds[$loop->parent->index]->assist == 1 && $student_tasks->where('task_id', $task->id)->first()->in_time != 'no')
+                                                @if ($tasks_finisheds[$loop->parent->index]->assist == 1 || $student_tasks->where('task_id', $task->id)->first()->in_time != 'no')
                                                    <label style="color: green;"> A tiempo</label>
                                                 @else
                                                    <label style="color: orangered;"> Fuera de tiempo el dia {{ $student_tasks->where('task_id', $task->id)->first()->updated_at }} </label>
