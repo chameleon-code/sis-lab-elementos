@@ -5,18 +5,19 @@
     <div class="card shadow mb-4">
         <div class="card-header py-2">
             <div class="d-flex justify-content-between">
-                <div class="panel-heading my-2 font-weight-bold text-primary container py-2"> Portafolios </div>
+                <div class="panel-heading my-2 font-weight-bold text-primary container py-2">Portafolio</div>
                 @if (!empty($tasks_finisheds))
                     <form action="/download" method="get">
                         {{ csrf_field() }}
                         <input type="hidden" name="schedule_id" value="{{ $schedule->id }}">
-                        <strong><button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Descargar portafolio" style="margin-top: 11px; margin-right: 18px;"><i class="fa fa-download" aria-hidden="true"></i></button></strong>
+                        <strong><button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Descargar Portafolio Completo" style="margin-top: 11px; margin-right: 18px;"><i class="fa fa-download" aria-hidden="true"></i></button></strong>
                     </form>
                 @endif
             </div>
 
             <div class="container">
                 <strong>Estudiante: </strong> {{ $schedule->user->first_name.' '.$schedule->user->second_name.' '.$schedule->user->names }} <br>
+                <strong>Código SIS: </strong> {{ $schedule->user->code_sis }}<br>
                 <strong>Materia: </strong> {{ $schedule->group->subject->name }} <br>
                 <strong>Grupo: </strong> {{ $schedule->group->name }} <br>
             </div>
@@ -88,23 +89,24 @@
                                     <div class="row" style="margin-left: 12px;" >
                                         @if (in_array($task->id, $student_tasks_ids))
                                         <div data-parent-id="panel{{$sesion->id}}">
-                                            <strong> Entregado  
-                                                @if ($tasks_finisheds[$loop->parent->index]->assist == 1 && $student_tasks->where('task_id', $task->id)->first()->in_time != 'no')
-                                                    en el dia correcto
+                                            <strong>Entrega:&nbsp;</strong>
+                                                @if ($tasks_finisheds[$loop->parent->index]->assist == 1 || $student_tasks->where('task_id', $task->id)->first()->in_time != 'no')
+                                                   <label style="color: green;"> A tiempo</label>
                                                 @else
-                                                    el dia: {{ $student_tasks->where('task_id', $task->id)->first()->updated_at) }}
+                                                   <label style="color: orangered;"> Fuera de tiempo el dia {{ $student_tasks->where('task_id', $task->id)->first()->updated_at }} </label>
                                                 @endif
-                                                &#10003 
-                                            </strong>                                            
+                                                &#10003                                           
                                         </div><br>
-                                        <div><strong> <a href="/storage/{{ $student_tasks->where('task_id', $task->id)->first()->task_path}}/{{$student_tasks->where('task_id', $task->id)->first()->task_name  }}" download="{{ $student_tasks->where('task_id', $task->id)->first()->task_name }}" data-toggle-2='tooltip' title='Descargar Tarea'><i class="fa fa-download" aria-hidden="true"></i></a></strong></div>
+                                        <div><strong> <a href="/downloadTask/{{ $student_tasks->where('task_id', $task->id)->first()->task_path}}/{{$student_tasks->where('task_id', $task->id)->first()->task_name  }}" download="{{ $student_tasks->where('task_id', $task->id)->first()->task_name }}" data-toggle-2='tooltip' title='Descargar Tarea'><i class="fa fa-download" aria-hidden="true"></i></a></strong></div>
                                         {{--  <div><strong data-id="score"> Puntuacion: {{ $student_tasks->where('task_id', $task->id)->first()->score }}</strong></div>  --}}
                                         @else
-                                            <strong>Sin entregar &#10005</strong>
+                                            <strong>Entrega:&nbsp;</strong> 
+                                            <label style="color: red;">Sin entregar &#10005</label>
                                         @endif
                                     </div>
                                 </div>
-                                <div> <strong> Límite de entrega: </strong> {{$sesion->date_end}} </div>
+                                {{-- <div> <strong> Límite de entrega: </strong> {{$sesion->date_end}} </div> --}}
+                                <div> <strong> Observación del Estudiante: </strong> {{$student_tasks->where('task_id', $task->id)->first()->description}} </div>
                             </div>
 
                             <div class="py-3 px-4" style="font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';">

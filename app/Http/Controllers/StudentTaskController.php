@@ -13,8 +13,10 @@ use App\Professor;
 use App\BlockGroup;
 use App\Group;
 use App\BlockSchedule;
+use App\Day;
 use App\StudentTask;
 use App\Management;
+use App\ScheduleRecord;
 
 class StudentTaskController extends Controller
 {
@@ -68,6 +70,7 @@ class StudentTaskController extends Controller
                 array_push($taskAll,(object)$taskData);
             }
             $totalSesions = count(Sesion::where('block_id',$sesion->block_id)->get()->all());
+            $day = Day::find(ScheduleRecord::find($sesion->schedule_id)->get()->first()->day_id)->name;
             $sesionTask = [
                // 'tasks' => $tasks,
                 'tasks' => $taskAll,
@@ -75,8 +78,9 @@ class StudentTaskController extends Controller
                 'subject' => Group::getSubjectById($sesion->group_id)->name,
                 'block_id' => $sesion->block_id,
                 'totalSesion' => $totalSesions,
-                'schedule_id' => $sesion->schedule_id,
-                'taskDone' => $taskDone
+                'day' => $day,
+                'taskDone' => $taskDone,
+                'schedule_id' =>$sesion->schedule_id,
             ];
             array_push($sesionOfWeek,(object)$sesionTask);
         }
@@ -85,6 +89,7 @@ class StudentTaskController extends Controller
             'sesions' => $sesionOfWeek,
             'management' => $management,
         ];
+        //dd($data);
         return view('components.contents.student.activities')->with($data);
     }
 

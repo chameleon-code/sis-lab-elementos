@@ -252,14 +252,14 @@ class TaskController extends Controller
         $zip = new \ZipArchive();
         $zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
         
-        $path = public_path('storage/folders');
+        //$path = public_path('storage/folders');
+        $path = storage_path('app').'/public/folders/';
         $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
         foreach ($files as $name => $file)
         {
             // We're skipping all subfolders
             if (!$file->isDir()) {
                 $filePath     = $file->getRealPath();
-        
                 // extracting filename with substr/strlen
                 $relativePath = 'folders/' . substr($filePath, strlen($path) + 1);
         

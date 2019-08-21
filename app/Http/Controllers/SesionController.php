@@ -85,7 +85,6 @@ class SesionController extends Controller
                 'block_registered' => $block_registered
                 // 'tasks_by_sesion' => $tasks_by_sesion,
             ];
-            //dd($data);
             return view('components.contents.professor.sesions', $data);
         }else{
             $data = [

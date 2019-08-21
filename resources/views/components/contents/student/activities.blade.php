@@ -29,6 +29,11 @@
                             </div>
                         @endif
                     @endif
+                    @if ($sesions==[])
+                        <div class="alert alert-warning">
+                            <label for="">Aún no existen sesiones</label>
+                        </div>
+                    @endif
                     @foreach ($sesions as $key=>$sesion)
                         @if ($key==0)
                             <div role="tabpanel" class="tab-pane fade in active show" id="{{str_replace(" ","",$sesion->subject)}}">
@@ -71,6 +76,8 @@
                                     <div class="alert alert-warning">
                                         <label for="">Aún no existen practicas para la sesión</label>
                                     </div>
+                                @else
+                                    <label for=""><strong>Nota:</strong> Tu día de trabajo es <strong>{{$sesion->day}}</strong>, procura entregar tus prácticas en ese momento.</label>
                                 @endif
                                 @foreach ($sesion->tasks as $task)
                                     <div class="row">
