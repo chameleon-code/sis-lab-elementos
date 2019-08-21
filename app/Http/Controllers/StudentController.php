@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use App\SubjectMatter;
 use Illuminate\Support\Facades\Cache;
 use App\BlockGroup;
@@ -37,9 +38,37 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
+
         $input = $request->all();
         $user = new User();
-        if ($user->validate($input)) {
+
+        $rules_guest =  [
+            'names' => 'required|max:100',
+            'first_name' => 'required|max:100',
+            'second_name' => 'required|max:100',
+            'email' => 'unique:users|email|required|max:150',
+            'password' => 'required|min:8',
+            'code_sis' => 'unique:users|required|max:10|min:8',
+            'ci' => 'unique:students|max:9|min:6',
+            'g-recaptcha-response' => 'required',
+        ];
+        $rules_admin =  [
+            'names' => 'required|max:100',
+            'first_name' => 'required|max:100',
+            'second_name' => 'required|max:100',
+            'email' => 'unique:users|email|required|max:150',
+            'password' => 'required|min:8',
+            'code_sis' => 'unique:users|required|max:10|min:8',
+            'ci' => 'unique:students|max:9|min:6',
+        ];
+
+        if(Auth::user()){
+            $rules = (Auth::user()->role_id==1) ? $rules_admin : $rules_guest;
+        } else {
+            $rules = $rules_guest;
+        }
+
+        if (Validator::make($input, $rules)) {
             $data = array(
                 'names' => $request->names,
                 'first_name' => $request->first_name,
