@@ -93,9 +93,14 @@
                             <br>
                             <div class="form-group">
                                 {!! Recaptcha::render() !!}
-                                @if ($errors->has('g-recaptcha-response'))
+                                {{-- @if ($errors->has('g-recaptcha-response'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                    </span>
+                                @endif                                                  --}}
+                                @if ($errors->has('error'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('error') }}</strong>
                                     </span>
                                 @endif                                                 
                             </div>

@@ -28,6 +28,7 @@ class LoginController extends Controller
     protected $redirectTo = '/home';
 
     protected function validateLogin(Request $request){
+        //dd($request);
         $this->validate($request, [
             'email' => 'required',
             'password' => 'required',
