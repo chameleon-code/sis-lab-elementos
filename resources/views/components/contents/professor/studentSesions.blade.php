@@ -5,7 +5,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-2">
             <div class="d-flex justify-content-between">
-                <div class="panel-heading my-2 font-weight-bold text-primary container py-2"> Portafolios </div>
+                <div class="panel-heading my-2 font-weight-bold text-primary container py-2">Portafolio</div>
                 @if (!empty($tasks_finisheds))
                     <form action="/download" method="get">
                         {{ csrf_field() }}
@@ -88,19 +88,19 @@
                                     <div class="row" style="margin-left: 12px;" >
                                         @if (in_array($task->id, $student_tasks_ids))
                                         <div data-parent-id="panel{{$sesion->id}}">
-                                            <strong> Entregado  
+                                            <strong>Entrega:&nbsp;</strong>
                                                 @if ($tasks_finisheds[$loop->parent->index]->assist == 1 && $student_tasks->where('task_id', $task->id)->first()->in_time != 'no')
-                                                    en el dia correcto
+                                                   <label style="color: green;"> A tiempo</label>
                                                 @else
-                                                    el dia: {{ $student_tasks->where('task_id', $task->id)->first()->updated_at) }}
+                                                   <label style="color: orangered;"> Fuera de tiempo el dia {{ $student_tasks->where('task_id', $task->id)->first()->updated_at }} </label>
                                                 @endif
-                                                &#10003 
-                                            </strong>                                            
+                                                &#10003                                           
                                         </div><br>
-                                        <div><strong> <a href="/storage/{{ $student_tasks->where('task_id', $task->id)->first()->task_path}}/{{$student_tasks->where('task_id', $task->id)->first()->task_name  }}" download="{{ $student_tasks->where('task_id', $task->id)->first()->task_name }}" data-toggle-2='tooltip' title='Descargar Tarea'><i class="fa fa-download" aria-hidden="true"></i></a></strong></div>
+                                        <div><strong> <a href="/downloadTask/{{ $student_tasks->where('task_id', $task->id)->first()->task_path}}/{{$student_tasks->where('task_id', $task->id)->first()->task_name  }}" download="{{ $student_tasks->where('task_id', $task->id)->first()->task_name }}" data-toggle-2='tooltip' title='Descargar Tarea'><i class="fa fa-download" aria-hidden="true"></i></a></strong></div>
                                         {{--  <div><strong data-id="score"> Puntuacion: {{ $student_tasks->where('task_id', $task->id)->first()->score }}</strong></div>  --}}
                                         @else
-                                            <strong>Sin entregar &#10005</strong>
+                                            <strong>Entrega:&nbsp;</strong> 
+                                            <label style="color: red;"> Sin entregar &#10005</label>
                                         @endif
                                     </div>
                                 </div>
