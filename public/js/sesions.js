@@ -70,7 +70,7 @@ function loadPractice(sesion_id){
                         link_file = "<span style='color: grey;'>"+file+"</span>";
                     } else {
                         file = element.task_file;
-                        link_file = `<a href="/downloadPractice${element.task_path}${element.task_file}" target='_blank'>${file}</a>`;
+                        link_file = `<a href="/downloadPractice/${element.task_path}${element.task_file}" target='_blank'>${file}</a>`;
                         //href="{{'/downloadTask/'.$task->done->task_path.'/'.$task->done->task_name}}"
                     }
                     var dom_file = "<div class='' style='margin-top: 15px; margin-bottom: -10px;'> Archivo adjunto: "+link_file+" </div>"
@@ -138,7 +138,7 @@ function storeTask(){
                 } else {
                     file = response.task_file;
                     //link_file = "<a href='"+response.task_path+response.task_file+"' target='_blank'>"+file+"</a>";
-                    link_file = `<a href="/downloadPractice${response.task_path}${response.task_file}" target='_blank'>${file}</a>`;
+                    link_file = `<a href="/downloadPractice/${response.task_path}${response.task_file}" target='_blank'>${file}</a>`;
                 }
                 var dom_file = "<div class='' style='margin-top: 15px; margin-bottom: -10px;'> Archivo adjunto: "+link_file+" </div>"
                 if(response.updated_at.charAt(8) == 0){
@@ -265,7 +265,7 @@ function storeEditedTask(){
                 } else {
                     file = response.task_file;
                     //link_file = "<a href='"+response.task_path+response.task_file+"' target='_blank'>"+file+"</a>";
-                    link_file = `<a href="/downloadPractice${response.task_path}${response.task_file}" target='_blank'>${file}</a>`;
+                    link_file = `<a href="/downloadPractice/${response.task_path}${response.task_file}" target='_blank'>${file}</a>`;
                 }
                 var dom_file = "<div class='' style='margin-top: 15px; margin-bottom: -10px;'> Archivo adjunto: "+link_file+" </div>"
                 if(response.updated_at.charAt(8) == 0){

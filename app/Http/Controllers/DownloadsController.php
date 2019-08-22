@@ -10,13 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class DownloadsController extends Controller
 {
     public function practiceDowload($any){
-        //dd($any);
         try {
-            if(Auth::User()){
-                $filePath = storage_path('app').'/'.$any;
-                //dd(storage_path('app'));
-                return response()->download( $filePath);
-            }
+            $filePath = storage_path('app').$any;
+            return response()->download( $filePath);
         } catch (Exception $e) {
             return back();
         }
