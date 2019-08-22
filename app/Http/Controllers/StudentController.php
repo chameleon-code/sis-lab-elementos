@@ -67,10 +67,8 @@ class StudentController extends Controller
         } else {
             $rules = $rules_guest;
         }
-
-        //dd(!Validator::make($input, $rules_guest)->fails());
-
-        if ( !Validator::make($input, $rules)->fails() ) {
+        $validator = Validator::make($input, $rules);
+        if ( !$validator->fails() ) {
             $data = array(
                 'names' => $request->names,
                 'first_name' => $request->first_name,
@@ -80,6 +78,7 @@ class StudentController extends Controller
                 'ci' => $request->ci,
                 'password' => $request->password
             );
+            Mail::to($request->email)->send(new StudentMailController($data,'register'));
             $newStudent = User::create([
                 'role_id' => Role::STUDENT,
                 'names' => $request->names,
@@ -93,18 +92,18 @@ class StudentController extends Controller
                 'user_id' => $newStudent->id,
                 'ci' => $request->ci,
             ]);
-            Mail::to($request->email)->send(new StudentMailController($data,'register'));
             if($request->mode=='register'){
                 return redirect('/');
             }else{
                 return redirect('/admin/students');
             }
         } else {
+            $errors = $validator->messages();
             if($request->mode=='register'){
-                $errors = ['error' => "El campo captcha es requerido"];
+                //$errors = ['error' => "El campo captcha es requerido"];
                 return redirect('/register')->withInput($input)->withErrors($errors);
             }else{
-                return redirect('/admin/student/create')->withInput($input)->withErrors($user->errors);
+                return redirect('/admin/student/create')->withInput($input)->withErrors($errors);
             }
         }
     }
