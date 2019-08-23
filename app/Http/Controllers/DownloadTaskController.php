@@ -52,7 +52,7 @@ class DownloadTaskController extends Controller
                 $zip = new \ZipArchive();
                 $zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
                 //$path = public_path().'/storage/' . $block->block_path .'/'.$group->name;
-                $path = storage_path('app').'/public/' . $block->block_path .'/'.$group->name;
+                $path = storage_path('app').'/public/'.$block->block_path.'/'.$group->name;
                 $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
                 foreach ($files as $name => $file)
                 {

@@ -29,6 +29,11 @@
                             </div>
                         @endif
                     @endif
+                    @if ($sesions==[])
+                        <div class="alert alert-warning">
+                            <label for="">Aún no existen sesiones</label>
+                        </div>
+                    @endif
                     @foreach ($sesions as $key=>$sesion)
                         @if ($key==0)
                             <div role="tabpanel" class="tab-pane fade in active show" id="{{str_replace(" ","",$sesion->subject)}}">
