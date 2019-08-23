@@ -85,6 +85,7 @@ class StudentTaskController extends Controller
             'sesions' => $sesionOfWeek,
             'management' => $management,
         ];
+        //dd($data);
         return view('components.contents.student.activities')->with($data);
     }
 

@@ -10,7 +10,7 @@
                     <form action="/download" method="get">
                         {{ csrf_field() }}
                         <input type="hidden" name="schedule_id" value="{{ $schedule->id }}">
-                        <strong><button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Descargar portafolio" style="margin-top: 11px; margin-right: 18px;"><i class="fa fa-download" aria-hidden="true"></i></button></strong>
+                        <strong><button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Descargar Portafolio Completo" style="margin-top: 11px; margin-right: 18px;"><i class="fa fa-download" aria-hidden="true"></i></button></strong>
                     </form>
                 @endif
             </div>
@@ -100,11 +100,12 @@
                                         {{--  <div><strong data-id="score"> Puntuacion: {{ $student_tasks->where('task_id', $task->id)->first()->score }}</strong></div>  --}}
                                         @else
                                             <strong>Entrega:&nbsp;</strong> 
-                                            <label style="color: red;"> Sin entregar &#10005</label>
+                                            <label style="color: red;">Sin entregar &#10005</label>
                                         @endif
                                     </div>
                                 </div>
-                                <div> <strong> Límite de entrega: </strong> {{$sesion->date_end}} </div>
+                                {{-- <div> <strong> Límite de entrega: </strong> {{$sesion->date_end}} </div> --}}
+                                <div> <strong> Observación del Estudiante: </strong> {{$student_tasks->where('task_id', $task->id)->first()->description}} </div>
                             </div>
 
                             <div class="py-3 px-4" style="font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';">
