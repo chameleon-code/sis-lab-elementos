@@ -38,7 +38,7 @@
                         <form class="user" role="form" method="POST" action="{{ url('student/register') }}">
                             {{ csrf_field() }}
                             <div class="form-group">
-                                <label for="">Nombres (*)</label>
+                                <label for="">Nombres</label>
                                 <input type="text" class="form-control" name="names" value="{{ old('names')}}" required autofocus>
                                     {!! $errors -> first('names','<label style="color:crimson">:message</label>')!!} 
                             </div>
@@ -59,21 +59,21 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                    <label for="">Correo Electrónico (*)</label>
+                                    <label for="">Correo Electrónico</label>
                                     <input type="email" class="form-control" name="email" value="{{ old('email')}}" required>
                                         {!! $errors -> first('email','<label style="color:crimson">:message</label>')!!} 
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <div class="">
-                                        <label for="">Código SIS (*)</label>  
+                                        <label for="">Código SIS</label>  
                                         <input type="number" class="form-control" name="code_sis" value="{{ old('code_sis')}}" required autofocus min="0">
                                             {!! $errors -> first('code_sis','<label style="color:crimson">:message</label>')!!}  
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="">
-                                        <label for="">Cédula de Identidad (*)</label>  
+                                        <label for="">Cédula de Identidad</label>  
                                         <input type="number" class="form-control" name="ci" value="{{ old('ci')}}" required autofocus min="0"> 
                                         {!! $errors -> first('ci','<label style="color:crimson">:message</label>')!!}  
                                     </div>
