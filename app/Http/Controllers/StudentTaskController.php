@@ -70,7 +70,8 @@ class StudentTaskController extends Controller
                 array_push($taskAll,(object)$taskData);
             }
             $totalSesions = count(Sesion::where('block_id',$sesion->block_id)->get()->all());
-            $day = Day::find(ScheduleRecord::find($sesion->schedule_id)->get()->first()->day_id)->name;
+            
+            $day = Day::find(ScheduleRecord::find($sesion->schedule_id)->day_id)->name;
             $sesionTask = [
                // 'tasks' => $tasks,
                 'tasks' => $taskAll,
@@ -191,11 +192,17 @@ class StudentTaskController extends Controller
     public function update(Request $request, $id)
     {
         if($request->hasFile('practice')){
+            $inDay = StudentTask::inDay($request->schedule_id);
+            $textInDay = "no";
+            if($inDay){
+                $textInDay = "yes";
+            }
             $file = $request->file('practice');
             $fileName = $file->getClientOriginalName();
             $studentTask = StudentTask::find($id);
             $studentTask->description = $request->description;
             $studentTask->task_name = $fileName;
+            $studentTask->in_time = $textInDay;
             $studentTask->save();
             $file -> move(storage_path('app').'/public/'.$studentTask->task_path,$fileName);
             return back();

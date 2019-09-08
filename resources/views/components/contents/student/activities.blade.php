@@ -145,6 +145,14 @@
                                         @else
                                         <div id="not-edit-{{$task->done->id}}">
                                             <div class="group col-sm-12">
+                                                <b>Entregado: </b>
+                                                @if ($task->done->in_time=="no")
+                                                   <span style="color: orangered">Fuera de tiempo</span> 
+                                                @else
+                                                   <span style="color: green">A tiempo</span> 
+                                                @endif
+                                            </div>
+                                            <div class="group col-sm-12">
                                                 <b>Descripción: </b>{{$task->done->description}}
                                             </div>
                                             <div class="group col-sm-12">
