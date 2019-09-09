@@ -114,9 +114,9 @@
                 <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
                 <ul class="list-inline mb-0">
                     <li class="list-inline-item mr-3">
-                    <a href="https://github.com/chameleon-code/">
-                        <i class="fab fa-github fa-2x fa-fw"></i>
-                    </a>
+                        <a href="mailto:chameleon.code.soft@gmail.com">
+                            <i class="fas fa-envelope fa-2x fa-fw" title="chameleon.code.soft@gmail.com"></i>
+                        </a>
                     </li>
                 </ul>
                 </div>
