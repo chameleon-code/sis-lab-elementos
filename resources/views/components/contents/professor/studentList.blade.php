@@ -1,6 +1,8 @@
 @extends('components.sections.professorSection')
 @section('userContent')
 
+<script> blockGroups = {!! json_encode( $blockGroups ) !!} </script>
+
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -16,9 +18,10 @@
                         <div class="">
                             <div class="form-group" style="">
                                 <div class="d-flex justify-content-between">
-                                    <select name="group_id" class="form-control" id="groups" style="width: 30%;">
+                                    <select name="group_id" class="form-control" id="groups" onchange="loadGroup()" style="width: 30%;">
                                         @forelse ($groups as $group)
                                         @if ($loop->first)
+
                                             <option class="form-control" value="{{$group->id}}" selected> Grupo {{$group->name . " - " . $group->subject->name}}</option>
                                         @continue
                                     @endif
@@ -38,32 +41,30 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 table-responsive">
-                                <table class="table dataTable text-center table-striped table-secondary" id="dataTable" width="100%"
-                                       cellspacing="0" role="grid" aria-describedby="dataTable_info"
-                                       style="width: 100%;">
+                            <div id="table-container" class="col-sm-12 table-responsive">
+                                <table class="table dataTable text-center table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                     <thead>
-                                    <tr role="row" class="bg-dark">
-                                        <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 230px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: white;">Código SIS</font></font></th>
-                                        <th class="sorting_desc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 380px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: white;">Apellidos</font></font></th>
-                                        <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 380px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: white;">Nombres</font></font></th>
-                                        {{-- <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 69px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Email</font></font></th> --}}
-                                        <th class="text-center" data-orderable="false" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 39px;">  <font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: white;">Acciones</font></font></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tablebody">
-                                    @foreach ($schedules as $item)
+                                        <tr role="row" class="bg-dark">
+                                            <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 150px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: white;">Código SIS</font></font></th>
+                                            <th class="sorting_desc mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 230px;" aria-sort="descending"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: white;">Apellidos</font></font></th>
+                                            <th class="sorting mgx-1" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 200px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: white;">Nombres</font></font></th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 170px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tarea de sesión</font></font></th>
+                                            <th class="text-center" data-orderable="false" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 120px;">  <font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: white;">Acciones</font></font></th>
+                                        </tr>
+                                    </thead>
+                                    {{-- @foreach ($schedules as $item)
                                         <tr role="row" class="odd">
                                             <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->code_sis }}</font></font></td>
                                             <td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->first_name }} {{ $item->user->second_name }}</font></font></td>
                                             <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $item->user->names }}</font></font></td>
+                                            <td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Entregada</font></font></td>
                                             <td class="text-center" style="text-align: center; display: inline-flex;">
                                                 <a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick="loadProfile({{ $item->user }})" id="profile"><i class="fas fa-eye"></i></a>
+                                                <a href="/professor/studentSesions/{{$item->id}}" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Historial de entregas"><i class="fas fa-briefcase"></i></a>
                                                 <a href="/professor/studentSesions/{{$item->id}}" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Portafolios"><i class="fas fa-briefcase"></i></a>
                                             </td>
                                         </tr>
-                                    @endforeach
-                                </tbody>
+                                    @endforeach --}}
                             </table>
                         </div>
                     </div>
@@ -91,7 +92,29 @@
     </div>
 </div>
 
-<script>    
+{{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#student-folder">Large modal</button> --}}
+
+<div id="student-folder" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
     function loadProfile(item){
         document.getElementById('namesProfile').innerHTML=item.names+' '+item.first_name+' '+item.second_name;
         document.getElementById('codeSisProfile').innerHTML=item.code_sis;

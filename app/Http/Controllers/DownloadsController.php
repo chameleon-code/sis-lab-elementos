@@ -11,7 +11,7 @@ class DownloadsController extends Controller
 {
     public function practiceDowload($any){
         try {
-            $filePath = storage_path('app').$any;
+            $filePath = storage_path('app').'/public/'.$any;
             return response()->download( $filePath);
         } catch (Exception $e) {
             return back();

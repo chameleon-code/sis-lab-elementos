@@ -12,6 +12,7 @@ use App\StudentSchedule;
 use App\StudentTask;
 use App\SubjectMatter;
 use App\User;
+use App\Sesion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -202,21 +203,36 @@ class ProfessorController extends Controller
     //Obtiene la lista de estudiantes en base a grupo
     public function studentList(){
         $professor = Professor::where('user_id', auth()->user()->id)->first();
-        $groups = Group::where('professor_id', $professor->id)->get()->reject(function ($item, $key){
-            if(is_null($item->blocks->first())){
-                return true;
+        $groups = [];
+        // $groups = Group::where('professor_id', $professor->id)->get()->reject(function ($item, $key){
+        //     if(is_null($item->blocks->first())){
+        //         return true;
+        //     }
+        // });
+        //$schedules = $this->studentListByGroup(new Request, $groups->first()->id);
+        // if($groups->isNotEmpty()){
+            //      //dd( Professor::getBlockGroupProfessor() );
+            // }
+            // else
+            //     $schedules = collect();
+        $blockGroups = Professor::getBlockGroupsProfessor();
+        foreach( Group::all() as $group ) {
+            foreach( $blockGroups as $blockGroup ) {
+                if( $group->id == $blockGroup->group_id ) {
+                    array_push( $groups, $group );
+                    break;
+                }
             }
-        }); 
-        if($groups->isNotEmpty()){
-            $schedules = $this->studentListByGroup(new Request, $groups->first()->id);
         }
-        else
-            $schedules = collect();
+        //dd( Sesion::getActualSesion(1)->first()->id );
+        //dd( $actualSesion = Sesion::getActualSesion(1) );
+        //dd( $studentTasks = StudentTask::join('tasks', 'student_tasks.task_id', 'tasks.id')->join('sesions', 'tasks.sesion_id', 'sesions.id')->where('sesions.id', 8)->get() );
         $data = [
-                    'schedules' => $schedules,
-                    'groups' => $groups,
-                    'title' => 'Estudiantes'
-                ];
+            //'schedules' => $schedules,
+            'blockGroups' => Professor::getBlockGroupsProfessor(),
+            'groups' => $groups,
+            'title' => 'Estudiantes'
+        ];
         return view('components.contents.professor.studentList', $data);
     }
 

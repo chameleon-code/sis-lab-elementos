@@ -20,6 +20,7 @@ Route::get('/professor/students/list/', 'ProfessorController@studentList')->midd
 Route::get('/professor/students/listByGroup/{id}', 'ProfessorController@studentListByGroup')->middleware('auth','professor');
 Route::get('/professor/studentSesions/{id}', 'SesionController@showStudentSesions')->middleware('auth','professor');
 Route::get('/professor/student/{idStudent}/task/{idTask}', 'TaskController@showStudentTask')->middleware('auth','professor');
+Route::get('/professor/student/schedules/{groupId}/{blockId}', 'StudentScheduleController@getSchedulesByGroup')->middleware('auth','professor');
 
 // Tareas o Practicas
 

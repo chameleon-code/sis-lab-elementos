@@ -10,7 +10,7 @@ class Professor extends Model
 {
     use ValidationTrait;
     protected $fillable = [
-        'user_id',
+        'id', 'user_id'
     ];
     protected $rules = [
         'names' => 'required|max:100',
@@ -66,5 +66,22 @@ class Professor extends Model
     
     public function groups(){
         return $this->hasMany('App\Group');
+    }
+
+    public static function getBlockGroupsProfessor() {
+        $professor = Professor::where('user_id', '=', Auth::user()->id)->get()->first();
+        $groups = Group::where('professor_id', '=', $professor->id)->get();
+        $blockGroups = BlockGroup::all();
+        $result = [];
+        foreach( $blockGroups as $blockGroup ) {
+            foreach ( $groups as $group ) {
+                if( $group->id == $blockGroup->group_id ) {
+                    array_push( $result, $blockGroup );
+                    break;
+                }
+            }
+        }
+        
+        return $result;
     }
 }
