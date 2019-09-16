@@ -21,6 +21,7 @@ Route::get('/professor/students/listByGroup/{id}', 'ProfessorController@studentL
 Route::get('/professor/studentSesions/{id}', 'SesionController@showStudentSesions')->middleware('auth','professor');
 Route::get('/professor/student/{idStudent}/task/{idTask}', 'TaskController@showStudentTask')->middleware('auth','professor');
 Route::get('/professor/student/schedules/{groupId}/{blockId}', 'StudentScheduleController@getSchedulesByGroup')->middleware('auth','professor');
+Route::get('/professor/students/getTasksStudent/{studentId}/{blockId}', 'StudentTaskController@getTasksStudent')->middleware('auth','professor');
 
 // Tareas o Practicas
 

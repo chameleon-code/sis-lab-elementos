@@ -173,6 +173,10 @@ class StudentScheduleController extends Controller
                 }
             }
         }
-        return $schedules;
+        $data = [
+            'schedules' => $schedules,
+            'actual_sesion' => $actualSesion
+        ];
+        return $data;
     }
 }
