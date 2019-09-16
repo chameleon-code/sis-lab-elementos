@@ -12117,3 +12117,7 @@ body.sidebar-toggled footer.sticky-footer {
       transform: rotate(360deg);
   }
 }
+
+.gg {
+  display: flex;
+}

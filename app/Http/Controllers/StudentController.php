@@ -44,8 +44,10 @@ class StudentController extends Controller
 
         $rules_guest =  [
             'names' => 'required|max:100',
-            'first_name' => 'required|max:100',
-            'second_name' => 'required|max:100',
+            // 'first_name' => 'required|max:100',
+            // 'second_name' => 'required|max:100',
+            'first_name' => 'max:100',
+            'second_name' => 'max:100',
             'email' => 'unique:users|email|required|max:150',
             'password' => 'required|min:8',
             'code_sis' => 'unique:users|required|max:10|min:8',
@@ -54,8 +56,10 @@ class StudentController extends Controller
         ];
         $rules_admin =  [
             'names' => 'required|max:100',
-            'first_name' => 'required|max:100',
-            'second_name' => 'required|max:100',
+            // 'first_name' => 'required|max:100',
+            // 'second_name' => 'required|max:100',
+            'first_name' => 'max:100',
+            'second_name' => 'max:100',
             'email' => 'unique:users|email|required|max:150',
             'password' => 'required|min:8',
             'code_sis' => 'unique:users|required|max:10|min:8',

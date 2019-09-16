@@ -15,12 +15,19 @@ $(document).ready(function() {
         url : '/students/registration/getScheduleStudent',
         success: function (response){
             //console.log(subject_matters_ids.length);
+
+            for(var i=0 ; i<subject_matters_ids.length ; i++)
+            {
+                $('#link-take-matter-'+subject_matters_ids[i]).show();
+            }
+
             if(Object.keys(response).length != 0){
                 for(var i=0 ; i<subject_matters_ids.length ; i++){
                     for(var j=0 ; j<Object.keys(response.schedule_student).length ; j++){
                         //console.log(subject_matters_ids[i] + " - " + response.schedule_student[j].subject_matter_id);
                         if(subject_matters_ids[i] == response.schedule_student[j].subject_matter_id){
                             $('#link-take-matter-'+response.schedule_student[j].subject_matter_id)[0].innerHTML = "Cambiar Horario";
+                            $('#link-take-matter-'+response.schedule_student[j].subject_matter_id).hide();
                             $('#student-schedule-id-'+response.schedule_student[j].subject_matter_id)[0].value = response.schedule_student[j].id;
                             $('#link-remove-matter-'+response.schedule_student[j].subject_matter_id)[0].setAttribute("onclick", "sendStudentScheduleId("+response.schedule_student[j].id+")");
                             $('#link-remove-matter-'+response.schedule_student[j].subject_matter_id).show();
@@ -42,10 +49,6 @@ $(document).ready(function() {
                         }
                     }
                 }
-            }
-            for(var i=0 ; i<subject_matters_ids.length ; i++)
-            {
-                $('#link-take-matter-'+subject_matters_ids[i]).show();
             }
         },
         error: function() {

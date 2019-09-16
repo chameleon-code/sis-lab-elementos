@@ -11,6 +11,7 @@ class Sesion extends Model
 {
     use ValidationTrait;
     protected $fillable = [
+        'id',
         'block_id',
         'number_sesion',
         'date_start',
@@ -129,5 +130,11 @@ class Sesion extends Model
 
     public static function getAllSesionByBlockId($block_id){
         return self::where('block_id',$block_id)->get();
+    }
+
+    public static function getActualSesion( $block_id ) {
+        $today = Carbon::now()->format('Y-m-d');
+        $actual_sesion = Sesion::where('block_id', '=', $block_id)->where('date_start', '<=', $today)->where('date_end', '>=', $today)->get()->first();
+        return $actual_sesion;
     }
 }
