@@ -87,9 +87,9 @@ class TaskController extends Controller
                 if($extension=='rar'||$extension=='zip'||$extension=='tar.gz'||$extension=='pdf'){
                     $name = $file->getClientOriginalName();
                    //$semiPath ='/storage/'.$dir.'/practices/sesion-'.$sesion_number.'/';
-                    $semiPath = '/public/'.$dir.'/practices/sesion-'.$sesion_number.'/';
+                    $semiPath = $dir.'/practices/sesion-'.$sesion_number.'/';
                    // $path = public_path().$semiPath;
-                    $path = storage_path('app').$semiPath;
+                    $path = storage_path('app').'/public/'.$semiPath;
                     $file -> move($path,$name);
                     $task = [
                         'title' => $request->title,
@@ -153,8 +153,8 @@ class TaskController extends Controller
                     $name = $file->getClientOriginalName();
                     // $semiPath ='/storage/'.$dir.'/practices/sesion-'.$sesion_number.'/';
                     // $path = public_path().$semiPath;
-                    $semiPath = '/public/'.$dir.'/practices/sesion-'.$sesion_number.'/';
-                    $path = storage_path('app').$semiPath;
+                    $semiPath = $dir.'/practices/sesion-'.$sesion_number.'/';
+                    $path = storage_path('app').'/public/'.$semiPath;
                     $file -> move($path,$name);
 
                     $task->title = $request->title;
