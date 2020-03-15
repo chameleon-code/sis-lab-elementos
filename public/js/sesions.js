@@ -406,6 +406,10 @@ function loadPracticeInfo() {
             console.log("Ha ocurrido un error.");
             alert("Error de conexión. Vuelva a intentarlo.");
         },
-        timeout: 10000
+        //timeout: 30000
     });
+}
+
+function selectManagement() {
+    
 }

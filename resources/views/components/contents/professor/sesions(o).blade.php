@@ -7,20 +7,18 @@
             <h6 class="m-0 font-weight-bold text-primary">Sesiones</h6>
         </div>
         <div class="card-body">
-            
-            {{-- revisar asignación de docentes a bloques --}}
-            {{-- @if ($blocks==null)
+            @if ($blocks==null)
                 <div class="alert alert-warning">
                     <br>
                     <ul>Aun no esta asignado a un bloque</ul>
                 </div>
-            @else --}}
+            @else
 
                 <div class="">
                     <div class="row">
                         <div class="col-sm-4">
                             <label for="">Gestión: </label>
-                            <select class="form-control" name="" id="block-selector" onchange="selectManagement()">
+                            <select class="form-control" name="" id="block-selector" onchange="">
                                 @foreach ($managements as $management)
                                     <option class="optional" value="{{$management->id}}">{{$management->semester}}/{{$management->managements}}</option>
                                 @endforeach
@@ -49,59 +47,56 @@
                     @foreach ($blocks as $key => $block)
                         <div id="block-{{$block->block_id}}" class="blocks-sesions" style="display: none;">
                             @if(empty($sesions[$key][0]))
-                                <hr>
-                                <div class="text-center">
-                                    <label class="h5 text-gray-900 mb-4">Generación Automática de Sesiones</label>
+                            <hr>
+                            <div class="text-center">
+                                <label class="h5 text-gray-900 mb-4">Generación Automática de Sesiones</label>
+                            </div>
+                            @if (count($errors)>0)
+                                <div class="alert alert-danger">
+                                    <b>Ha ocurrido un Error!</b>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{$error}}</li>
+                                        @endforeach
+                                    </ul>
                                 </div>
-                                @if (count($errors)>0)
-                                    <div class="alert alert-danger">
-                                        <b>Ha ocurrido un Error!</b>
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{$error}}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
+                            @endif
                                 
-                                {{-- autogeneración de sesiones --}}
-                                {{-- <form class="user" action="/sesions/store" method="POST">
-                                    {{csrf_field()}}
-                                    <div class="row">
-                                        <div class="form-group col-md-4 col-6">
-                                            <label for='name' class="">Inicio de las Sesiones</label>
-                                            <div>
-                                                <input  type="text" name="date_start" id="inicio_fecha" class="form-control col-md-12" placeholder="" value="{{$start}}" required readonly>
-                                            </div>
+                            <form class="user" action="/sesions/store" method="POST">
+                                {{csrf_field()}}
+                                <div class="row">
+                                    <div class="form-group col-md-4 col-6">
+                                        <label for='name' class="">Inicio de las Sesiones</label>
+                                        <div>
+                                            <input  type="text" name="date_start" id="inicio_fecha" class="form-control col-md-12" placeholder="" value="{{$start}}" required readonly>
                                         </div>
-                                        <div class="form-group col-md-4 col-6">
-                                            <label for='name' class="">Fin de las Sesiones</label>
-                                            <div>
-                                                <input type="text" name="date_end" id="fin_fecha" class="form-control col-md-12" placeholder="" value="{{$end}}" required readonly>
-                                            </div>
-                                        </div>
-                                        <input name="block_id" value="{{$block->block_id}}"hidden>
-                                        @if (Agent::isMobile())
-                                            <div class="form-group col-12">
-                                                <button id="btn_aling" type="submit" class="btn btn-warning btn-block col-md-12">
-                                                    <i class="fas fa-magic"></i>
-                                                    Autogenerar
-                                                </button>
-                                            </div> 
-                                        @else
-                                            <div class="form-group col-md-4 col-12">
-                                                <label style="height: 1.015rem;"></label>
-                                                <button id="btn_aling" type="submit" class="btn btn-warning btn-block col-md-12">
-                                                    <i class="fas fa-magic"></i>
-                                                    Autogenerar 
-                                                </button>
-                                            </div>  
-                                        @endif
                                     </div>
-                                </form> --}}
-
-                                <hr>
-                            
+                                    <div class="form-group col-md-4 col-6">
+                                        <label for='name' class="">Fin de las Sesiones</label>
+                                        <div>
+                                            <input type="text" name="date_end" id="fin_fecha" class="form-control col-md-12" placeholder="" value="{{$end}}" required readonly>
+                                        </div>
+                                    </div>
+                                    <input name="block_id" value="{{$block->block_id}}"hidden>
+                                    @if (Agent::isMobile())
+                                        <div class="form-group col-12">
+                                            <button id="btn_aling" type="submit" class="btn btn-warning btn-block col-md-12">
+                                                <i class="fas fa-magic"></i>
+                                                Autogenerar
+                                            </button>
+                                        </div> 
+                                    @else
+                                        <div class="form-group col-md-4 col-12">
+                                            <label style="height: 1.015rem;"></label>
+                                            <button id="btn_aling" type="submit" class="btn btn-warning btn-block col-md-12">
+                                                <i class="fas fa-magic"></i>
+                                                Autogenerar 
+                                            </button>
+                                        </div>  
+                                    @endif
+                                </div>
+                            </form>
+                            <hr>
                             @else
                                 <hr>
                             @endif
@@ -154,12 +149,27 @@
 
                                                                     <div class="row no-gutters align-items-center">
                                                                         <div class="col-auto">
+                                                                            {{-- @php
+                                                                                $quantity_students = null;
+                                                                                foreach ($groups as $group) {
+                                                                                    if($group->id == $block->group_id) {
+                                                                                        $quantity_students = $group_registered[$block->id];
+                                                                                    }
+                                                                                }
+                                                                            @endphp --}}
+                                                                            {{-- <div class="h6 mb-0 mr-3 font-weight-bold text-gray-800">{{ $tasks_by_sesion[$s->id] }}/{{ $quantity_students }}</div> --}}
                                                                             <div id="proportion-tasks-{{$s->id}}" class="h6 mb-0 mr-3 font-weight-bold text-gray-800">-/{{ $block_registered[$block->block_id] }}</div>
                                                                         </div>
                                                                         <div class="col">
                                                                             <div class="progress progress-sm mr-2">
                                                                                 @php
+                                                                                // if($quantity_students == 0){
+                                                                                //     $porcent_tasks = 0;
+                                                                                // } else {
+                                                                                //     $porcent_tasks = ($tasks_by_sesion[$s->id] * 100) / $quantity_students;
+                                                                                // }
                                                                                 @endphp
+                                                                                {{-- <div class="progress-bar bg-info" role="progressbar" style="width: {{ $porcent_tasks }}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div> --}}
                                                                                 <div id="porcent-tasks-{{$s->id}}" class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                                                             </div>
                                                                         </div>
@@ -194,7 +204,7 @@
                 @endif
                 
                 <script> displayIndexSesionByBlock({!! json_encode($blocks) !!}); </script>
-            {{-- @endif --}}
+            @endif
         </div>
         
     </div>

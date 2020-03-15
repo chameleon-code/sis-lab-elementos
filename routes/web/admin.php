@@ -79,7 +79,7 @@ Route::get('/admin/groups/getGroupsName/{id}', 'GroupController@getGroupsNameByS
 
 // Gestión de Bloques
 
-Route::get('/admin/blocks/getGroups/{id}', 'BlockController@getGroups')->middleware('auth','admin');
+Route::get('/admin/blocks/getGroups/{id}', 'BlockController@getGroups')->middleware('auth','admin'); // Talvez borrar
 Route::get('/admin/blocks/getGroupsId', 'BlockGroupController@getAllBlockGroups')->middleware('auth','admin');
 Route::get('/admin/blocks/setStatus/{id}/{value}', 'BlockController@setStatus')->middleware('auth','admin');
 

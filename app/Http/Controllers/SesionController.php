@@ -30,15 +30,6 @@ class SesionController extends Controller
         }
         $blocksIds = array_unique($blocksIds);
         $blockResult = array();
-// <<<<<<< HEAD
-//         $blockVisits = array();
-//         array_push($blockResult, $blockGroups[0]); array_push($blockVisits, $blockGroups[0]);
-//         foreach ($blockGroups as $block_group) {
-//             foreach($blockVisits as $blockVisit) {
-//                if($block_group->id != $blockVisit->id) {
-//                     array_push($blockResult,$block_group);
-//                     break;
-// =======
         foreach ($blocksIds as $ids) {
             $blockFlag=false;
             foreach ($blockGroups as $block) {
@@ -75,15 +66,18 @@ class SesionController extends Controller
 
             $block_registered = Block::quantityStudentsByBlock();
 
+            $blockgroups = 
+
             $data = [
-                'blocks' => $blockResult,
+                'managements' => Management::all(),
+                //'blocks' => $blockResult,
+                'blockgroups' => $blockgroups,
                 'sesions' => $sesionsBlocks,
                 'start' => $dateStart,
                 'end' => $dateEnd,
                 'subjects' => $subjectNames,
                 'groups' => Group::all(),
                 'block_registered' => $block_registered
-                // 'tasks_by_sesion' => $tasks_by_sesion,
             ];
             return view('components.contents.professor.sesions', $data);
         }else{

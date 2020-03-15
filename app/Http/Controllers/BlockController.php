@@ -38,17 +38,30 @@ class BlockController extends Controller
     public function create()
     {
         self::rememberNav();
-
+        $actual_management = Management::getActualManagement();
+        $block_groups = BlockGroup::join('blocks', 'block_group.block_id', '=', 'blocks.id')
+                                    ->join('managements', 'blocks.management_id', '=', 'managements.id')
+                                    ->select('block_group.*', 'managements.id as management_id')
+                                    ->get();
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
         $managements = Management::getAllManagements()->reverse();
         $groupsID = BlockGroup::getAllBlockGroupsId();
-        $groups = Group::where('subject_matter_id', 1)
-                        ->whereNotIn('id', $groupsID)                        
-                        ->orderBy('name')->get();
-        $data=['subjectMatters'=>$subjectMatters,
-                'groups'=>$groups,
-                'managements' =>$managements,
-            ];
+        // $groups = Group::where('subject_matter_id', 1)
+        //                 ->whereNotIn('id', $groupsID)
+        //                 ->orderBy('name')->get();
+        $groups = Group::join('block_group', 'groups.id', '=', 'block_group.group_id')
+                        ->join('blocks', 'block_group.block_id', '=', 'blocks.id')
+                        ->join('managements', 'blocks.management_id', '=', 'managements.id')
+                        ->select('groups.*', 'managements.id as management_id')
+                        ->orderby('name')
+                        ->get();
+        $data = [
+            'block_groups' => $block_groups,
+            'subjectMatters'=> $subjectMatters,
+            'groups'=> $groups,
+            'managements' => $managements,
+            'actual_management' => $actual_management
+        ];
         return view('components.contents.blocks.create', $data);
     }
 
@@ -65,6 +78,7 @@ class BlockController extends Controller
         $block = new Block();
         $man = Management::find($request->management_id);
         $name = 'Bloque-';
+        $id_name = [];
         if($block->validate($input)){   
             $man = Management::find($request->management_id);
             $dir = $man->management_path.'/'.$request->name;
@@ -75,7 +89,13 @@ class BlockController extends Controller
             foreach($groupsID as $key=>$value){
                 $group = Group::where('id', $value)->first();
                 $block->groups()->attach($group->id);
-                $name .= $group->professor->names[0];
+                //$name .= $group->professor->names[0];
+                array_push( $id_name, $group->professor->names[0] );
+            }
+            $id_name = array_unique( $id_name );
+            sort($id_name);
+            for($i=0 ; $i<sizeof($id_name) ; $i++) {
+                $name .= $id_name[$i];
             }
             //$name .= $block->id;
             $dir = $man->management_path.'/'.$name;
@@ -176,10 +196,11 @@ class BlockController extends Controller
     {
         //
     }
+    ////////////////////////////////// TALVEZ SE BORRE
     public function getGroups(Request $request, $id){
+        $actual_management = Management::getActualManagement();
         $groups = Group::getGroupsBySubjects($id);
         $groupsBlocks = BlockGroup::getAllBlockGroupsId();
-        //dd($groupsBlocks);
         $groups2 = $groups->reject(function($item, $key) use ($groupsBlocks){
             if (in_array($item->id, $groupsBlocks) && !$item->available)
                 return true;
@@ -189,6 +210,7 @@ class BlockController extends Controller
         }
         return $groups2->values()->all();
     }
+
     public function getBlocksBySubjects(Request $request, $id){
         $blocks = Block::getAllBlocks();
         $blocks2 = $blocks->reject(function($item, $key) use ($id){
