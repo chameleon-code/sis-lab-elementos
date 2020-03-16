@@ -301,4 +301,20 @@ class SesionController extends Controller
         ];
         return view('components.contents.professor.studentSesions', $data);
     }
+
+    public function getSesionsByBlock($blockId) {
+        $block = Block::join('block_group', 'blocks.id', '=', 'block_group.block_id')
+                        ->join('groups', 'block_group.group_id', '=', 'groups.id')
+                        ->join('subject_matters', 'groups.subject_matter_id', '=', 'subject_matters.id')
+                        ->where('blocks.id', '=', $blockId)
+                        ->select('groups.*', 'blocks.id as block_id', 'subject_matters.name as subject_name')
+                        ->get()
+                        ->first();
+        $sesions = Sesion::where('block_id', '=', $blockId)->get();
+        $data = [
+            'block' => $block,
+            'sesions' => $sesions
+        ];
+        return $data;
+    }
 }

@@ -30,3 +30,4 @@ Route::post('/tasks/create','TaskController@store')->name('tasks.create');
 Route::post('/professor/sesions/tasks/store/score','TaskController@storeScore');
 Route::get('/professor/practices/download','TaskController@downloadPractice');
 Route::get('/professor/practices/info','SesionController@practicesInfo');
+Route::get('/professor/sesions/{blockId}','SesionController@getSesionsByBlock');

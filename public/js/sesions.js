@@ -3,7 +3,6 @@ var task_dom_id = undefined;
 var task_dom_max_id = undefined;
 var modificando_form = false;
 var with_description = true;
-var schedules = undefined;
 
 $(document).ready(function(){
     $('#formActivity').hide();
@@ -11,9 +10,7 @@ $(document).ready(function(){
     $('#btnsEditTasks').hide();
     hideErrors();
 
-    loadPracticeInfo();
-
-    console.log( groups );
+    //loadPracticeInfo();
 });
 
 function showSesion(sesion){
@@ -370,22 +367,6 @@ function hideErrors(){
     $('#errors-form').empty();
 }
 
-function selectBlock(blocks) {
-    // let select = $("#block-selector")[0];
-    
-    // blocks.forEach(function (block) {
-    //     if(select.value == block.block_id) {
-    //         $("#block-"+block.block_id).show();
-    //     } else {
-    //         $("#block-"+block.block_id).hide();
-    //     }
-    // });
-}
-
-function displayIndexSesionByBlock(blocks) {
-    $("#block-"+blocks[0].block_id).show();
-}
-
 function loadPracticeInfo() {
     $.ajax({
         url : "/professor/practices/info",
@@ -427,4 +408,82 @@ function selectManagement() {
             display_blocks.push(groups[i].block_id);
         }
     }
+}
+
+function setSesionsOfSelectedBlock() {
+    $('#form-auto-sesions').hide();
+    $('#sesions-container').empty();
+    $('#sesions-title').empty();
+    $.ajax({
+        url : "/professor/sesions/"+$('#block-selector')[0].value,
+        success: function (response){
+            let block = response.block;
+            let sesions = response.sesions;
+            $('#input-block-id')[0].value = block.block_id;
+            if( sesions.length > 0 ) {
+                $('#sesions-title').append(`<label class="h5 text-gray-900 mb-3">Sesiones (${ block.subject_name }) </label>`);
+                for(let i=0 ; i<sesions.length ; i++) {
+                    $('#sesions-container').append(
+                        `
+                        <div>
+                        <thead>
+                            <tr>
+                                <div class="accordion-body bg-gray-300 rounded row" style="cursor: default;">
+                                    <div class="container d-flex justify-content-between p-1" style="">
+                                        <div class="d-flex justify-content-start">
+                                            <strong style="color: gray;"> Sesión:&nbsp; </strong> ${ sesions[i].number_sesion }
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <div class="mx-4">
+                                                <a id="sesion-badge-${ sesions[i].id }" href="#" class="mx-2" onclick="showSesion(${ sesions[i] }), loadPractice(${ sesions[i].id })" data-toggle-2="tooltip" title="Guía práctica"><i class="fas fa-book-open"></i></a>
+                                            </div>
+                                            <div class="text-center" onclick="showAccordion(${ sesions[i].id })" style="cursor: pointer; width: 18px;">
+                                                <strong id="arrowAccordion${ sesions[i].id }" style="color: #8b8b8b; font-weight: bold;">&#709;</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
+                        </thead>
+                        <div id="panel${ sesions[i].id }">
+                            <div class="d-flex justify-content-between">
+                                <div id="sesion-dates${ sesions[i].id }" class="col-xl-5 py-1 px-2 my-1 mx-1 card shadow" style="font-size: 15px;"></div>
+                                <div class="col-xl-7 mt-1 pl-0" style="padding-right: 12px;">
+                                    <div class="card shadow m-0">
+                                        <div class="card-body" style="padding: 8px;">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col">
+                                                    <div class="text-xs font-weight-bold text-info text-uppercase">Tareas entregadas</div>
+                                                    <div class="row no-gutters align-items-center">
+                                                        <div class="col-auto">
+                                                            <div id="proportion-tasks-${ sesions[i].id }" class="h6 mb-0 mr-3 font-weight-bold text-gray-800">-/{{ $block_registered[$block->block_id] }}</div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="progress progress-sm mr-2">
+                                                                <div id="porcent-tasks-${ sesions[i].id }" class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        `
+                    );
+                    $('#sesion-dates'+sesions[i].id).append(`<div> <strong> Inicio: </strong> ${ getSesionMonth( sesions[i].date_start) } </div>`);
+                    var end_month = getSesionMonth( sesions[i].date_end );
+                    $('#sesion-dates'+sesions[i].id ).append(`<div> <strong> Fin: </strong> ${ getSesionMonth( sesions[i].date_end ) } </div>`);
+                }
+            } else {
+                $('#form-auto-sesions').show();
+            }
+        },
+        error: function() {
+            alert("Error de conexión. Vuelva a intentarlo.");
+        }
+    });
 }
