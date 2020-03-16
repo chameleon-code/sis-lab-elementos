@@ -3,24 +3,24 @@ var task_dom_id = undefined;
 var task_dom_max_id = undefined;
 var modificando_form = false;
 var with_description = true;
-var schedules = undefined;
 
 $(document).ready(function(){
     $('#formActivity').hide();
     $('#btnsTasks').hide();
     $('#btnsEditTasks').hide();
     hideErrors();
-
-    loadPracticeInfo();
 });
 
-function showSesion(sesion){
+function showSesion(s_id, s_number_sesion){
+    event.preventDefault();
     hideFormActivity();
-    sesion_id = sesion.id;
-    $('#sesionTitle')[0].innerHTML = "Guía Práctica de la <strong> sesión " + sesion.number_sesion + "</strong>";
+    sesion_id = s_id;
+    $('#sesionTitle')[0].innerHTML = "Guía Práctica de la <strong> sesión " + s_number_sesion + "</strong>";
+    return false
 }
 
 function showFormActivity(){
+    event.preventDefault();
     hideErrors();
     $('#title-form')[0].innerHTML = "Nueva tarea";
     $('#btnAddActivity').hide();
@@ -38,14 +38,10 @@ function hideFormActivity(){
     $('#sesionTasks').show();
     $('#btnsTasks').hide();
     $('#btnsEditTasks').hide();
-    // $('#title')[0].value = "";
-    // $('#description')[0].value = "";
-    // $('#practice')[0].value = "";
 }
 
 function loadPractice(sesion_id){
     $('#sesionTasks').empty();  
-    // $('#group_id_input')[0].value = id;
         
     $.ajax({
         url : '/professor/sesion/'+sesion_id+'/tasks',
@@ -71,7 +67,6 @@ function loadPractice(sesion_id){
                     } else {
                         file = element.task_file;
                         link_file = `<a href="/downloadPractice/${element.task_path}${element.task_file}" target='_blank'>${file}</a>`;
-                        //href="{{'/downloadTask/'.$task->done->task_path.'/'.$task->done->task_name}}"
                     }
                     var dom_file = "<div class='' style='margin-top: 15px; margin-bottom: -10px;'> Archivo adjunto: "+link_file+" </div>"
                     if(element.updated_at.charAt(8) == 0){
@@ -137,7 +132,6 @@ function storeTask(){
                     link_file = "<span style='color: grey;'>"+file+"</span>";
                 } else {
                     file = response.task_file;
-                    //link_file = "<a href='"+response.task_path+response.task_file+"' target='_blank'>"+file+"</a>";
                     link_file = `<a href="/downloadPractice/${response.task_path}${response.task_file}" target='_blank'>${file}</a>`;
                 }
                 var dom_file = "<div class='' style='margin-top: 15px; margin-bottom: -10px;'> Archivo adjunto: "+link_file+" </div>"
@@ -163,6 +157,8 @@ function storeTask(){
                 $('#errors-div').show();
                 $('#errors-form').append("<li> Formato de archivo no aceptado </li>");
             }
+            new_quantity_tasks_sesion = parseInt( $('#badge-sesion-'+response.sesion_id).html() ) + 1;
+            $('#badge-sesion-'+response.sesion_id).html( new_quantity_tasks_sesion );
         },
         error: function() {
             endLoading();
@@ -177,6 +173,7 @@ function storeTask(){
 }
 
 function deleteTask(id_dom_task, id_task){
+    event.preventDefault();
     $('#btn-edit-task-'+id_dom_task).hide();
     $('#btn-delete-task-'+id_dom_task).hide();
     $('#task'+id_dom_task).after(
@@ -185,22 +182,19 @@ function deleteTask(id_dom_task, id_task){
 }
 
 function destroyTask(id_dom_task, id_task){
-    //var token = $("#token").val();
     $.ajax({
         url : '/professor/task/delete/'+id_task,
         beforeSend: function () {
             loading();
             $("#practice-sesion-modal").modal("hide");
         },
-        //headers: { "X-CSRF-TOKEN": token },
         success: function (response){
             $('#task'+id_dom_task).remove();
             $('#confirm-delete-task'+id_dom_task).remove();
-            // $('#sesionTasks').append(
-            //     "<div id='no-tasks' style='margin-bottom: 10px;'> <string> No hay tareas asignadas para esta sesión. </strong> </div>"
-            // );
             endLoading();
             $("#practice-sesion-modal").modal("show");
+            new_quantity_tasks_sesion = parseInt( $('#badge-sesion-'+response.sesion.id).html() ) - 1;
+            $('#badge-sesion-'+response.sesion.id).html( new_quantity_tasks_sesion );
         },
         error: function() {
             endLoading();
@@ -219,6 +213,7 @@ function cancelDelete(id_dom_task){
 }
 
 function editTask(task, i){
+    event.preventDefault();
     showFormActivity();
     $('#title-form')[0].innerHTML = "Edición de tarea";
     task_dom_id = i;
@@ -247,7 +242,6 @@ function storeEditedTask(){
         success: (response) => {
             if(response.title){
                 hideFormActivity();
-                //$('#task'+task_dom_id).remove();
                 var mes = getMonth(response.updated_at);
                 var dia = response.updated_at.charAt(8) + response.updated_at.charAt(9);
                 var hora = response.updated_at.charAt(11) + response.updated_at.charAt(12) + response.updated_at.charAt(13) + response.updated_at.charAt(14) +response.updated_at.charAt(15);
@@ -264,7 +258,6 @@ function storeEditedTask(){
                     link_file = "<span style='color: grey;'>"+file+"</span>";
                 } else {
                     file = response.task_file;
-                    //link_file = "<a href='"+response.task_path+response.task_file+"' target='_blank'>"+file+"</a>";
                     link_file = `<a href="/downloadPractice/${response.task_path}${response.task_file}" target='_blank'>${file}</a>`;
                 }
                 var dom_file = "<div class='' style='margin-top: 15px; margin-bottom: -10px;'> Archivo adjunto: "+link_file+" </div>"
@@ -368,44 +361,108 @@ function hideErrors(){
     $('#errors-form').empty();
 }
 
-function displaySesionByBlock(blocks) {
-    let select = $("#block-selector")[0];
-    
-    blocks.forEach(function (block) {
-        if(select.value == block.block_id) {
-            $("#block-"+block.block_id).show();
-        } else {
-            $("#block-"+block.block_id).hide();
+function selectManagement() {
+    $('#block-selector').empty();
+
+    let display_blocks = []
+
+    for(let i=0 ; i<groups.length ; i++) {
+        if( groups[i].management_id+"" == $('#management-selector')[0].value && !display_blocks.includes(groups[i].block_id) ) {
+            $('#block-selector').append(
+                `<option class="optional" value="${groups[i].block_id}"> ${ groups[i].block_name } ( ${ groups[i].subject.name } )</option>`
+            );
+            display_blocks.push(groups[i].block_id);
         }
-    });
+    }
 }
 
-function displayIndexSesionByBlock(blocks) {
-    $("#block-"+blocks[0].block_id).show();
-}
-
-function loadPracticeInfo() {
+function setSesionsOfSelectedBlock() {
+    $('#form-auto-sesions').hide();
+    $('#sesions-container').empty();
+    $('#sesions-title').empty();
     $.ajax({
-        url : "/professor/practices/info",
+        url : "/professor/sesions/"+$('#block-selector')[0].value,
         success: function (response){
-            for(i=0 ; i<Object.keys(response.sesions).length ; i++) {
-                $("#sesion-badge-"+response.sesions[i].id).append('<span class="badge badge-danger badge-counter">'+ response.quantity_sesion_tasks[response.sesions[i].id] +'</span>');
-            }
-            for(i=0 ; i<Object.keys(response.sesions).length ; i++) {
-                proportion_task = $("#proportion-tasks-"+response.sesions[i].id)[0].innerHTML;
-                $("#proportion-tasks-"+response.sesions[i].id)[0].innerHTML = response.tasks_by_sesion[response.sesions[i].id] + ( proportion_task ).substring(1, proportion_task.length);
-                if(proportion_task.substring(2, proportion_task.length) != 0) {
-                    porcent = (response.tasks_by_sesion[response.sesions[i].id] * 100) / proportion_task.substring(2, proportion_task.length);
-                } else {
-                    porcent = 0;
+            let block = response.block;
+            let sesions = response.sesions;
+            let commited_tasks_by_sesion = response.commited_tasks_by_sesion;
+            $('#input-block-id')[0].value = block.block_id;
+            if( sesions.length > 0 ) {
+                $('#sesions-title').append(`<label class="h5 text-gray-900 mb-3">Sesiones (${ block.subject_name }) </label>`);
+                for(let i=0 ; i<sesions.length ; i++) {
+                    $('#sesions-container').append(
+                        `
+                        <div>
+                        <thead>
+                            <tr>
+                                <div class="accordion-body bg-gray-300 rounded row" style="cursor: default;">
+                                    <div class="container d-flex justify-content-between p-1" style="">
+                                        <div class="d-flex justify-content-start">
+                                            <strong style="color: gray;"> Sesión:&nbsp; </strong> ${ sesions[i].number_sesion }
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <div class="mx-4">
+                                                <a href="#" class="mx-2 tasks-sesion-btn" onclick="showSesion(${ sesions[i].id }, ${ sesions[i].number_sesion }), loadPractice(${ sesions[i].id })" data-toggle-2="tooltip" title="Guía práctica">
+                                                    <i class="fas fa-book-open"></i>
+                                                    <span id="badge-sesion-${ sesions[i].id }" class="badge badge-danger badge-counter" style="margin-left: -4px;"> ${ response.tasks_by_sesions[i] } </span>
+                                                </a>
+                                            </div>
+                                            <div class="text-center" onclick="showAccordion(${ sesions[i].id })" style="cursor: pointer; width: 18px;">
+                                                <strong id="arrowAccordion${ sesions[i].id }" style="color: #8b8b8b; font-weight: bold;">&#709;</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
+                        </thead>
+                        <div id="panel${ sesions[i].id }">
+                            <div class="d-flex justify-content-between">
+                                <div id="sesion-dates${ sesions[i].id }" class="col-xl-5 py-1 px-2 my-1 mx-1 card shadow" style="font-size: 15px;"></div>
+                                <div class="col-xl-7 mt-1 pl-0" style="padding-right: 12px;">
+                                    <div class="card shadow m-0">
+                                        <div class="card-body" style="padding: 8px;">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col">
+                                                    <div class="text-xs font-weight-bold text-info text-uppercase">Tareas entregadas</div>
+                                                    <div class="row no-gutters align-items-center">
+                                                        <div class="col-auto">
+                                                            <div id="proportion-tasks-${ sesions[i].id }" class="h6 mb-0 mr-3 font-weight-bold text-gray-800">${ commited_tasks_by_sesion[i] }/${ response.total_students_block }</div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="progress progress-sm mr-2">
+                                                                <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: ${ (commited_tasks_by_sesion[i]*100)/response.total_students_block }%"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        `
+                    );
+                    $('#sesion-dates'+sesions[i].id).append(`<div> <strong> Inicio: </strong> ${ getSesionMonth( sesions[i].date_start) } </div>`);
+                    var end_month = getSesionMonth( sesions[i].date_end );
+                    $('#sesion-dates'+sesions[i].id ).append(`<div> <strong> Fin: </strong> ${ getSesionMonth( sesions[i].date_end ) } </div>`);
                 }
-                $("#porcent-tasks-"+response.sesions[i].id)[0].setAttribute("style", "width: "+ porcent +"%;");
+            } else {
+                selected_management = null;
+                for(let i=0 ; i<Object.keys(managements).length ; i++) {
+                    if( managements[i].id+"" == $('#management-selector')[0].value ) {
+                        selected_management = managements[i];
+                        break;
+                    }
+                }
+                $('#inicio_fecha')[0].value = selected_management.start_management;
+                $('#fin_fecha')[0].value = selected_management.end_management;
+                $('#form-auto-sesions').show();
             }
         },
         error: function() {
-            console.log("Ha ocurrido un error.");
             alert("Error de conexión. Vuelva a intentarlo.");
-        },
-        timeout: 10000
+        }
     });
 }
