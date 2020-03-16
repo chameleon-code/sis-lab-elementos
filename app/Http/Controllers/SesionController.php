@@ -311,9 +311,23 @@ class SesionController extends Controller
                         ->get()
                         ->first();
         $sesions = Sesion::where('block_id', '=', $blockId)->get();
+        $total_students_block = BlockSchedule::join('student_schedules', 'block_schedules.id', '=', 'student_schedules.block_schedule_id')
+                                            ->where('block_schedules.block_id', '=', $blockId)
+                                            ->get()
+                                            ->count();
+        $commited_tasks_by_sesion = [];
+        for($i=0 ; $i<sizeof($sesions) ; $i++) {
+            $commited_task_by_sesion = StudentTask::join('tasks', 'student_tasks.task_id', '=', 'tasks.id')
+                            ->where('tasks.sesion_id', '=', $sesions[$i]->id)
+                            ->get()
+                            ->count();
+            array_push($commited_tasks_by_sesion, $commited_task_by_sesion);
+        }
         $data = [
             'block' => $block,
-            'sesions' => $sesions
+            'sesions' => $sesions,
+            'total_students_block' => $total_students_block,
+            'commited_tasks_by_sesion' => $commited_tasks_by_sesion
         ];
         return $data;
     }

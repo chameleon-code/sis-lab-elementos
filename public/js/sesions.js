@@ -419,6 +419,7 @@ function setSesionsOfSelectedBlock() {
         success: function (response){
             let block = response.block;
             let sesions = response.sesions;
+            let commited_tasks_by_sesion = response.commited_tasks_by_sesion;
             $('#input-block-id')[0].value = block.block_id;
             if( sesions.length > 0 ) {
                 $('#sesions-title').append(`<label class="h5 text-gray-900 mb-3">Sesiones (${ block.subject_name }) </label>`);
@@ -456,11 +457,11 @@ function setSesionsOfSelectedBlock() {
                                                     <div class="text-xs font-weight-bold text-info text-uppercase">Tareas entregadas</div>
                                                     <div class="row no-gutters align-items-center">
                                                         <div class="col-auto">
-                                                            <div id="proportion-tasks-${ sesions[i].id }" class="h6 mb-0 mr-3 font-weight-bold text-gray-800">-/{{ $block_registered[$block->block_id] }}</div>
+                                                            <div id="proportion-tasks-${ sesions[i].id }" class="h6 mb-0 mr-3 font-weight-bold text-gray-800">${ commited_tasks_by_sesion[i] }/${ response.total_students_block }</div>
                                                         </div>
                                                         <div class="col">
                                                             <div class="progress progress-sm mr-2">
-                                                                <div id="porcent-tasks-${ sesions[i].id }" class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: ${ (commited_tasks_by_sesion[i]*100)/response.total_students_block }%"></div>
                                                             </div>
                                                         </div>
                                                     </div>
