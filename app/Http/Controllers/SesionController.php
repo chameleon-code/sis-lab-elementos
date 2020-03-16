@@ -13,6 +13,7 @@ use App\StudentSchedule;
 use App\StudentTask;
 use App\BlockSchedule;
 use App\Group;
+use Illuminate\Support\Facades\Auth;
 
 class SesionController extends Controller
 {
@@ -64,19 +65,30 @@ class SesionController extends Controller
                 array_push($id_groups, $block_groups[$i]->group_id);
             }
 
-            $block_registered = Block::quantityStudentsByBlock();
+            $professor = Professor::join('users', 'professors.user_id', '=', 'users.id')
+                                    ->where('users.id', '=', Auth::user()->id)
+                                    ->select('users.*', 'professors.id as professor_id')
+                                    ->get()
+                                    ->first();
 
-            $blockgroups = 
+            $block_registered = Block::quantityStudentsByBlock();
+            $groups = Group::join('block_group', 'groups.id', '=', 'block_group.group_id')
+                            ->join('blocks', 'block_group.block_id', '=', 'blocks.id')
+                            ->join('managements', 'blocks.management_id', '=', 'managements.id')
+                            ->select('groups.*', 'block_group.id as block_group_id', 'blocks.id as block_id', 'blocks.name as block_name','managements.id as management_id')
+                            ->where('groups.professor_id', '=', $professor->professor_id)
+                            ->get();
 
             $data = [
-                'managements' => Management::all(),
-                //'blocks' => $blockResult,
-                'blockgroups' => $blockgroups,
+                'managements' => Management::all()->reverse(),
+                'actual_management' => Management::getActualManagement(),
+                'blocks' => $blockResult,
+                //'blockgroups' => $blockgroups,
                 'sesions' => $sesionsBlocks,
                 'start' => $dateStart,
                 'end' => $dateEnd,
                 'subjects' => $subjectNames,
-                'groups' => Group::all(),
+                'groups' => $groups,
                 'block_registered' => $block_registered
             ];
             return view('components.contents.professor.sesions', $data);

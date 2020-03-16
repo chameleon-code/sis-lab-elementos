@@ -1,6 +1,12 @@
 @extends('components.sections.professorSection')
 @section('userContent')
 
+<script>
+    var managements = {!! json_encode( $managements ) !!};
+    var actual_management = {!! json_encode( $actual_management ) !!};
+    var groups = {!! json_encode( $groups ) !!}
+</script>
+
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -20,7 +26,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <label for="">Gestión: </label>
-                            <select class="form-control" name="" id="block-selector" onchange="selectManagement()">
+                            <select class="form-control" name="" id="management-selector" onchange="selectManagement()">
                                 @foreach ($managements as $management)
                                     <option class="optional" value="{{$management->id}}">{{$management->semester}}/{{$management->managements}}</option>
                                 @endforeach
@@ -28,17 +34,18 @@
                         </div>
                         <div class="col-sm-8">
                             <label for="">Bloque: </label>
-                            <select class="form-control" name="" id="block-selector" onchange="displaySesionByBlock({{ json_encode($blocks) }})">
-                                @foreach ($blocks as $key => $block)
+                            <select class="form-control" name="" id="block-selector" onchange="selectBlock({{ json_encode($blocks) }})">
                                 @php
-                                    $g = null;
-                                    foreach ($groups as $group) {
-                                        if($block->group_id == $group->id) {
-                                            $g = $group->name;
-                                        }
-                                    }
+                                    $display_blocks = [];
+                                    $last_index_managements = ( sizeof($managements)-1 >= 0 ) ? sizeof($managements)-1 : 0;
                                 @endphp
-                                    <option class="optional" value="{{$block->block_id}}">{{$subjects[$key]}}</option>
+                                @foreach ($groups as $group)
+                                    @if( $group->management_id == $managements[$last_index_managements]->id && !in_array($group->block_id, $display_blocks) )
+                                        <option class="optional" value="{{$group->block_id}}"> {{ $group->block_name }} ( {{ $group->subject->name }} )</option>
+                                        @php
+                                            array_push($display_blocks, $group->block_id);
+                                        @endphp
+                                    @endif
                                 @endforeach
                             </select>
                         </div>

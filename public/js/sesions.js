@@ -12,6 +12,8 @@ $(document).ready(function(){
     hideErrors();
 
     loadPracticeInfo();
+
+    console.log( groups );
 });
 
 function showSesion(sesion){
@@ -368,16 +370,16 @@ function hideErrors(){
     $('#errors-form').empty();
 }
 
-function displaySesionByBlock(blocks) {
-    let select = $("#block-selector")[0];
+function selectBlock(blocks) {
+    // let select = $("#block-selector")[0];
     
-    blocks.forEach(function (block) {
-        if(select.value == block.block_id) {
-            $("#block-"+block.block_id).show();
-        } else {
-            $("#block-"+block.block_id).hide();
-        }
-    });
+    // blocks.forEach(function (block) {
+    //     if(select.value == block.block_id) {
+    //         $("#block-"+block.block_id).show();
+    //     } else {
+    //         $("#block-"+block.block_id).hide();
+    //     }
+    // });
 }
 
 function displayIndexSesionByBlock(blocks) {
@@ -411,5 +413,18 @@ function loadPracticeInfo() {
 }
 
 function selectManagement() {
-    
+    // console.log( $('#management-selector')[0].value );
+
+    $('#block-selector').empty();
+
+    let display_blocks = []
+
+    for(let i=0 ; i<groups.length ; i++) {
+        if( groups[i].management_id+"" == $('#management-selector')[0].value && !display_blocks.includes(groups[i].block_id) ) {
+            $('#block-selector').append(
+                `<option class="optional" value="${groups[i].block_id}"> ${ groups[i].block_name } ( ${ groups[i].subject.name } )</option>`
+            );
+            display_blocks.push(groups[i].block_id);
+        }
+    }
 }

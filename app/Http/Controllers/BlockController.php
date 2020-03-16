@@ -38,7 +38,6 @@ class BlockController extends Controller
     public function create()
     {
         self::rememberNav();
-        $actual_management = Management::getActualManagement();
         $block_groups = BlockGroup::join('blocks', 'block_group.block_id', '=', 'blocks.id')
                                     ->join('managements', 'blocks.management_id', '=', 'managements.id')
                                     ->select('block_group.*', 'managements.id as management_id')
@@ -49,18 +48,36 @@ class BlockController extends Controller
         // $groups = Group::where('subject_matter_id', 1)
         //                 ->whereNotIn('id', $groupsID)
         //                 ->orderBy('name')->get();
-        $groups = Group::join('block_group', 'groups.id', '=', 'block_group.group_id')
+        $registered_groups = Group::join('block_group', 'groups.id', '=', 'block_group.group_id')
                         ->join('blocks', 'block_group.block_id', '=', 'blocks.id')
                         ->join('managements', 'blocks.management_id', '=', 'managements.id')
                         ->select('groups.*', 'managements.id as management_id')
                         ->orderby('name')
                         ->get();
+
+        $groups = [];
+        for($i=0 ; $i<sizeof($registered_groups) ; $i++ ) {
+            array_push( $groups, $registered_groups[$i] );
+        }
+        
+        $unregistered_groups = Group::all();
+        $registered_id_groups = [];
+        for($i=0 ; $i<sizeof($groups) ; $i++) {
+            array_push($registered_id_groups, $groups[$i]->id);
+        }
+
+        for($i=0 ; $i<sizeof($unregistered_groups) ; $i++) {
+            $unregistered_groups[$i]->management_id = null;
+            if( !in_array( $unregistered_groups[$i]->id, $registered_id_groups ) ) {
+                array_push( $groups, $unregistered_groups[$i] );
+            }
+        }
+
         $data = [
             'block_groups' => $block_groups,
             'subjectMatters'=> $subjectMatters,
             'groups'=> $groups,
-            'managements' => $managements,
-            'actual_management' => $actual_management
+            'managements' => $managements
         ];
         return view('components.contents.blocks.create', $data);
     }

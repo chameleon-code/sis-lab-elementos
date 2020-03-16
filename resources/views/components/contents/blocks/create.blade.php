@@ -3,10 +3,11 @@
 @section('userContent')
 
 <script>
-    var actual_management = {!! json_encode($actual_management) !!}
     var block_groups = {!! json_encode($block_groups) !!}
     var managements = {!! json_encode($managements) !!}
     var groups = {!! json_encode($groups) !!}
+
+    console.log( groups );
 </script>
 
 <div class="row justify-content-center">
@@ -38,7 +39,7 @@
                                     <label for="management" class="control-label">Gestión</label>
                                     <select class="form-control col-md-12" name="management_id" id="managements" onchange="loadGroups()">
                                         @forelse ($managements as $management)
-                                            <option class="form-control" value="{{$management->id}}">{{$management->semester}}-{{$management->managements}}</option>
+                                            <option class="form-control" value="{{$management->id}}">{{$management->semester}}/{{$management->managements}}</option>
                                         @empty
                                             <option class="form-control" value="">No existen gestiones registradas</option>
                                         @endempty
