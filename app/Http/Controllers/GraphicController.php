@@ -86,11 +86,12 @@ class GraphicController extends Controller
         //dd($tasks_students);
         return $tasks_students;
     }
-
+//Graficos para el profesor
     public function indexProfessor(){
         $professor=Auth()->user()->Professor;
-        //dd($professor_id);
-        $subjectMatters=$professor->subjectMatters()->get();
+        //dd($professor);
+        $subjectMatters=$professor->subjectMatters()->get()->unique();
+        //dd($subjectMatters->unique());
         $groups=$professor->groups()->get();;
         //dd($groups->first()->subject);
         $data=[
