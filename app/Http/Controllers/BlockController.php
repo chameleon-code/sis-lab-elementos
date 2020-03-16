@@ -213,7 +213,7 @@ class BlockController extends Controller
     {
         //
     }
-    ////////////////////////////////// TALVEZ SE BORRE
+    
     public function getGroups(Request $request, $id){
         $actual_management = Management::getActualManagement();
         $groups = Group::getGroupsBySubjects($id);
