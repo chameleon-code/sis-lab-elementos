@@ -13,6 +13,7 @@ use App\StudentSchedule;
 use App\StudentTask;
 use App\BlockSchedule;
 use App\Group;
+use Illuminate\Support\Facades\Auth;
 
 class SesionController extends Controller
 {
@@ -23,76 +24,24 @@ class SesionController extends Controller
      */
     public function index()
     {
-        $blockGroups = Professor::getBlocksProfessor();
-        $blocksIds = array();
-        foreach ($blockGroups as $block) {
-            array_push($blocksIds,$block->block_id);
-        }
-        $blocksIds = array_unique($blocksIds);
-        $blockResult = array();
-// <<<<<<< HEAD
-//         $blockVisits = array();
-//         array_push($blockResult, $blockGroups[0]); array_push($blockVisits, $blockGroups[0]);
-//         foreach ($blockGroups as $block_group) {
-//             foreach($blockVisits as $blockVisit) {
-//                if($block_group->id != $blockVisit->id) {
-//                     array_push($blockResult,$block_group);
-//                     break;
-// =======
-        foreach ($blocksIds as $ids) {
-            $blockFlag=false;
-            foreach ($blockGroups as $block) {
-                if($block->block_id == $ids && $blockFlag == false){
-                    $blockFlag=true;
-                    array_push($blockResult,$block);
-                }
-            }    
-        }
-        $sesionsBlocks=[];
-        $dateStart = '';
-        $dateEnd = '';
-        $subjectNames=[];
-        $blockFlag = -1;
-        if($blockGroups!=null){
-            foreach ($blockGroups as $blockGroup) {
-                $blockId = $blockGroup->block_id;
-                if($blockId!=$blockFlag){
-                    $subjectName = Professor::getSubjectByBlockGroup($blockGroup->id);
-                    array_push($sesionsBlocks, Sesion::where('block_id','=',$blockId)->get());
-                    $management_id = Block::where('id','=',$blockId)->get()->first()->management_id;
-                    $dateStart = Management::where('id','=',$management_id)->get()->first()->start_management;
-                    $dateEnd = Management::where('id','=',$management_id)->get()->first()->end_management;
-                    array_push($subjectNames, $subjectName);
-                    $blockFlag = $blockId;
-                }
-            }
+        $professor = Professor::join('users', 'professors.user_id', '=', 'users.id')
+                                ->where('users.id', '=', Auth::user()->id)
+                                ->select('users.*', 'professors.id as professor_id')
+                                ->get()
+                                ->first();
 
-            $id_groups = array();
-            $block_groups = BlockGroup::all();
-            for($i=0 ; $i<sizeof($block_groups) ; $i++) {
-                array_push($id_groups, $block_groups[$i]->group_id);
-            }
+        $groups = Group::join('block_group', 'groups.id', '=', 'block_group.group_id')
+                        ->join('blocks', 'block_group.block_id', '=', 'blocks.id')
+                        ->join('managements', 'blocks.management_id', '=', 'managements.id')
+                        ->select('groups.*', 'block_group.id as block_group_id', 'blocks.id as block_id', 'blocks.name as block_name','managements.id as management_id')
+                        ->where('groups.professor_id', '=', $professor->professor_id)
+                        ->get();
 
-            $block_registered = Block::quantityStudentsByBlock();
-
-            $data = [
-                'blocks' => $blockResult,
-                'sesions' => $sesionsBlocks,
-                'start' => $dateStart,
-                'end' => $dateEnd,
-                'subjects' => $subjectNames,
-                'groups' => Group::all(),
-                'block_registered' => $block_registered
-                // 'tasks_by_sesion' => $tasks_by_sesion,
-            ];
-            return view('components.contents.professor.sesions', $data);
-        }else{
-            $data = [
-                'blocks'=>[],
-                'sesions' => [],
-            ];
-            return view('components.contents.professor.sesions', $data);
-        }
+        $data = [
+            'managements' => Management::all()->reverse(),
+            'groups' => $groups
+        ];
+        return view('components.contents.professor.sesions', $data);
     }
 
     public function practicesInfo(){
@@ -294,5 +243,44 @@ class SesionController extends Controller
             'sesion_max' => $sesion_max,
         ];
         return view('components.contents.professor.studentSesions', $data);
+    }
+
+    public function getSesionsByBlock($blockId) {
+        $block = Block::join('block_group', 'blocks.id', '=', 'block_group.block_id')
+                        ->join('groups', 'block_group.group_id', '=', 'groups.id')
+                        ->join('subject_matters', 'groups.subject_matter_id', '=', 'subject_matters.id')
+                        ->where('blocks.id', '=', $blockId)
+                        ->select('groups.*', 'blocks.id as block_id', 'subject_matters.name as subject_name')
+                        ->get()
+                        ->first();
+        $sesions = Sesion::where('block_id', '=', $blockId)->get();
+        $total_students_block = BlockSchedule::join('student_schedules', 'block_schedules.id', '=', 'student_schedules.block_schedule_id')
+                                            ->where('block_schedules.block_id', '=', $blockId)
+                                            ->get()
+                                            ->count();
+        $tasks_by_sesions = [];
+        for($i=0 ; $i<sizeof($sesions) ; $i++) {
+            $tasks_by_sesion = Sesion::join('tasks', 'sesions.id', '=', 'tasks.sesion_id')
+                            ->where('sesions.id', '=', $sesions[$i]->id)
+                            ->get()
+                            ->count();
+            array_push($tasks_by_sesions, $tasks_by_sesion);
+        }
+        $commited_tasks_by_sesion = [];
+        for($i=0 ; $i<sizeof($sesions) ; $i++) {
+            $commited_task_by_sesion = StudentTask::join('tasks', 'student_tasks.task_id', '=', 'tasks.id')
+                            ->where('tasks.sesion_id', '=', $sesions[$i]->id)
+                            ->get()
+                            ->count();
+            array_push($commited_tasks_by_sesion, $commited_task_by_sesion);
+        }
+        $data = [
+            'block' => $block,
+            'sesions' => $sesions,
+            'total_students_block' => $total_students_block,
+            'tasks_by_sesions' => $tasks_by_sesions,
+            'commited_tasks_by_sesion' => $commited_tasks_by_sesion
+        ];
+        return $data;
     }
 }
