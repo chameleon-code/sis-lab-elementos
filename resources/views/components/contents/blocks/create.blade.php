@@ -6,8 +6,6 @@
     var block_groups = {!! json_encode($block_groups) !!}
     var managements = {!! json_encode($managements) !!}
     var groups = {!! json_encode($groups) !!}
-
-    console.log( groups );
 </script>
 
 <div class="row justify-content-center">
@@ -71,8 +69,9 @@
                                             @forelse ($groups as $group)
                                                 @php
                                                     $registered = false;
+                                                    $last_index_managements = ( sizeof($managements)-1 > 0 ) ? sizeof($managements)-1 : 0;
                                                     foreach( $block_groups as $block_group ) {
-                                                        if( $block_group->group_id == $group->id && $block_group->management_id == $managements[0]->id ) {
+                                                        if( $block_group->group_id == $group->id && $block_group->management_id == $managements[$last_index_managements]->id ) {
                                                             $registered = true;
                                                         }
                                                     }
@@ -86,7 +85,7 @@
                                             @empty
                                                 <option class="form-control" value=""> Grupos no disponibles o asignados a otro bloque. </option>
                                             @endforelse
-                                            <script> actual_groups = {!! json_encode($actual_groups) !!}; </script>
+                                            <script> actual_groups = {!! json_encode($actual_groups) !!}; console.log( {!! json_encode($actual_groups) !!} ); </script>
                                         </select>
                                     </div>
                                 </div>

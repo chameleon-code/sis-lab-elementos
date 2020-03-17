@@ -42,9 +42,6 @@
             @endif
 
             <div class="card-body">
-
-                {{-- <script> addUserId({{json_encode(Auth::user()->id)}}); </script> --}}
-
                 @php
                     $id_select = 1;
                 @endphp
@@ -53,7 +50,6 @@
                 @php
                     $groups_sm = App\Group::where("subject_matter_id", "=", $item->id)->get();
                 @endphp
-                    {{--  <div class="flex-row my-2 rounded card shadow">  --}}
                     <div class="d-flex justify-content-between my-2 px-1 rounded shadow card-matter" style="height: 90px;">
                         <div class="row">
                             <img id="img-matter" class="" style="width:100px; height: 100%; border-top-left-radius: 5px; border-bottom-left-radius: 5px;" src="/img/subjectMatter.jpg" alt="">
@@ -77,11 +73,9 @@
                                 <input id="student-schedule-id-{{$item->id}}" type="number" name="student_schedule_id" style="display: none;">
                                 <a id="link-remove-matter-{{$item->id}}" class="" href="#" class="btn btn-primary" data-toggle="modal" data-target="#unregistration" style="display: none; margin-right: 10px;">Retirar Materia</a>
                                 <a id="link-take-matter-{{$item->id}}" class="" href="#" class="btn btn-primary" onclick="infReg({{ $item }}, {{ $id_select }}), $('#modal-footer').hide(), $('#info-inscription').hide(), verifyRegistration({{$item->id}})" style="display: none;">Inscribirse</a><br>
-                                {{--  <a class="float-right" href="#" data-toggle="modal" data-target="#registration" onclick="confirmReg({{ $item }}, {{ $id_select }})">Inscribirse</a>  --}}
                             </div>
                         </div>
                     </div>
-                    {{--  </div>  --}}
                 @php
                     $id_select++;
                 @endphp
@@ -93,15 +87,15 @@
 </div>
 
 <div id="inf-reg-modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content container">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Seleccione un día de trabajo</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body" id="text_confirm_reg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content container">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Seleccione un día de trabajo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="text_confirm_reg">
 
                 <table id="schedules-table" class="table table-striped table-light table-responsive" style="">
                     <thead class="">
@@ -112,21 +106,19 @@
                             <th class="text-dark" style="width: 350px;" scope="col">Seleccionar</th>
                         </tr>
                     </thead>
-                    <tbody id="body-table">
-                        
-                    </tbody>
+                    <tbody id="body-table"></tbody>
                 </table>
-
-                    <hr>
-                    <div id="info-inscription">
-                        Se inscribirá en la matería: <strong id="subjectMatter_selected">?</strong>, con el grupo: <strong id="group_selected">?</strong>.
-                    </div>
-
+                
+                <hr>
+                    
+                <div id="info-inscription">
+                    Se inscribirá en la matería: <strong id="subjectMatter_selected">?</strong>, con el grupo: <strong id="group_selected">?</strong>.
+                </div>
             </div>
+            
             <div class="modal-body" id="text_select_group" style="display: none;">
                 Debe seleccionar un grupo.
             </div>
-    
             
             <div class="modal-footer" id="modal-footer">
                 <form id="form-registration" method="POST" action="{{ url('/students/registration/store') }}">
@@ -136,46 +128,45 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_cancel">Cancelar</button>
                     <button type="submit" class="btn btn-primary" id="btn_confirm">Confirmar</button>
                 </form>
-          </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="modal fade" id="unregistration" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Retirar Materia</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ¿Está seguro que desea retirar la materia?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <a href="#" class="btn btn-danger" id="btn-unregister"> Confirmar </a>
-      </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Retirar Materia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro que desea retirar la materia?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <a href="#" class="btn btn-danger" id="btn-unregister"> Confirmar </a>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="modal fade bd-example-modal-lg" id="infoInscription" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Estado de inscripción</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Estado de inscripción</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="info-ins" class="modal-body"></div>
             </div>
-            <div id="info-ins" class="modal-body">
-                
-            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 @endsection

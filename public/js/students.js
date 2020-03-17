@@ -1,7 +1,6 @@
 var schedule_id;
 var subject_matters_ids = new Array();
 var student_schedule_id = undefined;
-//var user_id = undefined;
 
 function addSubjectMatterId(id) {
     subject_matters_ids.push(id);
@@ -14,8 +13,6 @@ $(document).ready(function() {
     $.ajax({
         url : '/students/registration/getScheduleStudent',
         success: function (response){
-            //console.log(subject_matters_ids.length);
-
             for(var i=0 ; i<subject_matters_ids.length ; i++)
             {
                 $('#link-take-matter-'+subject_matters_ids[i]).show();
@@ -189,22 +186,6 @@ function verifyRegistration (subject_matter_id){
         var schedule_student_id = $('#student-schedule-id-'+subject_matter_id)[0].value;
         var url = "/students/registration/edit/"+schedule_student_id+"";
         $('#form-registration')[0].setAttribute("action", url);
-
-        // var formData = new FormData($('#form-registration')[0]);
-
-        // $.ajax({
-        //     url : 'http://localhost:8000/students/registration/edit/'+schedule_student_id,
-        //     type: 'POST',
-        //     data: formData,
-        //     contentType: false,
-        //     processData: false,
-        //     success: (response) => {
-        //         console.log("todo cool");
-        //     },
-        //     error: function(){
-
-        //     }
-        // });
     }
 }
 
