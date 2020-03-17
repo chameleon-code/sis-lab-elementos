@@ -31,6 +31,8 @@ $(document).ready(function(){
         }
     });
 
+    loadGroups();
+
     if ( $('#group_id1 > option').length < 1 ) {
         $('#group_id1').append("<option value=''> Grupos no disponibles o asignados a otro bloque. </option>");
     }

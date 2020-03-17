@@ -9,6 +9,8 @@ $(document).ready(function(){
     $('#btnsTasks').hide();
     $('#btnsEditTasks').hide();
     hideErrors();
+    selectManagement();
+    setSesionsOfSelectedBlock();
 });
 
 function showSesion(s_id, s_number_sesion){

@@ -45,11 +45,12 @@
                 @php
                     $id_select = 1;
                 @endphp
-                @foreach($subjectMatters as $item)
-                <script> addSubjectMatterId({{json_encode($item->id)}}); </script>
-                @php
-                    $groups_sm = App\Group::where("subject_matter_id", "=", $item->id)->get();
-                @endphp
+                
+                <script> console.log( {!! json_encode($subjectMatters) !!} ); </script>
+                @forelse($subjectMatters as $item)
+                    @php
+                        $groups_sm = App\Group::where("subject_matter_id", "=", $item->id)->get();
+                    @endphp
                     <div class="d-flex justify-content-between my-2 px-1 rounded shadow card-matter" style="height: 90px;">
                         <div class="row">
                             <img id="img-matter" class="" style="width:100px; height: 100%; border-top-left-radius: 5px; border-bottom-left-radius: 5px;" src="/img/subjectMatter.jpg" alt="">
@@ -60,11 +61,11 @@
                         <div class="" style="width: 35%;">
                             <div class="py-1 px-1" style="">
                                 <select name="group_id" class="form-control col-md-12 my-1" id="group_{{ $id_select }}" onchange="clearSelects({{ $id_select }})" style="">
-                                        <option class="form-control text-center" value="">grupo</option>
+                                    <option class="form-control text-center" value="">grupo</option>
                                         @forelse ($groups_sm as $group)
                                             <option class="form-control" value="{{$group->id}}">{{$group->name ." - " . $group->professor->names ." " . $group->professor->first_name." " . $group->professor->second_name }}</option>
                                         @empty
-                                        <option class="form-control" value="">No existen grupos para la materia seleccionada</option>
+                                            <option class="form-control" value="">No existen grupos para la materia seleccionada</option>
                                         @endempty
                                         @endforelse
                                 </select>
@@ -76,10 +77,13 @@
                             </div>
                         </div>
                     </div>
-                @php
-                    $id_select++;
-                @endphp
-                @endforeach
+                    @php
+                        $id_select++;
+                    @endphp
+                @empty
+                    <hr>
+                    <div class="alert alert-warning"> No existe oferta de materias para la gestión actual </div>
+                @endforelse
 
             </div>
         </div>

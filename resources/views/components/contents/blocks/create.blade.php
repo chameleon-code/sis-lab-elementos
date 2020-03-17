@@ -63,7 +63,7 @@
                                     <a class="btn btn-md" id="removeGroup"><i class="fas fa-minus"></i></a>  </br>
                                     <div id="groups_container" data-frm="1">
                                         <select class="form-control col-md-12" name="groups_id[]" id="group_id1">
-                                            @php
+                                            {{-- @php
                                                 $actual_groups = [];
                                             @endphp
                                             @forelse ($groups as $group)
@@ -85,7 +85,7 @@
                                             @empty
                                                 <option class="form-control" value=""> Grupos no disponibles o asignados a otro bloque. </option>
                                             @endforelse
-                                            <script> actual_groups = {!! json_encode($actual_groups) !!}; console.log( {!! json_encode($actual_groups) !!} ); </script>
+                                            <script> actual_groups = {!! json_encode($actual_groups) !!}; </script> --}}
                                         </select>
                                     </div>
                                 </div>

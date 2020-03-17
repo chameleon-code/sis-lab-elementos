@@ -175,7 +175,6 @@ class StudentController extends Controller
     {
         $management = Management::getActualManagement();
         $blocks = Block::getAllBlocks();
-        $subjectMatters = SubjectMatter::all();
         $subjectMatters = SubjectMatter::getActualSubjectMatters($management->id);
         $groups = Group::getGroupBlocks();
         $data=[ 'blocks' => $blocks,
