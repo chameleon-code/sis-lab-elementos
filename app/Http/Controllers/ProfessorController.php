@@ -29,18 +29,18 @@ class ProfessorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        self::rememberNav();
-
         $professors = Professor::getAllProfessors();
         if(Auth::user()->role_id==Role::ADMIN){
-            $data = ['professors' => $professors,
-            'title' => 'Docentes',
-            'view'  =>  'adminSection',
+            $data = [
+                'professors' => $professors,
+                'title' => 'Docentes',
+                'view'  =>  'adminSection',
             ];
         }else{
-            $data = ['professors' => $professors,
-            'title' => 'Docentes',
-            'view'  =>  'professorSection',
+            $data = [
+                'professors' => $professors,
+                'title' => 'Docentes',
+                'view'  =>  'professorSection',
             ];
         }
         return view('components.contents.professor.index',$data);
@@ -78,10 +78,8 @@ class ProfessorController extends Controller
      */
     public function create()
     {
-        self::rememberNav();
-
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
-        $data=['subjectMatters'=>$subjectMatters];
+        $data = ['subjectMatters' => $subjectMatters];
         return view('components.contents.professor.create', $data);
     }
 
@@ -134,7 +132,8 @@ class ProfessorController extends Controller
         $professor = Professor::findOrFail($id);
         $user_id=$professor->user_id;
         $user = User::findOrFail($user_id);
-        $data=['professor' => $professor,
+        $data = [
+            'professor' => $professor,
             'user' => $user
         ];
         return view('components.contents.professor.profile')->withTitle('Perfil de Docente')->with($data);
@@ -151,7 +150,8 @@ class ProfessorController extends Controller
         $professor = Professor::findOrFail($id);
         $user_id=$professor->user_id;
         $user = User::findOrFail($user_id); 
-        $data=['professor' => $professor,
+        $data = [
+            'professor' => $professor,
             'user' => $user
         ];
         return view('components.contents.professor.edit')->withTitle('Editar Docente')->with($data);
@@ -204,17 +204,6 @@ class ProfessorController extends Controller
     public function studentList(){
         $professor = Professor::where('user_id', auth()->user()->id)->first();
         $groups = [];
-        // $groups = Group::where('professor_id', $professor->id)->get()->reject(function ($item, $key){
-        //     if(is_null($item->blocks->first())){
-        //         return true;
-        //     }
-        // });
-        //$schedules = $this->studentListByGroup(new Request, $groups->first()->id);
-        // if($groups->isNotEmpty()){
-            //      //dd( Professor::getBlockGroupProfessor() );
-            // }
-            // else
-            //     $schedules = collect();
         $blockGroups = Professor::getBlockGroupsProfessor();
         foreach( Group::all() as $group ) {
             foreach( $blockGroups as $blockGroup ) {
@@ -224,11 +213,7 @@ class ProfessorController extends Controller
                 }
             }
         }
-        //dd( Sesion::getActualSesion(1)->first()->id );
-        //dd( $actualSesion = Sesion::getActualSesion(1) );
-        //dd( $studentTasks = StudentTask::join('tasks', 'student_tasks.task_id', 'tasks.id')->join('sesions', 'tasks.sesion_id', 'sesions.id')->where('sesions.id', 8)->get() );
         $data = [
-            //'schedules' => $schedules,
             'blockGroups' => Professor::getBlockGroupsProfessor(),
             'groups' => $groups,
             'title' => 'Estudiantes'
@@ -265,11 +250,9 @@ class ProfessorController extends Controller
         $student = Student::findOrFail($id);
         $user_id = $student->user_id;
         $user = User::findOrFail($user_id);
-
         $data = ['student' => $student,
             'user' => $user
         ];
-
         return view('components.contents.professor.profileStudent')->withTitle('Perfil de Estudiante')->with($data);
     }
 
@@ -286,16 +269,5 @@ class ProfessorController extends Controller
             'title' => 'Portafolios en base a grupos'
         ];
         return view('components.contents.professor.portflies', $data);
-    }
-
-    public function rememberNav(){
-        $tmp = 0.05;
-        Cache::put('professor_nav', ' show', $tmp);
-        Cache::put('auxiliar_nav', '', $tmp);
-        Cache::put('student_nav', '', $tmp);
-        Cache::put('management_nav', '', $tmp);
-        Cache::put('subject_matter_nav', '', $tmp);
-        Cache::put('group_nav', '', $tmp);
-        Cache::put('block_nav', '', $tmp);
     }
 }

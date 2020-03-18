@@ -22,18 +22,13 @@ use App\Assistance;
 class AuxiliarController extends Controller
 {
     public function index(){
-        self::rememberNav();
-        
         $auxiliars = Auxiliar::getAllAuxiliars();
         $data=['auxiliars' => $auxiliars,
                 'title' => 'Auxiliars Title'];
-        
         return view('components.contents.auxiliar.index', $data);
     }
     
     public function create(){
-        self::rememberNav();
-
         return view('components.contents.auxiliar.create');
     }
 
@@ -121,7 +116,6 @@ class AuxiliarController extends Controller
         $data=['auxiliar' => $auxiliar,
             'user' => $user
         ];
-        
         return view('components.contents.auxiliar.profile')->withTitle('Perfil de Auxiliar')->with($data);
     }
 
@@ -199,16 +193,5 @@ class AuxiliarController extends Controller
             $resp = true;
         }
         return $resp;
-    }
-
-    public function rememberNav(){
-        $tmp = 0.05;
-        Cache::put('professor_nav', '', $tmp);
-        Cache::put('auxiliar_nav', ' show', $tmp);
-        Cache::put('student_nav', '', $tmp);
-        Cache::put('management_nav', '', $tmp);
-        Cache::put('subject_matter_nav', '', $tmp);
-        Cache::put('group_nav', '', $tmp);
-        Cache::put('block_nav', '', $tmp);
     }
 }

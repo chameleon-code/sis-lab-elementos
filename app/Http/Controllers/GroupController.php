@@ -20,11 +20,11 @@ class GroupController extends Controller
      */
     public function index()
     {
-        self::rememberNav();
-
         $groups = Group::getAllGroups();
-        $data=['groups' => $groups,
-                'title' => 'Grupos'];
+        $data = [
+            'groups' => $groups,
+            'title' => 'Grupos'
+        ];
         return view('components.contents.groups.index', $data);
     }
 
@@ -35,8 +35,6 @@ class GroupController extends Controller
      */
     public function create()
     {
-        self::rememberNav();
-
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
         $professors = Professor::getAllProfessors();
         $count = $this->getCountSubjects(new Request(), 1) + 1;
@@ -46,11 +44,12 @@ class GroupController extends Controller
                 array_push($groupNames, $i);
             }
         }
-        $data=['subjectMatters'=>$subjectMatters,
-                'professors' => $professors,
-                'countGroups' => $count,
-                'groupNames' => $groupNames
-            ];
+        $data = [
+            'subjectMatters'=>$subjectMatters,
+            'professors' => $professors,
+            'countGroups' => $count,
+            'groupNames' => $groupNames
+        ];
         return view('components.contents.groups.create', $data);
     }
 
@@ -67,7 +66,6 @@ class GroupController extends Controller
         if($groups->validate($input)){
             Group::create($input);
             Session::flash('status_message','Grupo añadido!');
-            
             return redirect('/admin/groups');
         }
             return redirect('/admin/groups/create')->withInput()->withErrors($groups->errors);
@@ -93,7 +91,6 @@ class GroupController extends Controller
     public function edit($id)
     {
         $group = Group::findOrFail($id);
-        //dd($group->subject);
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
         $professors = Professor::getAllProfessors();
         $groupNames = array($group->name);
@@ -102,7 +99,7 @@ class GroupController extends Controller
                 array_push($groupNames, $i);
             }
         }
-        $data=[
+        $data = [
             'group' => $group,
             'subjectMatters' => $subjectMatters,
             'professors' => $professors,
@@ -122,13 +119,11 @@ class GroupController extends Controller
     {
         $group = Group::find($id);
         $input = $request->all();
-
         if($group->validate($input)){
             $group->name = $request->name;
             $group->subject_matter_id = $request->subject_matter_id;
             $group->professor_id = $request->professor_id;
             $group->save();
-
             Session::flash('status_message', 'Grupo Editado!');
             return redirect('/admin/groups');
         }
@@ -145,13 +140,11 @@ class GroupController extends Controller
     {
         try{
             $group = Group::findOrFail($id);
-
             $group->delete();
             $status_message = 'Grupo borrado';
         }catch(ModelNotFoundException $e){
             $status_message = 'Grupo no identificado';
         }
-
         Session::flash('status_message',$status_message);
         return redirect('/admin/groups');
     }
@@ -169,38 +162,11 @@ class GroupController extends Controller
         $groups = array_pluck($groups, 'name');
         return $groups;
     }
-
-    public function rememberNav(){
-        $tmp = 0.05;
-        Cache::put('professor_nav', '', $tmp);
-        Cache::put('auxiliar_nav', '', $tmp);
-        Cache::put('student_nav', '', $tmp);
-        Cache::put('management_nav', '', $tmp);
-        Cache::put('subject_matter_nav', '', $tmp);
-        Cache::put('group_nav', ' show', $tmp);
-        Cache::put('block_nav', '', $tmp);
-    }
-
     
     public static function getBlockBygroupId(Request $request, $id){
         $group = Group::findOrFail($id);
         if($request->ajax()){
             return response()->json($group->blocks()->first());
         }
-    }        
-//deprecated
-        /*public function getProfessors(Request $request, $id){
-            if($request->ajax()){
-                $professors = ProfessorSubjectMatter::getAllProfessors($id);
-                $users = array();
-                $i = 0;
-                foreach($professors as $key=>$value){
-                    $usr = Professor::where('id', $value->professor_id)->firstOrFail();
-                    $user = User::findOrFail($usr->user_id);
-                    $users[$i] = $user;
-                    $i++;
-                }
-                return response()->json($users);
-            }
-        }*/
+    }
 }

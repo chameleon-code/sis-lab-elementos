@@ -83,8 +83,6 @@ class BlockGroupController extends Controller
         //
     }
 
-
-
     public function getAllBlockGroups(){
         return BlockGroup::getAllBlockGroupsId();
     }

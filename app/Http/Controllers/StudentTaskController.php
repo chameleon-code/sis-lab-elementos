@@ -70,7 +70,6 @@ class StudentTaskController extends Controller
                 array_push($taskAll,(object)$taskData);
             }
             $totalSesions = count(Sesion::where('block_id',$sesion->block_id)->get()->all());
-            
             $day = Day::find(ScheduleRecord::find($sesion->schedule_id)->day_id)->name;
             $sesionTask = [
                // 'tasks' => $tasks,
@@ -90,7 +89,6 @@ class StudentTaskController extends Controller
             'sesions' => $sesionOfWeek,
             'management' => $management,
         ];
-        //dd($data);
         return view('components.contents.student.activities')->with($data);
     }
 
@@ -118,7 +116,6 @@ class StudentTaskController extends Controller
             if($extension=='rar'||$extension=='zip'){
                 $user = Auth::user();
                 $student = Student::where('user_id','=',$user->id)->first();
-                
                 $hour = Carbon::now()->format('H:i:s');
                 // Refactorizacion para ver si se entrego la tarea en el dia correcto
                 //$inHour = StudentTask::inHour($hour, $request->schedule_id);
@@ -133,11 +130,8 @@ class StudentTaskController extends Controller
                 }
                 $fileName = $file->getClientOriginalName();
                 $fileSesion = $request->sesion_number;
-
                 $blockScheduleId = BlockSchedule::where('schedule_id',$request->schedule_id)->where('block_id',$request->block_id)->get()->first()->id;
                 $studentSchedule = StudentSchedule::where('student_id',$student->id)->where('block_schedule_id',$blockScheduleId)->get()->first();
-                
-    
                 if($studentSchedule!=[]){
                     $file -> move(storage_path('app').'/public/'.$studentSchedule->student_path.'/sesion-'.$fileSesion,$fileName);
                     $data = [
@@ -230,8 +224,15 @@ class StudentTaskController extends Controller
     }
 
     public function getTasksStudent( $student_id, $block_id ) {
-        $studentTasks = StudentTask::where('student_tasks.student_id', $student_id)->join('tasks', 'student_tasks.task_id', 'tasks.id')->join('sesions', 'tasks.sesion_id', 'sesions.id')->where('sesions.block_id', $block_id)->select('student_tasks.*')->get();
-        $block_tasks = Task::join('sesions', 'tasks.sesion_id', 'sesions.id')->where('sesions.block_id', $block_id)->select('tasks.*')->get();
+        $studentTasks = StudentTask::where('student_tasks.student_id', $student_id)
+                                   ->join('tasks', 'student_tasks.task_id', 'tasks.id')
+                                   ->join('sesions', 'tasks.sesion_id', 'sesions.id')
+                                   ->where('sesions.block_id', $block_id)->select('student_tasks.*')
+                                   ->get();
+        $block_tasks = Task::join('sesions', 'tasks.sesion_id', 'sesions.id')
+                           ->where('sesions.block_id', $block_id)
+                           ->select('tasks.*')
+                           ->get();
         $data = [
             'block_sesions' => Sesion::where('block_id', $block_id)->get(),
             'block_tasks' => $block_tasks,
