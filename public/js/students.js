@@ -2,14 +2,15 @@ var schedule_id;
 var subject_matters_ids = new Array();
 var student_schedule_id = undefined;
 
-function addSubjectMatterId(id) {
-    subject_matters_ids.push(id);
-}
+// function addSubjectMatterId(id) {
+//     subject_matters_ids.push(id);
+// }
 
 $(document).ready(function() {
-    $('#info-inscription').hide();
-    $('#modal-footer').hide();
+    // $('#info-inscription').hide();
+    // $('#modal-footer').hide();
 
+    // Para obtener las inscripciones del estudiante
     $.ajax({
         url : '/students/registration/getScheduleStudent',
         success: function (response){
@@ -17,11 +18,9 @@ $(document).ready(function() {
             {
                 $('#link-take-matter-'+subject_matters_ids[i]).show();
             }
-
             if(Object.keys(response).length != 0){
                 for(var i=0 ; i<subject_matters_ids.length ; i++){
                     for(var j=0 ; j<Object.keys(response.schedule_student).length ; j++){
-                        //console.log(subject_matters_ids[i] + " - " + response.schedule_student[j].subject_matter_id);
                         if(subject_matters_ids[i] == response.schedule_student[j].subject_matter_id){
                             $('#link-take-matter-'+response.schedule_student[j].subject_matter_id)[0].innerHTML = "Cambiar Horario";
                             $('#link-take-matter-'+response.schedule_student[j].subject_matter_id).hide();
@@ -51,9 +50,9 @@ $(document).ready(function() {
         error: function() {
             console.log("No se ha podido obtener la información");
             alert("Error de conexión. Vuelva a intentarlo.");
-        },
-        timeout: 10000
+        }
     });
+
 });
 
 function clearSelects(id) {
@@ -251,64 +250,221 @@ function status(){
     });
 }
 
-function dayById(day_id){
-    day = undefined;
-    switch (day_id) {
-        case 1:
-            day = 'Lunes';
+// function dayById(day_id){
+//     day = undefined;
+//     switch (day_id) {
+//         case 1:
+//             day = 'Lunes';
+//             break;
+//         case 2:
+//             day = 'Martes';
+//             break;
+//         case 3:
+//             day = 'Miércoles';
+//             break;
+//         case 4:
+//             day = 'Jueves';
+//             break;
+//         case 5:
+//             day = 'Viernes';
+//             break;
+//         case 6:
+//             day = 'Sábado';
+//             break;
+//     }
+//     return day;
+// }
+
+// function hourById(hour_id){
+//     hour = undefined;
+//     switch (hour_id) {
+//         case 1:
+//             hour = '06:45 - 08:15';
+//             break;
+//         case 2:
+//             hour = '08:15 - 09:45';
+//             break;
+//         case 3:
+//             hour = '09:45 - 11:15';
+//             break;
+//         case 4:
+//             hour = '11:15 - 12:45';
+//             break;
+//         case 5:
+//             hour = '12:45 - 14:15';
+//             break;
+//         case 6:
+//             hour = '14:15 - 15:45';
+//             break;
+//         case 7:
+//             hour = '15:45 - 17:15';
+//             break;
+//         case 8:
+//             hour = '17:15 - 18:45';
+//             break;
+//         case 9:
+//             hour = '18:45 - 20:15';
+//             break;
+//         case 10:
+//             hour = '20:15 - 21:45';
+//             break;
+//     }
+//     return hour;
+// }
+
+
+
+///////////////////////////////////////////////////////////////////
+
+function infoRegistration( subject_id ) {
+    $('#info-inscription').hide();
+    $('#modal-footer').hide();
+    let selected_group = null;
+    for(let i=0 ; i<groups.length ; i++) {
+        if( $('#selector-subject-'+subject_id)[0].value == groups[i].id ) {
+            selected_group = groups[i];
             break;
-        case 2:
-            day = 'Martes';
-            break;
-        case 3:
-            day = 'Miércoles';
-            break;
-        case 4:
-            day = 'Jueves';
-            break;
-        case 5:
-            day = 'Viernes';
-            break;
-        case 6:
-            day = 'Sábado';
-            break;
+        }
     }
-    return day;
+
+
+    // $('#no-schedules').remove();
+    $('#body-schedules-table').empty();
+    // $('#group_id_input')[0].value = id;
+    // var select = $('#group_' + id)[0];
+
+    // if (select.options[select.selectedIndex].text !== "grupo") {
+        $.ajax({
+            url : '/students/registration/getGroupSchedules/'+selected_group.id+'/'+selected_group.block_id,
+            // beforeSend: function () {
+            //     loading();
+            // },
+            success: function (response){
+
+                if(Object.keys(response).length > 0){
+
+                    // var cont = 1;
+                    // let longChecks = 0;
+                    // response.forEach(function(element) {
+                    //     if(element.block_id == id) {
+                    //         longChecks++;
+                    //     }
+                    // });
+                    // var longitud_horarios = 0;
+
+                    response.forEach(function(block_schedule) {
+                        //if(element.block_id == id) {
+
+                            let day = block_schedule.schedule.day.name;
+                            let hour = ( block_schedule.schedule.hour.start ).substr(0, 5) + " - " + (block_schedule.schedule.hour.end).substr(0, 5);
+                            $('#body-schedules-table').show();
+                            $('#body-schedules-table').append(
+                                `
+                                <tr class='text-center'>
+                                    <td style='display: none;'> ${ block_schedule.schedule.laboratory.name } </td>
+                                    <td> ${ day } </td>
+                                    <td style='display: none;'> ${ hour } </td>
+                                    <td>
+                                        <div class='custom-control custom-checkbox small'>
+                                            <input type='checkbox' class='custom-control-input' id='check-block-schedule-${ block_schedule.schedule.id }' onclick='clickCheck( ${ JSON.stringify( block_schedule ) }, ${ JSON.stringify( response ) } )'>
+                                            <label class='custom-control-label' for='check-block-schedule-${ block_schedule.schedule.id }'></label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                `
+                            );
+                            // <input type='checkbox' class='custom-control-input' id='check${ block_schedule.schedule.id }' onclick='clearChecks( ${ longChecks }, ${ cont }, ${ element.schedule_id }, ${ element.id } )'></input>
+                            // cont++;
+                            // longitud_horarios++;
+
+                        //}
+                    });
+
+                    $("#inf-reg-modal").modal("show");
+
+                    // if(longitud_horarios == 0) {
+                    //     endLoading();
+                    //     $('#schedules-table').hide();
+                    //     $('#schedules-table').after(
+                    //         "<div id='no-schedules'> <strong> No hay horarios disponibles para este grupo. </strong> </div>"
+                    //     );
+                    //     $("#inf-reg-modal").modal("show");
+                    // } else {
+                    //     endLoading();
+                    //     $("#inf-reg-modal").modal("show");
+                    // }
+
+                } else {
+
+                    $('#schedules-table').hide();
+                    $('#schedules-table').after(
+                        "<div id='no-schedules'> <strong> No hay horarios disponibles para este grupo. </strong> </div>"
+                    );
+                    $("#inf-reg-modal").modal("show");
+
+                    // endLoading();
+                    // $('#schedules-table').hide();
+                    // $('#schedules-table').after(
+                    //     "<div id='no-schedules'> <strong> No hay horarios disponibles para este grupo. </strong> </div>"
+                    // );
+                    // $("#inf-reg-modal").modal("show");
+                }
+            },
+            error: function() {
+                
+                $('#schedules-table').hide();
+                $('#schedules-table').after(
+                    "<div id='no-schedules'> <strong> No hay horarios disponibles para este grupo. </strong> </div>"
+                );
+                alert("Error de conexión. Vuelva a intentarlo.");
+            },
+            timeout: 10000
+        });
+
+        $('#text_select_group')[0].setAttribute("style", "display: none;");
+        $('#text_confirm_reg')[0].setAttribute("style", "");
+        $('#btn_cancel')[0].setAttribute("style", "");
+        $('#btn_confirm')[0].setAttribute("style", "");
+        // $('#subjectMatter_selected')[0].innerHTML = item.name;
+        // $('#group_selected')[0].innerHTML = select.options[select.selectedIndex].text;
+        // $('#group_id_input')[0].value = select.value;
+    // } else {
+    //     $('#text_confirm_reg')[0].setAttribute("style", "display: none;");
+    //     $('#btn_cancel')[0].setAttribute("style", "display: none;");
+    //     $('#btn_confirm')[0].setAttribute("style", "display: none;");
+    //     $('#text_select_group')[0].setAttribute("style", "");
+    //     endLoading();
+    //     $("#inf-reg-modal").modal("show");
+    // }
 }
 
-function hourById(hour_id){
-    hour = undefined;
-    switch (hour_id) {
-        case 1:
-            hour = '06:45 - 08:15';
-            break;
-        case 2:
-            hour = '08:15 - 09:45';
-            break;
-        case 3:
-            hour = '09:45 - 11:15';
-            break;
-        case 4:
-            hour = '11:15 - 12:45';
-            break;
-        case 5:
-            hour = '12:45 - 14:15';
-            break;
-        case 6:
-            hour = '14:15 - 15:45';
-            break;
-        case 7:
-            hour = '15:45 - 17:15';
-            break;
-        case 8:
-            hour = '17:15 - 18:45';
-            break;
-        case 9:
-            hour = '18:45 - 20:15';
-            break;
-        case 10:
-            hour = '20:15 - 21:45';
-            break;
+function clickCheck( block_schedule, block_schedules ) {
+    //console.log( block_schedule );
+    $('#info-inscription').hide();
+    $('#modal-footer').hide();
+
+    if( $('#check-block-schedule-'+block_schedule.schedule_id)[0].checked == 1 ) {
+        for(let i=0 ; i<block_schedules.length ; i++) {
+            if( block_schedules[i].schedule_id != block_schedule.schedule_id ) {
+                $('#check-block-schedule-'+block_schedules[i].schedule_id)[0].checked = 0;
+            }
+        }
+        $('#input_block_schedule_id')[0].value = block_schedule.id;
+        $('#input_group_id')[0].value = block_schedule.group_id;
+        $('#selected-subject-name').html( block_schedule.schedule.subject );
+        $('#selected-group-name').html( block_schedule.group_name );
+        $('#info-inscription').show();
+        $('#modal-footer').show();
+    } else {
+        // si esta marcado y desmarcamos
+        for(let i=0 ; i<block_schedules.length ; i++) {
+            if( block_schedules[i].schedule_id != block_schedule.schedule_id ) {
+                $('#check-block-schedule-'+block_schedules[i].schedule_id)[0].checked = 0;
+            }
+        }
+        $('#input_block_schedule_id')[0].value = null;
+        $('#input_group_id')[0].value = null;
+        $('#info-inscription').hide();
+        $('#modal-footer').hide();
     }
-    return hour;
 }

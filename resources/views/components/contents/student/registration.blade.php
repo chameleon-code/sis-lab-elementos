@@ -19,9 +19,15 @@
     }
 </style>
 
+<script>
+    var groups = {!! json_encode($groups) !!};
+    var subjects = {!! json_encode($subjects) !!};
+</script>
+
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
+
             <div class="d-flex justify-content-between">
                 <div class="panel-heading m-0 font-weight-bold text-primary">Inscripción</div>
                 <div class="mx-3">
@@ -29,7 +35,7 @@
                 </div>
             </div>
 
-            @if(isset($error))
+            {{-- @if(isset($error))
                 <div id="schedule-error" class="alert alert-danger mt-3 mb-0">
                     <div class="d-flex justify-content-between">
                         <b>Horario no disponible.</b>
@@ -39,14 +45,54 @@
                         <li>{{ $error }}</li>
                     </ul>
                 </div>
-            @endif
+            @endif --}}
 
             <div class="card-body">
+
+                @forelse( $subjects as $subject )
+                    <div class="card shadow rounded mb-4" style="padding: 0px 12px;">
+                        <div class="row">
+                            <div class="col-sm-3 text-center text-xs font-weight-bold text-info text-uppercase text-light py-1" style="background-color: #c984df; display: flex; align-items: center; border-top-left-radius: 2%; border-bottom-left-radius: 2%; font-size: 0.75rem;">
+                                <b class=""> {{ $subject->name }} </b>
+                            </div>
+                            <div class="col-sm-9" style="font-size: 0.8rem;">
+                                <div class="card-block px-2 pt-3 pb-2">
+                                    <select class="form-control mb-2" name="" id="selector-subject-{{ $subject->id }}">
+                                        @forelse ($groups as $group)
+                                            @if ($group->subject_matter_id == $subject->id)
+                                                <option value="{{ $group->id }}"> Grupo {{ $group->name }} - {{ $group->professor->names }} {{ $group->professor->first_name }} {{ $group->professor->second_name }} </option>
+                                            @endif
+                                        @empty
+                                            <option value="">no hay grupos jaja</option>
+                                        @endforelse
+                                    </select>
+                                    <b class='text-primary' style='font-size: 12px;'>Ya se encuentra inscrito en esta materia. <br>
+                                        Grupo 0 - Docente
+                                    </b>
+                                    <hr class="mt-2 mb-2">
+                                    <div class="d-flex justify-content-between" style="font-size: 0.9rem;">
+                                        <div></div>
+                                        <div>
+                                            <a id="subscription-btn-{{ $subject->id }}" href="#" class="" onclick="infoRegistration({{ $subject->id }})"> Inscribirse </a>
+                                            <a id="unsubscription-btn-{{ $subject->id }}" href="#" class=""> Retirar materia </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="alert alert-warning"> No existe oferta de materias para la gestión actual </div>
+                @endforelse
+
+
+
+
+
                 @php
                     $id_select = 1;
                 @endphp
                 
-                <script> console.log( {!! json_encode($subjectMatters) !!} ); </script>
                 @forelse($subjectMatters as $item)
                     @php
                         $groups_sm = App\Group::where("subject_matter_id", "=", $item->id)->get();
@@ -90,6 +136,9 @@
     </div>
 </div>
 
+
+
+
 <div id="inf-reg-modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content container">
@@ -110,13 +159,13 @@
                             <th class="text-dark" style="width: 350px;" scope="col">Seleccionar</th>
                         </tr>
                     </thead>
-                    <tbody id="body-table"></tbody>
+                    <tbody id="body-schedules-table"></tbody>
                 </table>
                 
                 <hr>
                     
-                <div id="info-inscription">
-                    Se inscribirá en la matería: <strong id="subjectMatter_selected">?</strong>, con el grupo: <strong id="group_selected">?</strong>.
+                <div id="info-inscription" style="display: none;">
+                    Se inscribirá en la materia: <strong id="selected-subject-name">?</strong>, con el grupo: <strong id="selected-group-name">?</strong>.
                 </div>
             </div>
             
@@ -124,11 +173,11 @@
                 Debe seleccionar un grupo.
             </div>
             
-            <div class="modal-footer" id="modal-footer">
+            <div class="modal-footer" id="modal-footer" style="display: none;">
                 <form id="form-registration" method="POST" action="{{ url('/students/registration/store') }}">
                     {{ csrf_field() }}
-                    <input id="block_schedule_id" type="number" name="block_schedule_id" style="display: none;">
-                    <input id="group_id_input" type="number" name="group_id" style="display: none;">
+                    <input id="input_block_schedule_id" type="number" name="block_schedule_id" style="display: none;">
+                    <input id="input_group_id" type="number" name="group_id" style="display: none;">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_cancel">Cancelar</button>
                     <button type="submit" class="btn btn-primary" id="btn_confirm">Confirmar</button>
                 </form>
