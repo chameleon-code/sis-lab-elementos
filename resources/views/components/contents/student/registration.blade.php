@@ -23,51 +23,67 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
 
-            <div class="d-flex justify-content-between">
-                <div class="panel-heading m-0 font-weight-bold text-primary">Inscripción</div>
-                <div class="mx-3">
-                    <a class="py-1" href="#" style="font-size: 14px; width: 100px;" onclick="status()"> Estado de Inscripción </a>
-                </div>
-            </div>
 
-            <div class="card-body">
-
-                @forelse( $subjects as $subject )
-                    <div class="card shadow rounded mb-4" style="padding: 0px 12px;">
-                        <div class="row">
-                            <div id="tittle-card-subject" class="col-sm-3 text-center text-xs font-weight-bold text-info text-uppercase text-light py-2">
-                                <b class=""> {{ $subject->name }} </b>
-                            </div>
-                            <div class="col-sm-9" style="font-size: 0.8rem;">
-                                <div class="card-block px-2 pt-3 pb-2">
-                                    <select class="form-control mb-2" name="" id="selector-subject-{{ $subject->id }}">
-                                        @forelse ($groups as $group)
-                                            @if ($group->subject_matter_id == $subject->id)
-                                                <option value="{{ $group->id }}"> Grupo {{ $group->name }} - {{ $group->professor->names }} {{ $group->professor->first_name }} {{ $group->professor->second_name }} </option>
-                                            @endif
-                                        @empty
-                                            <option value="">no hay grupos jaja</option>
-                                        @endforelse
-                                    </select>
-                                    <b id="message-subject-{{ $subject->id }}" class='text-primary mt-4' style='font-size: 13px;'></b>
-                                    <br>
-                                    <div class="d-flex justify-content-between" style="font-size: 0.9rem;">
-                                        <div></div>
-                                        <div class="mt-2">
-                                            <input id="student-subscription-subject-{{$subject->id}}" type="number" name="student_subscription-subject" hidden>
-                                            <a id="subscription-btn-{{ $subject->id }}" href="#" class="" onclick="infoRegistration({{ $subject->id }})" style="display: none;"> Inscribirse </a>
-                                            <a id="unsubscription-btn-{{ $subject->id }}" href="#" class="" onclick="removeSubscription({{ $subject->id }})" data-toggle="modal" data-target="#unregistration" style="display: none;"> Retirar materia </a>
+            @if(App\Management::getActualManagement() != null)
+                @if (App\Management::getActualManagement()->enable_inscription == 1)
+                    
+                    <div class="d-flex justify-content-between">
+                        <div class="panel-heading m-0 font-weight-bold text-primary">Inscripción</div>
+                        <div class="mx-3">
+                            <a class="py-1" href="#" style="font-size: 14px; width: 100px;" onclick="status()"> Estado de Inscripción </a>
+                        </div>
+                    </div>
+        
+                    <div class="card-body">
+                        @forelse( $subjects as $subject )
+                            <div class="card shadow rounded mb-4" style="padding: 0px 12px;">
+                                <div class="row">
+                                    <div id="tittle-card-subject" class="col-sm-3 text-center text-xs font-weight-bold text-info text-uppercase text-light py-2">
+                                        <b class=""> {{ $subject->name }} </b>
+                                    </div>
+                                    <div class="col-sm-9" style="font-size: 0.8rem;">
+                                        <div class="card-block px-2 pt-3 pb-2">
+                                            <select class="form-control mb-2" name="" id="selector-subject-{{ $subject->id }}">
+                                                @forelse ($groups as $group)
+                                                    @if ($group->subject_matter_id == $subject->id)
+                                                        <option value="{{ $group->id }}"> Grupo {{ $group->name }} - {{ $group->professor->names }} {{ $group->professor->first_name }} {{ $group->professor->second_name }} </option>
+                                                    @endif
+                                                @empty
+                                                    <option value=""> No existen grupos habilitados para esta materia </option>
+                                                @endforelse
+                                            </select>
+                                            <b id="message-subject-{{ $subject->id }}" class='text-primary mt-4' style='font-size: 13px;'></b>
+                                            <br>
+                                            <div class="d-flex justify-content-between" style="font-size: 0.9rem;">
+                                                <div></div>
+                                                <div class="mt-2">
+                                                    <input id="student-subscription-subject-{{$subject->id}}" type="number" name="student_subscription-subject" hidden>
+                                                    <a id="subscription-btn-{{ $subject->id }}" href="#" class="" onclick="infoRegistration({{ $subject->id }})" style="display: none;"> Inscribirse </a>
+                                                    <a id="unsubscription-btn-{{ $subject->id }}" href="#" class="" onclick="removeSubscription({{ $subject->id }})" data-toggle="modal" data-target="#unregistration" style="display: none;"> Retirar materia </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @empty
+                            <div class="alert alert-warning"> No existe oferta de materias para la gestión actual </div>
+                        @endforelse
                     </div>
-                @empty
-                    <div class="alert alert-warning"> No existe oferta de materias para la gestión actual </div>
-                @endforelse
 
-            </div>
+                @else
+
+                    <div class="panel-heading m-0 font-weight-bold text-primary">Inscripción</div> <br>
+                    <div class="alert alert-warning"> Se encuentra fuera del periodo de inscripciones </div>
+
+                @endif
+            @else
+                    
+                <div class="panel-heading m-0 font-weight-bold text-primary">Inscripción</div> <br>
+                <div class="alert alert-warning"> Se encuentra fuera del periodo de inscripciones </div>
+
+            @endif
+
         </div>
     </div>
 </div>

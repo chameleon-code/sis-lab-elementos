@@ -33,20 +33,16 @@
   <!-- Divider -->
   <hr class="sidebar-divider">
 
-  @if(App\Management::getActualManagement() != null)
-    @if (App\Management::getActualManagement()->enable_inscription == 1)
-    <!-- Heading -->
-    <div class="sidebar-heading">
-      Opciones
-    </div>
-    
-    <li class="nav-item">
-      <a class="nav-link" href="{{url("/students/registration")}}">
-        <i class="fas fa-fw fa-calendar-alt"></i>
-        <span>Inscripción</span>
-      </a>
-    </li>
-    @endif
-  @endif
+  <!-- Heading -->
+  <div class="sidebar-heading">
+    Opciones
+  </div>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="{{url("/students/registration")}}">
+      <i class="fas fa-fw fa-calendar-alt"></i>
+      <span>Inscripción</span>
+    </a>
+  </li>
 
 @endsection
