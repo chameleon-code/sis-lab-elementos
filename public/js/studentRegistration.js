@@ -139,7 +139,6 @@ function removeSubscription( subject_id ) {
 }
 
 function status(){
-    console.log( student_schedules );
     $('#info-ins').empty();
     if(student_schedules.length > 0){
         for(let i=0 ; i<student_schedules.length ; i++){
@@ -156,7 +155,7 @@ function status(){
                             <b class='py-0 my-0'> Ambiente:&nbsp; </b> Ambiente
                         </div>
                         <div class='d-flex justify-content-start' style='padding-left: 2px;'>
-                            <b> Grupo ${ student_schedules[i].group_name } </b> - ${ student_schedules[i].professor_names } ${ student_schedules[i].professor_first_name } ${ student_schedules[i].professor_second_name }
+                            <b> Grupo ${ student_schedules[i].group_name } </b> &nbsp; ${ student_schedules[i].professor_names } ${ student_schedules[i].professor_first_name } ${ student_schedules[i].professor_second_name }
                         </div>
                         <div class='' style='font-size: 15px; padding-left: 2px;'>
                             <b> Día de trabajo:&nbsp; </b> ${ student_schedules[i].schedule.day.name }
