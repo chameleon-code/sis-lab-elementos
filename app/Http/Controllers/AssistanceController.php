@@ -20,8 +20,6 @@ class AssistanceController extends Controller
     public function index()
     {
         $students = Student::getAllStudents();
-        //$user_id = $student->user_id;
-        //$user = User::findOrFail($user_id);
         $labs = Laboratory::all();
         $auxiliarctrl = new AuxiliarController();
         $block_schedules = $auxiliarctrl->getStudentList(new Request, $labs->first()->id);
@@ -76,7 +74,6 @@ class AssistanceController extends Controller
         return view('components.contents.auxiliar.assistance', $data);
     }
 
-
     public function show($id)
     {
         $student = Student::findOrFail($id);
@@ -100,7 +97,6 @@ class AssistanceController extends Controller
                 $assistance->attend = 1;
                 $assistance->day = date('Y-m-d');
                 $assistance->sesion_id = Sesion::getSesionIdToDayByBlock($block_schedule->block_id, $block_schedule->schedule_id);
-                //dd($assistance);
                 $assistance->save();
                 $success = true;
             }
@@ -128,16 +124,4 @@ class AssistanceController extends Controller
         Storage::makeDirectory($dir);
         return redirect('/home');
     }
-
-
-    /* public function rememberNav(){
-         $tmp = 0.05;
-         Cache::put('professor_nav', '', $tmp);
-         Cache::put('auxiliar_nav', '', $tmp);
-         Cache::put('student_nav', ' show', $tmp);
-         Cache::put('management_nav', '', $tmp);
-         Cache::put('subject_matter_nav', '', $tmp);
-         Cache::put('group_nav', '', $tmp);
-         Cache::put('block_nav', '', $tmp);
-     }*/
 }

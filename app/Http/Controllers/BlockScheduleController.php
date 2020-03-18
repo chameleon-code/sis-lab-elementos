@@ -31,9 +31,7 @@ class BlockScheduleController extends Controller
         $input = $request->all();
         $blockSchedules = new BlockSchedule();
         if($blockSchedules->validate($input)){
-
             //Session::flash('status_message','Gestión añadida!');
-            
             return redirect('/schedule/{block_id}/create/{laboratory_id?}');
         }
             return redirect('/admin/blocks/createSchedule')->withInput()->withErrors($blockSchedules->errors);    
@@ -46,18 +44,15 @@ class BlockScheduleController extends Controller
         //     'management' => $management,
         //     'semesters' => $semesters
         // ];
-        
         // return view('components.contents.management.edit')->withTitle('Editar la Gestión')->with($data);
     }
 
     public function update(Request $request, $id){
         // $management = Management::find($id);
         // $input = $request->all();
-
         // if($management->validate($input)){
         //     $management->semester = $request->semester;
         //     $management->save();
-
         //     Session::flash('status_message', 'Gestión Editada!');
         //     return redirect('/admin/managements');
         // }

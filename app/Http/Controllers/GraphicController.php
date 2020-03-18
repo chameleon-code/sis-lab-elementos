@@ -15,7 +15,6 @@ class GraphicController extends Controller
         $subjectMatters=SubjectMatter::getAllSubjectMatters();
         $managements=Management::getAllManagements();
         $groups=Group::getAllGroups();
-        //dd($groups->first()->subject);
         $data=[
             'subjectMatters' => $subjectMatters,
             'managements'    => $managements,
@@ -33,9 +32,7 @@ class GraphicController extends Controller
                 $taskStudent=$value->studentTasks()->get()->first();
                 array_push ( $task_student , $taskStudent);
             }
-            //dd($valor->first()->studentTasks()->get());
         }
-        //dd($task_student);
         return $task_student;
     }
     public function getTaskByGroupID($group_id){
@@ -48,7 +45,6 @@ class GraphicController extends Controller
                 array_push($tasks_students,$value);
             }
         }
-        //dd($tasks_students);
         return $tasks_students;
     }
     public function getTaskByManagemenId($management_id){
@@ -56,7 +52,6 @@ class GraphicController extends Controller
         $task_student=[];
         foreach($blocks_managements as $key => $value){
             $block_sesions=$value->sesions()->get();
-            //dd($block_sesions);
             foreach($block_sesions as $key => $value){
                 $tasks = $value->tasks()->get();
                 foreach($tasks as $key => $value){
@@ -67,7 +62,6 @@ class GraphicController extends Controller
                 }
             }
         }
-        //dd($task_student);
         return $task_student;
     }
     public function getTaskBySubjectMatterId($subject_id){
@@ -83,17 +77,14 @@ class GraphicController extends Controller
                 }
             }
         }
-        //dd($tasks_students);
         return $tasks_students;
     }
-//Graficos para el profesor
+
+    //Graficos para el profesor
     public function indexProfessor(){
         $professor=Auth()->user()->Professor;
-        //dd($professor);
         $subjectMatters=$professor->subjectMatters()->get()->unique();
-        //dd($subjectMatters->unique());
         $groups=$professor->groups()->get();;
-        //dd($groups->first()->subject);
         $data=[
             'subjectMatters' => $subjectMatters,
             'groups'         => $groups

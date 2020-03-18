@@ -12,21 +12,17 @@ use Illuminate\Support\Facades\Cache;
 class ManagementController extends Controller
 {
     public function index(){
-        self::rememberNav();
-
         $managements=Management::getAllManagements();
-        $data=[
+        $data = [
             'managements'=>$managements
         ];
         return view('components.contents.management.index',$data);
     }
 
     public function create(){
-        self::rememberNav();
-
         $semesters=['1','2','3','4'];
         $managements=Carbon::now()->format('Y');
-        $data=[
+        $data = [
             'semesters' => $semesters,
             'managements' => $managements,
             'enable_inscription' => 0,
@@ -40,8 +36,6 @@ class ManagementController extends Controller
         if($managements->validate($input)){
             $dir = 'folders/'.$request->managements.'-'.$request->semester;
             //$input->management_path = $dir;
-            //dd($input);
-
             Management::create([
                 'semester' => $request->semester,
                 'managements' => $request->managements,
@@ -50,9 +44,7 @@ class ManagementController extends Controller
                 'management_path' => $dir,
             ]);
             Session::flash('status_message','Gestión añadida!');
-
             Storage::makeDirectory($dir);
-            
             return redirect('/admin/managements');
         }
             return redirect('/admin/management/create')->withInput()->withErrors($managements->errors);
@@ -61,24 +53,21 @@ class ManagementController extends Controller
     public function edit($id){
         $management = Management::findOrFail($id);
         $semesters=['1','2','3','4'];
-        $data=[
+        $data = [
             'management' => $management,
             'semesters' => $semesters
         ];
-        
         return view('components.contents.management.edit')->withTitle('Editar la Gestión')->with($data);
     }
 
     public function update(Request $request, $id){
         $management = Management::find($id);
         $input = $request->all();
-
         if($management->validate($input)){
             $management->semester = $request->semester;
             $management->start_management = $request->start_management;
             $management->end_management = $request->end_management;
             $management->save();
-
             Session::flash('status_message', 'Gestión Editada!');
             return redirect('/admin/managements');
         }
@@ -93,7 +82,6 @@ class ManagementController extends Controller
         }catch(ModelNotFoundException $e){
             $status_message = 'no Subject-matter with tha id';
         }
-
         Session::flash('status_message',$status_message);
         return redirect('/admin/managements');
     }
@@ -102,18 +90,6 @@ class ManagementController extends Controller
         $management = Management::findOrFail($id);
         $management->enable_inscription = $value;
         $management->save();
-
         return response(["response" => $management]);
-    }
-
-    public function rememberNav(){
-        $tmp = 0.05;
-        Cache::put('professor_nav', '', $tmp);
-        Cache::put('auxiliar_nav', '', $tmp);
-        Cache::put('student_nav', '', $tmp);
-        Cache::put('management_nav', ' show', $tmp);
-        Cache::put('subject_matter_nav', '', $tmp);
-        Cache::put('group_nav', '', $tmp);
-        Cache::put('block_nav', '', $tmp);
     }
 }
