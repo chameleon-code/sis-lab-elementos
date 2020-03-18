@@ -258,23 +258,24 @@ class BlockController extends Controller
         Cache::put('block_nav', ' show', $tmp);
     }
 
-    public function getGroupSchedules($id, Request $request){
-        // $block_id = BlockGroup::getBlockByIdGroup($id)->block_id;
-        // $block = Block::find($block_id);
-        // return $block->scheduleRecords()->get();
-        $block_group = BlockGroup::where('group_id', '=', $id)->get()->first();
-        $block = Block::where('id', '=', $block_group->block_id)->get()->first();
-        $block_schedules = BlockSchedule::all();
-        // $block_schedules = BlockSchedule::join('schedule_records','schedule_records.id','=','block_schedules.schedule_id')->where('block_schedules.block_id', '=', $block->id)->select('block_schedules.id AS block_schedule_id', 'block_schedules.block_id', 'schedule_records.id AS schedule_record_id', 'schedule_records.laboratory_id', 'schedule_records.day_id', 'schedule_records.hour_id')->orderBy('schedule_records.day_id')->get();
-        // $block_schedules->each(function ($item){
-        //     $item->setAppends([]);
-        // });
-        // if($request->ajax()){
-        //     return response()->json($block_schedules);
-        // }
-
+    public function getGroupSchedules($group_id, $block_id){
+        // $block_group = BlockGroup::where('group_id', '=', $id)->get()->first();
+        // $block = Block::where('id', '=', $block_group->block_id)->get()->first();
+        // $block_schedules = BlockSchedule::all();
+        $block_schedules = BlockSchedule::join('blocks', 'block_schedules.block_id', '=', 'blocks.id')
+                                        ->join('block_group', 'blocks.id', '=', 'block_group.block_id')
+                                        ->join('groups', 'block_group.group_id', '=', 'groups.id')
+                                        ->join('schedule_records', 'block_schedules.schedule_id', '=','schedule_records.id')
+                                        ->join('laboratories', 'schedule_records.laboratory_id', '=', 'laboratories.id')
+                                        ->join('days', 'schedule_records.day_id', '=', 'days.id')
+                                        ->join('hours', 'schedule_records.hour_id', '=', 'hours.id')
+                                        ->where('blocks.id', '=', $block_id)
+                                        ->where('groups.id', '=', $group_id)
+                                        ->select('block_schedules.*', 'groups.id as group_id', 'groups.name as group_name')
+                                        ->get();
         return $block_schedules;
     }
+
     public function setStatus($id, $value){
         $block = Block::findOrFail($id);
         $block->available = $value;

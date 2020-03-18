@@ -28,9 +28,9 @@
                         <div class="col-sm-8">
                             <label for="">Bloque: </label>
                             <select class="form-control" name="" id="block-selector" onchange="setSesionsOfSelectedBlock()">
-                                @php
+                                {{-- @php
                                     $display_blocks = [];
-                                    $last_index_managements = ( sizeof($managements)-1 >= 0 ) ? sizeof($managements)-1 : 0;
+                                    $last_index_managements = ( sizeof($managements)-1 >= 0 ) ? sizeof($managements)-1 : 0; // PUEDE QUE SEA AQUI!!!!!!!!!!!!
                                 @endphp
                                 @foreach ($groups as $group)
                                     @if( $group->management_id == $managements[$last_index_managements]->id && !in_array($group->block_id, $display_blocks) )
@@ -39,15 +39,11 @@
                                             array_push($display_blocks, $group->block_id);
                                         @endphp
                                     @endif
-                                @endforeach
+                                @endforeach --}}
                             </select>
                         </div>
                     </div>
                 </div>
-
-                <script>
-                    setSesionsOfSelectedBlock();
-                </script>
 
                 <hr>
 

@@ -173,16 +173,47 @@ class StudentController extends Controller
 
     public function registration()
     {
-        $management = Management::getActualManagement();
-        $blocks = Block::getAllBlocks();
-        $subjectMatters = SubjectMatter::all();
-        $subjectMatters = SubjectMatter::getActualSubjectMatters($management->id);
-        $groups = Group::getGroupBlocks();
-        $data=[ 'blocks' => $blocks,
-                'groups' => $groups,
-                'management' =>$management,
-                'subjectMatters' => $subjectMatters,
-            ];
+        $actual_management = Management::getActualManagement();
+        $subjectMatters = SubjectMatter::getActualSubjectMatters($actual_management->id);
+        $groups = Group::join('block_group', 'groups.id', '=', 'block_group.group_id')
+                       ->join('blocks', 'block_group.block_id', '=', 'blocks.id')
+                       ->join('managements', 'blocks.management_id', '=', 'managements.id')
+                       ->where('managements.id', '=', $actual_management->id)
+                       ->select('groups.*', 'blocks.id as block_id', 'blocks.id as block_id', 'managements.id as management_id')
+                       ->orderby('name')
+                       ->get();
+        $subject_ids = [];
+        for($i=0 ; $i<sizeof($groups) ; $i++) {
+            array_push($subject_ids, $groups[$i]->subject->id);
+        }
+        $subject_ids = array_unique($subject_ids);
+        $subjects = [];
+        for($i=0 ; $i<sizeof($subject_ids) ; $i++) {
+            array_push( $subjects, SubjectMatter::find($subject_ids[$i]) );
+        }
+
+        $user = User::join('students', 'users.id', '=', 'students.user_id')
+                    ->where('users.id', '=', Auth::user()->id)
+                    ->select('users.*', 'students.id as student_id')
+                    ->get()
+                    ->first();
+        $student_schedules = BlockSchedule::join('student_schedules', 'block_schedules.id', '=', 'student_schedules.block_schedule_id')
+                                          ->join('blocks', 'block_schedules.block_id', '=', 'blocks.id')
+                                          ->join('managements', 'blocks.management_id', '=', 'managements.id')
+                                          ->join('groups', 'student_schedules.group_id', '=', 'groups.id')
+                                          ->join('subject_matters', 'groups.subject_matter_id', '=', 'subject_matters.id')
+                                          ->join('professors', 'groups.professor_id', '=', 'professors.id')
+                                          ->join('users', 'professors.user_id', '=', 'users.id')
+                                          ->where('student_schedules.student_id', '=', $user->student_id)
+                                          ->where('managements.id', '=', $actual_management->id)
+                                          ->select('block_schedules.*', 'subject_matters.id as subject_matter_id', 'subject_matters.name as subject_matter_name', 'groups.id as group_id', 'groups.name as group_name', 'users.names as professor_names', 'users.first_name as professor_first_name', 'users.second_name as professor_second_name', 'student_schedules.id as student_schedule_id')
+                                          ->get();
+        $data = [
+            'groups' => $groups,
+            'subjects' => $subjects,
+            'subjectMatters' => $subjectMatters,
+            'student_schedules' => $student_schedules
+        ];
         return view('components.contents.student.registration', $data);
     }
 
