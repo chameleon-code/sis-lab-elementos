@@ -1,11 +1,3 @@
-var schedule_id;
-var subject_matters_ids = new Array();
-var student_schedule_id = undefined;
-
-// function addSubjectMatterId(id) {
-//     subject_matters_ids.push(id);
-// }
-
 $(document).ready(function() {
     checkRegistrationSubject();
 });
@@ -20,72 +12,6 @@ function verifyRegistration (subject_matter_id){
         $('#form-registration')[0].setAttribute("action", url);
     }
 }
-
-//Para obtener el estado de inscripcion
-function status(){
-    $('#info-ins').empty();
-    $.ajax({
-        url : '/students/registration/getScheduleStudent',
-        beforeSend: function() {
-            loading();
-        },
-        success: function (response){
-            if(Object.keys(response.schedule_student).length > 0){
-                var matter = undefined;
-                var group_name = undefined;
-                var professor = undefined;
-                var day = undefined;
-                var hour = undefined;
-                var lab;
-                for(var i=0 ; i<Object.keys(response.schedule_student).length ; i++){
-                    for(var j=0 ; j<Object.keys(response.subject_matters).length ; j++){
-                        if(response.subject_matters[j].id == response.schedule_student[i].subject_matter_id){
-                            matter = response.subject_matters[j].name;
-                            console.log(matter);
-                        }
-                    }
-                    for(var j=0 ; j<Object.keys(response.groups).length ; j++){
-                        if(response.groups[j].id == response.schedule_student[i].group_id){
-                            group_name = response.groups[j].name;
-                        }
-                    }
-                    for(var j=0 ; j<Object.keys(response.professors).length ; j++){
-                        if(response.professors[j].professor_id == response.schedule_student[i].professor_id){
-                            professor = response.professors[j].names + " " + response.professors[j].first_name + " " + response.professors[j].second_name;
-                        }
-                    }
-                    for(var j=0 ; j<Object.keys(response.block_schedules).length ; j++){
-                        if(response.block_schedules[j].id == response.schedule_student[i].block_schedule_id){
-                            day = response.block_schedules[j].schedule.day.name;
-                            hour = (response.block_schedules[j].schedule.hour.start).substr(0, 5) + " - " + (response.block_schedules[j].schedule.hour.end).substr(0, 5);
-                            lab = response.block_schedules[j].schedule.laboratory.name;
-                        }
-                    }
-                    $('#info-ins').append(
-                        //`<div class='accordion-body bg-gray-300 rounded row my-2' style='cursor: default;'> <div class='container d-flex justify-content-between px-1' style=''> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong class='py-0 my-0'> Materia:&nbsp;</strong> ${ matter } </div> </div> <div class='my-0 mx-1' style='font-size: 15px;'> <div class='d-flex justify-content-start' style='padding-left: 3px; display: none !important;'> <strong class='py-0 my-0'> Laboratorio:&nbsp; </strong> ${ lab } </div> <div class='d-flex justify-content-start' style='padding-left: 2px;'> Grupo ${ group_name } - ${ professor } </div> <div class='' style='font-size: 15px; padding-left: 2px;'> ${ day } ${ hour } </div> </div> </div>`
-                        `<div class='accordion-body bg-gray-300 rounded row my-2' style='cursor: default;'> <div class='container d-flex justify-content-between px-1' style=''> <div class='d-flex justify-content-start' style='padding-left: 3px;'> <strong class='py-0 my-0'> Materia:&nbsp;</strong> ${ matter } </div> </div> <div class='my-0 mx-1' style='font-size: 15px;'> <div class='d-flex justify-content-start' style='padding-left: 3px; display: none !important;'> <strong class='py-0 my-0'> Laboratorio:&nbsp; </strong> ${ lab } </div> <div class='d-flex justify-content-start' style='padding-left: 2px;'> Grupo ${ group_name } - ${ professor } </div> <div class='' style='font-size: 15px; padding-left: 2px;'> ${ day } </div> </div> </div>`
-                    )
-                    endLoading();
-                    $("#infoInscription").modal("show");
-                }
-            } else {
-                $('#info-ins').append(
-                    "<div> No cuenta con materias inscritas. </div>"
-                );
-                endLoading();
-                $("#infoInscription").modal("show");
-            }
-        },
-        error: function(){
-            console.log("Ha ocurrido un error.");
-            alert("Error de conexión. Vuelva a intentarlo.");
-        },
-        timeout: 10000
-    });
-}
-
-
-///////////////////////////////////////////////////////////////////
 
 function infoRegistration( subject_id ) {
     $('#info-inscription').hide();
@@ -179,7 +105,7 @@ function checkRegistrationSubject() {
                 $("#selector-subject-"+subjects[i].id).prop( "disabled", true );
                 $('#message-subject-'+subjects[i].id).append(
                     `
-                    Ya se encuentra inscrito en esta materia. <br>
+                    Se encuentra inscrito en esta materia. <br>
                     Grupo ${ student_schedules[j].group_name } - ${ student_schedules[j].professor_names } ${ student_schedules[j].professor_first_name } ${ student_schedules[j].professor_second_name }
                     `
                 );
@@ -209,5 +135,41 @@ function removeSubscription( subject_id ) {
             );
             break;
         }
+    }
+}
+
+function status(){
+    console.log( student_schedules );
+    $('#info-ins').empty();
+    if(student_schedules.length > 0){
+        for(let i=0 ; i<student_schedules.length ; i++){
+            $('#info-ins').append(
+                `
+                <div class='accordion-body bg-gray-300 rounded row my-2' style='cursor: default;'>
+                    <div class='container d-flex justify-content-between px-1' style=''>
+                        <div class='d-flex justify-content-start' style='padding-left: 3px;'>
+                            <b class='py-0 my-0'> Materia:&nbsp;</b> ${ student_schedules[i].subject_matter_name }
+                        </div>
+                    </div>
+                    <div class='my-0 mx-1' style='font-size: 15px;'>
+                        <div class='d-flex justify-content-start' style='padding-left: 3px; display: none !important;'>
+                            <b class='py-0 my-0'> Ambiente:&nbsp; </b> Ambiente
+                        </div>
+                        <div class='d-flex justify-content-start' style='padding-left: 2px;'>
+                            <b> Grupo ${ student_schedules[i].group_name } </b> - ${ student_schedules[i].professor_names } ${ student_schedules[i].professor_first_name } ${ student_schedules[i].professor_second_name }
+                        </div>
+                        <div class='' style='font-size: 15px; padding-left: 2px;'>
+                            <b> Día de trabajo:&nbsp; </b> ${ student_schedules[i].schedule.day.name }
+                        </div>
+                    </div>
+                </div>`
+            )
+            $("#infoInscription").modal("show");
+        }
+    } else {
+        $('#info-ins').append(
+            "<div> No esta inscrito en ninguna materia. </div>"
+        );
+        $("#infoInscription").modal("show");
     }
 }

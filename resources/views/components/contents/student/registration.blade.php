@@ -46,7 +46,7 @@
                                                 <option value="{{ $group->id }}"> Grupo {{ $group->name }} - {{ $group->professor->names }} {{ $group->professor->first_name }} {{ $group->professor->second_name }} </option>
                                             @endif
                                         @empty
-                                            <option value="">no hay grupos jaja</option>
+                                            <option value=""> No existen grupos habilitados para esta materia </option>
                                         @endforelse
                                     </select>
                                     <b id="message-subject-{{ $subject->id }}" class='text-primary mt-4' style='font-size: 13px;'></b>
