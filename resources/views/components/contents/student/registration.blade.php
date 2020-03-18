@@ -3,25 +3,20 @@
 @section('userContent')
 
 <style>
-    @media screen and (max-width: 1150px) {
-        #img-matter {
-            display:none;
-        }
-        .card-matter {
-            height: 105px !important;
-        }
-    }
-
-    @media screen and (max-width: 688px) {
-        .card-matter {
-            height: 150px !important;
-        }
+    #tittle-card-subject {
+        background-image: linear-gradient(180deg, #1cc88a 5%, #466feb 100%);
+        display: flex;
+        align-items: center;
+        border-top-left-radius: 2%;
+        border-bottom-left-radius: 2%;
+        font-size: 0.75rem;
     }
 </style>
 
 <script>
     var groups = {!! json_encode($groups) !!};
     var subjects = {!! json_encode($subjects) !!};
+    var student_schedules = {!! json_encode($student_schedules) !!};
 </script>
 
 <div class="container-fluid">
@@ -35,24 +30,12 @@
                 </div>
             </div>
 
-            {{-- @if(isset($error))
-                <div id="schedule-error" class="alert alert-danger mt-3 mb-0">
-                    <div class="d-flex justify-content-between">
-                        <b>Horario no disponible.</b>
-                        <a style="color: #78261f;" href="#" onclick="$('#schedule-error').hide()"> <i class="fa fa-times"></i> </a>
-                    </div>
-                    <ul class="m-0">
-                        <li>{{ $error }}</li>
-                    </ul>
-                </div>
-            @endif --}}
-
             <div class="card-body">
 
                 @forelse( $subjects as $subject )
                     <div class="card shadow rounded mb-4" style="padding: 0px 12px;">
                         <div class="row">
-                            <div class="col-sm-3 text-center text-xs font-weight-bold text-info text-uppercase text-light py-1" style="background-color: #c984df; display: flex; align-items: center; border-top-left-radius: 2%; border-bottom-left-radius: 2%; font-size: 0.75rem;">
+                            <div id="tittle-card-subject" class="col-sm-3 text-center text-xs font-weight-bold text-info text-uppercase text-light py-2">
                                 <b class=""> {{ $subject->name }} </b>
                             </div>
                             <div class="col-sm-9" style="font-size: 0.8rem;">
@@ -66,15 +49,14 @@
                                             <option value="">no hay grupos jaja</option>
                                         @endforelse
                                     </select>
-                                    <b class='text-primary' style='font-size: 12px;'>Ya se encuentra inscrito en esta materia. <br>
-                                        Grupo 0 - Docente
-                                    </b>
-                                    <hr class="mt-2 mb-2">
+                                    <b id="message-subject-{{ $subject->id }}" class='text-primary mt-4' style='font-size: 13px;'></b>
+                                    <br>
                                     <div class="d-flex justify-content-between" style="font-size: 0.9rem;">
                                         <div></div>
-                                        <div>
-                                            <a id="subscription-btn-{{ $subject->id }}" href="#" class="" onclick="infoRegistration({{ $subject->id }})"> Inscribirse </a>
-                                            <a id="unsubscription-btn-{{ $subject->id }}" href="#" class=""> Retirar materia </a>
+                                        <div class="mt-2">
+                                            <input id="student-subscription-subject-{{$subject->id}}" type="number" name="student_subscription-subject" hidden>
+                                            <a id="subscription-btn-{{ $subject->id }}" href="#" class="" onclick="infoRegistration({{ $subject->id }})" style="display: none;"> Inscribirse </a>
+                                            <a id="unsubscription-btn-{{ $subject->id }}" href="#" class="" onclick="removeSubscription({{ $subject->id }})" data-toggle="modal" data-target="#unregistration" style="display: none;"> Retirar materia </a>
                                         </div>
                                     </div>
                                 </div>
@@ -85,59 +67,10 @@
                     <div class="alert alert-warning"> No existe oferta de materias para la gestión actual </div>
                 @endforelse
 
-
-
-
-
-                @php
-                    $id_select = 1;
-                @endphp
-                
-                @forelse($subjectMatters as $item)
-                    @php
-                        $groups_sm = App\Group::where("subject_matter_id", "=", $item->id)->get();
-                    @endphp
-                    <div class="d-flex justify-content-between my-2 px-1 rounded shadow card-matter" style="height: 90px;">
-                        <div class="row">
-                            <img id="img-matter" class="" style="width:100px; height: 100%; border-top-left-radius: 5px; border-bottom-left-radius: 5px;" src="/img/subjectMatter.jpg" alt="">
-                            <div class="my-2 mx-3" id="subject-matter-{{$item->id}}" style="font-size: 15px;">
-                                <strong> {{$item->name}} </strong>
-                            </div>
-                        </div>
-                        <div class="" style="width: 35%;">
-                            <div class="py-1 px-1" style="">
-                                <select name="group_id" class="form-control col-md-12 my-1" id="group_{{ $id_select }}" onchange="clearSelects({{ $id_select }})" style="">
-                                    <option class="form-control text-center" value="">grupo</option>
-                                        @forelse ($groups_sm as $group)
-                                            <option class="form-control" value="{{$group->id}}">{{$group->name ." - " . $group->professor->names ." " . $group->professor->first_name." " . $group->professor->second_name }}</option>
-                                        @empty
-                                            <option class="form-control" value="">No existen grupos para la materia seleccionada</option>
-                                        @endempty
-                                        @endforelse
-                                </select>
-                            </div>
-                            <div id="option-inscriptions" class="mx-2 row px-1" style="font-size: 14px;">
-                                <input id="student-schedule-id-{{$item->id}}" type="number" name="student_schedule_id" style="display: none;">
-                                <a id="link-remove-matter-{{$item->id}}" class="" href="#" class="btn btn-primary" data-toggle="modal" data-target="#unregistration" style="display: none; margin-right: 10px;">Retirar Materia</a>
-                                <a id="link-take-matter-{{$item->id}}" class="" href="#" class="btn btn-primary" onclick="infReg({{ $item }}, {{ $id_select }}), $('#modal-footer').hide(), $('#info-inscription').hide(), verifyRegistration({{$item->id}})" style="display: none;">Inscribirse</a><br>
-                            </div>
-                        </div>
-                    </div>
-                    @php
-                        $id_select++;
-                    @endphp
-                @empty
-                    <hr>
-                    <div class="alert alert-warning"> No existe oferta de materias para la gestión actual </div>
-                @endforelse
-
             </div>
         </div>
     </div>
 </div>
-
-
-
 
 <div id="inf-reg-modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -165,7 +98,7 @@
                 <hr>
                     
                 <div id="info-inscription" style="display: none;">
-                    Se inscribirá en la materia: <strong id="selected-subject-name">?</strong>, con el grupo: <strong id="selected-group-name">?</strong>.
+                    Proceder con la inscripción <strong id="selected-subject-name">?</strong>, grupo <strong id="selected-group-name">?</strong> ?
                 </div>
             </div>
             
@@ -195,9 +128,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                ¿Está seguro que desea retirar la materia?
-            </div>
+            <div id="message-remove-subscription" class="modal-body"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 <a href="#" class="btn btn-danger" id="btn-unregister"> Confirmar </a>
@@ -225,5 +156,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('/js/students.js') }}"></script>
+    <script src="{{ asset('/js/studentRegistration.js') }}"></script>
 @endpush
