@@ -293,3 +293,21 @@
 </body>
 
 </html>
+
+<script>
+      
+  $(document).ready( function() {
+    nav_link_collapsed_id = ( localStorage.getItem("nav_link_collapsed_id") ) ? localStorage.getItem("nav_link_collapsed_id").substring(1, localStorage.getItem("nav_link_collapsed_id").length) : null;
+    if( nav_link_collapsed_id ) {
+      $( localStorage.getItem("nav_link_collapsed_id") ).addClass('show');
+    }
+  });
+  
+  $(".nav-link").click( function() {
+    if( $(this).attr("aria-expanded") == "false" && $(this).data("target") ) {
+      localStorage.setItem( "nav_link_collapsed_id", $(this).data("target") );
+    } else {
+      localStorage.removeItem( "nav_link_collapsed_id" );
+    }
+  });
+</script>

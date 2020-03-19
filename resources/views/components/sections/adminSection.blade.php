@@ -38,7 +38,7 @@
 
   <!-- Nav Item - Pages Collapse Menu -->
   <li class="nav-item">
-    <a class="nav-link collapsed" id="professors" href="#" data-toggle="collapse" data-target="#collapseProfessors" aria-expanded="true" aria-controls="collapseProfessors">
+    <a class="nav-link collapsed" id="professors" href="#" data-toggle="collapse" data-target="#collapseProfessors" aria-expanded="false" aria-controls="collapseProfessors">
       <i class="fas fa-fw fa-chalkboard-teacher"></i>
       <span>Docentes</span>
     </a>
@@ -53,7 +53,7 @@
 
   <!-- Nav Item - Utilities Collapse Menu -->
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAuxiliars" aria-expanded="true" aria-controls="collapseAuxiliars">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAuxiliars" aria-expanded="false" aria-controls="collapseAuxiliars">
       <i class="fas fa-fw fa-user-friends"></i>
       <span>Auxiliares</span>
     </a>
@@ -68,7 +68,7 @@
   </li>
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStudents" aria-expanded="true" aria-controls="collapseStudents">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStudents" aria-expanded="false" aria-controls="collapseStudents">
       <i class="fas fa-fw fa-users"></i>
       <span>Estudiantes</span>
     </a>
@@ -90,7 +90,7 @@
   </div>
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagments" aria-expanded="true" aria-controls="collapseManagments">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagments" aria-expanded="false" aria-controls="collapseManagments">
       <i class="fas fa-fw fa-calendar-alt"></i>
       <span>Gestiones</span>
     </a>
@@ -104,7 +104,7 @@
   </li>
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSubjects" aria-expanded="true" aria-controls="collapseSubjects">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSubjects" aria-expanded="false" aria-controls="collapseSubjects">
       <i class="fas fa-fw fa-bookmark"></i>
       <span>Materias</span>
     </a>
@@ -118,7 +118,7 @@
   </li>
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGroups" aria-expanded="true" aria-controls="collapseGroups">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGroups" aria-expanded="false" aria-controls="collapseGroups">
       <i class="fas fa-fw fa-list-alt"></i>
       <span>Grupos</span>
     </a>
@@ -132,7 +132,7 @@
   </li>
 
   <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBlocks" aria-expanded="true" aria-controls="collapseBlocks">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBlocks" aria-expanded="false" aria-controls="collapseBlocks">
         <i class="fas fa-fw fa-boxes"></i>
         <span>Bloques</span>
       </a>
@@ -172,23 +172,4 @@
     <script src="{{ asset('/js/events.js') }}"></script> --}}
     <script src="{{ asset("https://cdn.jsdelivr.net/npm/sweetalert2@8") }}"></script>
     {{-- <link rel="stylesheet" href="{{ asset('/css/calendar.css') }}"> --}}
-
-    <script>
-      
-      $(document).ready( function() {
-
-        nav_link_collapsed_id = ( localStorage.getItem("nav_link_collapsed_id") ) ? localStorage.getItem("nav_link_collapsed_id").substring(1, localStorage.getItem("nav_link_collapsed_id").length) : null;
-        if( nav_link_collapsed_id ) {
-          $( localStorage.getItem("nav_link_collapsed_id") ).addClass('show');
-        }
-
-        $(".nav-link").click( function() {
-          if( $(this).data("target") ) {
-            localStorage.setItem( "nav_link_collapsed_id", $(this).data("target") );
-          } else {
-            localStorage.removeItem( "nav_link_collapsed_id" );
-          }
-        });
-      });
-    </script>
 @endpush

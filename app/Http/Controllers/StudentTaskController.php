@@ -240,4 +240,32 @@ class StudentTaskController extends Controller
         ];
         return $data;
     }
+
+    public function studentTasks() {
+        $professor = Professor::join('users', 'professors.user_id', '=', 'users.id')
+                              ->where('users.id', '=', Auth::user()->id)
+                              ->select('users.*', 'professors.id as professor_id')
+                              ->get()
+                              ->first();
+        $groups = Group::join('block_group', 'groups.id', '=', 'block_group.group_id')
+                       ->join('blocks', 'block_group.block_id', '=', 'blocks.id')
+                       ->join('managements', 'blocks.management_id', '=', 'managements.id')
+                       ->select('groups.*', 'block_group.id as block_group_id', 'blocks.id as block_id', 'blocks.name as block_name','managements.id as management_id')
+                       ->where('groups.professor_id', '=', $professor->professor_id)
+                       ->get();
+        $sesions = Sesion::join('blocks', 'sesions.block_id', '=', 'blocks.id')
+                         ->join('block_group', 'blocks.id', '=', 'block_group.block_id')
+                         ->join('groups', 'block_group.group_id', '=', 'groups.id')
+                         ->join('managements', 'blocks.management_id', '=', 'managements.id')
+                         ->where('groups.professor_id', '=', $professor->professor_id)
+                         ->select('sesions.*', 'groups.id as group_id', 'blocks.id as block_id', 'managements.id as management_id')
+                         ->orderby('number_sesion')
+                         ->get();
+        $data = [
+            'managements' => Management::all()->reverse(),
+            'groups' => $groups,
+            'sesions' => $sesions
+        ];
+        return view('components.contents.professor.studentTasks', $data);
+    }
 }

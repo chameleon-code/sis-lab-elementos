@@ -236,4 +236,25 @@ class StudentController extends Controller
         ];
         return $response;
     }
+
+    public function getStudentsByGroup($group_id, $block_id, $management_id) {
+        $students = Student::join('student_schedules', 'students.id', '=', 'student_schedules.student_id')
+                           ->join('users', 'students.user_id', '=', 'users.id')
+                           ->join('groups', 'student_schedules.group_id', '=', 'groups.id')
+                           ->join('block_group', 'groups.id', '=', 'block_group.group_id')
+                           ->join('blocks', 'block_group.block_id', '=', 'blocks.id')
+                           ->join('managements', 'blocks.management_id', '=', 'managements.id')
+                           ->join('block_schedules', 'student_schedules.block_schedule_id', '=', 'block_schedules.id')
+                           ->where('managements.id', '=', $management_id)
+                           ->where('block_schedules.block_id', '=', $block_id)
+                           ->where('student_schedules.group_id', '=', $group_id)
+                           ->select('users.*', 'students.id as student_id', 'groups.id as group_id', 'blocks.id as block_id', 'managements.id as management_id')
+                           ->orderby('first_name')
+                           ->get();
+        $data = [
+            'students' => $students,
+            'actual_sesion' => Sesion::getActualSesion($block_id)
+        ];
+        return $data;
+    }
 }
