@@ -18,19 +18,19 @@
                         <div class="">
                             <div class="form-group" style="">
                                 <div class="d-flex justify-content-between">
-                                    <select name="group_id" class="form-control" id="groups" onchange="loadGroup()" style="width: 30%;">
+                                    <select name="group_id" class="form-control" id="groups" style="width: 30%;">
                                         @forelse ($groups as $group)
-                                        @if ($loop->first)
-
-                                            <option class="form-control" value="{{$group->id}}" selected> Grupo {{$group->name . " - " . $group->subject->name}}</option>
-                                        @continue
-                                    @endif
-                                        <option class="form-control" value="{{$group->id}}"> Grupo {{$group->name . " - " . $group->subject->name}}</option>
-                                    @empty
-                                        <option class="form-control" value="">No tiene grupos relacionados con algun bloque</option>
-                                        @endempty
+                                            @if ($loop->first)
+                                                <option class="form-control" value="{{$group->id}}" selected> Grupo {{$group->name . " - " . $group->subject->name}}</option>
+                                                @continue
+                                            @endif
+                                                <option class="form-control" value="{{$group->id}}"> Grupo {{$group->name . " - " . $group->subject->name}}</option>
+                                            @empty
+                                                <option class="form-control" value="">No tiene grupos relacionados con algun bloque</option>
+                                            @endempty
                                         @endforelse
                                     </select>
+                                    
                                     <br>
                                     <div class="form-group">
                                         <form class="mx-2" action="/downloadGroupRegister" method="get">
@@ -41,6 +41,33 @@
                                     </div>
                                 </div>
                                 <div class="font-weight-bold text-info text-uppercase mx-2" style="font-size: 13.5px;"> <b id="actual-sesion-title">  </b> </div>
+                            </div>
+                            <div class="form-group" style="">
+                                <select name="block_id" class="form-control" id="blocks" style="width: 30%;">
+                                    @forelse ($blocks as $block)
+                                        @if ($loop->first)
+                                            <option class="form-control" value="{{$block->id}}" selected>{{$block->name}}</option>
+                                            @continue
+                                        @endif
+                                            <option class="form-control" value="{{$block->id}}">{{$block->name}}</option>
+                                        @empty
+                                            <option class="form-control" value="">No tiene Bloques relacionados con el grupo</option>
+                                        @endempty
+                                    @endforelse
+                                </select>
+                                <br>
+                                <select name="sesion_id" class="form-control" id="sesions" style="width: 30%;">
+                                    @forelse ($sesions as $sesion)
+                                        @if ($sesion->number_sesion == $actual_sesion)
+                                            <option class="form-control" value="{{$sesion->id}}" selected> Sesion {{$sesion->number_sesion}}</option>
+                                            @continue
+                                        @endif
+                                            <option class="form-control" value="{{$sesion->id}}"> Sesion {{$sesion->number_sesion}}</option>
+                                        @empty
+                                            <option class="form-control" value="">No tiene sesiones relacionados con algun bloque</option>
+                                        @endempty
+                                    @endforelse
+                                </select>
                             </div>
                             <div id="table-container" class="col-sm-12 table-responsive">
                                 <table class="table dataTable text-center table-striped table-secondary" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">

@@ -202,21 +202,27 @@ class ProfessorController extends Controller
 
     //Obtiene la lista de estudiantes en base a grupo
     public function studentList(){
-        $professor = Professor::where('user_id', auth()->user()->id)->first();
-        $groups = [];
         $blockGroups = Professor::getBlockGroupsProfessor();
-        foreach( Group::all() as $group ) {
-            foreach( $blockGroups as $blockGroup ) {
-                if( $group->id == $blockGroup->group_id ) {
-                    array_push( $groups, $group );
-                    break;
-                }
+        $groups=Professor::where('user_id', '=', Auth::user()->id)->get()->first()->groups;
+        $sesion = Sesion::getActualSesion($groups->first()->blocks[0]->id);
+        $actual_sesion=0;
+        try {
+            if($sesion != null){
+                $actual_sesion = $sesion->number_sesion;
             }
+            // throw new \App\Exceptions\NotFoundmonException('not_found');
+        } catch (Exception $e) {
+            report($e); 
+            // if an exception happened in the try block above 
         }
         $data = [
-            'blockGroups' => Professor::getBlockGroupsProfessor(),
-            'groups' => $groups,
-            'title' => 'Estudiantes'
+            //'schedules' => $schedules,
+            'blockGroups'   => $blockGroups,
+            'groups'        => $groups,
+            'blocks'        => $groups->first()->blocks,
+            'sesions'       => $groups->first()->blocks[0]->sesions,
+            'title'         => 'Estudiantes',
+            'actual_sesion' => $actual_sesion
         ];
         return view('components.contents.professor.studentList', $data);
     }

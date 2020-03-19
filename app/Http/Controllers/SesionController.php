@@ -256,12 +256,14 @@ class SesionController extends Controller
                                                   ->count();
             array_push($commited_tasks_by_sesion, $commited_task_by_sesion);
         }
+        $actualSesion = Sesion::getActualSesion($blockId);
         $data = [
-            'block' => $block,
-            'sesions' => $sesions,
-            'total_students_block' => $total_students_block,
-            'tasks_by_sesions' => $tasks_by_sesions,
-            'commited_tasks_by_sesion' => $commited_tasks_by_sesion
+            'block'                     => $block,
+            'sesions'                   => $sesions,
+            'total_students_block'      => $total_students_block,
+            'tasks_by_sesions'          => $tasks_by_sesions,
+            'commited_tasks_by_sesion'  => $commited_tasks_by_sesion,
+            'actual_sesion'             => $actualSesion
         ];
         return $data;
     }

@@ -4,62 +4,159 @@ var block_id = undefined;
 
 $('document').ready(function(){
     //console.log( schedules );
-    loadGroup();
-    // var table = $('#dataTable').DataTable();
-    // $('#groups').change(function(event){
-    //     emptyProfile();
-    //     var array = Array();
-    //     var data = Array();
-    //     $('#group_id').val(event.target.value);
-    //     $.ajax({
-    //         url: window.location.origin+'/professor/students/listByGroup/'+event.target.value+'',
-    //         success: (response) => {
-    //             array = response;
-    //         },
-    //     }).then( () => {
-    //         table.destroy(); 
-    //         table = $('#dataTable').DataTable({
-    //             data: array,
-    //             columns: [
-    //                 { data: 'Codigo_Sis'},
-    //                 { data: 'Apellidos'},
-    //                 { data: 'Nombres'},
-    //                 { data: 'Acciones',
-    //                 render : function(data, type, row) {
-    //                     return `<a href="#" class="buttons-icons btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick="loadProfile(${ data.student })"><i class="fas fa-eye"></i></a>
-    //                             <a href="/professor/studentSesions/${data.schedule_id}" class="btn btn-warning btn-circle btn-sm mx-1" data-toggle="tooltip" title="Portafolios"><i class="fas fa-briefcase"></i></a>`
-    //                     } 
-    //                 }                      
-    //             ]
-    //         }).draw();
-    //         console.log($('.buttons-icons').parent().attr('style','text-align: center; display: flex;').attr('class','text-center')); 
-    //     });
-    // });
-});
-
-function loadGroup() {
-    $('#group_id').removeAttr("value");
-    $('#group_id').attr("value", $('#groups')[0].value);
-    $('#dataTable').DataTable().clear().draw();
-    //console.log( $('#groups')[0].value );
-
-    blockGroups.forEach(element => {
-        if( element.group_id == $('#groups')[0].value ) {
-            block_id = element.block_id;
-        }
-    });
+    //carga los grupos
+    //loadGroup();
+    loadSesionActual();
     
-    $.ajax({
-        url: '/professor/student/schedules/'+$('#groups')[0].value+'/'+block_id,
-        beforeSend: function () {
-            loading();
-        },
-        success: function( response ) {
-            endLoading();
-            //console.log( response );
-
-            $('#actual-sesion-title')[0].innerHTML = "Sesión " + response.actual_sesion.number_sesion;
-
+    $("#groups").change(function(event) {
+        console.log("....................ejecutandodo grupo....................");
+        var group_id = $('#groups option:selected').val();
+        url = "/professor/blocks/" + group_id;
+        loading();
+        $.get(url, function(response, state) {
+            //console.log(response);
+            //materia
+            $('#blocks').empty();
+            //var materia = response[0].subject.name;
+            //$('#materia').val(materia);
+            for (f = 0; f < response.length; f++) {
+                var block_id = response[f].id;
+                var name =  response[f].name;
+                var option = $('<option></option>').attr("value", response[f].id).text(name);
+                option.attr("class", "form-control");
+                $('#blocks').append(option);
+            }
+            var block_id = $('#blocks option:selected').val();
+            //console.log(block_id +".."+ group_id);
+            
+            // url_schedule = "/professor/student/schedules/" + group_id + "/" +  block_id;
+            // $.get(url_schedule, function(response, state) {
+                console.log(block_id);
+                url = "/professor/sesions/" + block_id;
+                $.get(url, function(response, state) {
+                    console.log("....................sesion....................");
+                    console.log(response);
+                    $('#sesions').empty();
+                    response.sesions.forEach(element => {
+                        var number_sesion = element.number_sesion;
+                        var actual_sesion;
+                        try {
+                            actual_sesion = response.actual_sesion.number_sesion;
+                            throw "myException"; // genera una excepción
+                         }
+                        catch (e) {
+                            actual_sesion = 0;
+                        }
+                        console.log(number_sesion);
+                        //console.log(number_sesion +"/"+ element.actual_sesion.number_sesion)
+                        if(number_sesion == actual_sesion){
+                            var option = $('<option></option>').attr("value", "denikin").text("Sesion "+number_sesion);
+                            option.attr("class", "form-control");
+                            option.attr("selected","true");
+                            $('#sesions').append(option);
+                        }else{
+                            var option = $('<option></option>').attr("value", element.id).text("Sesion "+number_sesion);
+                            option.attr("class", "form-control");
+                            $('#sesions').append(option);
+                        }
+                    });
+                    console.log("....................ejecutandodo Sesiones....................");
+                    var group_id = $('#groups option:selected').val();
+                    var block_id = $('#blocks option:selected').val();
+                    var sesion_id = $('#sesions option:selected').val();
+                    url = "/professor/students/sesion/"+group_id+"/"+block_id+"/"+ sesion_id;
+                    $.get(url, function(response, state) {
+                        console.log("....................eliminando tabla y creando....................");
+                        console.log(response);
+                        $('#dataTable').DataTable().clear().draw();
+                        response.schedules.forEach(element => {
+                            //console.log(element);
+                            $('#dataTable').DataTable().row.add([
+                                `<td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${ element.user.code_sis }</font></font></td>`,
+                                `<td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${ element.user.first_name } ${ element.user.second_name }</font></font></td>`,
+                                `<td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${ element.user.names }</font></font></td>`,
+                                `<td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${ element.tarea_sesion }</font></font></td>`,
+                                `<div class="text-center" style="display: flex;">
+                                    <a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick='loadProfile(${ JSON.stringify(element.user) })' id="profile"><i class="fas fa-eye"></i></a>
+                                    <a href="/professor/studentSesions/${element.id}}" class="btn btn-success btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Portafolios" data-toggle="modal" data-target="#student-folder" onclick='loadFolder(${ JSON.stringify(element) })'><i class="fas fa-briefcase"></i></a>
+                                </div>`
+                            ]).draw();
+                        });
+                        endLoading();
+                    });
+                });
+            // });
+        });
+        
+    });
+    $("#blocks").change(function(event) {
+        loading();
+        console.log("....................ejecutandodo bloque....................");
+        // var group_id = $('#groups option:selected').val();
+        var block_id = event.target.value;
+            url = "/professor/sesions/" + block_id;
+            $.get(url, function(response, state) {
+                console.log(response);
+                $('#sesions').empty();
+                response.sesions.forEach(element => {
+                    var number_sesion = element.number_sesion;
+                    var actual_sesion;
+                    try {
+                        actual_sesion = response.actual_sesion.number_sesion;
+                        throw "myException"; // genera una excepción
+                    }
+                    catch (e) {
+                        // actual_sesion = 0;
+                    }
+                    console.log(actual_sesion);
+                    if(number_sesion == actual_sesion){
+                        var option = $('<option></option>').attr("value", "denikin").text("Sesion "+number_sesion);
+                        option.attr("class", "form-control");
+                        option.attr("selected","true");
+                        $('#sesions').append(option);
+                    }else{
+                        var option = $('<option></option>').attr("value", element.id).text("Sesion "+number_sesion);
+                        option.attr("class", "form-control");
+                        $('#sesions').append(option);
+                    }
+                });
+                console.log("....................ejecutandodo Sesiones....................");
+                var group_id = $('#groups option:selected').val();
+                var block_id = $('#blocks option:selected').val();
+                var sesion_id = $('#sesions option:selected').val();
+                url = "/professor/students/sesion/"+group_id+"/"+block_id+"/"+ sesion_id;
+                $.get(url, function(response, state) {
+                    //console.log(response);
+                    $('#dataTable').DataTable().clear().draw();
+                    console.log("....................eliminando tabla....................");
+                    response.schedules.forEach(element => {
+                        //console.log(element);
+                        $('#dataTable').DataTable().row.add([
+                            `<td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${ element.user.code_sis }</font></font></td>`,
+                            `<td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${ element.user.first_name } ${ element.user.second_name }</font></font></td>`,
+                            `<td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${ element.user.names }</font></font></td>`,
+                            `<td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${ element.tarea_sesion }</font></font></td>`,
+                            `<div class="text-center" style="display: flex;">
+                                <a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick='loadProfile(${ JSON.stringify(element.user) })' id="profile"><i class="fas fa-eye"></i></a>
+                                <a href="/professor/studentSesions/${element.id}}" class="btn btn-success btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Portafolios" data-toggle="modal" data-target="#student-folder" onclick='loadFolder(${ JSON.stringify(element) })'><i class="fas fa-briefcase"></i></a>
+                            </div>`
+                        ]).draw();
+                    });
+                    endLoading();
+                });
+            });
+    });
+    $("#sesions").change(function(event) {
+        loading();
+        console.log("....................ejecutandodo Sesiones....................");
+        var group_id = $('#groups option:selected').val();
+        var block_id = $('#blocks option:selected').val();
+        var sesion_id = $('#sesions option:selected').val();
+        url = "/professor/students/sesion/"+group_id+"/"+block_id+"/"+ sesion_id;
+        $.get(url, function(response, state) {
+            //console.log(response);
+            $('#dataTable').DataTable().clear().draw();
+            console.log("....................eliminando tabla....................");
             response.schedules.forEach(element => {
                 //console.log(element);
                 $('#dataTable').DataTable().row.add([
@@ -73,15 +170,55 @@ function loadGroup() {
                     </div>`
                 ]).draw();
             });
-        },
-        error: function() {
             endLoading();
-            alert("Error de conexión. Vuelva a intentarlo.");
-        },
-        timeout: 20000
+        });
     });
-}
+});
+function loadSesionActual(){
 
+}
+// function loadGroup() {
+//     $('#group_id').removeAttr("value");
+//     $('#group_id').attr("value", $('#groups')[0].value);
+//     $('#dataTable').DataTable().clear().draw();
+//     //console.log( $('#groups')[0].value );
+
+//     blockGroups.forEach(element => {
+//         if( element.group_id == $('#groups')[0].value ) {
+//             block_id = element.block_id;
+//         }
+//     });
+    
+//     $.ajax({
+//         url: '/professor/student/schedules/'+$('#groups')[0].value+'/'+block_id,
+//         beforeSend: function () {
+//             loading();
+//         },
+//         success: function( response ) {
+//             endLoading();
+//             //console.log( response );
+//             $('#actual-sesion-title')[0].innerHTML = "Sesión " + response.actual_sesion.number_sesion;
+//             response.schedules.forEach(element => {
+//                 //console.log(element);
+//                 $('#dataTable').DataTable().row.add([
+//                     `<td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${ element.user.code_sis }</font></font></td>`,
+//                     `<td class="sorting_1 mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${ element.user.first_name } ${ element.user.second_name }</font></font></td>`,
+//                     `<td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${ element.user.names }</font></font></td>`,
+//                     `<td class="mgx-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${ element.tarea_sesion }</font></font></td>`,
+//                     `<div class="text-center" style="display: flex;">
+//                         <a href="#" class="btn btn-info btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Ver Perfil" data-toggle="modal" data-target="#studentProfile" onclick='loadProfile(${ JSON.stringify(element.user) })' id="profile"><i class="fas fa-eye"></i></a>
+//                         <a href="/professor/studentSesions/${element.id}}" class="btn btn-success btn-circle btn-sm mx-1" data-toggle-2="tooltip" title="Portafolios" data-toggle="modal" data-target="#student-folder" onclick='loadFolder(${ JSON.stringify(element) })'><i class="fas fa-briefcase"></i></a>
+//                     </div>`
+//                 ]).draw();
+//             });
+//         },
+//         error: function() {
+//             endLoading();
+//             alert("Error de conexión. Vuelva a intentarlo.");
+//         },
+//         timeout: 20000
+//     });
+// }
 function loadFolder( studentSchedule ) {
     //console.log( studentSchedule );
 
@@ -101,9 +238,7 @@ function loadFolder( studentSchedule ) {
         url: '/professor/students/getTasksStudent/'+studentSchedule.student_id+'/'+studentSchedule.blockschedule.block_id,
         success: function( response ) {
             // console.log( response );
-
             response.block_sesions.forEach( sesion => {
-
                 sesion_tasks = [];
                 title_task = "";
                 response.block_tasks.forEach( task =>{
@@ -160,7 +295,6 @@ function loadFolder( studentSchedule ) {
                                     </div>
                                 </div>`
                 }
-
                 $('#sesions-student').append(
                         `<div class="card border-left-${ sesion_color } shadow h-100 mx-2 mt-2 mb-2" style="margin-bottom: 0px;">
                             <div class="card-body py-2">
@@ -191,7 +325,6 @@ function loadFolder( studentSchedule ) {
                         ${ detail }
                         `
                 );
-
             });
         },
         error: function () {
