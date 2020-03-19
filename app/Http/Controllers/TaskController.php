@@ -80,7 +80,6 @@ class TaskController extends Controller
             $user = Auth::user();
             $blockGroupId = Professor::getBlockProfessor()->block_id;
             $dir = Block::where('id', '=', $blockGroupId)->get()->first()->block_path;
-
             if($request->file()){
                 $file = $request->file('practice');
                 $extension = $file->getClientOriginalExtension();
@@ -144,7 +143,6 @@ class TaskController extends Controller
             $user = Auth::user();
             $blockGroupId = Professor::getBlockProfessor()->block_id;
             $dir = Block::where('id', '=', $blockGroupId)->get()->first()->block_path;
-
             if($request->file()){
                 $file = $request->file('practice');
                 $extension = $file->getClientOriginalExtension();
@@ -156,7 +154,6 @@ class TaskController extends Controller
                     $semiPath = $dir.'/practices/sesion-'.$sesion_number.'/';
                     $path = storage_path('app').'/public/'.$semiPath;
                     $file -> move($path,$name);
-
                     $task->title = $request->title;
                     $task->published_by = $user->names.' '.$user->first_name;
                     $task->description = $request->description;
@@ -204,7 +201,6 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
         $sesion = Sesion::where('id', '=', $task->sesion_id)->get()->first();
         $task->delete();
-
         return response()->json(['message' => 'Eliminado correctamente!', 'sesion' => $sesion]);
     }
 
@@ -215,7 +211,6 @@ class TaskController extends Controller
         $task = Task::find($idTask);
         $group = Group::find($student->first()->group_id);
         $subjectMatter = SubjectMatter::where('id', '=', $group->subject_matter_id)->get()->first();
-
         $data = [
             'student' => $student,
             'user' => $user,
@@ -229,7 +224,6 @@ class TaskController extends Controller
     public function getTasksBySesion($id){
         $sesion_id = Sesion::findOrFail($id)->id;
         $tasks = Task::where('sesion_id', '=', $sesion_id)->get();
-
         return $tasks;
     }
 
@@ -240,10 +234,8 @@ class TaskController extends Controller
 
     public function storeScore(Request $request){
         $student_task = StudentTask::findorFail($request->student_task_id);
-
         $student_task->score = $request->task_score;
         $student_task->save();
-
         return response()->json($student_task);
     }
 
@@ -251,7 +243,6 @@ class TaskController extends Controller
         $zip_file = 'folders.zip';
         $zip = new \ZipArchive();
         $zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
-        
         //$path = public_path('storage/folders');
         $path = storage_path('app').'/public/folders/';
         $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));

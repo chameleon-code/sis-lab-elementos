@@ -42,7 +42,7 @@
       <i class="fas fa-fw fa-chalkboard-teacher"></i>
       <span>Docentes</span>
     </a>
-    <div id="collapseProfessors" class="collapse{{Cache::get('professor_nav')}}" aria-labelledby="headingProfessors" data-parent="#accordionSidebar">
+    <div id="collapseProfessors" class="collapse" aria-labelledby="headingProfessors" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="{{ url("/admin/professors")}}"><i class="fas fa-list"></i>  Listar</a>
@@ -57,7 +57,8 @@
       <i class="fas fa-fw fa-user-friends"></i>
       <span>Auxiliares</span>
     </a>
-    <div id="collapseAuxiliars" class="collapse{{Cache::get('auxiliar_nav')}}" aria-labelledby="headingAuxiliars" data-parent="#accordionSidebar">
+    {{-- <div id="collapseAuxiliars" class="collapse show" aria-labelledby="headingAuxiliars" data-parent="#accordionSidebar"> --}}
+    <div id="collapseAuxiliars" class="collapse" aria-labelledby="headingAuxiliars" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="/admin/auxiliars"><i class="fas fa-list"></i>  Listar</a>
@@ -71,7 +72,7 @@
       <i class="fas fa-fw fa-users"></i>
       <span>Estudiantes</span>
     </a>
-    <div id="collapseStudents" class="collapse{{Cache::get('student_nav')}}" aria-labelledby="headingStudents" data-parent="#accordionSidebar">
+    <div id="collapseStudents" class="collapse" aria-labelledby="headingStudents" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="{{url('/admin/students')}}"><i class="fas fa-list"></i>  Listar</a>
@@ -93,7 +94,7 @@
       <i class="fas fa-fw fa-calendar-alt"></i>
       <span>Gestiones</span>
     </a>
-    <div id="collapseManagments" class="collapse{{Cache::get('management_nav')}}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+    <div id="collapseManagments" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="{{url('/admin/managements')}}"><i class="fas fa-list"></i>  Listar</a>
@@ -107,7 +108,7 @@
       <i class="fas fa-fw fa-bookmark"></i>
       <span>Materias</span>
     </a>
-    <div id="collapseSubjects" class="collapse{{Cache::get('subject_matter_nav')}}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+    <div id="collapseSubjects" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="{{url('/admin/subjectmatters')}}"><i class="fas fa-list"></i>  Listar</a>
@@ -121,7 +122,7 @@
       <i class="fas fa-fw fa-list-alt"></i>
       <span>Grupos</span>
     </a>
-    <div id="collapseGroups" class="collapse{{Cache::get('group_nav')}}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+    <div id="collapseGroups" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="{{url('/admin/groups')}}"><i class="fas fa-list"></i>  Listar</a>
@@ -135,7 +136,7 @@
         <i class="fas fa-fw fa-boxes"></i>
         <span>Bloques</span>
       </a>
-      <div id="collapseBlocks" class="collapse{{Cache::get('block_nav')}}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div id="collapseBlocks" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Opciones:</h6>
           <a class="collapse-item" href="{{url('/admin/blocks')}}"><i class="fas fa-list"></i>  Listar</a>
@@ -157,27 +158,37 @@
       <span>Horario</span>
     </a>
   </li>
-  
-  {{-- <li class="nav-item">
-    <a class="nav-link" href="charts.html">
-      <i class="fas fa-fw fa-chart-area"></i>
-      <span>Estadisticas</span></a>
-  </li>
-
-  <li class="nav-item">
-    <a class="nav-link" href="tables.html">
-      <i class="fas fa-fw fa-shield-alt"></i>
-      <span>Log</span></a>
-  </li> --}}
 
    <hr class="sidebar-divider d-none d-md-block">
+
 @endsection
+
 @section('userContent')
     {{-- @include('components.contents.partials.eventsCalendar') --}}
 @endsection
+
 @push('scripts')
     {{-- <script src="{{ asset('/js/calendar.js') }}"></script>
     <script src="{{ asset('/js/events.js') }}"></script> --}}
     <script src="{{ asset("https://cdn.jsdelivr.net/npm/sweetalert2@8") }}"></script>
     {{-- <link rel="stylesheet" href="{{ asset('/css/calendar.css') }}"> --}}
+
+    <script>
+      
+      $(document).ready( function() {
+
+        nav_link_collapsed_id = ( localStorage.getItem("nav_link_collapsed_id") ) ? localStorage.getItem("nav_link_collapsed_id").substring(1, localStorage.getItem("nav_link_collapsed_id").length) : null;
+        if( nav_link_collapsed_id ) {
+          $( localStorage.getItem("nav_link_collapsed_id") ).addClass('show');
+        }
+
+        $(".nav-link").click( function() {
+          if( $(this).data("target") ) {
+            localStorage.setItem( "nav_link_collapsed_id", $(this).data("target") );
+          } else {
+            localStorage.removeItem( "nav_link_collapsed_id" );
+          }
+        });
+      });
+    </script>
 @endpush

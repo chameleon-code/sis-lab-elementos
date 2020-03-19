@@ -9,6 +9,8 @@ $(document).ready(function(){
     $('#btnsTasks').hide();
     $('#btnsEditTasks').hide();
     hideErrors();
+    selectManagement();
+    setSesionsOfSelectedBlock();
 });
 
 function showSesion(s_id, s_number_sesion){
@@ -462,7 +464,10 @@ function setSesionsOfSelectedBlock() {
             }
         },
         error: function() {
-            alert("Error de conexión. Vuelva a intentarlo.");
+            // No hay bloques en la gestion seleccionada
+            $('#block-selector').append(
+                `<option class="optional" value=""> No esta asignado a ningún bloque para la gestión seleccionada </option>`
+            );
         }
     });
 }

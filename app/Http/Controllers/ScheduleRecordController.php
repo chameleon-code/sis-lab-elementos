@@ -22,9 +22,6 @@ class ScheduleRecordController extends Controller
         $block = Block::findOrFail($block_id);
         $block_name=$block->name;
         $groups = $block->groups;
-        //dd($groups->first()->subject->name);
-        //dd($blockGroups);
-        
         $laboratorys=Laboratory::getAllLaboratory();
         $days=Day::getAllDays();
         $hours=Hour::getAllHours();
@@ -41,7 +38,6 @@ class ScheduleRecordController extends Controller
     }
 
     public function store(Request $request){
-        
         if($request->ajax()){
             $id=ScheduleRecord::create([
                 'laboratory_id' => $request->laboratory_id,
@@ -51,7 +47,6 @@ class ScheduleRecordController extends Controller
                 'subject'       => $request->subject,
                 'color'         => $request->color
             ])->id;
-            //dd($request->subject);
             BlockSchedule::create([
                 'schedule_id' => $id,
                 'block_id' => $request->block_id
@@ -66,7 +61,7 @@ class ScheduleRecordController extends Controller
         // $scheduleRecords = new ScheduleRecord();
         // $blockSchedule = new BlockSchedule();
         // if($scheduleRecords->validate($input)){
-            Session::flash('status_message','Gestión añadida!');
+        Session::flash('status_message','Gestión añadida!');
             
         //     return redirect('/admin/managements');
         // }
@@ -75,14 +70,12 @@ class ScheduleRecordController extends Controller
 
     public function getRecords(Request $request, $laboratory_id){
         // $schedule = ScheduleRecord::getSchedulesByLaboratory($laboratory_id);
-        //dd($schedule);
         // if($request->ajax()){
         //     return response()->json([
         //         'schedule'=>$schedule
         //     ]);
         // }
         return ScheduleRecord::getSchedulesByLaboratory($laboratory_id);
-
     }
 
     public function edit($id){
@@ -114,11 +107,10 @@ class ScheduleRecordController extends Controller
         $block = Block::findOrFail(1);
         $groups = $block->groups;
         $blocks=Block::getAllBlocks();
-        // dd($blocks);
         $laboratorys=Laboratory::getAllLaboratory();
         $days=Day::getAllDays();
         $hours=Hour::getAllHours();
-        $data=[
+        $data = [
             //'scheduleRecords' => $scheduleRecords,
             'groups'          => $groups,
             'blocks'          => $blocks,
@@ -138,7 +130,7 @@ class ScheduleRecordController extends Controller
         $laboratorys=Laboratory::getAllLaboratory();
         $days=Day::getAllDays();
         $hours=Hour::getAllHours();
-        $data=[
+        $data = [
             'laboratories'    => $laboratorys,
             'days'            => $days,
             'hours'           => $hours

@@ -48,17 +48,25 @@
             <i class="fas fa-laptop-code"></i>
         </div>
         <div class="sidebar-brand-text mx-3">
-        @if (Auth::user()->role_id == 1)
-            Administrador
-        @endif  
-        @if (Auth::user()->role_id == 2)
-            Docente
-        @endif 
-        @if (Auth::user()->role_id == 3)
-            Auxiliar
-        @endif
-        @if (Auth::user()->role_id == 4)
-            Estudiante
+        @if( Auth::user() )
+          @if (Auth::user()->role_id == 1)
+              Administrador
+          @endif  
+          @if (Auth::user()->role_id == 2)
+              Docente
+          @endif 
+          @if (Auth::user()->role_id == 3)
+              Auxiliar
+          @endif
+          @if (Auth::user()->role_id == 4)
+              Estudiante
+          @endif
+        @else
+          @php
+            //Comprobar si funciona
+            header("Location: /");
+            exit();
+          @endphp
         @endif
         </div>
       </a>
@@ -87,26 +95,53 @@
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
 
-              @php
-              $management = App\Management::getActualManagement();
-              $carbon = new \Carbon\Carbon();
-              $actual_date = $carbon->now()->format('Y-m-d');
+          @php
+            $management = App\Management::getActualManagement();
+            $carbon = new \Carbon\Carbon();
+            $actual_date = $carbon->now()->format('Y-m-d');
           @endphp
           
           @if($management != null)
           <li class="nav-item">
             <div class="nav-link" style="pointer-events: none !important;">
               <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{ substr($actual_date, 8, 2) }} {{ App\Management::getMonth($actual_date) }} </span>
-              <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <strong> {{ $management->semester }}-{{ $management->managements }} </strong> </span> &nbsp;
+              <span class="mr-0 d-none d-lg-inline text-gray-600 small"> <strong> {{ $management->semester }}-{{ $management->managements }} </strong> </span> &nbsp;
             </div>
           </li>
           @else
           <li class="nav-item">
             <div class="nav-link" style="pointer-events: none !important;">
-              <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{ substr($actual_date, 8, 2) }} {{ App\Management::getMonth($actual_date) }} </span>
+              <span class="mr-0 d-none d-lg-inline text-gray-600 small"> {{ substr($actual_date, 8, 2) }} {{ App\Management::getMonth($actual_date) }} </span>
             </div>
           </li>
           @endif
+
+          <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-bell fa-fw"></i>
+              <!-- Counter - Alerts -->
+              <span class="badge badge-danger badge-counter">0</span>
+            </a>
+            <!-- Dropdown - Alerts -->
+            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+              <h6 class="dropdown-header">
+                Notificaciones
+              </h6>
+              <br><br>
+              {{-- <a class="dropdown-item d-flex align-items-center" href="#">
+                <div class="mr-3">
+                  <div class="icon-circle bg-primary">
+                    <i class="fas fa-file-alt text-white"></i>
+                  </div>
+                </div>
+                <div>
+                  <div class="small text-gray-500">December 12, 2019</div>
+                  <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                </div>
+              </a> --}}
+              <a class="dropdown-item text-center small text-gray-500" href="#"> Mostrar todo </a>
+            </div>
+          </li>
 
           <!-- Nav Item - User Information -->
           <li class="nav-item dropdown no-arrow">
@@ -204,19 +239,27 @@
         <div class="card-body text-center"><img src="/users/demo.png" class="card-profile-img">
             <h3 class="mb-3"> {{ Auth::user()->names }} {{ Auth::user()->first_name }} {{ Auth::user()->second_name }} </h3>
             <p class=""> <strong> Tipo de Usuario: </strong>
-              @if(Auth::user()->role_id == 1)
-                Administrador
-              @elseif(Auth::user()->role_id == 2)
-                Docente
-              @elseif(Auth::user()->role_id == 3)
-                Auxiliar
-              @elseif(Auth::user()->role_id == 4)
-                Estudiante
+              @if(Auth::user())
+                @if(Auth::user()->role_id == 1)
+                  Administrador
+                @elseif(Auth::user()->role_id == 2)
+                  Docente
+                @elseif(Auth::user()->role_id == 3)
+                  Auxiliar
+                @elseif(Auth::user()->role_id == 4)
+                  Estudiante
+                @endif
+              @else
+                @php
+                  //Comprobar si funciona
+                  header("Location: /");
+                  exit();
+                @endphp
               @endif
             </p>
             <p class=""> <strong> Código Sis: </strong> {{ Auth::user()->code_sis }} </p>
             <p class=""> <strong> Correo Electrónico: </strong> {{ Auth::user()->email }} </p>
-            <a href="#" class="btn-sm btn-primary"> Editar Información </a>
+            {{-- <a href="#" class="btn-sm btn-primary"> Editar Información </a> --}}
         </div>
     </div>
   </div>
@@ -237,9 +280,10 @@
   <script src="/vendor/chart.js/Chart.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="/js/demo/chart-area-demo.js"></script>
+  {{-- <script src="/js/demo/chart-area-demo.js"></script>
   <script src="/js/demo/chart-pie-demo.js"></script>
-  <script src="/js/demo/chart-bar-demo.js"></script>
+  <script src="/js/demo/chart-bar-demo.js"></script> --}}
+  
   <!-- Page level plugins -->
   <script src="/vendor/datatables/jquery.dataTables.js"></script>
   <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>

@@ -3,105 +3,101 @@
 @section('userContent')
 
 <style>
-    @media screen and (max-width: 1150px) {
-        #img-matter {
-            display:none;
-        }
-        .card-matter {
-            height: 105px !important;
-        }
-    }
-
-    @media screen and (max-width: 688px) {
-        .card-matter {
-            height: 150px !important;
-        }
+    #tittle-card-subject {
+        background-image: linear-gradient(180deg, #1cc88a 5%, #466feb 100%);
+        display: flex;
+        align-items: center;
+        border-top-left-radius: 2%;
+        border-bottom-left-radius: 2%;
+        font-size: 0.75rem;
     }
 </style>
+
+<script>
+    var groups = {!! json_encode($groups) !!};
+    var subjects = {!! json_encode($subjects) !!};
+    var student_schedules = {!! json_encode($student_schedules) !!};
+</script>
 
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <div class="d-flex justify-content-between">
-                <div class="panel-heading m-0 font-weight-bold text-primary">Inscripción</div>
-                <div class="mx-3">
-                    <a class="py-1" href="#" style="font-size: 14px; width: 100px;" onclick="status()"> Estado de Inscripción </a>
-                </div>
-            </div>
 
-            @if(isset($error))
-                <div id="schedule-error" class="alert alert-danger mt-3 mb-0">
+
+            @if(App\Management::getActualManagement() != null)
+                @if (App\Management::getActualManagement()->enable_inscription == 1)
+                    
                     <div class="d-flex justify-content-between">
-                        <b>Horario no disponible.</b>
-                        <a style="color: #78261f;" href="#" onclick="$('#schedule-error').hide()"> <i class="fa fa-times"></i> </a>
+                        <div class="panel-heading m-0 font-weight-bold text-primary">Inscripción</div>
+                        <div class="mx-3">
+                            <a class="py-1" href="#" style="font-size: 14px; width: 100px;" onclick="status()"> Estado de Inscripción </a>
+                        </div>
                     </div>
-                    <ul class="m-0">
-                        <li>{{ $error }}</li>
-                    </ul>
-                </div>
+        
+                    <div class="card-body">
+                        @forelse( $subjects as $subject )
+                            <div class="card shadow rounded mb-4" style="padding: 0px 12px;">
+                                <div class="row">
+                                    <div id="tittle-card-subject" class="col-sm-3 text-center text-xs font-weight-bold text-info text-uppercase text-light py-2">
+                                        <b class=""> {{ $subject->name }} </b>
+                                    </div>
+                                    <div class="col-sm-9" style="font-size: 0.8rem;">
+                                        <div class="card-block px-2 pt-3 pb-2">
+                                            <select class="form-control mb-2" name="" id="selector-subject-{{ $subject->id }}">
+                                                @forelse ($groups as $group)
+                                                    @if ($group->subject_matter_id == $subject->id)
+                                                        <option value="{{ $group->id }}"> Grupo {{ $group->name }} - {{ $group->professor->names }} {{ $group->professor->first_name }} {{ $group->professor->second_name }} </option>
+                                                    @endif
+                                                @empty
+                                                    <option value=""> No existen grupos habilitados para esta materia </option>
+                                                @endforelse
+                                            </select>
+                                            <b id="message-subject-{{ $subject->id }}" class='text-primary mt-4' style='font-size: 13px;'></b>
+                                            <br>
+                                            <div class="d-flex justify-content-between" style="font-size: 0.9rem;">
+                                                <div></div>
+                                                <div class="mt-2">
+                                                    <input id="student-subscription-subject-{{$subject->id}}" type="number" name="student_subscription-subject" hidden>
+                                                    <a id="subscription-btn-{{ $subject->id }}" href="#" class="" onclick="infoRegistration({{ $subject->id }})" style="display: none;"> Inscribirse </a>
+                                                    <a id="unsubscription-btn-{{ $subject->id }}" href="#" class="" onclick="removeSubscription({{ $subject->id }})" data-toggle="modal" data-target="#unregistration" style="display: none;"> Retirar materia </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="alert alert-warning"> No existe oferta de materias para la gestión actual </div>
+                        @endforelse
+                    </div>
+
+                @else
+
+                    <div class="panel-heading m-0 font-weight-bold text-primary">Inscripción</div> <br>
+                    <div class="alert alert-warning"> Se encuentra fuera del periodo de inscripciones </div>
+
+                @endif
+            @else
+                    
+                <div class="panel-heading m-0 font-weight-bold text-primary">Inscripción</div> <br>
+                <div class="alert alert-warning"> Se encuentra fuera del periodo de inscripciones </div>
+
             @endif
 
-            <div class="card-body">
-
-                {{-- <script> addUserId({{json_encode(Auth::user()->id)}}); </script> --}}
-
-                @php
-                    $id_select = 1;
-                @endphp
-                @foreach($subjectMatters as $item)
-                <script> addSubjectMatterId({{json_encode($item->id)}}); </script>
-                @php
-                    $groups_sm = App\Group::where("subject_matter_id", "=", $item->id)->get();
-                @endphp
-                    {{--  <div class="flex-row my-2 rounded card shadow">  --}}
-                    <div class="d-flex justify-content-between my-2 px-1 rounded shadow card-matter" style="height: 90px;">
-                        <div class="row">
-                            <img id="img-matter" class="" style="width:100px; height: 100%; border-top-left-radius: 5px; border-bottom-left-radius: 5px;" src="/img/subjectMatter.jpg" alt="">
-                            <div class="my-2 mx-3" id="subject-matter-{{$item->id}}" style="font-size: 15px;">
-                                <strong> {{$item->name}} </strong>
-                            </div>
-                        </div>
-                        <div class="" style="width: 35%;">
-                            <div class="py-1 px-1" style="">
-                                <select name="group_id" class="form-control col-md-12 my-1" id="group_{{ $id_select }}" onchange="clearSelects({{ $id_select }})" style="">
-                                        <option class="form-control text-center" value="">grupo</option>
-                                        @forelse ($groups_sm as $group)
-                                            <option class="form-control" value="{{$group->id}}">{{$group->name ." - " . $group->professor->names ." " . $group->professor->first_name." " . $group->professor->second_name }}</option>
-                                        @empty
-                                        <option class="form-control" value="">No existen grupos para la materia seleccionada</option>
-                                        @endempty
-                                        @endforelse
-                                </select>
-                            </div>
-                            <div id="option-inscriptions" class="mx-2 row px-1" style="font-size: 14px;">
-                                <input id="student-schedule-id-{{$item->id}}" type="number" name="student_schedule_id" style="display: none;">
-                                <a id="link-remove-matter-{{$item->id}}" class="" href="#" class="btn btn-primary" data-toggle="modal" data-target="#unregistration" style="display: none; margin-right: 10px;">Retirar Materia</a>
-                                <a id="link-take-matter-{{$item->id}}" class="" href="#" class="btn btn-primary" onclick="infReg({{ $item }}, {{ $id_select }}), $('#modal-footer').hide(), $('#info-inscription').hide(), verifyRegistration({{$item->id}})" style="display: none;">Inscribirse</a><br>
-                                {{--  <a class="float-right" href="#" data-toggle="modal" data-target="#registration" onclick="confirmReg({{ $item }}, {{ $id_select }})">Inscribirse</a>  --}}
-                            </div>
-                        </div>
-                    </div>
-                    {{--  </div>  --}}
-                @php
-                    $id_select++;
-                @endphp
-                @endforeach
-
-            </div>
         </div>
     </div>
 </div>
 
 <div id="inf-reg-modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content container">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Seleccione un día de trabajo</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body" id="text_confirm_reg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content container">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Seleccione un día de trabajo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="text_confirm_reg">
 
                 <table id="schedules-table" class="table table-striped table-light table-responsive" style="">
                     <thead class="">
@@ -112,74 +108,69 @@
                             <th class="text-dark" style="width: 350px;" scope="col">Seleccionar</th>
                         </tr>
                     </thead>
-                    <tbody id="body-table">
-                        
-                    </tbody>
+                    <tbody id="body-schedules-table"></tbody>
                 </table>
-
-                    <hr>
-                    <div id="info-inscription">
-                        Se inscribirá en la matería: <strong id="subjectMatter_selected">?</strong>, con el grupo: <strong id="group_selected">?</strong>.
-                    </div>
-
+                
+                <hr>
+                    
+                <div id="info-inscription" style="display: none;">
+                    Proceder con la inscripción <strong id="selected-subject-name">?</strong>, grupo <strong id="selected-group-name">?</strong> ?
+                </div>
             </div>
+            
             <div class="modal-body" id="text_select_group" style="display: none;">
                 Debe seleccionar un grupo.
             </div>
-    
             
-            <div class="modal-footer" id="modal-footer">
+            <div class="modal-footer" id="modal-footer" style="display: none;">
                 <form id="form-registration" method="POST" action="{{ url('/students/registration/store') }}">
                     {{ csrf_field() }}
-                    <input id="block_schedule_id" type="number" name="block_schedule_id" style="display: none;">
-                    <input id="group_id_input" type="number" name="group_id" style="display: none;">
+                    <input id="input_block_schedule_id" type="number" name="block_schedule_id" style="display: none;">
+                    <input id="input_group_id" type="number" name="group_id" style="display: none;">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_cancel">Cancelar</button>
                     <button type="submit" class="btn btn-primary" id="btn_confirm">Confirmar</button>
                 </form>
-          </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="modal fade" id="unregistration" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Retirar Materia</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ¿Está seguro que desea retirar la materia?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <a href="#" class="btn btn-danger" id="btn-unregister"> Confirmar </a>
-      </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Retirar Materia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="message-remove-subscription" class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <a href="#" class="btn btn-danger" id="btn-unregister"> Confirmar </a>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="modal fade bd-example-modal-lg" id="infoInscription" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Estado de inscripción</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Estado de inscripción</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="info-ins" class="modal-body"></div>
             </div>
-            <div id="info-ins" class="modal-body">
-                
-            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('/js/students.js') }}"></script>
+    <script src="{{ asset('/js/studentRegistration.js') }}"></script>
 @endpush

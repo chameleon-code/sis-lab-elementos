@@ -9,7 +9,7 @@ Route::get('/students/registration', 'StudentController@registration')->middlewa
 Route::post('/students/registration/store', 'StudentScheduleController@store')->name('student.reg.store')->middleware('auth','student');
 Route::get('/students/registration/getBlocksBySubjects/{id}', 'BlockController@getBlocksBySubjects')->middleware('auth','student');
 Route::get('/students/registration/getGroups/{id}', 'BlockController@getGroupsByBlocks')->middleware('auth','student');
-Route::get('/students/registration/getGroupSchedules/{id}', 'BlockController@getGroupSchedules')->middleware('auth','student');
+Route::get('/students/registration/getGroupSchedules/{group_id}/{block_id}', 'BlockController@getGroupSchedules')->middleware('auth','student');
 Route::get('/students/registration/getScheduleStudent', 'StudentController@getScheduleStudent')->middleware('auth','student');
 Route::get('/student/unregistration/{id}', 'StudentScheduleController@destroy')->middleware('auth','student');
 Route::post('/students/registration/edit/{id}', 'StudentScheduleController@edit')->middleware('auth','student');

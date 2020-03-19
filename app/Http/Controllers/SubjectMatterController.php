@@ -12,16 +12,15 @@ use Illuminate\Support\Facades\Cache;
 class SubjectMatterController extends Controller
 {
     public function index(){
-        self::rememberNav();
-
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
-        $data=['subjectMatters' => $subjectMatters,
-                'title' => 'Materias'];
+        $data = [
+            'subjectMatters' => $subjectMatters,
+            'title' => 'Materias'
+        ];
         return view('components.contents.subjectMatter.index', $data);
     }
 
     public function create(){
-        self::rememberNav();
         return view('components.contents.subjectMatter.create');
     }
 
@@ -32,7 +31,6 @@ class SubjectMatterController extends Controller
             $input['name'] = strtoupper($input['name']);
             SubjectMatter::create($input);
             Session::flash('status_message','Materia añadida!');
-            
             return redirect('/admin/subjectmatters');
         }
             return redirect('/admin/subjectmatter/create')->withInput()->withErrors($subjectMatters->errors);
@@ -41,20 +39,16 @@ class SubjectMatterController extends Controller
     public function edit($id){
         
         $subjectMatter = SubjectMatter::findOrFail($id);
-        $data=['subjectMatter' => $subjectMatter
-        ];
-        
+        $data = ['subjectMatter' => $subjectMatter];
         return view('components.contents.subjectMatter.edit')->withTitle('Editar la Materia')->with($data);
     }
 
     public function update(Request $request, $id){
         $subjectMatter = SubjectMatter::find($id);
         $input = $request->all();
-
         if($subjectMatter->validate($input)){
             $subjectMatter->name = $request->name;
             $subjectMatter->save();
-
             Session::flash('status_message', 'Materia Editada!');
             return redirect('/admin/subjectmatters');
         }
@@ -69,19 +63,7 @@ class SubjectMatterController extends Controller
         }catch(ModelNotFoundException $e){
             $status_message = 'no Subject-matter with tha id';
         }
-
         Session::flash('status_message',$status_message);
         return redirect('/admin/subjectmatters');
-    }
-
-    public function rememberNav(){
-        $tmp = 0.05;
-        Cache::put('professor_nav', '', $tmp);
-        Cache::put('auxiliar_nav', '', $tmp);
-        Cache::put('student_nav', '', $tmp);
-        Cache::put('management_nav', '', $tmp);
-        Cache::put('subject_matter_nav', ' show', $tmp);
-        Cache::put('group_nav', '', $tmp);
-        Cache::put('block_nav', '', $tmp);
     }
 }

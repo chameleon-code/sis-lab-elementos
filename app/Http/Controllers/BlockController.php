@@ -22,7 +22,6 @@ class BlockController extends Controller
      */
     public function index()
     {
-        self::rememberNav();
         $blocks = Block::getAllBlocks();
         $data = [
             'blocks' => $blocks
@@ -37,7 +36,6 @@ class BlockController extends Controller
      */
     public function create()
     {
-        self::rememberNav();
         $block_groups = BlockGroup::join('blocks', 'block_group.block_id', '=', 'blocks.id')
                                     ->join('managements', 'blocks.management_id', '=', 'managements.id')
                                     ->select('block_group.*', 'managements.id as management_id')
@@ -45,34 +43,27 @@ class BlockController extends Controller
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
         $managements = Management::getAllManagements()->reverse();
         $groupsID = BlockGroup::getAllBlockGroupsId();
-        // $groups = Group::where('subject_matter_id', 1)
-        //                 ->whereNotIn('id', $groupsID)
-        //                 ->orderBy('name')->get();
         $registered_groups = Group::join('block_group', 'groups.id', '=', 'block_group.group_id')
                         ->join('blocks', 'block_group.block_id', '=', 'blocks.id')
                         ->join('managements', 'blocks.management_id', '=', 'managements.id')
                         ->select('groups.*', 'managements.id as management_id')
                         ->orderby('name')
                         ->get();
-
         $groups = [];
         for($i=0 ; $i<sizeof($registered_groups) ; $i++ ) {
             array_push( $groups, $registered_groups[$i] );
         }
-        
         $unregistered_groups = Group::all();
         $registered_id_groups = [];
         for($i=0 ; $i<sizeof($groups) ; $i++) {
             array_push($registered_id_groups, $groups[$i]->id);
         }
-
         for($i=0 ; $i<sizeof($unregistered_groups) ; $i++) {
             $unregistered_groups[$i]->management_id = null;
             if( !in_array( $unregistered_groups[$i]->id, $registered_id_groups ) ) {
                 array_push( $groups, $unregistered_groups[$i] );
             }
         }
-
         $data = [
             'block_groups' => $block_groups,
             'subjectMatters'=> $subjectMatters,
@@ -90,7 +81,6 @@ class BlockController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->groups_id);
         $input =$request->all();
         $block = new Block();
         $man = Management::find($request->management_id);
@@ -106,7 +96,6 @@ class BlockController extends Controller
             foreach($groupsID as $key=>$value){
                 $group = Group::where('id', $value)->first();
                 $block->groups()->attach($group->id);
-                //$name .= $group->professor->names[0];
                 array_push( $id_name, $group->professor->names[0] );
             }
             $id_name = array_unique( $id_name );
@@ -114,7 +103,6 @@ class BlockController extends Controller
             for($i=0 ; $i<sizeof($id_name) ; $i++) {
                 $name .= $id_name[$i];
             }
-            //$name .= $block->id;
             $dir = $man->management_path.'/'.$name;
             $block->block_path = $dir;
             $block->name = $name;
@@ -146,9 +134,7 @@ class BlockController extends Controller
      */
     public function edit($id)
     {
-        self::rememberNav();
         $block = Block::findOrFail($id);
-        //dd($block->groups->first()->subject->id);
         $subjectMatters = SubjectMatter::getAllSubjectMatters();
         $managements = Management::getAllManagements()->reverse();
         $groupsID = BlockGroup::getAllBlockGroupsId();
@@ -191,7 +177,6 @@ class BlockController extends Controller
             }
 
             //$dir = $man->management_path.'/'.$name;
-
             //$block->block_path = $dir;
             $block->name = $name;
             $block->save();
@@ -247,39 +232,25 @@ class BlockController extends Controller
         return $block->groups;
     }
 
-    public function rememberNav(){
-        $tmp = 0.05;
-        Cache::put('professor_nav', '', $tmp);
-        Cache::put('auxiliar_nav', '', $tmp);
-        Cache::put('student_nav', '', $tmp);
-        Cache::put('management_nav', '', $tmp);
-        Cache::put('subject_matter_nav', '', $tmp);
-        Cache::put('group_nav', '', $tmp);
-        Cache::put('block_nav', ' show', $tmp);
-    }
-
-    public function getGroupSchedules($id, Request $request){
-        // $block_id = BlockGroup::getBlockByIdGroup($id)->block_id;
-        // $block = Block::find($block_id);
-        // return $block->scheduleRecords()->get();
-        $block_group = BlockGroup::where('group_id', '=', $id)->get()->first();
-        $block = Block::where('id', '=', $block_group->block_id)->get()->first();
-        $block_schedules = BlockSchedule::all();
-        // $block_schedules = BlockSchedule::join('schedule_records','schedule_records.id','=','block_schedules.schedule_id')->where('block_schedules.block_id', '=', $block->id)->select('block_schedules.id AS block_schedule_id', 'block_schedules.block_id', 'schedule_records.id AS schedule_record_id', 'schedule_records.laboratory_id', 'schedule_records.day_id', 'schedule_records.hour_id')->orderBy('schedule_records.day_id')->get();
-        // $block_schedules->each(function ($item){
-        //     $item->setAppends([]);
-        // });
-        // if($request->ajax()){
-        //     return response()->json($block_schedules);
-        // }
-
+    public function getGroupSchedules($group_id, $block_id){
+        $block_schedules = BlockSchedule::join('blocks', 'block_schedules.block_id', '=', 'blocks.id')
+                                        ->join('block_group', 'blocks.id', '=', 'block_group.block_id')
+                                        ->join('groups', 'block_group.group_id', '=', 'groups.id')
+                                        ->join('schedule_records', 'block_schedules.schedule_id', '=','schedule_records.id')
+                                        ->join('laboratories', 'schedule_records.laboratory_id', '=', 'laboratories.id')
+                                        ->join('days', 'schedule_records.day_id', '=', 'days.id')
+                                        ->join('hours', 'schedule_records.hour_id', '=', 'hours.id')
+                                        ->where('blocks.id', '=', $block_id)
+                                        ->where('groups.id', '=', $group_id)
+                                        ->select('block_schedules.*', 'groups.id as group_id', 'groups.name as group_name')
+                                        ->get();
         return $block_schedules;
     }
+
     public function setStatus($id, $value){
         $block = Block::findOrFail($id);
         $block->available = $value;
         $block->save();
-
         return response(["response" => $block]);
     }
 }

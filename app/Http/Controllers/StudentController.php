@@ -28,24 +28,19 @@ class StudentController extends Controller
 {
     public function index()
     {
-        self::rememberNav();
-
         $students = Student::getAllStudents();
-        $data = ['students' => $students,
+        $data = [
+            'students' => $students,
             'title' => 'Estudiantes'];
         return view('components.contents.student.index', $data);
     }
 
     public function store(Request $request)
     {
-
         $input = $request->all();
         $user = new User();
-
         $rules_guest =  [
             'names' => 'required|max:100',
-            // 'first_name' => 'required|max:100',
-            // 'second_name' => 'required|max:100',
             'first_name' => 'max:100',
             'second_name' => 'max:100',
             'email' => 'unique:users|email|required|max:150',
@@ -56,8 +51,6 @@ class StudentController extends Controller
         ];
         $rules_admin =  [
             'names' => 'required|max:100',
-            // 'first_name' => 'required|max:100',
-            // 'second_name' => 'required|max:100',
             'first_name' => 'max:100',
             'second_name' => 'max:100',
             'email' => 'unique:users|email|required|max:150',
@@ -65,7 +58,6 @@ class StudentController extends Controller
             'code_sis' => 'unique:users|required|max:10|min:8',
             'ci' => 'unique:students|max:9|min:6',
         ];
-
         if(Auth::user()){
             $rules = (Auth::user()->role_id==1) ? $rules_admin : $rules_guest;
         } else {
@@ -104,7 +96,6 @@ class StudentController extends Controller
         } else {
             $errors = $validator->messages();
             if($request->mode=='register'){
-                //$errors = ['error' => "El campo captcha es requerido"];
                 return redirect('/register')->withInput($input)->withErrors($errors);
             }else{
                 return redirect('/admin/student/create')->withInput($input)->withErrors($errors);
@@ -117,10 +108,8 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
         $user_id = $student->user_id;
         $student->delete();
-
         $user = User::findOrFail($user_id);
         $user->delete();
-
         return redirect('/admin/students');
     }
 
@@ -129,10 +118,10 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
         $user_id = $student->user_id;
         $user = User::findOrFail($user_id);
-        $data = ['student' => $student,
+        $data = [
+            'student' => $student,
             'user' => $user
         ];
-
         return view('components.contents.student.edit')->withTitle('Editar Estudiante')->with($data);
     }
 
@@ -163,50 +152,81 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
         $user_id = $student->user_id;
         $user = User::findOrFail($user_id);
-
-        $data = ['student' => $student,
+        $data = [
+            'student' => $student,
             'user' => $user
         ];
-
         return view('components.contents.student.profile')->withTitle('Perfil de Estudiante')->with($data);
     }
 
     public function registration()
     {
-        $management = Management::getActualManagement();
-        $blocks = Block::getAllBlocks();
-        $subjectMatters = SubjectMatter::all();
-        $subjectMatters = SubjectMatter::getActualSubjectMatters($management->id);
-        $groups = Group::getGroupBlocks();
-        $data=[ 'blocks' => $blocks,
-                'groups' => $groups,
-                'management' =>$management,
-                'subjectMatters' => $subjectMatters,
-            ];
+        $actual_management = Management::getActualManagement();
+        $subjectMatters = SubjectMatter::getActualSubjectMatters($actual_management->id);
+        $groups = Group::join('block_group', 'groups.id', '=', 'block_group.group_id')
+                       ->join('blocks', 'block_group.block_id', '=', 'blocks.id')
+                       ->join('managements', 'blocks.management_id', '=', 'managements.id')
+                       ->where('managements.id', '=', $actual_management->id)
+                       ->select('groups.*', 'blocks.id as block_id', 'blocks.id as block_id', 'managements.id as management_id')
+                       ->orderby('name')
+                       ->get();
+        $subject_ids = [];
+        for($i=0 ; $i<sizeof($groups) ; $i++) {
+            array_push($subject_ids, $groups[$i]->subject->id);
+        }
+        $subject_ids = array_unique($subject_ids);
+        $subjects = [];
+        for($i=0 ; $i<sizeof($subject_ids) ; $i++) {
+            array_push( $subjects, SubjectMatter::find($subject_ids[$i]) );
+        }
+        $user = User::join('students', 'users.id', '=', 'students.user_id')
+                    ->where('users.id', '=', Auth::user()->id)
+                    ->select('users.*', 'students.id as student_id')
+                    ->get()
+                    ->first();
+        $student_schedules = BlockSchedule::join('student_schedules', 'block_schedules.id', '=', 'student_schedules.block_schedule_id')
+                                          ->join('blocks', 'block_schedules.block_id', '=', 'blocks.id')
+                                          ->join('managements', 'blocks.management_id', '=', 'managements.id')
+                                          ->join('groups', 'student_schedules.group_id', '=', 'groups.id')
+                                          ->join('subject_matters', 'groups.subject_matter_id', '=', 'subject_matters.id')
+                                          ->join('professors', 'groups.professor_id', '=', 'professors.id')
+                                          ->join('users', 'professors.user_id', '=', 'users.id')
+                                          ->where('student_schedules.student_id', '=', $user->student_id)
+                                          ->where('managements.id', '=', $actual_management->id)
+                                          ->select('block_schedules.*', 'subject_matters.id as subject_matter_id', 'subject_matters.name as subject_matter_name', 'groups.id as group_id', 'groups.name as group_name', 'users.names as professor_names', 'users.first_name as professor_first_name', 'users.second_name as professor_second_name', 'student_schedules.id as student_schedule_id')
+                                          ->get();
+        $data = [
+            'groups' => $groups,
+            'subjects' => $subjects,
+            'subjectMatters' => $subjectMatters,
+            'student_schedules' => $student_schedules
+        ];
         return view('components.contents.student.registration', $data);
     }
 
     public function create()
     {
-        self::rememberNav();
         return view('components.contents.student.create');
     }
 
     public function getScheduleStudent(){
         $student = Student::where('user_id', '=', Auth::user()->id)->get()->first();
-        //$student = Student::where('user_id', '=', $id)->get()->first();
         $groups = Group::all();
-        $professors = Professor::join('users', 'user_id', '=', 'users.id')->select('professors.id AS professor_id', 'users.names', 'users.first_name', 'users.second_name')->get();
+        $professors = Professor::join('users', 'user_id', '=', 'users.id')
+                               ->select('professors.id AS professor_id', 'users.names', 'users.first_name', 'users.second_name')
+                               ->get();
         $professors->each(function ($item){
             $item->setAppends([]);
         });
-        $shcedule_student = StudentSchedule::join('groups','group_id','=','groups.id')->select('groups.id AS group_id', 'groups.name', 'groups.subject_matter_id', 'groups.professor_id', 'student_schedules.id', 'student_schedules.student_id', 'student_schedules.block_schedule_id', 'student_schedules.student_path')->where('student_schedules.student_id', '=', $student->id)->get();
+        $shcedule_student = StudentSchedule::join('groups','group_id','=','groups.id')
+                                           ->select('groups.id AS group_id', 'groups.name', 'groups.subject_matter_id', 'groups.professor_id', 'student_schedules.id', 'student_schedules.student_id', 'student_schedules.block_schedule_id', 'student_schedules.student_path')
+                                           ->where('student_schedules.student_id', '=', $student->id)
+                                           ->get();
         $shcedule_student->each(function ($item){
             $item->setAppends([]);
         });
         $subject_matters = SubjectMatter::all();
         $block_schedules = BlockSchedule::all();
-
         $response = [
             'groups' => $groups,
             'professors' => $professors,
@@ -214,19 +234,6 @@ class StudentController extends Controller
             'subject_matters' => $subject_matters,
             'block_schedules' => $block_schedules,
         ];
-
-        //return $shcedule_student;
         return $response;
-    }
-
-    public function rememberNav(){
-        $tmp = 0.05;
-        Cache::put('professor_nav', '', $tmp);
-        Cache::put('auxiliar_nav', '', $tmp);
-        Cache::put('student_nav', ' show', $tmp);
-        Cache::put('management_nav', '', $tmp);
-        Cache::put('subject_matter_nav', '', $tmp);
-        Cache::put('group_nav', '', $tmp);
-        Cache::put('block_nav', '', $tmp);
     }
 }
