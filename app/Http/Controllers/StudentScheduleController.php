@@ -161,13 +161,13 @@ class StudentScheduleController extends Controller
 
     public function getSchedulesByGroup( $groupId, $blockId ) {
         $schedules = StudentSchedule::where('group_id', '=', $groupId)->get();
+        //dd($schedules);
         $actualSesion = Sesion::getActualSesion($blockId);
         $studentTasks = StudentTask::join('tasks', 'student_tasks.task_id', 'tasks.id')->join('sesions', 'tasks.sesion_id', 'sesions.id')->where('sesions.id', $actualSesion->id)->get();
         foreach ($schedules as $schedule) {
             $schedule->tarea_sesion = 'No entregada';
             foreach( $studentTasks as $studentTask ) {
                 if($schedule->student_id == $studentTask->student_id) {
-                    //$schedule->push( ['tarea_sesion' => true] );
                     $schedule->tarea_sesion = 'Entregada';
                     break;
                 }
@@ -176,6 +176,24 @@ class StudentScheduleController extends Controller
         $data = [
             'schedules' => $schedules,
             'actual_sesion' => $actualSesion
+        ];
+        return $data;
+    }
+    public function getSesionsByBlockByGroup($group_id,$block_id,$sesion_id){
+        $schedules = StudentSchedule::where('group_id', '=', $group_id)->get();
+        $actualSesion = Sesion::getActualSesion($block_id);
+        $studentTasks = StudentTask::join('tasks', 'student_tasks.task_id', 'tasks.id')->join('sesions', 'tasks.sesion_id', 'sesions.id')->where('sesions.id', $sesion_id)->get();
+        foreach ($schedules as $schedule) {
+            $schedule->tarea_sesion = 'No entregada';
+            foreach( $studentTasks as $studentTask ) {
+                if($schedule->student_id == $studentTask->student_id) {
+                    $schedule->tarea_sesion = 'Entregada';
+                    break;
+                }
+            }
+        }
+        $data = [
+            'schedules' => $schedules,
         ];
         return $data;
     }

@@ -202,8 +202,8 @@ class ProfessorController extends Controller
 
     //Obtiene la lista de estudiantes en base a grupo
     public function studentList(){
-        $professor = Professor::where('user_id', auth()->user()->id)->first();
-        $groups = [];
+        //$professor = Professor::where('user_id', auth()->user()->id)->first();
+        //$groups = [];
         // $groups = Group::where('professor_id', $professor->id)->get()->reject(function ($item, $key){
         //     if(is_null($item->blocks->first())){
         //         return true;
@@ -216,22 +216,41 @@ class ProfessorController extends Controller
             // else
             //     $schedules = collect();
         $blockGroups = Professor::getBlockGroupsProfessor();
-        foreach( Group::all() as $group ) {
-            foreach( $blockGroups as $blockGroup ) {
-                if( $group->id == $blockGroup->group_id ) {
-                    array_push( $groups, $group );
-                    break;
-                }
-            }
-        }
+       // dd($blockGroups);
+    //    se realiza lo mismo con la siguiente linea
+        // foreach( Group::all() as $group ) {
+        //     foreach( $blockGroups as $blockGroup ) {
+        //         if( $group->id == $blockGroup->group_id ) {
+        //             array_push( $groups, $group );
+        //             break;
+        //         }
+        //     }
+        // }
+        $groups=Professor::where('user_id', '=', Auth::user()->id)->get()->first()->groups;
+        //dd($groups->groups);
         //dd( Sesion::getActualSesion(1)->first()->id );
         //dd( $actualSesion = Sesion::getActualSesion(1) );
         //dd( $studentTasks = StudentTask::join('tasks', 'student_tasks.task_id', 'tasks.id')->join('sesions', 'tasks.sesion_id', 'sesions.id')->where('sesions.id', 8)->get() );
+        $sesion = Sesion::getActualSesion($groups->first()->blocks[0]->id);
+        //dd($actual_sesion);
+        $actual_sesion=0;
+        try {
+            if($sesion != null){
+                $actual_sesion = $sesion->number_sesion;
+            }
+            // throw new \App\Exceptions\NotFoundmonException('not_found');
+        } catch (Exception $e) {
+            report($e); 
+            // if an exception happened in the try block above 
+        }
         $data = [
             //'schedules' => $schedules,
-            'blockGroups' => Professor::getBlockGroupsProfessor(),
-            'groups' => $groups,
-            'title' => 'Estudiantes'
+            'blockGroups'   => $blockGroups,
+            'groups'        => $groups,
+            'blocks'        => $groups->first()->blocks,
+            'sesions'       => $groups->first()->blocks[0]->sesions,
+            'title'         => 'Estudiantes',
+            'actual_sesion' => $actual_sesion
         ];
         return view('components.contents.professor.studentList', $data);
     }

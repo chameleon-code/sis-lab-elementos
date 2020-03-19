@@ -182,10 +182,11 @@ class GroupController extends Controller
     }
 
     
-    public static function getBlockBygroupId(Request $request, $id){
+    public function getBlockBygroupId(Request $request, $id){
         $group = Group::findOrFail($id);
+        //dd($group->blocks);
         if($request->ajax()){
-            return response()->json($group->blocks()->first());
+            return response()->json($group->blocks);
         }
     }        
 //deprecated
@@ -203,4 +204,10 @@ class GroupController extends Controller
                 return response()->json($users);
             }
         }*/
+    // public function getBlockBygroupId(Request $request, $id){
+    //     $group = Group::findOrFail($id);
+    //     if($request->ajax()){
+    //         return response()->json($group->blocks()->first());
+    //     }
+    // } 
 }
