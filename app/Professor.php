@@ -73,15 +73,20 @@ class Professor extends Model
         $groups = Group::where('professor_id', '=', $professor->id)->get();
         $blockGroups = BlockGroup::all();
         $result = [];
-        foreach( $blockGroups as $blockGroup ) {
-            foreach ( $groups as $group ) {
-                if( $group->id == $blockGroup->group_id ) {
-                    array_push( $result, $blockGroup );
-                    break;
-                }
+        foreach($groups as $gp){
+            foreach($gp->blockGroups as $blockGroup){
+                array_push($result,$blockGroup);
             }
         }
-        
+        // foreach( $blockGroups as $blockGroup ) {
+        //     foreach ( $groups as $group ) {
+        //         if( $group->id == $blockGroup->group_id ) {
+        //             array_push( $result, $blockGroup );
+        //             break;
+
+        //         }
+        //     }
+        // }
         return $result;
     }
 }

@@ -163,10 +163,11 @@ class GroupController extends Controller
         return $groups;
     }
     
-    public static function getBlockBygroupId(Request $request, $id){
+    public function getBlockBygroupId(Request $request, $id){
         $group = Group::findOrFail($id);
+        //dd($group->blocks);
         if($request->ajax()){
-            return response()->json($group->blocks()->first());
+            return response()->json($group->blocks);
         }
     }
 }

@@ -77,4 +77,8 @@ class Group extends Model
         }
         return $group_registered;
     }
+
+    public function blockGroups(){
+        return $this->hasMany('App\BlockGroup');
+    }
 }
