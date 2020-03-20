@@ -34,3 +34,7 @@ Route::post('/professor/sesions/tasks/store/score','TaskController@storeScore');
 Route::get('/professor/practices/download','TaskController@downloadPractice');
 Route::get('/professor/practices/info','SesionController@practicesInfo');
 Route::get('/professor/sesions/{blockId}','SesionController@getSesionsByBlock');
+Route::get('/deliveredTasks','StudentTaskController@studentTasks');
+Route::get('/professor/getStudentsByGroup/{group_id}/{block_id}/{management_id}/{sesion_id}','StudentController@getStudentsByGroup');
+Route::get('/professor/getStudentTask/{student_id}/{sesion_id}','StudentTaskController@getStudentTask');
+Route::get('/professor/actualSesionBlock/{block_id}','SesionController@getActualSesionBlock');

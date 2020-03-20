@@ -38,7 +38,7 @@
   </div>
   <!-- Nav Item - Pages Collapse Menu -->
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStudent" aria-expanded="true" aria-controls="collapseStudent">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStudent" aria-expanded="false" aria-controls="collapseStudent">
       <i class="fas fa-fw fa-users"></i>
       <span>Estudiantes</span>
     </a>
@@ -47,7 +47,7 @@
         <h6 class="collapse-header">Opciones:</h6>
         <a class="collapse-item" href="{{url("/professor/students/list")}}"><i class="fas fa-list"></i>  Listar</a>
         {{-- <a class="collapse-item" href="{{ url("/professor/registerAssistance")}}"><i class="fas fa-clipboard-list"></i>  Registro de Asistencia</a> --}}
-        {{-- <a class="collapse-item" href="/portflies"><i class="far fa-folder"></i>  Portafolios</a> --}}
+        <a class="collapse-item" href="/deliveredTasks"><i class="fas fa-book"></i>  Practicas</a>
       </div>
     </div>
   </li>
