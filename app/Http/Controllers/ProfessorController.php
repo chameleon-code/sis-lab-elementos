@@ -29,6 +29,7 @@ class ProfessorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
+        if( !Auth::user() ) { return redirect('/'); }
         $professors = Professor::getAllProfessors();
         if(Auth::user()->role_id==Role::ADMIN){
             $data = [
@@ -202,6 +203,7 @@ class ProfessorController extends Controller
 
     //Obtiene la lista de estudiantes en base a grupo
     public function studentList(){
+        if( !Auth::user() ) { return redirect('/'); }
         $blockGroups = Professor::getBlockGroupsProfessor();
         $groups=Professor::where('user_id', '=', Auth::user()->id)->get()->first()->groups;
         $sesion = Sesion::getActualSesion($groups->first()->blocks[0]->id);

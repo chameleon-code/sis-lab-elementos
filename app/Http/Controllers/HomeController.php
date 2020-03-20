@@ -27,6 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if( !Auth::user() ) { return redirect('/'); }
         switch (Auth::user()->role_id) {
             case Role::ADMIN:
                 $controller = new GraphicController();
