@@ -6,6 +6,11 @@
         height: 34px;
         width: 34px;
     }
+
+    .img-student-container {
+        display: flex;
+        align-items: center;
+    }
 </style>
 
 <script>
@@ -51,6 +56,8 @@
 
             <br>
 
+            <div id="alert-students-container" class="alert alert-warning" style="display: none;"> No hay estudiantes inscritos </div>
+            
             <div id="practices-content" class="row px-2 mb-3" style="display: none;">
 
                 <div id="students-container" class="col-sm-6 py-1 my-0" style="overflow: auto;"></div>
