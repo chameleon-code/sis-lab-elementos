@@ -223,6 +223,7 @@ class StudentTaskController extends Controller
         //
     }
 
+    // REVISAR CREO QUE VERION OBSOLETA ////////////////////////////////////////////
     public function getTasksStudent( $student_id, $block_id ) {
         $studentTasks = StudentTask::where('student_tasks.student_id', $student_id)
                                    ->join('tasks', 'student_tasks.task_id', 'tasks.id')
@@ -237,6 +238,21 @@ class StudentTaskController extends Controller
             'block_sesions' => Sesion::where('block_id', $block_id)->get(),
             'block_tasks' => $block_tasks,
             'student_tasks' => $studentTasks
+        ];
+        return $data;
+    }
+
+    public function getStudentTask($student_id, $sesion_id) {
+        $tasks = Task::join('student_tasks', 'tasks.id', '=', 'student_tasks.task_id')
+                    ->where('student_tasks.student_id', '=', $student_id)
+                    ->where('tasks.sesion_id', '=', $sesion_id)
+                    ->select('student_tasks.*', 'tasks.title as task_title', 'tasks.published_by as task_published_by', 'tasks.description as task_description', 'tasks.task_path as path', 'tasks.task_file as file', 'tasks.updated_at as task_updated_at')
+                    ->orderby('title')
+                    ->get();
+        $sesion_tasks = Task::where('sesion_id', '=', $sesion_id)->orderby('title')->get();
+        $data = [
+            'tasks' => $tasks,
+            'sesion_tasks' => $sesion_tasks
         ];
         return $data;
     }

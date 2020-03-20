@@ -267,4 +267,8 @@ class SesionController extends Controller
         ];
         return $data;
     }
+
+    public function getActualSesionBlock( $block_id ) {
+        return Sesion::getActualSesion( $block_id );
+    }
 }
