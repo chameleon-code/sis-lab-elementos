@@ -24,6 +24,7 @@ class SesionController extends Controller
      */
     public function index()
     {
+        if( !Auth::user() ) { return redirect('/'); }
         $professor = Professor::join('users', 'professors.user_id', '=', 'users.id')
                               ->where('users.id', '=', Auth::user()->id)
                               ->select('users.*', 'professors.id as professor_id')
