@@ -252,9 +252,14 @@ class SesionController extends Controller
         for($i=0 ; $i<sizeof($sesions) ; $i++) {
             $commited_task_by_sesion = StudentTask::join('tasks', 'student_tasks.task_id', '=', 'tasks.id')
                                                   ->where('tasks.sesion_id', '=', $sesions[$i]->id)
-                                                  ->get()
-                                                  ->count();
-            array_push($commited_tasks_by_sesion, $commited_task_by_sesion);
+                                                  ->select('student_tasks.student_id')
+                                                  ->get();
+            $commited_task_by_sesion_array = [];
+            for($j=0 ; $j<sizeof($commited_task_by_sesion) ; $j++) {
+                array_push( $commited_task_by_sesion_array, $commited_task_by_sesion[$j]->student_id );
+            }
+            $commited_task_by_sesion_array = array_unique( $commited_task_by_sesion_array );
+            array_push( $commited_tasks_by_sesion, sizeof($commited_task_by_sesion_array) );
         }
         $actualSesion = Sesion::getActualSesion($blockId);
         $data = [
