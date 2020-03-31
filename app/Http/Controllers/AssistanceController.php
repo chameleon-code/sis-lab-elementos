@@ -113,6 +113,7 @@ class AssistanceController extends Controller
 
     public function confirm(Request $request)
     {
+        if( !Auth::user() ) { return redirect('/'); }
         $user = Auth::user();
         $student = Student::where('user_id', '=', $user->id)->get()->first();
         $student->block_id = $request->block_id;

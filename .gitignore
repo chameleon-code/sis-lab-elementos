@@ -6,3 +6,37 @@
 Homestead.json
 Homestead.yaml
 config/mail.php
+
+## IGNORE DE ARCHIVOS PARA SUBIDA AL SERVIDOR ( COMENTAR PARA DESASRRROLLO )
+## Al comentar o descomentar:
+## $ git rm -r  --cached .
+## $ git add .
+## $ git commit ...
+
+# /app/Console
+# /app/Exceptions
+# /app/Mail
+# /app/Notifications
+# /app/Providers
+# /app/Traits
+# /bootstrap
+# /config
+# /database
+# /public/storage
+# /public/users
+# /public/.htaccess
+# /public/favicon.ico
+# /public/index.php
+# /public/robots.txt
+# /public/web.config
+# /storage
+# /tests
+# .env
+# artisan
+# composer.json
+# composer.lock
+# gulpfile.js
+# package.json
+# phpunit.xml
+# readme.md
+# server.php

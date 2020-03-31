@@ -23,6 +23,8 @@ use App\BlockSchedule;
 use App\ScheduleRecord;
 use App\StudentSchedule;
 use App\Professor;
+use App\StudentTask;
+use App\Task;
 
 class StudentController extends Controller
 {
@@ -179,22 +181,26 @@ class StudentController extends Controller
         for($i=0 ; $i<sizeof($subject_ids) ; $i++) {
             array_push( $subjects, SubjectMatter::find($subject_ids[$i]) );
         }
-        $user = User::join('students', 'users.id', '=', 'students.user_id')
-                    ->where('users.id', '=', Auth::user()->id)
-                    ->select('users.*', 'students.id as student_id')
-                    ->get()
-                    ->first();
-        $student_schedules = BlockSchedule::join('student_schedules', 'block_schedules.id', '=', 'student_schedules.block_schedule_id')
-                                          ->join('blocks', 'block_schedules.block_id', '=', 'blocks.id')
-                                          ->join('managements', 'blocks.management_id', '=', 'managements.id')
-                                          ->join('groups', 'student_schedules.group_id', '=', 'groups.id')
-                                          ->join('subject_matters', 'groups.subject_matter_id', '=', 'subject_matters.id')
-                                          ->join('professors', 'groups.professor_id', '=', 'professors.id')
-                                          ->join('users', 'professors.user_id', '=', 'users.id')
-                                          ->where('student_schedules.student_id', '=', $user->student_id)
-                                          ->where('managements.id', '=', $actual_management->id)
-                                          ->select('block_schedules.*', 'subject_matters.id as subject_matter_id', 'subject_matters.name as subject_matter_name', 'groups.id as group_id', 'groups.name as group_name', 'users.names as professor_names', 'users.first_name as professor_first_name', 'users.second_name as professor_second_name', 'student_schedules.id as student_schedule_id')
-                                          ->get();
+        if( Auth::user() ) {
+            $user = User::join('students', 'users.id', '=', 'students.user_id')
+                        ->where('users.id', '=', Auth::user()->id)
+                        ->select('users.*', 'students.id as student_id')
+                        ->get()
+                        ->first();
+            $student_schedules = BlockSchedule::join('student_schedules', 'block_schedules.id', '=', 'student_schedules.block_schedule_id')
+                                              ->join('blocks', 'block_schedules.block_id', '=', 'blocks.id')
+                                              ->join('managements', 'blocks.management_id', '=', 'managements.id')
+                                              ->join('groups', 'student_schedules.group_id', '=', 'groups.id')
+                                              ->join('subject_matters', 'groups.subject_matter_id', '=', 'subject_matters.id')
+                                              ->join('professors', 'groups.professor_id', '=', 'professors.id')
+                                              ->join('users', 'professors.user_id', '=', 'users.id')
+                                              ->where('student_schedules.student_id', '=', $user->student_id)
+                                              ->where('managements.id', '=', $actual_management->id)
+                                              ->select('block_schedules.*', 'subject_matters.id as subject_matter_id', 'subject_matters.name as subject_matter_name', 'groups.id as group_id', 'groups.name as group_name', 'users.names as professor_names', 'users.first_name as professor_first_name', 'users.second_name as professor_second_name', 'student_schedules.id as student_schedule_id')
+                                              ->get();
+        } else {
+            $student_schedules = [];
+        }
         $data = [
             'groups' => $groups,
             'subjects' => $subjects,
@@ -235,5 +241,52 @@ class StudentController extends Controller
             'block_schedules' => $block_schedules,
         ];
         return $response;
+    }
+
+    public function getStudentsByGroup($group_id, $block_id, $management_id, $sesion_id) {
+        $students = Student::join('student_schedules', 'students.id', '=', 'student_schedules.student_id')
+                           ->join('users', 'students.user_id', '=', 'users.id')
+                           ->join('groups', 'student_schedules.group_id', '=', 'groups.id')
+                           ->join('block_group', 'groups.id', '=', 'block_group.group_id')
+                           ->join('blocks', 'block_group.block_id', '=', 'blocks.id')
+                           ->join('managements', 'blocks.management_id', '=', 'managements.id')
+                           ->join('block_schedules', 'student_schedules.block_schedule_id', '=', 'block_schedules.id')
+                           ->where('managements.id', '=', $management_id)
+                           ->where('block_schedules.block_id', '=', $block_id)
+                           ->where('student_schedules.group_id', '=', $group_id)
+                           ->select('users.*', 'students.id as student_id', 'groups.id as group_id', 'blocks.id as block_id', 'managements.id as management_id')
+                           ->orderby('first_name')
+                           ->get();
+        $students_with_task = Student::join('student_tasks', 'students.id', '=', 'student_tasks.student_id')
+                                     ->join('tasks', 'student_tasks.task_id', '=', 'tasks.id')
+                                     ->join('sesions', 'tasks.sesion_id', '=', 'sesions.id')
+                                     ->join('student_schedules', 'students.id', '=', 'student_schedules.student_id')
+                                     ->join('block_schedules', 'student_schedules.block_schedule_id', '=', 'block_schedules.id')
+                                     ->join('users', 'students.user_id', '=', 'users.id')
+                                     ->where('block_schedules.block_id', '=', $block_id)
+                                     ->where('student_schedules.group_id', '=', $group_id)
+                                     ->where('tasks.sesion_id', '=', $sesion_id)
+                                     ->select('tasks.*', 'block_schedules.block_id as block_id', 'student_schedules.group_id as group_id','students.id as student_id', 'users.first_name as student_first_name')
+                                     ->orderby('student_first_name')
+                                     ->get();
+        $students_with_task_ids = [];
+        for($i=0 ; $i<sizeof($students_with_task) ; $i++) {
+            array_push($students_with_task_ids, $students_with_task[$i]->student_id);
+        }
+        $students_status_task = [];
+        for($i=0 ; $i<sizeof($students) ; $i++) {
+            array_push( $students_status_task, false );
+        }
+        for($i=0 ; $i<sizeof($students) ; $i++) {
+            if( in_array($students[$i]->student_id, $students_with_task_ids) ) {
+                $students_status_task[$i] = true;
+            }
+        }
+        $data = [
+            'students' => $students,
+            'students_status_task' => $students_status_task,
+            'students_with_task_ids' => array_unique($students_with_task_ids)
+        ];
+        return $data;
     }
 }

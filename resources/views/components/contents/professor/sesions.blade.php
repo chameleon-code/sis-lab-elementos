@@ -17,7 +17,7 @@
 
                 <div class="">
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-4 mb-2">
                             <label for="">Gestión: </label>
                             <select class="form-control" name="" id="management-selector" onchange="selectManagement(), setSesionsOfSelectedBlock()">
                                 @foreach ($managements as $management)
