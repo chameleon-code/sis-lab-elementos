@@ -86,6 +86,7 @@ Route::post('/schedule/create/{block_id}','ScheduleRecordController@store')->mid
 
 Route::get('/schedule/records/{laboratory_id}','ScheduleRecordController@getRecords')->middleware('auth','admin');
 Route::delete('/schedule/records/delete/{id}','ScheduleRecordController@destroy')->name('schedule.destroy')->middleware('auth','admin');
+Route::get('/schedule/records/blocks/{block_id}','ScheduleRecordController@getRecordsByBlock')->middleware('auth','admin');
 //Route::get('/admin/blocks/createSchedule','BlockScheduleController@create');
 //Horarios con seleccion de bloques
 Route::get('/schedule/create/','ScheduleRecordController@createSchedule')->middleware('auth','admin');

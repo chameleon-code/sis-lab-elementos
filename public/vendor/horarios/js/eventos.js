@@ -1,5 +1,7 @@
 $(document).ready(function() {
-    url = "/schedule/records/1";
+    //url = "/schedule/records/" + $('#block_id').val();
+    url = "/schedule/records/blocks/" + $('#block_id').val(); 
+    console.log(url);
     $.get(url, function(response, state) {
         console.log(response);
         $('#bloque').empty();
