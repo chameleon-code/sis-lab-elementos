@@ -137,4 +137,8 @@ class ScheduleRecordController extends Controller
         ];
         return view('components.contents.auxiliar.schedule',$data);
     }
+
+    public function getRecordsByBlock($block_id){
+        return BlockSchedule::getSchedulesByBlock($block_id);
+    }
 }

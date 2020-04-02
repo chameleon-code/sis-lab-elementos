@@ -32,4 +32,13 @@ class BlockSchedule extends Model
         return $this->belongsToMany('App\Student', 'student_schedules', 'block_schedule_id', 'student_id')
         ->wherePivotIn('group_id', $id);
     }
+    public static function getSchedulesByBlock($block_id){
+        $blocks = self::where('block_id',$block_id)->get();
+        $schedule = [];
+        foreach($blocks as $block){
+            array_push($schedule,$block->schedule);
+            //$schedule[$block->schedule->id] = $block->schedule;
+        }
+        return $schedule;
+    }
 }
