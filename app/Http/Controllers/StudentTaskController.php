@@ -292,4 +292,15 @@ class StudentTaskController extends Controller
         ];
         return view('components.contents.professor.studentTasks', $data);
     }
+
+    public function storeScore( $student_task_id, $score ) {
+        $student_task = StudentTask::find( $student_task_id );
+        if( $score == "-" ) {
+            $student_task->score = null;
+        } else {
+            $student_task->score = $score;
+        }
+        $student_task->save();
+        return [ 'error' => false ];
+    }
 }

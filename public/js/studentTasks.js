@@ -191,6 +191,18 @@ function viewSesionTask( student ) {
                 }
                 if( response.tasks.length > 0 ) {
                     for(let i=0 ; i<response.tasks.length ; i++) {
+                        let comentario = "";
+                        if ( !response.tasks[i].description || response.tasks[i].description == "" ) {
+                            comentario = "Ninguno";
+                        } else {
+                            comentario = response.tasks[i].description;
+                        }
+                        let score;
+                        if( !response.tasks[i].score ) {
+                            score = "-"
+                        } else {
+                            score = response.tasks[i].score;
+                        }
                         let in_time = ( response.tasks[i].in_time == "yes" ) ? "<b class='text-success'> (A tiempo) </b>" : "<b class='text-danger'> (Con retraso) </b>";
                         $('#delivered-task-container-2').append(
                             `
@@ -198,12 +210,17 @@ function viewSesionTask( student ) {
                                 <div class="p-3">
                                     <div> <b> Archivo </b>:&nbsp; <a href="/downloadPractice/${ response.tasks[i].task_path }/${ response.tasks[i].task_name }"> ${ response.tasks[i].task_name } </a> </div>
                                     <div> <b> Entrega: </b> &nbsp; ${ getDate( response.tasks[i].updated_at ) } - ${ getHour( response.tasks[i].updated_at ) } ${ in_time } </div>
-                                    <div> <b> Comentario: </b> &nbsp; ${ response.tasks[i].description } </div>
+                                    <div> <b> Comentario: </b> &nbsp; ${ comentario } </div>
+                                    <div class="d-flex justify-content-between">
+                                        <div class="w-50" style="font-size: 0.9rem;"> <b> Calificación: </b> &nbsp; </div>
+                                        <div class="" style="margin-top: -11px;"> <input id="score-task-${ response.tasks[i].id }" class="score-input text-center text-xs font-weight-bold text-primary text-uppercase" type="text" min="0" max="100" value="${ score }" autocomplete="off" style="width: 80px; border: none; border-bottom: 2px solid #48B07E; outline: none !important; font-size: 1.2rem;"> </div>
+                                    </div>
                                 </div>
                             </div>
                             `
                         );
                     }
+                    initScoreListeners();
                 } else {
                     //no hay tareas
                     $('#delivered-task-container-2').append( 
@@ -243,6 +260,18 @@ function viewSesionTask( student ) {
 
                 if( response.tasks.length > 0 ) {
                     for(let i=0 ; i<response.tasks.length ; i++) {
+                        let comentario;
+                        if ( !response.tasks[i].description || response.tasks[i].description == "" ) {
+                            comentario = "Ninguno";
+                        } else {
+                            comentario = response.tasks[i].description;
+                        }
+                        let score;
+                        if( !response.tasks[i].score ) {
+                            score = "-"
+                        } else {
+                            score = response.tasks[i].score;
+                        }
                         let in_time = ( response.tasks[i].in_time == "yes" ) ? "<b class='text-success'> (A tiempo) </b>" : "<b class='text-danger'> (Con retraso) </b>";
                         $('#delivered-task-container').append(
                             `
@@ -250,12 +279,17 @@ function viewSesionTask( student ) {
                                 <div class="p-3">
                                     <div> <b> Archivo </b>:&nbsp; <a href="/downloadPractice/${ response.tasks[i].task_path }/${ response.tasks[i].task_name }"> ${ response.tasks[i].task_name } </a> </div>
                                     <div> <b> Entrega: </b> &nbsp; ${ getDate( response.tasks[i].updated_at ) } - ${ getHour( response.tasks[i].updated_at ) } ${ in_time } </div>
-                                    <div> <b> Comentario: </b> &nbsp; ${ response.tasks[i].description } </div>
+                                    <div class="mb-3"> <b> Comentario: </b> &nbsp; ${ comentario } </div>
+                                    <div class="d-flex justify-content-between">
+                                        <div class="w-50" style="font-size: 0.9rem;"> <b> Calificación: </b> &nbsp; </div>
+                                        <div class="" style="margin-top: -11px;"> <input id="score-task-${ response.tasks[i].id }" class="score-input text-center text-xs font-weight-bold text-primary text-uppercase" type="text" min="0" max="100" value="${ score }" autocomplete="off" style="width: 80px; border: none; border-bottom: 2px solid #48B07E; outline: none !important; font-size: 1.2rem;"> </div>
+                                    </div>
                                 </div>
                             </div>
                             `
                         );
                     }
+                    initScoreListeners();
                 } else {
                     //no hay tareas
                     $('#delivered-task-container').append( 
@@ -269,5 +303,70 @@ function viewSesionTask( student ) {
         error: function() {
         }
     });
+}
 
+var init_score_value;
+
+function initScoreListeners() {
+    let allow_store;
+    $('.score-input').each( function() {
+        $(this).focusin( function() {
+            allow_store = true;
+            editScoreTask( $(this)[0].id );
+        });
+
+        $(this).focusout( function() {
+            if( allow_store ) {
+                storeScoreTask( $(this)[0].id );
+            } else {
+                exitEditScore( $(this)[0].id );
+            }
+        });
+
+        $(this).keydown(function(event) {
+            if( event.keyCode == 27 ) {
+                allow_store = false;
+                $(this).blur();
+            } else if( event.keyCode == 13 ) {
+                allow_store = true;
+                $(this).blur();
+            }
+        });
+    });
+}
+
+function editScoreTask( input_id ) {
+    init_score_value = $('#'+input_id).val();
+    $('#'+input_id).removeClass('text-primary');
+    $('#'+input_id).addClass('text-dark');
+    if( $('#'+input_id).val() == "-" ) {
+        $('#'+input_id).val('');
+    }
+    $('#'+input_id).attr('type', 'number');
+}
+
+function storeScoreTask( input_id ) {
+    $('#'+input_id).removeClass('text-dark');
+    $('#'+input_id).addClass('text-primary');
+    $('#'+input_id).attr('type', 'text');
+    if( $('#'+input_id).val() == '' ) {
+        $('#'+input_id).val('-');
+    }
+    let student_task_id = ( input_id.split('-') )[ input_id.split('-').length - 1 ];
+    $.ajax({
+        url: '/professor/studentTask/storeScore/'+student_task_id+'/'+$('#'+input_id).val(),
+        success: function( response ) {
+            //
+        },
+        error: function() {
+            //
+        }
+    });
+}
+
+function exitEditScore( input_id ) {
+    $('#'+input_id).removeClass('text-dark');
+    $('#'+input_id).addClass('text-primary');
+    $('#'+input_id).attr('type', 'text');
+    $('#'+input_id).val( init_score_value )
 }

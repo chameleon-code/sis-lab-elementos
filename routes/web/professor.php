@@ -38,3 +38,4 @@ Route::get('/deliveredTasks','StudentTaskController@studentTasks');
 Route::get('/professor/getStudentsByGroup/{group_id}/{block_id}/{management_id}/{sesion_id}','StudentController@getStudentsByGroup');
 Route::get('/professor/getStudentTask/{student_id}/{block_id}/{sesion_id}','StudentTaskController@getStudentTask');
 Route::get('/professor/actualSesionBlock/{block_id}','SesionController@getActualSesionBlock');
+Route::get('/professor/studentTask/storeScore/{student_task_id}/{score}','StudentTaskController@storeScore');
