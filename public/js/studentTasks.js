@@ -59,6 +59,7 @@ function selectBlock() {
 }
 
 function selectGroup() {
+    $('#alert-students-container').hide();
     $('#sesion-selector').empty()
     let no_sesions = true;
     for(let i=0 ; i<sesions.length ; i++) {
@@ -115,7 +116,7 @@ function loadStudents() {
                     $('#students-container').append(
                         `
                         <div id="item-student-${ students[i].student_id }" class="item-student row mx-1 mb-0 py-1 border-bottom" onclick='viewSesionTask( ${ JSON.stringify(students[i]) } )' style="cursor: pointer;">
-                            <div class="">
+                            <div class="img-student-container text-center">
                                 <img src="/users/demo.png" alt="">
                             </div>
                             <div class="mx-3" style="font-size: 0.8rem;">
@@ -131,6 +132,7 @@ function loadStudents() {
                 $('#practices-content').show();
             } else {
                 // No hay estudiantes inscritos
+                $('#alert-students-container').show();
                 $('#students-container').css( 'height', "10px" );
                 $('#task-container').css( 'height', "10px" );
                 $('#practices-content').hide();
@@ -157,9 +159,8 @@ function viewSesionTask( student ) {
     $('#sesion-task-container-2').empty();
     $('#delivered-task-container-2').empty();
     $.ajax({
-        url : '/professor/getStudentTask/'+student.student_id+'/'+$('#sesion-selector')[0].value,
+        url : '/professor/getStudentTask/'+student.student_id+'/'+$('#block-selector')[0].value+'/'+$('#sesion-selector')[0].value,
         success: function ( response ){
-            console.log( response );
             if( $(window).width() < 1055 ) {
                 // Mostrar en modal
                 $('#task-modal').modal('show');
@@ -168,20 +169,40 @@ function viewSesionTask( student ) {
                     <div class="mt-0 mb-0"> <b> ${ student.first_name } ${ student.second_name } ${ student.names } </b> </div>
                     <div class="my-0"> <b> ${ student.code_sis } </b> </div>
                     <div class="my-0"> <b> ${ student.email } </b> </div>
-                    <div class="mb-3 mt-0"> <b> Día de trabajo: &nbsp; </b> Día </div>
+                    <div class="mb-3 mt-0"> <b> Día de trabajo: &nbsp; </b> ${ response.student_schedule[0].schedule.day.name } </div>
                     `
                 );
-                for(let i=0 ; i<response.sesion_tasks.length ; i++ ) {
+                if( response.sesion_tasks.length > 0 ) {
+                    for(let i=0 ; i<response.sesion_tasks.length ; i++ ) {
+                        $('#sesion-task-container-2').append(
+                            `
+                            <div> <b> Tarea de la sesión: </b> &nbsp; ${ response.sesion_tasks[i].title } </div>
+                            <div> ${ response.sesion_tasks[i].description } </div>
+                            <div class="mb-1 border-bottom"> <b> Archivo </b>:&nbsp; <a href="/downloadPractice/${ response.sesion_tasks[i].task_path }/${ response.sesion_tasks[i].task_file }"> ${ response.sesion_tasks[i].task_file } </a> </div>
+                            `
+                        );
+                    }
+                } else {
                     $('#sesion-task-container-2').append(
                         `
-                        <div> <b> Tarea de la sesión: </b> &nbsp; ${ response.sesion_tasks[i].title } </div>
-                        <div> ${ response.sesion_tasks[i].description } </div>
-                        <div class="mb-1 border-bottom"> <b> Archivo </b>:&nbsp; <a href="/downloadPractice/${ response.sesion_tasks[i].task_path }/${ response.sesion_tasks[i].task_file }"> ${ response.sesion_tasks[i].task_file } </a> </div>
+                        <div class="alert alert-warning"> No existen tareas para la sesion actual </div>
                         `
                     );
                 }
                 if( response.tasks.length > 0 ) {
                     for(let i=0 ; i<response.tasks.length ; i++) {
+                        let comentario = "";
+                        if ( !response.tasks[i].description || response.tasks[i].description == "" ) {
+                            comentario = "Ninguno";
+                        } else {
+                            comentario = response.tasks[i].description;
+                        }
+                        let score;
+                        if( !response.tasks[i].score ) {
+                            score = "-"
+                        } else {
+                            score = response.tasks[i].score;
+                        }
                         let in_time = ( response.tasks[i].in_time == "yes" ) ? "<b class='text-success'> (A tiempo) </b>" : "<b class='text-danger'> (Con retraso) </b>";
                         $('#delivered-task-container-2').append(
                             `
@@ -189,12 +210,17 @@ function viewSesionTask( student ) {
                                 <div class="p-3">
                                     <div> <b> Archivo </b>:&nbsp; <a href="/downloadPractice/${ response.tasks[i].task_path }/${ response.tasks[i].task_name }"> ${ response.tasks[i].task_name } </a> </div>
                                     <div> <b> Entrega: </b> &nbsp; ${ getDate( response.tasks[i].updated_at ) } - ${ getHour( response.tasks[i].updated_at ) } ${ in_time } </div>
-                                    <div> <b> Comentario: </b> &nbsp; ${ response.tasks[i].description } </div>
+                                    <div> <b> Comentario: </b> &nbsp; ${ comentario } </div>
+                                    <div class="d-flex justify-content-between">
+                                        <div class="w-50" style="font-size: 0.9rem;"> <b> Calificación: </b> &nbsp; </div>
+                                        <div class="" style="margin-top: -11px;"> <input id="score-task-${ response.tasks[i].id }" class="score-input text-center text-xs font-weight-bold text-primary text-uppercase" type="text" min="0" max="100" value="${ score }" autocomplete="off" style="width: 80px; border: none; border-bottom: 2px solid #48B07E; outline: none !important; font-size: 1.2rem;"> </div>
+                                    </div>
                                 </div>
                             </div>
                             `
                         );
                     }
+                    initScoreListeners();
                 } else {
                     //no hay tareas
                     $('#delivered-task-container-2').append( 
@@ -210,20 +236,42 @@ function viewSesionTask( student ) {
                     <div class="mt-3 mb-0"> <b> ${ student.first_name } ${ student.second_name } ${ student.names } </b> </div>
                     <div class="my-0"> <b> ${ student.code_sis } </b> </div>
                     <div class="my-0"> <b> ${ student.email } </b> </div>
-                    <div class="mb-3 mt-0"> <b> Día de trabajo: &nbsp; </b> Día </div>
+                    <div class="mb-3 mt-0"> <b> Día de trabajo: &nbsp; </b> ${ response.student_schedule[0].schedule.day.name } </div>
                     `
                 );
-                for(let i=0 ; i<response.sesion_tasks.length ; i++ ) {
+                if( response.sesion_tasks.length > 0 ) {
+                    for(let i=0 ; i<response.sesion_tasks.length ; i++ ) {
+                        $('#sesion-task-container').append(
+                            `
+                            <div> <b> Tarea de la sesión: </b> &nbsp; ${ response.sesion_tasks[i].title } </div>
+                            <div> ${ response.sesion_tasks[i].description } </div>
+                            <div class="mb-1 border-bottom"> <b> Archivo </b>:&nbsp; <a href="/downloadPractice/${ response.sesion_tasks[i].task_path }/${ response.sesion_tasks[i].task_file }"> ${ response.sesion_tasks[i].task_file } </a> </div>
+                            `
+                        );
+                    }
+                } else {
                     $('#sesion-task-container').append(
                         `
-                        <div> <b> Tarea de la sesión: </b> &nbsp; ${ response.sesion_tasks[i].title } </div>
-                        <div> ${ response.sesion_tasks[i].description } </div>
-                        <div class="mb-1 border-bottom"> <b> Archivo </b>:&nbsp; <a href="/downloadPractice/${ response.sesion_tasks[i].task_path }/${ response.sesion_tasks[i].task_file }"> ${ response.sesion_tasks[i].task_file } </a> </div>
+                        <div class="alert alert-warning"> No existen tareas para la sesion actual </div>
                         `
                     );
                 }
+
+
                 if( response.tasks.length > 0 ) {
                     for(let i=0 ; i<response.tasks.length ; i++) {
+                        let comentario;
+                        if ( !response.tasks[i].description || response.tasks[i].description == "" ) {
+                            comentario = "Ninguno";
+                        } else {
+                            comentario = response.tasks[i].description;
+                        }
+                        let score;
+                        if( !response.tasks[i].score ) {
+                            score = "-"
+                        } else {
+                            score = response.tasks[i].score;
+                        }
                         let in_time = ( response.tasks[i].in_time == "yes" ) ? "<b class='text-success'> (A tiempo) </b>" : "<b class='text-danger'> (Con retraso) </b>";
                         $('#delivered-task-container').append(
                             `
@@ -231,12 +279,17 @@ function viewSesionTask( student ) {
                                 <div class="p-3">
                                     <div> <b> Archivo </b>:&nbsp; <a href="/downloadPractice/${ response.tasks[i].task_path }/${ response.tasks[i].task_name }"> ${ response.tasks[i].task_name } </a> </div>
                                     <div> <b> Entrega: </b> &nbsp; ${ getDate( response.tasks[i].updated_at ) } - ${ getHour( response.tasks[i].updated_at ) } ${ in_time } </div>
-                                    <div> <b> Comentario: </b> &nbsp; ${ response.tasks[i].description } </div>
+                                    <div class="mb-3"> <b> Comentario: </b> &nbsp; ${ comentario } </div>
+                                    <div class="d-flex justify-content-between">
+                                        <div class="w-50" style="font-size: 0.9rem;"> <b> Calificación: </b> &nbsp; </div>
+                                        <div class="" style="margin-top: -11px;"> <input id="score-task-${ response.tasks[i].id }" class="score-input text-center text-xs font-weight-bold text-primary text-uppercase" type="text" min="0" max="100" value="${ score }" autocomplete="off" style="width: 80px; border: none; border-bottom: 2px solid #48B07E; outline: none !important; font-size: 1.2rem;"> </div>
+                                    </div>
                                 </div>
                             </div>
                             `
                         );
                     }
+                    initScoreListeners();
                 } else {
                     //no hay tareas
                     $('#delivered-task-container').append( 
@@ -250,5 +303,70 @@ function viewSesionTask( student ) {
         error: function() {
         }
     });
+}
 
+var init_score_value;
+
+function initScoreListeners() {
+    let allow_store;
+    $('.score-input').each( function() {
+        $(this).focusin( function() {
+            allow_store = true;
+            editScoreTask( $(this)[0].id );
+        });
+
+        $(this).focusout( function() {
+            if( allow_store ) {
+                storeScoreTask( $(this)[0].id );
+            } else {
+                exitEditScore( $(this)[0].id );
+            }
+        });
+
+        $(this).keydown(function(event) {
+            if( event.keyCode == 27 ) {
+                allow_store = false;
+                $(this).blur();
+            } else if( event.keyCode == 13 ) {
+                allow_store = true;
+                $(this).blur();
+            }
+        });
+    });
+}
+
+function editScoreTask( input_id ) {
+    init_score_value = $('#'+input_id).val();
+    $('#'+input_id).removeClass('text-primary');
+    $('#'+input_id).addClass('text-dark');
+    if( $('#'+input_id).val() == "-" ) {
+        $('#'+input_id).val('');
+    }
+    $('#'+input_id).attr('type', 'number');
+}
+
+function storeScoreTask( input_id ) {
+    $('#'+input_id).removeClass('text-dark');
+    $('#'+input_id).addClass('text-primary');
+    $('#'+input_id).attr('type', 'text');
+    if( $('#'+input_id).val() == '' ) {
+        $('#'+input_id).val('-');
+    }
+    let student_task_id = ( input_id.split('-') )[ input_id.split('-').length - 1 ];
+    $.ajax({
+        url: '/professor/studentTask/storeScore/'+student_task_id+'/'+$('#'+input_id).val(),
+        success: function( response ) {
+            //
+        },
+        error: function() {
+            //
+        }
+    });
+}
+
+function exitEditScore( input_id ) {
+    $('#'+input_id).removeClass('text-dark');
+    $('#'+input_id).addClass('text-primary');
+    $('#'+input_id).attr('type', 'text');
+    $('#'+input_id).val( init_score_value )
 }
