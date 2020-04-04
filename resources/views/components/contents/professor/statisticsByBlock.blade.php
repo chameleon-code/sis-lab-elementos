@@ -4,14 +4,13 @@
 <script>
     var managements = {!! json_encode( $managements ) !!};
     var groups = {!! json_encode( $groups ) !!};
-    var sesions = {!! json_encode( $sesions ) !!};
 </script>
 
 <div class="container-fluid">
 
     <div class="card shadow mb-3">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary" for=""> Estadísticas por grupo </h6>
+            <h6 class="m-0 font-weight-bold text-primary" for=""> Estadísticas por bloque </h6>
         </div>
         <div class="card-body py-3">
             <div class="row px-2">
@@ -26,13 +25,6 @@
                 <div class="col-sm-8">
                     <label class="my-0" for="">Bloque: </label>
                     <select class="form-control" name="" id="block-selector" onchange="selectBlock()"></select>
-                </div>
-            </div>
-            <hr class="my-2 mx-2">
-            <div class="row px-2">
-                <div class="col-sm-3 mb-2">
-                    <label class="my-0" for="">Grupo: </label>
-                    <select class="form-control" name="" id="group-selector" onchange="selectGroup()"></select>
                 </div>
             </div>
         </div>
@@ -68,7 +60,7 @@
 
 </div>
 
-<script src="/js/graphics/graphicsByGroup.js"></script>
+<script src="/js/graphics/graphicsByBlock.js"></script>
 
 @endsection
 

@@ -25,7 +25,6 @@ Route::get('/professor/students/getTasksStudent/{studentId}/{blockId}', 'Student
 
 Route::get('/professor/blocks/{groupId}','GroupController@getBlockBygroupId');
 Route::get('/professor/students/sesion/{group_id}/{block_id}/{sesion_id}','StudentScheduleController@getSesionsByBlockByGroup');
-Route::get('/professor/graphics2','ProfessorController@statisticsView')->middleware('auth');
 
 // Tareas o Practicas
 
@@ -42,5 +41,9 @@ Route::get('/professor/actualSesionBlock/{block_id}','SesionController@getActual
 Route::get('/professor/studentTask/storeScore/{student_task_id}/{score}','StudentTaskController@storeScore');
 
 // Gráficas
+Route::get('/professor/graphicsByGroup','ProfessorController@statisticsByGroup')->middleware('auth');
+Route::get('/professor/graphicsByBlock','ProfessorController@statisticsByBLock')->middleware('auth');
 Route::get('/professor/sesionsStatusByGroup/{management_id}/{block_id}/{group_id}','SesionController@getStatusSesionByGroup');
+Route::get('/professor/sesionsStatusByBlock/{management_id}/{block_id}','SesionController@getStatusSesionByBlock');
 Route::get('/professor/scoreTasksByGroup/{management_id}/{block_id}/{group_id}','StudentTaskController@getScoreTasksByGroup');
+Route::get('/professor/scoreTasksByBlock/{management_id}/{block_id}','StudentTaskController@getScoreTasksByBlock');

@@ -24,35 +24,35 @@ function selectManagement() {
 }
 
 function selectBlock() {
-    $('#group-selector').empty();
-    let no_groups = true;
-    for(let i=0 ; i<groups.length ; i++) {
-        if( groups[i].management_id == $('#management-selector')[0].value && groups[i].block_id == $('#block-selector')[0].value ) {
-            $('#group-selector').append(
-                `<option class="optional" value="${groups[i].id}"> ${ groups[i].name } </option>`
-            );
-            no_groups = false;
-        }
-    }
-    if( no_groups ) {
-        $('#group-selector').append(
-            `<option class="optional" value=""> Sin grupos </option>`
-        );
-    }
-    selectGroup();
-}
-
-function selectGroup() {
+    // $('#group-selector').empty();
+    // let no_groups = true;
+    // for(let i=0 ; i<groups.length ; i++) {
+    //     if( groups[i].management_id == $('#management-selector')[0].value && groups[i].block_id == $('#block-selector')[0].value ) {
+    //         $('#group-selector').append(
+    //             `<option class="optional" value="${groups[i].id}"> ${ groups[i].name } </option>`
+    //         );
+    //         no_groups = false;
+    //     }
+    // }
+    // if( no_groups ) {
+    //     $('#group-selector').append(
+    //         `<option class="optional" value=""> Sin grupos </option>`
+    //     );
+    // }
     Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
     Chart.defaults.global.defaultFontColor = '#858796';
     loadAreaChart();
     loadDonutChart();
+    // selectGroup();
 }
+
+// function selectGroup() {
+// }
 
 function loadAreaChart() {
     $('#chart-area-container').empty();
     $.ajax({
-        url : "/professor/sesionsStatusByGroup/"+$('#management-selector').val()+"/"+$('#block-selector').val()+"/"+$('#group-selector').val(),
+        url : "/professor/sesionsStatusByBlock/"+$('#management-selector').val()+"/"+$('#block-selector').val(),
         success: function (response){
             if( response.sesions.length > 0 ) {
                 let sesions = [];
@@ -65,7 +65,7 @@ function loadAreaChart() {
                     <div class="chart-area"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
                         <canvas id="myAreaChart" style="display: block; height: 320px; width: 426px;" width="383" height="287" class="chartjs-render-monitor"></canvas>
                     </div>
-                    <div class="text-center mt-3" style="font-size: 0.9rem;"> Estudiantes: <b> ${ response.total_students_group } </b> </div>
+                    <div class="text-center mt-3" style="font-size: 0.9rem;"> Estudiantes: <b> ${ response.total_students_block } </b> </div>
                     `
                 );
                 var ctx = document.getElementById("myAreaChart");
@@ -114,7 +114,7 @@ function loadAreaChart() {
                             }],
                             yAxes: [{
                                 ticks: {
-                                    maxTicksLimit: parseInt( response.total_students_group ),
+                                    maxTicksLimit: parseInt( response.total_students_block ),
                                     padding: 10,
                                     callback: function(value, index, values) {
                                         return number_format(value);
@@ -173,7 +173,7 @@ function loadDonutChart() {
     $('#chart-donut-container').empty();
     $('#chart-donut-container-2').empty();
     $.ajax({
-        url : "/professor/scoreTasksByGroup/"+$('#management-selector').val()+"/"+$('#block-selector').val()+"/"+$('#group-selector').val(),
+        url : "/professor/scoreTasksByBlock/"+$('#management-selector').val()+"/"+$('#block-selector').val(),
         success: function (response){
             if( response.length > 0 ) {
                 let students_without_deliveries = 0;

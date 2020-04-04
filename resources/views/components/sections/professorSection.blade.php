@@ -68,8 +68,8 @@
     <div id="collapseStadistics" class="collapse" aria-labelledby="headingStudent" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
-        <a class="collapse-item" href="{{url("/professor/graphics2")}}"><i class="fas fa-chart-pie"></i> Por grupo </a>
-        <a class="collapse-item" href="{{url("#")}}"><i class="fas fa-chart-pie"></i> Por bloque </a>
+        <a class="collapse-item" href="{{url("/professor/graphicsByGroup")}}"><i class="fas fa-chart-pie"></i> Por grupo </a>
+        <a class="collapse-item" href="{{url("/professor/graphicsByBlock")}}"><i class="fas fa-chart-pie"></i> Por bloque </a>
         <a class="collapse-item" href="{{url("#")}}"><i class="fas fa-chart-pie"></i> Por gestión </a>
       </div>
     </div>
