@@ -55,7 +55,7 @@ function selectBlock() {
             `<option class="optional" value=""> Sin grupos </option>`
         );
     }
-    selectGroup()
+    selectGroup();
 }
 
 function selectGroup() {
@@ -88,7 +88,7 @@ function selectGroup() {
             `<option class="optional" value=""> Sin sesiones </option>`
         );
     }
-    loadStudents()
+    loadStudents();
 }
 
 function loadStudents() {

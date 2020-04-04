@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use App\Block;
 use App\BlockSchedule;
+use App\Management;
 
 class ProfessorController extends Controller
 {
@@ -263,7 +264,6 @@ class ProfessorController extends Controller
         ];
         return view('components.contents.professor.profileStudent')->withTitle('Perfil de Estudiante')->with($data);
     }
-
     
     public function downloadPortflies(){
         $professor = Professor::where('user_id', auth()->user()->id)->first();
@@ -277,5 +277,34 @@ class ProfessorController extends Controller
             'title' => 'Portafolios en base a grupos'
         ];
         return view('components.contents.professor.portflies', $data);
+    }
+
+    public function statisticsView() {
+        if( !Auth::user() ) { return redirect('/'); }
+        $professor = Professor::join('users', 'professors.user_id', '=', 'users.id')
+                              ->where('users.id', '=', Auth::user()->id)
+                              ->select('users.*', 'professors.id as professor_id')
+                              ->get()
+                              ->first();
+        $groups = Group::join('block_group', 'groups.id', '=', 'block_group.group_id')
+                       ->join('blocks', 'block_group.block_id', '=', 'blocks.id')
+                       ->join('managements', 'blocks.management_id', '=', 'managements.id')
+                       ->select('groups.*', 'block_group.id as block_group_id', 'blocks.id as block_id', 'blocks.name as block_name','managements.id as management_id')
+                       ->where('groups.professor_id', '=', $professor->professor_id)
+                       ->get();
+        $sesions = Sesion::join('blocks', 'sesions.block_id', '=', 'blocks.id')
+                         ->join('block_group', 'blocks.id', '=', 'block_group.block_id')
+                         ->join('groups', 'block_group.group_id', '=', 'groups.id')
+                         ->join('managements', 'blocks.management_id', '=', 'managements.id')
+                         ->where('groups.professor_id', '=', $professor->professor_id)
+                         ->select('sesions.*', 'groups.id as group_id', 'blocks.id as block_id', 'managements.id as management_id')
+                         ->orderby('number_sesion')
+                         ->get();
+        $data = [
+            'managements' => Management::all()->reverse(),
+            'groups' => $groups,
+            'sesions' => $sesions
+        ];
+        return view('components.contents.professor.statistics2', $data);
     }
 }

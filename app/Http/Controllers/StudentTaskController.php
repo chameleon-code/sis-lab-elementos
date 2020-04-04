@@ -303,4 +303,54 @@ class StudentTaskController extends Controller
         $student_task->save();
         return [ 'error' => false ];
     }
+
+    public function getScoreTasksByGroup( $management_id, $block_id, $group_id ) {
+        $students_group = StudentSchedule::join('block_schedules', 'student_schedules.block_schedule_id', '=', 'block_schedules.id')
+                                         ->join('blocks', 'block_schedules.block_id', '=', 'blocks.id')
+                                         ->join('managements', 'blocks.management_id', '=', 'managements.id')
+                                         ->where('managements.id', '=', $management_id)
+                                         ->where('block_schedules.block_id', '=', $block_id)
+                                         ->where('student_schedules.group_id', '=', $group_id)
+                                         ->get();
+        $score_mean_students = [];
+        for($i=0 ; $i<sizeof($students_group) ; $i++) {
+            $scores = [];
+            $score_mean = 0;
+            $tasks_by_student = StudentTask::join('student_schedules', 'student_tasks.student_id', '=', 'student_schedules.student_id')
+                                           ->join('block_schedules', 'student_schedules.block_schedule_id', '=', 'block_schedules.id')
+                                           ->join('tasks', 'student_tasks.task_id', '=', 'tasks.id')
+                                           ->join('sesions', 'tasks.sesion_id', '=', 'sesions.id')
+                                           ->where('sesions.block_id', '=', $block_id)
+                                           ->where('student_schedules.group_id', '=', $group_id)
+                                           ->where('student_tasks.student_id', '=', $students_group[$i]->student_id)
+                                           ->select('student_tasks.*', 'student_schedules.group_id')
+                                           ->get();
+            if( sizeof($tasks_by_student) > 0 ) {
+                for($j=0 ; $j<sizeof($tasks_by_student) ; $j++) {
+                    array_push( $scores, $tasks_by_student[$j]->score );
+                }
+                $null_scores = [];
+                $not_null_scores = [];
+                for($j=0 ; $j<sizeof($scores) ; $j++) {
+                    if( $scores[$j] ) {
+                        array_push( $not_null_scores, $scores[$j] );
+                    } else {
+                        array_push( $null_scores, $scores[$j] );
+                    }
+                }
+                if( sizeof($not_null_scores) > 0 ) {
+                    for($j=0 ; $j<sizeof($not_null_scores) ; $j++) {
+                        $score_mean = $score_mean + $not_null_scores[$j];
+                    }
+                    $score_mean = $score_mean / sizeof($not_null_scores);
+                } else {
+                    $score_mean = -1;
+                }
+            } else {
+                $score_mean = null;
+            }
+            array_push( $score_mean_students, $score_mean );
+        }
+        return $score_mean_students;
+    }
 }
