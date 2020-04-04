@@ -62,15 +62,15 @@
 
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStadistics" aria-expanded="false" aria-controls="collapseStudent">
-      <i class="fas fa-fw fa-users"></i>
-      <span> Estadísticas (v2)</span>
+      <i class="fas fa-fw fa-chart-pie"></i>
+      <span> Estadísticas </span>
     </a>
     <div id="collapseStadistics" class="collapse" aria-labelledby="headingStudent" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Opciones:</h6>
-        <a class="collapse-item" href="{{url("/professor/graphicsByGroup")}}"><i class="fas fa-chart-pie"></i> Por grupo </a>
-        <a class="collapse-item" href="{{url("/professor/graphicsByBlock")}}"><i class="fas fa-chart-pie"></i> Por bloque </a>
-        <a class="collapse-item" href="{{url("#")}}"><i class="fas fa-chart-pie"></i> Por gestión </a>
+        <a class="collapse-item" href="{{url("/professor/graphicsByGroup")}}"><i class="fas fa-list-alt"></i> Por grupo </a>
+        <a class="collapse-item" href="{{url("/professor/graphicsByBlock")}}"><i class="fas fa-boxes"></i> Por bloque </a>
+        {{-- <a class="collapse-item" href="{{url("#")}}"><i class="fas fa-chart-pie"></i> Por gestión </a> --}}
       </div>
     </div>
   </li>
