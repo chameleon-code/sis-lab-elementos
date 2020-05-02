@@ -28,7 +28,7 @@ Route::get('/professor/students/sesion/{group_id}/{block_id}/{sesion_id}','Stude
 
 // Tareas o Practicas
 
-//Route::get('/tasks','TaskController@index');
+// Route::get('/tasks','TaskController@index');
 Route::post('/tasks/create','TaskController@store')->name('tasks.create');
 Route::post('/professor/sesions/tasks/store/score','TaskController@storeScore');
 Route::get('/professor/practices/download','TaskController@downloadPractice');
@@ -39,3 +39,11 @@ Route::get('/professor/getStudentsByGroup/{group_id}/{block_id}/{management_id}/
 Route::get('/professor/getStudentTask/{student_id}/{block_id}/{sesion_id}','StudentTaskController@getStudentTask');
 Route::get('/professor/actualSesionBlock/{block_id}','SesionController@getActualSesionBlock');
 Route::get('/professor/studentTask/storeScore/{student_task_id}/{score}','StudentTaskController@storeScore');
+
+// Gráficas
+Route::get('/professor/graphicsByGroup','ProfessorController@statisticsByGroup')->middleware('auth');
+Route::get('/professor/graphicsByBlock','ProfessorController@statisticsByBLock')->middleware('auth');
+Route::get('/professor/sesionsStatusByGroup/{management_id}/{block_id}/{group_id}','SesionController@getStatusSesionByGroup');
+Route::get('/professor/sesionsStatusByBlock/{management_id}/{block_id}','SesionController@getStatusSesionByBlock');
+Route::get('/professor/scoreTasksByGroup/{management_id}/{block_id}/{group_id}','StudentTaskController@getScoreTasksByGroup');
+Route::get('/professor/scoreTasksByBlock/{management_id}/{block_id}','StudentTaskController@getScoreTasksByBlock');

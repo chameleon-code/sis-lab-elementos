@@ -55,7 +55,7 @@ function selectBlock() {
             `<option class="optional" value=""> Sin grupos </option>`
         );
     }
-    selectGroup()
+    selectGroup();
 }
 
 function selectGroup() {
@@ -88,7 +88,7 @@ function selectGroup() {
             `<option class="optional" value=""> Sin sesiones </option>`
         );
     }
-    loadStudents()
+    loadStudents();
 }
 
 function loadStudents() {
@@ -174,11 +174,15 @@ function viewSesionTask( student ) {
                 );
                 if( response.sesion_tasks.length > 0 ) {
                     for(let i=0 ; i<response.sesion_tasks.length ; i++ ) {
+                        let file_link = "Ninguno";
+                        if( response.sesion_tasks[i].task_file ) {
+                            file_link = ` <a href="/downloadPractice/${ response.sesion_tasks[i].task_path }/${ response.sesion_tasks[i].task_file }"> ${ response.sesion_tasks[i].task_file } </a> `;
+                        }
                         $('#sesion-task-container-2').append(
                             `
                             <div> <b> Tarea de la sesión: </b> &nbsp; ${ response.sesion_tasks[i].title } </div>
                             <div> ${ response.sesion_tasks[i].description } </div>
-                            <div class="mb-1 border-bottom"> <b> Archivo </b>:&nbsp; <a href="/downloadPractice/${ response.sesion_tasks[i].task_path }/${ response.sesion_tasks[i].task_file }"> ${ response.sesion_tasks[i].task_file } </a> </div>
+                            <div class="mb-1 border-bottom"> <b> Archivo </b>:&nbsp; ${ file_link } </div>
                             `
                         );
                     }
@@ -241,11 +245,15 @@ function viewSesionTask( student ) {
                 );
                 if( response.sesion_tasks.length > 0 ) {
                     for(let i=0 ; i<response.sesion_tasks.length ; i++ ) {
+                        let file_link = "Ninguno";
+                        if( response.sesion_tasks[i].task_file ) {
+                            file_link = ` <a href="/downloadPractice/${ response.sesion_tasks[i].task_path }/${ response.sesion_tasks[i].task_file }"> ${ response.sesion_tasks[i].task_file } </a> `;
+                        }
                         $('#sesion-task-container').append(
                             `
                             <div> <b> Tarea de la sesión: </b> &nbsp; ${ response.sesion_tasks[i].title } </div>
                             <div> ${ response.sesion_tasks[i].description } </div>
-                            <div class="mb-1 border-bottom"> <b> Archivo </b>:&nbsp; <a href="/downloadPractice/${ response.sesion_tasks[i].task_path }/${ response.sesion_tasks[i].task_file }"> ${ response.sesion_tasks[i].task_file } </a> </div>
+                            <div class="mb-1 border-bottom"> <b> Archivo </b>:&nbsp; ${ file_link } </div>
                             `
                         );
                     }

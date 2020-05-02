@@ -11,78 +11,12 @@
         display: flex;
         align-items: center;
     }
-
-    /* ================================================================ */
-
-    /* .md-input {
-        position: relative;
-    }
-    .md-input .md-form-control {
-        font-size: 16px;
-        display: block;
-        border: none;
-        border-bottom: 2px solid #CACACA;
-        box-shadow: none;
-        width: 100%;
-        outline: none;
-    }
-
-    .md-input label {
-        color: rgba(0, 0, 0, 0.5);
-        font-size: 15px;
-        font-weight: normal;
-        position: absolute;
-        pointer-events: none;
-        left: 5px;
-        top: 10px;
-        transition: 0.2s ease all;
-        -moz-transition: 0.2s ease all;
-        -webkit-transition: 0.2s ease all;
-    }
-
-    .md-input .bar:before {
-        left: 50%;
-    }
-
-    .md-input .bar:after {
-        right: 50%;
-    }
-
-    .md-input .highlight {
-        position: absolute;
-        height: 60%;
-        top: 25%;
-        left: 0;
-        pointer-events: none;
-        opacity: 0.5;
-    }
-    .md-input .md-form-control:focus ~ label, .md-input .md-form-control:valid ~ label {
-        top: -15px;
-        font-size: 14px;
-        color: #183D5D;
-    }
-    .md-input .bar:before, .md-input .bar:after {
-        content: '';
-        height: 2px;
-        width: 0;
-        bottom: 0px;
-        position: absolute;
-        background: #03A9F4;
-        transition: 0.2s ease all;
-        -moz-transition: 0.2s ease all;
-        -webkit-transition: 0.2s ease all;
-    }
-
-    .md-input .md-form-control:focus ~ .bar:before, .md-input .md-form-control:focus ~ .bar:after {
-        width: 50%;
-    } */
-
 </style>
 
 <script>
     var managements = {!! json_encode( $managements ) !!};
-    var groups = {!! json_encode( $groups ) !!}
-    var sesions = {!! json_encode( $sesions ) !!}
+    var groups = {!! json_encode( $groups ) !!};
+    var sesions = {!! json_encode( $sesions ) !!};
 </script>
 
 <div class="container-fluid">
@@ -97,7 +31,7 @@
                     <label class="my-0" for="">Gestión: </label>
                     <select class="form-control" name="" id="management-selector" onchange="selectManagement()">
                         @foreach ($managements as $management)
-                            <option class="optional" value="{{$management->id}}">{{$management->semester}}/{{$management->managements}}</option>
+                            <option class="optional" value="{{$management->id}}"> {{$management->semester}}/{{$management->managements}} </option>
                         @endforeach
                     </select>
                 </div>
